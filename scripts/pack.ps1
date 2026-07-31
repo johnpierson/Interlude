@@ -95,8 +95,8 @@ foreach ($target in @($manifest.versions | Where-Object { $_.active })) {
         engine_version   = $engineVersion
         engine           = 'dynamo'
         engine_metadata  = "Dynamo $dynamo ($($target.targetFramework)); Revit $revitYears"
-        site_url         = 'https://github.com/johntpierson/Interlude'
-        repository_url   = 'https://github.com/johntpierson/Interlude'
+        site_url         = 'https://github.com/johnpierson/Interlude'
+        repository_url   = 'https://github.com/johnpierson/Interlude'
         contains_binaries = $true
         node_libraries   = @("Interlude, Version=$($manifest.assemblyVersion), Culture=neutral, PublicKeyToken=null")
     }

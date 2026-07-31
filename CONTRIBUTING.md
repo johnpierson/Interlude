@@ -8,7 +8,7 @@ You need the [.NET 10 SDK](https://dotnet.microsoft.com/download). One SDK compi
 matrix — the `net8.0-windows` builds for Dynamo 3.0 and 3.6 as well as `net10.0-windows` for 4.0.
 
 ```bash
-git clone https://github.com/johntpierson/Interlude.git
+git clone https://github.com/johnpierson/Interlude.git
 cd Interlude
 dotnet build Interlude.sln
 dotnet test Interlude.sln

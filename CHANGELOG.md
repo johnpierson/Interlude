@@ -70,5 +70,5 @@ First release.
 - Architecture tests for the layering, library visibility, renderer coverage and schema coverage.
 - An API-surface snapshot, because saved graphs bind to node names and parameter positions.
 
-[Unreleased]: https://github.com/johntpierson/Interlude/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/johntpierson/Interlude/releases/tag/v1.0.0
+[Unreleased]: https://github.com/johnpierson/Interlude/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/johnpierson/Interlude/releases/tag/v1.0.0

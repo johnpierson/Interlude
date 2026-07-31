@@ -1,10 +1,24 @@
+> **Historical document.** This is the design brief Interlude was built from, written before the
+> package had a name — it calls itself "RhythmForms" throughout and its file links point at the
+> Rhythm repository it was drafted against. Neither is true of this repository.
+>
+> It is kept because the reasoning is still the reasoning: the framework evaluation, the
+> single-assembly decision, the pitfalls register. For how the package actually turned out, read
+> [architecture.md](architecture.md).
+>
+> Where the two differ: Interlude ships as its own package rather than bundled into a Rhythm
+> deploy, and the icon-resource assembly in section 8 was not built — an empty resource DLL would
+> break the one-assembly rule the rest of the build enforces.
+
+---
+
 # RhythmForms — Architecture & Implementation Plan
 
 ## Context
 
 Rhythm needs a next-generation forms/UI subsystem for Dynamo: nodes describe a form declaratively, a renderer shows it, and strongly-typed results flow back — replacing the pattern Data-Shapes established, with modern UI, dynamic behaviors (VisibleIf/EnabledIf/RequiredIf, computed values, live validation), theming, and headless testability, with **zero Revit dependencies**.
 
-A spike scaffold already exists on branch `rhythm-forms-spike` (untracked): [src/RhythmForms/RhythmForms.csproj](src/RhythmForms/RhythmForms.csproj), [src/RhythmForms/Directory.Build.props](src/RhythmForms/Directory.Build.props), [scripts/build-all.ps1](scripts/build-all.ps1), [versions.json](versions.json). It builds one assembly **per Dynamo version** (3.0/3.6 → net8.0-windows, 4.0 → net10.0-windows), `UseWPF=true`, `RootNamespace=Rhythm`, single PackageReference `DynamoVisualProgramming.ZeroTouchLibrary` with `ExcludeAssets="runtime"` (loads headless — no DynamoCore/DynamoCoreWpf). No source code yet. **This plan keeps and builds on that scaffold.**
+A spike scaffold already exists on branch `rhythm-forms-spike` (untracked): `src/RhythmForms/RhythmForms.csproj`, `src/RhythmForms/Directory.Build.props`, `scripts/build-all.ps1`, `versions.json`. It builds one assembly **per Dynamo version** (3.0/3.6 → net8.0-windows, 4.0 → net10.0-windows), `UseWPF=true`, `RootNamespace=Rhythm`, single PackageReference `DynamoVisualProgramming.ZeroTouchLibrary` with `ExcludeAssets="runtime"` (loads headless — no DynamoCore/DynamoCoreWpf). No source code yet. **This plan keeps and builds on that scaffold.**
 
 ## Decisions confirmed with John
 
@@ -159,8 +173,8 @@ sealed class ControlRendererRegistry { Register(IControlRenderer); Resolve(FormE
 
 - Build matrix stays as scaffolded: `scripts/build-all.ps1` × `versions.json` active list (3.0, 3.6, 4.0).
 - Copy into deploy via `deploy/dynamo_to_revit_mapping.json`: `deploy/2025` ← 3.0 build, `deploy/2026` ← 3.6 build, `deploy/2027` ← 4.0 build. Files per folder: `RhythmForms.dll`, `RhythmForms.xml` (required for port names/tooltips), `RhythmForms_DynamoCustomization.xml`.
-- Add `"RhythmForms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"` to `deploy/pkg.json` `node_libraries`; add RhythmForms to the view-extension download list in [src/RhythmViewExtension/RhythmViewExtension.cs](src/RhythmViewExtension/RhythmViewExtension.cs) / `Global.cs` so it actually reaches users.
-- **CI** ([.github/workflows/build.yml](.github/workflows/build.yml)): add `setup-dotnet` with `8.0.x` **and** `10.0.x`; run `build-all.ps1` via `dotnet build` (keep out of the msbuild .sln steps); verify `RhythmForms.dll` + `.xml` per version **and that no other DLLs appear**; run tests incl. API-surface snapshot + architecture test; copy to deploy folders.
+- Add `"RhythmForms, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null"` to `deploy/pkg.json` `node_libraries`; add RhythmForms to the view-extension download list in `src/RhythmViewExtension/RhythmViewExtension.cs` / `Global.cs` so it actually reaches users.
+- **CI** (`.github/workflows/build.yml`): add `setup-dotnet` with `8.0.x` **and** `10.0.x`; run `build-all.ps1` via `dotnet build` (keep out of the msbuild .sln steps); verify `RhythmForms.dll` + `.xml` per version **and that no other DLLs appear**; run tests incl. API-surface snapshot + architecture test; copy to deploy folders.
 - **Icons:** ship `RhythmForms.customization.dll` (resx+AL, same as RhythmCore) for the net8 rows; spike whether that same resource-only assembly loads fine on the net10/2027 row (resource assemblies have no real TFM constraint — if it works, it also fixes RhythmCore's 2027 icon gap). Ship 2027 without icons if the spike fails; don't block v1.
 - Older Revit years (2020–2024, net48/Dynamo 2.x): **out of scope** — RhythmForms is net8+/Dynamo 3.0+ only, consistent with `versions.json`.
 

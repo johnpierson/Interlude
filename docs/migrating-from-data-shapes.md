@@ -204,3 +204,8 @@ Input.CheckBox("Include sheets", key: "includeSheets")    ─┴─► Form.Show
 Install both. They share no namespaces, no class names and no assemblies. Migrate a graph when
 there is a reason to — a form that needs conditional fields, validation or a layout — and leave
 the rest alone.
+
+## See also
+
+- [Node reference](node-reference.md) — every node and every port
+- [Recipes](recipes.md) — worked patterns, including several that have no Data-Shapes equivalent
