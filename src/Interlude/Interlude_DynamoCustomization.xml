@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Maps Interlude's node namespace onto the Dynamo library tree.
+
+  The node facades live in the root `Interlude` namespace, so every node lands under a single
+  top-level `Interlude` category with the facade class as its sub-category: Interlude > Input >
+  TextBox, Interlude > Form > Show, and so on. The supporting namespaces (Interlude.Model,
+  Interlude.Runtime, ...) never appear because every type in them carries
+  [IsVisibleInDynamoLibrary(false)].
+
+  This file must ship beside Interlude.dll, named <AssemblyName>_DynamoCustomization.xml.
+-->
+<customization>
+  <namespaces>
+    <namespace name="Interlude">
+      <category>Interlude</category>
+    </namespace>
+  </namespaces>
+</customization>

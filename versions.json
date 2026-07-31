@@ -1,0 +1,28 @@
+{
+  "//": "Build matrix for Interlude. One Interlude.dll is produced per Dynamo version.",
+  "//assemblyVersion": "Frozen at 1.0.0.0 across all releases so graphs never break on upgrade.",
+  "assemblyVersion": "1.0.0.0",
+  "versions": [
+    {
+      "dynamo": "3.0",
+      "targetFramework": "net8.0-windows",
+      "zeroTouchPackage": "3.0.3.7597",
+      "revitYears": [ 2025 ],
+      "active": true
+    },
+    {
+      "dynamo": "3.6",
+      "targetFramework": "net8.0-windows",
+      "zeroTouchPackage": "3.6.1.9900",
+      "revitYears": [ 2026 ],
+      "active": true
+    },
+    {
+      "dynamo": "4.0",
+      "targetFramework": "net10.0-windows",
+      "zeroTouchPackage": "4.0.2.3870",
+      "revitYears": [ 2027 ],
+      "active": true
+    }
+  ]
+}

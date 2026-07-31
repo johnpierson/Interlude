@@ -1,0 +1,18 @@
+<Project>
+
+  <!--
+    Imported before Microsoft.Common.props, which is the only place output paths can be set
+    without MSBuild warning that NuGet already used the old value. Everything here exists to
+    keep the three Dynamo builds in separate trees; the csproj owns the rest.
+  -->
+
+  <Import Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+
+  <PropertyGroup>
+    <DynamoVersion Condition="'$(DynamoVersion)' == ''">4.0</DynamoVersion>
+    <RepoRoot>$(MSBuildThisFileDirectory)..\..\</RepoRoot>
+    <BaseOutputPath>$(RepoRoot)artifacts\build\$(DynamoVersion)\</BaseOutputPath>
+    <BaseIntermediateOutputPath>$(RepoRoot)artifacts\obj\$(DynamoVersion)\Interlude\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+
+</Project>

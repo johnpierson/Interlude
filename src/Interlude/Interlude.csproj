@@ -1,0 +1,81 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    THE ONLY SHIPPED ASSEMBLY.
+
+    One Interlude.dll is built per Dynamo version. Pass -p:DynamoVersion=3.0|3.6|4.0
+    (scripts/build-all.ps1 drives the matrix from versions.json). Layering between
+    Model / Conditions / Validation / Runtime / Rendering / Serialization and the WPF
+    code is enforced by namespaces plus ArchitectureTests, not by extra assemblies:
+    every additional assembly would multiply across 3 Dynamo builds x N package folders.
+  -->
+
+  <!-- DynamoVersion and the per-version output paths are set in Directory.Build.props,
+       which MSBuild imports early enough to place obj/ without warning. -->
+
+  <PropertyGroup Condition="'$(DynamoVersion)' == '3.0'">
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <DynamoPackageVersion>3.0.3.7597</DynamoPackageVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DynamoVersion)' == '3.6'">
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <DynamoPackageVersion>3.6.1.9900</DynamoPackageVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DynamoVersion)' == '4.0'">
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <DynamoPackageVersion>4.0.2.3870</DynamoPackageVersion>
+  </PropertyGroup>
+
+  <Target Name="ValidateDynamoVersion" BeforeTargets="PrepareForBuild"
+          Condition="'$(TargetFramework)' == ''">
+    <Error Text="Unknown DynamoVersion '$(DynamoVersion)'. Supported values are 3.0, 3.6 and 4.0 (see versions.json)." />
+  </Target>
+
+  <PropertyGroup>
+    <AssemblyName>Interlude</AssemblyName>
+    <RootNamespace>Interlude</RootNamespace>
+    <UseWPF>true</UseWPF>
+
+    <!-- Dynamo reads Interlude.xml for port names and tooltips: it ships alongside the DLL. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Model/runtime types are public because they cross node ports; not every one needs prose. -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+    <IncludeSymbols>false</IncludeSymbols>
+    <DebugType Condition="'$(Configuration)' == 'Release'">none</DebugType>
+    <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <!--
+    ZERO RUNTIME DEPENDENCIES.
+
+    ExcludeAssets="runtime" means the Dynamo assemblies are used for attributes at
+    compile time only and are never copied next to Interlude.dll. Dynamo supplies its
+    own at load time; shipping ours would be an assembly-conflict generator. Everything
+    else comes from the BCL and in-box WPF: no Newtonsoft (Dynamo pins its own), no
+    System.Text.Json package reference (it is in-box on net8.0+).
+  -->
+  <ItemGroup>
+    <PackageReference Include="DynamoVisualProgramming.ZeroTouchLibrary" Version="$(DynamoPackageVersion)"
+                      ExcludeAssets="runtime" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Interlude_DynamoCustomization.xml" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <!--
+    Guard rail for the single most damaging regression this project can have:
+    a transitive package sneaking a second DLL into the package's bin folder.
+  -->
+
+  <Target Name="VerifyNoExtraAssemblies" AfterTargets="Build" Condition="'$(DisableOutputVerification)' != 'true'">
+    <ItemGroup>
+      <_UnexpectedOutput Include="$(OutputPath)*.dll" Exclude="$(OutputPath)Interlude.dll" />
+    </ItemGroup>
+    <Error Condition="'@(_UnexpectedOutput)' != ''"
+           Text="Interlude must ship exactly one assembly, but the build output also contains: @(_UnexpectedOutput->'%(Filename)%(Extension)', ', '). Add ExcludeAssets=&quot;runtime&quot; to the offending PackageReference or remove it." />
+  </Target>
+
+</Project>
