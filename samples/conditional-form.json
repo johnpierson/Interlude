@@ -1,0 +1,216 @@
+{
+  "schemaVersion": 1,
+  "title": "Export settings",
+  "description": "Fields appear, enable and become required in response to other fields.",
+  "elements": [
+    {
+      "$type": "dropdown",
+      "isEditable": false,
+      "showSearch": false,
+      "options": [
+        {
+          "value": "DWG",
+          "display": "DWG",
+          "isEnabled": true
+        },
+        {
+          "value": "IFC",
+          "display": "IFC",
+          "isEnabled": true
+        },
+        {
+          "value": "PDF",
+          "display": "PDF",
+          "isEnabled": true
+        }
+      ],
+      "selectFirstByDefault": true,
+      "isReadOnly": false,
+      "key": "format",
+      "label": "Format",
+      "rules": []
+    },
+    {
+      "$type": "groupBox",
+      "header": "DWG options",
+      "children": [
+        {
+          "$type": "dropdown",
+          "isEditable": false,
+          "showSearch": false,
+          "options": [
+            {
+              "value": "2013",
+              "display": "2013",
+              "isEnabled": true
+            },
+            {
+              "value": "2018",
+              "display": "2018",
+              "isEnabled": true
+            },
+            {
+              "value": "2024",
+              "display": "2024",
+              "isEnabled": true
+            }
+          ],
+          "selectFirstByDefault": true,
+          "isReadOnly": false,
+          "key": "dwgVersion",
+          "label": "Version",
+          "rules": []
+        },
+        {
+          "$type": "checkBox",
+          "content": "Explode nested families",
+          "isReadOnly": false,
+          "key": "explode",
+          "rules": []
+        }
+      ],
+      "key": "",
+      "visibleIf": {
+        "$type": "comparison",
+        "key": "format",
+        "operator": "equals",
+        "operand": "DWG",
+        "ignoreCase": false
+      },
+      "rules": []
+    },
+    {
+      "$type": "groupBox",
+      "header": "IFC options",
+      "children": [
+        {
+          "$type": "dropdown",
+          "isEditable": false,
+          "showSearch": false,
+          "options": [
+            {
+              "value": "IFC2x3",
+              "display": "IFC2x3",
+              "isEnabled": true
+            },
+            {
+              "value": "IFC4",
+              "display": "IFC4",
+              "isEnabled": true
+            }
+          ],
+          "selectFirstByDefault": true,
+          "isReadOnly": false,
+          "key": "ifcVersion",
+          "label": "Schema",
+          "rules": []
+        },
+        {
+          "$type": "checkBox",
+          "content": "Export base quantities",
+          "isReadOnly": false,
+          "key": "baseQuantities",
+          "rules": []
+        }
+      ],
+      "key": "",
+      "visibleIf": {
+        "$type": "comparison",
+        "key": "format",
+        "operator": "equals",
+        "operand": "IFC",
+        "ignoreCase": false
+      },
+      "rules": []
+    },
+    {
+      "$type": "separator",
+      "orientation": "horizontal",
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "checkBox",
+      "content": "Export to a specific folder",
+      "isReadOnly": false,
+      "key": "toFolder",
+      "rules": []
+    },
+    {
+      "$type": "folderPicker",
+      "isReadOnly": false,
+      "key": "folder",
+      "label": "Folder",
+      "enabledIf": {
+        "$type": "comparison",
+        "key": "toFolder",
+        "operator": "isChecked",
+        "ignoreCase": false
+      },
+      "requiredIf": {
+        "$type": "comparison",
+        "key": "toFolder",
+        "operator": "isChecked",
+        "ignoreCase": false
+      },
+      "rules": []
+    },
+    {
+      "$type": "checkBox",
+      "content": "This export needs a justification",
+      "isReadOnly": false,
+      "key": "needsReason",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": true,
+      "lines": 3,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "reason",
+      "label": "Justification",
+      "visibleIf": {
+        "$type": "comparison",
+        "key": "needsReason",
+        "operator": "isChecked",
+        "ignoreCase": false
+      },
+      "requiredIf": {
+        "$type": "constant",
+        "value": true
+      },
+      "rules": []
+    }
+  ],
+  "buttons": {
+    "submitText": "Submit",
+    "cancelText": "Cancel",
+    "showSubmit": true,
+    "showCancel": true,
+    "extraButtons": [],
+    "closeOnEscape": true
+  },
+  "window": {
+    "width": 420,
+    "minWidth": 280,
+    "minHeight": 120,
+    "maxHeight": 800,
+    "isResizable": true,
+    "showInTaskbar": false,
+    "topmost": false
+  },
+  "theme": {
+    "mode": "auto",
+    "cornerRadius": 4,
+    "fontSize": 13,
+    "density": "comfortable",
+    "reducedMotion": false,
+    "labelWidth": 130,
+    "baseSpacing": 8,
+    "controlHeight": 28
+  },
+  "formId": "",
+  "rememberValues": true,
+  "headlessUseDefaults": false
+}

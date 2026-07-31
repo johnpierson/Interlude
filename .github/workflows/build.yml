@@ -1,0 +1,104 @@
+name: build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    # Windows is not a preference here: Interlude is a WPF package for Revit and Dynamo.
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          # The .NET 10 SDK compiles net8.0-windows as well, so one SDK covers the whole matrix.
+          # The 8.0 runtime is not needed: the tests run on net10.0-windows and the 3.0/3.6
+          # flavours are compile-verified from identical source.
+          dotnet-version: '10.0.x'
+
+      - name: Restore
+        run: dotnet restore Interlude.sln
+
+      - name: Build the solution
+        run: dotnet build Interlude.sln -c Release --no-restore -p:ContinuousIntegrationBuild=true
+
+      - name: Test
+        run: >
+          dotnet test tests/Interlude.Tests/Interlude.Tests.csproj
+          -c Release --no-build
+          --logger "trx;LogFileName=results.trx"
+          --results-directory artifacts/test-results
+
+      - name: Build every Dynamo version and pack
+        shell: pwsh
+        run: ./scripts/build-all.ps1 -Configuration Release -Pack
+
+      # The single most damaging regression this package can have is a second DLL appearing
+      # beside Interlude.dll in a folder Revit shares with every other add-in. build-all.ps1
+      # already refuses to build one; this repeats the check against what was actually packed.
+      - name: Verify each package ships exactly one assembly
+        shell: pwsh
+        run: |
+          $failed = $false
+          foreach ($bin in Get-ChildItem dist -Recurse -Directory -Filter bin) {
+            $dlls = @(Get-ChildItem $bin.FullName -Filter *.dll)
+            $names = ($dlls | Select-Object -ExpandProperty Name) -join ', '
+            if ($dlls.Count -ne 1 -or $dlls[0].Name -ne 'Interlude.dll') {
+              Write-Error "$($bin.FullName) contains: $names"
+              $failed = $true
+            }
+            foreach ($required in 'Interlude.xml', 'Interlude_DynamoCustomization.xml') {
+              if (-not (Test-Path (Join-Path $bin.FullName $required))) {
+                Write-Error "$($bin.FullName) is missing $required"
+                $failed = $true
+              }
+            }
+          }
+          if ($failed) { exit 1 }
+          Write-Host "Every package ships exactly one assembly." -ForegroundColor Green
+
+      - name: Verify the samples are up to date
+        shell: pwsh
+        run: |
+          # The gallery in the preview harness is the source of truth for samples/. If they have
+          # drifted, the checked-in examples no longer match the code that produced them.
+          $exe = Get-ChildItem tools/Interlude.Preview/bin/Release -Recurse -Filter Interlude.Preview.exe |
+            Select-Object -First 1
+          & $exe.FullName --export samples
+          $changed = git status --porcelain samples
+          if ($changed) {
+            Write-Error "samples/ is out of date. Run: Interlude.Preview.exe --export samples"
+            Write-Host $changed
+            exit 1
+          }
+          Write-Host "samples/ is up to date." -ForegroundColor Green
+
+      - name: Upload packages
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: interlude-packages
+          path: dist/
+          if-no-files-found: error
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: artifacts/test-results/
+          if-no-files-found: ignore

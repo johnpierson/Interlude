@@ -1,0 +1,26 @@
+name: Feature request
+description: Something Interlude should be able to do.
+labels: [enhancement]
+
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: >
+        What are you trying to build, and where does Interlude get in the way? Describe the
+        situation rather than the feature — there is often a way to do it already, and where
+        there is not, the situation is what shapes the right answer.
+    validations:
+      required: true
+
+  - type: textarea
+    id: idea
+    attributes:
+      label: What you had in mind
+      description: A node, a control, a behaviour. Rough is fine.
+
+  - type: textarea
+    id: workaround
+    attributes:
+      label: What you are doing instead today

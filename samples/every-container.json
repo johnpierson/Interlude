@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "title": "Every container",
+  "description": "Layout containers, nested the way a real form nests them.",
+  "elements": [
+    {
+      "$type": "card",
+      "header": "Card",
+      "subheader": "A raised panel with a heading",
+      "hasShadow": true,
+      "children": [
+        {
+          "$type": "textBox",
+          "isMultiline": false,
+          "lines": 4,
+          "wrapText": true,
+          "isReadOnly": false,
+          "key": "inside_a_card",
+          "label": "Inside a card",
+          "rules": [],
+          "style": {
+            "labelWidth": 0,
+            "isEmpty": false
+          }
+        }
+      ],
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "groupBox",
+      "header": "Group box",
+      "children": [
+        {
+          "$type": "hStack",
+          "spacing": -1,
+          "equalWidths": false,
+          "wrap": false,
+          "children": [
+            {
+              "$type": "numeric",
+              "increment": 1,
+              "decimalPlaces": 2,
+              "unit": "mm",
+              "showSpinner": true,
+              "isReadOnly": false,
+              "key": "width",
+              "label": "Width",
+              "rules": [],
+              "style": {
+                "labelWidth": 50,
+                "isEmpty": false
+              }
+            },
+            {
+              "$type": "numeric",
+              "increment": 1,
+              "decimalPlaces": 2,
+              "unit": "mm",
+              "showSpinner": true,
+              "isReadOnly": false,
+              "key": "height",
+              "label": "Height",
+              "rules": [],
+              "style": {
+                "labelWidth": 50,
+                "isEmpty": false
+              }
+            }
+          ],
+          "key": "",
+          "rules": []
+        }
+      ],
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "expander",
+      "header": "Expander",
+      "isExpanded": false,
+      "children": [
+        {
+          "$type": "textBox",
+          "isMultiline": false,
+          "lines": 4,
+          "wrapText": true,
+          "isReadOnly": false,
+          "key": "hidden_until_opened",
+          "label": "Hidden until opened",
+          "rules": []
+        }
+      ],
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "grid",
+      "columns": [
+        {
+          "kind": "auto",
+          "value": 0
+        },
+        {
+          "kind": "star",
+          "value": 1
+        },
+        {
+          "kind": "star",
+          "value": 1
+        }
+      ],
+      "rows": [],
+      "columnSpacing": -1,
+      "rowSpacing": -1,
+      "children": [
+        {
+          "$type": "label",
+          "text": "Grid:",
+          "headingLevel": 0,
+          "wrapText": true,
+          "isMuted": false,
+          "key": "",
+          "rules": []
+        },
+        {
+          "$type": "textBox",
+          "isMultiline": false,
+          "lines": 4,
+          "wrapText": true,
+          "isReadOnly": false,
+          "key": "field",
+          "rules": [],
+          "style": {
+            "labelWidth": 0,
+            "isEmpty": false
+          }
+        },
+        {
+          "$type": "textBox",
+          "isMultiline": false,
+          "lines": 4,
+          "wrapText": true,
+          "isReadOnly": false,
+          "key": "field_2",
+          "rules": [],
+          "style": {
+            "labelWidth": 0,
+            "isEmpty": false
+          }
+        }
+      ],
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "tabs",
+      "selectedIndex": 0,
+      "isVertical": false,
+      "children": [
+        {
+          "$type": "tabPage",
+          "header": "General",
+          "children": [
+            {
+              "$type": "textBox",
+              "isMultiline": false,
+              "lines": 4,
+              "wrapText": true,
+              "isReadOnly": false,
+              "key": "on_tab_one",
+              "label": "On tab one",
+              "rules": []
+            }
+          ],
+          "key": "",
+          "rules": []
+        },
+        {
+          "$type": "tabPage",
+          "header": "Advanced",
+          "children": [
+            {
+              "$type": "checkBox",
+              "content": "On tab two",
+              "isReadOnly": false,
+              "key": "on_tab_two",
+              "rules": []
+            }
+          ],
+          "key": "",
+          "rules": []
+        }
+      ],
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "splitView",
+      "orientation": "horizontal",
+      "splitterPosition": 0.4,
+      "children": [
+        {
+          "$type": "card",
+          "header": "Left",
+          "hasShadow": true,
+          "children": [],
+          "key": "",
+          "rules": []
+        },
+        {
+          "$type": "card",
+          "header": "Right",
+          "hasShadow": true,
+          "children": [],
+          "key": "",
+          "rules": []
+        }
+      ],
+      "key": "",
+      "rules": [],
+      "style": {
+        "height": 120,
+        "isEmpty": false
+      }
+    }
+  ],
+  "buttons": {
+    "submitText": "Submit",
+    "cancelText": "Cancel",
+    "showSubmit": true,
+    "showCancel": true,
+    "extraButtons": [],
+    "closeOnEscape": true
+  },
+  "window": {
+    "width": 620,
+    "minWidth": 280,
+    "minHeight": 120,
+    "maxHeight": 820,
+    "isResizable": true,
+    "showInTaskbar": false,
+    "topmost": false
+  },
+  "theme": {
+    "mode": "auto",
+    "cornerRadius": 4,
+    "fontSize": 13,
+    "density": "comfortable",
+    "reducedMotion": false,
+    "labelWidth": 130,
+    "baseSpacing": 8,
+    "controlHeight": 28
+  },
+  "formId": "",
+  "rememberValues": true,
+  "headlessUseDefaults": false
+}

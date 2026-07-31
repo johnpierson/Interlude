@@ -1,0 +1,554 @@
+{
+  "schemaVersion": 1,
+  "title": "Long form",
+  "elements": [
+    {
+      "$type": "label",
+      "text": "Fifty fields",
+      "headingLevel": 2,
+      "wrapText": true,
+      "isMuted": false,
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "label",
+      "text": "For checking that scrolling and layout hold up.",
+      "headingLevel": 0,
+      "wrapText": true,
+      "isMuted": true,
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field1",
+      "label": "Field 1",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field2",
+      "label": "Field 2",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field3",
+      "label": "Field 3",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field4",
+      "label": "Field 4",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field5",
+      "label": "Field 5",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field6",
+      "label": "Field 6",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field7",
+      "label": "Field 7",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field8",
+      "label": "Field 8",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field9",
+      "label": "Field 9",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field10",
+      "label": "Field 10",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field11",
+      "label": "Field 11",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field12",
+      "label": "Field 12",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field13",
+      "label": "Field 13",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field14",
+      "label": "Field 14",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field15",
+      "label": "Field 15",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field16",
+      "label": "Field 16",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field17",
+      "label": "Field 17",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field18",
+      "label": "Field 18",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field19",
+      "label": "Field 19",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field20",
+      "label": "Field 20",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field21",
+      "label": "Field 21",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field22",
+      "label": "Field 22",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field23",
+      "label": "Field 23",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field24",
+      "label": "Field 24",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field25",
+      "label": "Field 25",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field26",
+      "label": "Field 26",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field27",
+      "label": "Field 27",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field28",
+      "label": "Field 28",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field29",
+      "label": "Field 29",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field30",
+      "label": "Field 30",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field31",
+      "label": "Field 31",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field32",
+      "label": "Field 32",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field33",
+      "label": "Field 33",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field34",
+      "label": "Field 34",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field35",
+      "label": "Field 35",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field36",
+      "label": "Field 36",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field37",
+      "label": "Field 37",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field38",
+      "label": "Field 38",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field39",
+      "label": "Field 39",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field40",
+      "label": "Field 40",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field41",
+      "label": "Field 41",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field42",
+      "label": "Field 42",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field43",
+      "label": "Field 43",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field44",
+      "label": "Field 44",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field45",
+      "label": "Field 45",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field46",
+      "label": "Field 46",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field47",
+      "label": "Field 47",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field48",
+      "label": "Field 48",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field49",
+      "label": "Field 49",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "field50",
+      "label": "Field 50",
+      "rules": []
+    }
+  ],
+  "buttons": {
+    "submitText": "Submit",
+    "cancelText": "Cancel",
+    "showSubmit": true,
+    "showCancel": true,
+    "extraButtons": [],
+    "closeOnEscape": true
+  },
+  "window": {
+    "width": 520,
+    "minWidth": 280,
+    "minHeight": 120,
+    "maxHeight": 700,
+    "isResizable": true,
+    "showInTaskbar": false,
+    "topmost": false
+  },
+  "theme": {
+    "mode": "auto",
+    "cornerRadius": 4,
+    "fontSize": 13,
+    "density": "comfortable",
+    "reducedMotion": false,
+    "labelWidth": 130,
+    "baseSpacing": 8,
+    "controlHeight": 28
+  },
+  "formId": "",
+  "rememberValues": true,
+  "headlessUseDefaults": false
+}

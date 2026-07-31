@@ -1,0 +1,14 @@
+<Application x:Class="Interlude.Preview.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Interlude.Preview"
+             ShutdownMode="OnMainWindowClose">
+  <!--
+    Deliberately no application-level resources.
+
+    The harness leaves Application.Current.Resources empty so that anything a form looks like
+    comes from Interlude's own window-scoped theming and nothing else. If a form only renders
+    correctly because the host supplied a style, that would show up here as a form that looks
+    wrong - which is exactly what should happen, because Revit will not supply it either.
+  -->
+</Application>
