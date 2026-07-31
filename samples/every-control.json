@@ -1,0 +1,425 @@
+{
+  "schemaVersion": 1,
+  "title": "Every control",
+  "description": "One of each, to check that they line up and read as one form.",
+  "elements": [
+    {
+      "$type": "textBox",
+      "placeholder": "Type something",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "text",
+      "label": "Text",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "placeholder": "Several lines",
+      "isMultiline": true,
+      "lines": 3,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "notes",
+      "label": "Notes",
+      "rules": []
+    },
+    {
+      "$type": "password",
+      "placeholder": "Hidden",
+      "isReadOnly": false,
+      "key": "password",
+      "label": "Password",
+      "rules": []
+    },
+    {
+      "$type": "numeric",
+      "minimum": 0,
+      "maximum": 10,
+      "increment": 1,
+      "decimalPlaces": 2,
+      "unit": "m",
+      "showSpinner": true,
+      "defaultValue": 1.75,
+      "isReadOnly": false,
+      "key": "number",
+      "label": "Number",
+      "rules": []
+    },
+    {
+      "$type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "increment": 1,
+      "showSpinner": true,
+      "defaultValue": 3,
+      "isReadOnly": false,
+      "key": "integer",
+      "label": "Integer",
+      "rules": []
+    },
+    {
+      "$type": "slider",
+      "minimum": 0,
+      "maximum": 100,
+      "step": 5,
+      "decimalPlaces": 2,
+      "showValue": true,
+      "showTicks": false,
+      "defaultValue": 40,
+      "isReadOnly": false,
+      "key": "slider",
+      "label": "Slider",
+      "rules": []
+    },
+    {
+      "$type": "dropdown",
+      "isEditable": false,
+      "showSearch": false,
+      "options": [
+        {
+          "value": "Concrete",
+          "display": "Concrete",
+          "isEnabled": true
+        },
+        {
+          "value": "Steel",
+          "display": "Steel",
+          "isEnabled": true
+        },
+        {
+          "value": "Timber",
+          "display": "Timber",
+          "isEnabled": true
+        },
+        {
+          "value": "Masonry",
+          "display": "Masonry",
+          "isEnabled": true
+        }
+      ],
+      "selectFirstByDefault": true,
+      "isReadOnly": false,
+      "key": "dropdown",
+      "label": "Dropdown",
+      "rules": []
+    },
+    {
+      "$type": "radioGroup",
+      "orientation": "vertical",
+      "columns": 0,
+      "options": [
+        {
+          "value": "Metric",
+          "display": "Metric",
+          "isEnabled": true
+        },
+        {
+          "value": "Imperial",
+          "display": "Imperial",
+          "isEnabled": true
+        }
+      ],
+      "selectFirstByDefault": true,
+      "isReadOnly": false,
+      "key": "radio",
+      "label": "Radio",
+      "rules": []
+    },
+    {
+      "$type": "checkBox",
+      "content": "A check box",
+      "isReadOnly": false,
+      "key": "a_check_box",
+      "rules": []
+    },
+    {
+      "$type": "toggle",
+      "onText": "Enabled",
+      "offText": "Disabled",
+      "isReadOnly": false,
+      "key": "toggle",
+      "label": "Toggle",
+      "rules": []
+    },
+    {
+      "$type": "listSelection",
+      "options": [
+        {
+          "value": "North",
+          "display": "North",
+          "isEnabled": true
+        },
+        {
+          "value": "South",
+          "display": "South",
+          "isEnabled": true
+        },
+        {
+          "value": "East",
+          "display": "East",
+          "isEnabled": true
+        },
+        {
+          "value": "West",
+          "display": "West",
+          "isEnabled": true
+        }
+      ],
+      "allowMultiple": true,
+      "showSearch": true,
+      "showSelectAll": true,
+      "visibleRows": 4,
+      "isReadOnly": false,
+      "key": "multi_list",
+      "label": "Multi list",
+      "rules": []
+    },
+    {
+      "$type": "listSelection",
+      "options": [
+        {
+          "value": "A",
+          "display": "A",
+          "isEnabled": true
+        },
+        {
+          "value": "B",
+          "display": "B",
+          "isEnabled": true
+        },
+        {
+          "value": "C",
+          "display": "C",
+          "isEnabled": true
+        }
+      ],
+      "allowMultiple": false,
+      "showSearch": true,
+      "showSelectAll": true,
+      "visibleRows": 3,
+      "isReadOnly": false,
+      "key": "single_list",
+      "label": "Single list",
+      "rules": []
+    },
+    {
+      "$type": "treeSelection",
+      "roots": [
+        {
+          "value": "L1",
+          "display": "Level 1",
+          "children": [
+            {
+              "value": "101",
+              "display": "Room 101",
+              "children": [],
+              "isExpanded": false,
+              "isEnabled": true,
+              "isSelectable": true
+            },
+            {
+              "value": "102",
+              "display": "Room 102",
+              "children": [],
+              "isExpanded": false,
+              "isEnabled": true,
+              "isSelectable": true
+            }
+          ],
+          "isExpanded": true,
+          "isEnabled": true,
+          "isSelectable": true
+        },
+        {
+          "value": "L2",
+          "display": "Level 2",
+          "children": [],
+          "isExpanded": false,
+          "isEnabled": true,
+          "isSelectable": true
+        }
+      ],
+      "allowMultiple": true,
+      "showCheckBoxes": true,
+      "expandAll": false,
+      "showSearch": true,
+      "checkChildrenWithParent": true,
+      "isReadOnly": false,
+      "key": "tree",
+      "label": "Tree",
+      "rules": []
+    },
+    {
+      "$type": "datePicker",
+      "includeTime": false,
+      "defaultToToday": true,
+      "isReadOnly": false,
+      "key": "date",
+      "label": "Date",
+      "rules": []
+    },
+    {
+      "$type": "datePicker",
+      "includeTime": true,
+      "defaultToToday": true,
+      "isReadOnly": false,
+      "key": "date_and_time",
+      "label": "Date and time",
+      "rules": []
+    },
+    {
+      "$type": "colorPicker",
+      "showAlpha": false,
+      "presets": [
+        {
+          "red": 196,
+          "green": 43,
+          "blue": 28,
+          "alpha": 255,
+          "luminance": 0.341321568627451
+        },
+        {
+          "red": 227,
+          "green": 179,
+          "blue": 65,
+          "alpha": 255,
+          "luminance": 0.7072784313725489
+        },
+        {
+          "red": 26,
+          "green": 127,
+          "blue": 55,
+          "alpha": 255,
+          "luminance": 0.3474235294117647
+        },
+        {
+          "red": 47,
+          "green": 111,
+          "blue": 235,
+          "alpha": 255,
+          "luminance": 0.41568627450980394
+        },
+        {
+          "red": 110,
+          "green": 64,
+          "blue": 201,
+          "alpha": 255,
+          "luminance": 0.36616470588235295
+        },
+        {
+          "red": 27,
+          "green": 31,
+          "blue": 36,
+          "alpha": 255,
+          "luminance": 0.11911372549019607
+        }
+      ],
+      "defaultValue": {
+        "$color": "#3366CC"
+      },
+      "isReadOnly": false,
+      "key": "colour",
+      "label": "Colour",
+      "rules": []
+    },
+    {
+      "$type": "filePicker",
+      "filter": "Revit files|*.rvt|All files|*.*",
+      "allowMultiple": false,
+      "isSaveDialog": false,
+      "isReadOnly": false,
+      "key": "file",
+      "label": "File",
+      "rules": []
+    },
+    {
+      "$type": "folderPicker",
+      "isReadOnly": false,
+      "key": "folder",
+      "label": "Folder",
+      "rules": []
+    },
+    {
+      "$type": "separator",
+      "orientation": "horizontal",
+      "caption": "Display",
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "label",
+      "text": "A heading",
+      "headingLevel": 3,
+      "wrapText": true,
+      "isMuted": false,
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "label",
+      "text": "Muted body text sitting under it.",
+      "headingLevel": 0,
+      "wrapText": true,
+      "isMuted": true,
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "markdown",
+      "text": "Markdown supports **bold**, *italic*, `code` and [links](https://dynamobim.org).\n\n- bullet one\n- bullet two\n\n1. numbered\n2. numbered",
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "progress",
+      "value": 65,
+      "minimum": 0,
+      "maximum": 100,
+      "isIndeterminate": false,
+      "showPercentage": true,
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "button",
+      "text": "A body button",
+      "action": "submitWithTag",
+      "tag": "body",
+      "isPrimary": false,
+      "key": "",
+      "rules": []
+    }
+  ],
+  "buttons": {
+    "submitText": "Submit",
+    "cancelText": "Cancel",
+    "showSubmit": true,
+    "showCancel": true,
+    "extraButtons": [],
+    "closeOnEscape": true
+  },
+  "window": {
+    "width": 560,
+    "minWidth": 280,
+    "minHeight": 120,
+    "maxHeight": 860,
+    "isResizable": true,
+    "showInTaskbar": false,
+    "topmost": false
+  },
+  "theme": {
+    "mode": "auto",
+    "cornerRadius": 4,
+    "fontSize": 13,
+    "density": "comfortable",
+    "reducedMotion": false,
+    "labelWidth": 130,
+    "baseSpacing": 8,
+    "controlHeight": 28
+  },
+  "formId": "",
+  "rememberValues": true,
+  "headlessUseDefaults": false
+}

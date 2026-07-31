@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    DEV ONLY. Never shipped, never copied into a Dynamo package.
+
+    The harness exists because iterating on a form's visuals inside Revit means a Revit restart
+    per change. Here it is a rebuild and a click. It also doubles as proof that Interlude runs in
+    a plain WPF application with no Dynamo present at all.
+  -->
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>Interlude.Preview</AssemblyName>
+    <RootNamespace>Interlude.Preview</RootNamespace>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Interlude\Interlude.csproj" />
+  </ItemGroup>
+
+  <!--
+    Referenced with full assets, unlike the shipped project.
+
+    Interlude's public types carry [IsVisibleInDynamoLibrary] to keep the Dynamo library tidy,
+    and .NET must resolve an attribute's assembly whenever anything reflects over the type that
+    carries it. Enum.GetNames and System.Text.Json's enum handling both do, so a host with no
+    DynamoServices.dll cannot even serialize a form. Dynamo always has it; a standalone harness
+    has to ask for it.
+  -->
+  <ItemGroup>
+    <PackageReference Include="DynamoVisualProgramming.ZeroTouchLibrary" Version="4.0.2.3870" />
+  </ItemGroup>
+
+</Project>

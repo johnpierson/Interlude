@@ -1,0 +1,84 @@
+name: release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Package version, such as 1.1.0'
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Work out the version
+        id: version
+        shell: pwsh
+        run: |
+          $version = if ('${{ github.event_name }}' -eq 'workflow_dispatch') {
+            '${{ github.event.inputs.version }}'
+          } else {
+            '${{ github.ref_name }}'.TrimStart('v')
+          }
+
+          if ($version -notmatch '^\d+\.\d+\.\d+$') {
+            throw "Version '$version' is not major.minor.patch."
+          }
+
+          "version=$version" >> $env:GITHUB_OUTPUT
+          Write-Host "Releasing $version"
+
+      - name: Test
+        run: dotnet test Interlude.sln -c Release -p:ContinuousIntegrationBuild=true
+
+      - name: Build and pack
+        shell: pwsh
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          # AssemblyVersion stays frozen at 1.0.0.0 so upgrading never breaks a saved graph;
+          # only the file version and the package version move.
+          ./scripts/build-all.ps1 -Configuration Release
+          ./scripts/pack.ps1 -Configuration Release -Version $env:VERSION
+
+      - name: Zip each package
+        shell: pwsh
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          New-Item -ItemType Directory -Path release -Force | Out-Null
+          foreach ($folder in Get-ChildItem dist -Directory) {
+            $dynamo = $folder.Name -replace '^dynamo-', ''
+            $name = "Interlude-$env:VERSION-dynamo$dynamo.zip"
+            Compress-Archive -Path (Join-Path $folder.FullName '*') -DestinationPath (Join-Path 'release' $name)
+            Write-Host "packaged $name"
+          }
+
+      - name: Publish the release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: release/*.zip
+          generate_release_notes: true
+          draft: true
+          body: |
+            Download the archive matching your Dynamo version and unzip it into your Dynamo
+            packages folder. See [docs/installing.md](docs/installing.md).
+
+            | Archive | Dynamo | Revit |
+            | --- | --- | --- |
+            | `dynamo3.0` | 3.0 | 2025 |
+            | `dynamo3.6` | 3.6 | 2026 |
+            | `dynamo4.0` | 4.0 | 2027 |

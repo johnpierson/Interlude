@@ -1,0 +1,135 @@
+{
+  "schemaVersion": 1,
+  "title": "Validation",
+  "description": "Rules run as you type. Try submitting an empty form first.",
+  "elements": [
+    {
+      "$type": "textBox",
+      "placeholder": "ABC-1234",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "projectCode",
+      "label": "Project code",
+      "helpText": "Three letters, a dash, then four digits.",
+      "requiredIf": {
+        "$type": "constant",
+        "value": true
+      },
+      "rules": [
+        {
+          "$type": "regex",
+          "pattern": "^[A-Z]{3}-[0-9]{4}$",
+          "ignoreCase": false,
+          "message": "Use the form ABC-1234."
+        }
+      ]
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "email",
+      "label": "Email",
+      "rules": [
+        {
+          "$type": "regex",
+          "pattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$",
+          "ignoreCase": false,
+          "message": "That does not look like an email address."
+        }
+      ]
+    },
+    {
+      "$type": "integer",
+      "increment": 1,
+      "showSpinner": true,
+      "defaultValue": 1,
+      "isReadOnly": false,
+      "key": "levels",
+      "label": "Levels",
+      "rules": [
+        {
+          "$type": "range",
+          "minimum": 1,
+          "maximum": 200
+        }
+      ]
+    },
+    {
+      "$type": "datePicker",
+      "includeTime": false,
+      "defaultToToday": true,
+      "isReadOnly": false,
+      "key": "start",
+      "label": "Start",
+      "rules": []
+    },
+    {
+      "$type": "datePicker",
+      "includeTime": false,
+      "defaultToToday": true,
+      "isReadOnly": false,
+      "key": "end",
+      "label": "End",
+      "helpText": "Must be after the start date.",
+      "rules": [
+        {
+          "$type": "comparison",
+          "otherKey": "start",
+          "operator": "greaterThan",
+          "ignoreCase": false,
+          "message": "The end date must be after the start date."
+        }
+      ]
+    },
+    {
+      "$type": "filePicker",
+      "filter": "All files|*.*",
+      "allowMultiple": false,
+      "isSaveDialog": false,
+      "isReadOnly": false,
+      "key": "template",
+      "label": "Template",
+      "rules": [
+        {
+          "$type": "fileExists",
+          "mustBeDirectory": false
+        }
+      ]
+    }
+  ],
+  "buttons": {
+    "submitText": "Submit",
+    "cancelText": "Cancel",
+    "showSubmit": true,
+    "showCancel": true,
+    "extraButtons": [],
+    "closeOnEscape": true
+  },
+  "window": {
+    "width": 420,
+    "minWidth": 280,
+    "minHeight": 120,
+    "maxHeight": 800,
+    "isResizable": true,
+    "showInTaskbar": false,
+    "topmost": false
+  },
+  "theme": {
+    "mode": "auto",
+    "cornerRadius": 4,
+    "fontSize": 13,
+    "density": "comfortable",
+    "reducedMotion": false,
+    "labelWidth": 130,
+    "baseSpacing": 8,
+    "controlHeight": 28
+  },
+  "formId": "",
+  "rememberValues": true,
+  "headlessUseDefaults": false
+}

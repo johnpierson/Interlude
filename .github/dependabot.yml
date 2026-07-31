@@ -1,0 +1,25 @@
+version: 2
+
+updates:
+  # Interlude ships with no runtime dependencies, so the only packages here are the compile-time
+  # Dynamo reference and the test tooling. Grouping them keeps the noise to one pull request.
+  - package-ecosystem: nuget
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 3
+    groups:
+      test-tooling:
+        patterns:
+          - 'xunit*'
+          - 'Xunit*'
+          - 'Microsoft.NET.Test.Sdk'
+    ignore:
+      # Pinned deliberately: each Dynamo version is built against a specific reference assembly,
+      # and versions.json is where that choice is recorded.
+      - dependency-name: DynamoVisualProgramming.*
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

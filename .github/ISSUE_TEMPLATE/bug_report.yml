@@ -1,0 +1,66 @@
+name: Bug report
+description: Something in Interlude does not behave the way it should.
+labels: [bug]
+
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. The most useful thing you can include is the form itself:
+        wire your elements into `Form.Create` and `Form.ToJson`, and paste the result below.
+        That makes almost any layout or behaviour problem reproducible in seconds.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you see, and what did you expect instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: form-json
+    attributes:
+      label: The form
+      description: Output of `Form.ToJson`, if the problem involves a specific form.
+      render: json
+
+  - type: input
+    id: interlude-version
+    attributes:
+      label: Interlude version
+      placeholder: '1.0.0'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: host
+    attributes:
+      label: Where it runs
+      options:
+        - Revit 2027 (Dynamo 4.0)
+        - Revit 2026 (Dynamo 3.6)
+        - Revit 2025 (Dynamo 3.0)
+        - Dynamo Sandbox
+        - Dynamo Player
+        - Command line or scheduled run
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: run-mode
+    attributes:
+      label: Dynamo run mode
+      description: Worth knowing for anything involving a dialog appearing more than once.
+      options:
+        - Manual
+        - Automatic
+        - Periodic
+        - Not applicable
+
+  - type: textarea
+    id: anything-else
+    attributes:
+      label: Anything else
+      description: Node warnings, a screenshot, an unusual display scale or locale.

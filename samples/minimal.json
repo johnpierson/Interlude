@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "title": "Rename views",
+  "description": "The smallest form worth showing.",
+  "elements": [
+    {
+      "$type": "textBox",
+      "placeholder": "e.g. WIP_",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "prefix",
+      "label": "Prefix",
+      "requiredIf": {
+        "$type": "constant",
+        "value": true
+      },
+      "rules": []
+    },
+    {
+      "$type": "checkBox",
+      "content": "Include sheets",
+      "isReadOnly": false,
+      "key": "include_sheets",
+      "rules": []
+    }
+  ],
+  "buttons": {
+    "submitText": "Submit",
+    "cancelText": "Cancel",
+    "showSubmit": true,
+    "showCancel": true,
+    "extraButtons": [],
+    "closeOnEscape": true
+  },
+  "window": {
+    "width": 420,
+    "minWidth": 280,
+    "minHeight": 120,
+    "maxHeight": 800,
+    "isResizable": true,
+    "showInTaskbar": false,
+    "topmost": false
+  },
+  "theme": {
+    "mode": "auto",
+    "cornerRadius": 4,
+    "fontSize": 13,
+    "density": "comfortable",
+    "reducedMotion": false,
+    "labelWidth": 130,
+    "baseSpacing": 8,
+    "controlHeight": 28
+  },
+  "formId": "",
+  "rememberValues": true,
+  "headlessUseDefaults": false
+}

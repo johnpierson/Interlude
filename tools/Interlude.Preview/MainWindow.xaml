@@ -1,0 +1,108 @@
+<Window x:Class="Interlude.Preview.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Interlude preview harness"
+        Width="1000" Height="680"
+        MinWidth="760" MinHeight="520"
+        WindowStartupLocation="CenterScreen"
+        Background="#1E2126"
+        Foreground="#E8EAED"
+        FontFamily="Segoe UI"
+        FontSize="13">
+
+  <Window.Resources>
+    <Style TargetType="TextBlock">
+      <Setter Property="Foreground" Value="#E8EAED" />
+    </Style>
+    <Style TargetType="Label">
+      <Setter Property="Foreground" Value="#A2AAB5" />
+      <Setter Property="Padding" Value="0,0,0,2" />
+    </Style>
+    <Style TargetType="Button">
+      <Setter Property="Padding" Value="12,6" />
+      <Setter Property="Margin" Value="0,0,8,0" />
+      <Setter Property="MinWidth" Value="96" />
+    </Style>
+    <Style TargetType="ComboBox">
+      <Setter Property="Padding" Value="6,3" />
+      <Setter Property="Margin" Value="0,0,0,10" />
+    </Style>
+  </Window.Resources>
+
+  <Grid Margin="16">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="300" />
+      <ColumnDefinition Width="16" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <!-- Left: what to show, and how it should look. -->
+    <DockPanel Grid.Column="0">
+      <TextBlock DockPanel.Dock="Top" Text="Interlude" FontSize="22" FontWeight="SemiBold" />
+      <TextBlock DockPanel.Dock="Top" Text="Preview harness" Foreground="#A2AAB5" Margin="0,0,0,16" />
+
+      <StackPanel DockPanel.Dock="Bottom" Margin="0,12,0,0">
+        <Button x:Name="ShowButton" Content="Show form" Click="OnShowForm"
+                Background="#4C8DFF" Foreground="#0E1116" FontWeight="SemiBold"
+                Padding="12,8" Margin="0,0,0,8" />
+        <WrapPanel>
+          <Button Content="Open JSON…" Click="OnOpenJson" />
+          <Button Content="Save JSON…" Click="OnSaveJson" />
+        </WrapPanel>
+        <CheckBox x:Name="HotReloadBox" Content="Reload and reshow when the file changes"
+                  Foreground="#A2AAB5" Margin="0,10,0,0" IsChecked="True" />
+      </StackPanel>
+
+      <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel>
+          <Label Content="Sample" />
+          <ListBox x:Name="SampleList" Height="200" SelectionChanged="OnSampleChanged" Margin="0,0,0,12" />
+
+          <Label Content="Appearance" />
+          <ComboBox x:Name="ModeBox" SelectionChanged="OnThemeChanged" />
+
+          <Label Content="Density" />
+          <ComboBox x:Name="DensityBox" SelectionChanged="OnThemeChanged" />
+
+          <Label Content="Accent" />
+          <ComboBox x:Name="AccentBox" SelectionChanged="OnThemeChanged" />
+
+          <Label Content="Corner radius" />
+          <Slider x:Name="RadiusSlider" Minimum="0" Maximum="14" Value="4"
+                  TickFrequency="1" IsSnapToTickEnabled="True"
+                  ValueChanged="OnThemeChanged" Margin="0,0,0,10" />
+
+          <Label Content="Label width" />
+          <Slider x:Name="LabelWidthSlider" Minimum="0" Maximum="240" Value="130"
+                  TickFrequency="10" IsSnapToTickEnabled="True"
+                  ValueChanged="OnThemeChanged" Margin="0,0,0,10" />
+
+          <CheckBox x:Name="ReducedMotionBox" Content="Reduced motion"
+                    Foreground="#A2AAB5" Checked="OnThemeChanged" Unchecked="OnThemeChanged" />
+        </StackPanel>
+      </ScrollViewer>
+    </DockPanel>
+
+    <!-- Right: what the form is, and what it gave back. -->
+    <DockPanel Grid.Column="2">
+      <TextBlock x:Name="SummaryText" DockPanel.Dock="Top" TextWrapping="Wrap"
+                 Foreground="#A2AAB5" Margin="0,0,0,12" />
+
+      <TabControl Background="Transparent" BorderThickness="0">
+        <TabItem Header="Definition">
+          <TextBox x:Name="DefinitionText" IsReadOnly="True" FontFamily="Consolas" FontSize="12"
+                   Background="#262A31" Foreground="#E8EAED" BorderThickness="0"
+                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                   Padding="10" />
+        </TabItem>
+        <TabItem Header="Result">
+          <TextBox x:Name="ResultText" IsReadOnly="True" FontFamily="Consolas" FontSize="12"
+                   Background="#262A31" Foreground="#E8EAED" BorderThickness="0"
+                   VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                   Padding="10"
+                   Text="Show a form to see its answers here." />
+        </TabItem>
+      </TabControl>
+    </DockPanel>
+  </Grid>
+</Window>
