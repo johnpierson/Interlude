@@ -3,7 +3,7 @@
 ## Reporting a vulnerability
 
 Please report security issues privately through
-[GitHub's advisory form](https://github.com/johntpierson/Interlude/security/advisories/new)
+[GitHub's advisory form](https://github.com/johnpierson/Interlude/security/advisories/new)
 rather than as a public issue.
 
 Include what an attacker could achieve, how to reproduce it, and the Interlude and Dynamo versions

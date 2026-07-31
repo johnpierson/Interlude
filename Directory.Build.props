@@ -26,7 +26,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>$(VersionPrefix).0</FileVersion>
     <InformationalVersion>$(VersionPrefix)</InformationalVersion>
-    <RepositoryUrl>https://github.com/johntpierson/Interlude</RepositoryUrl>
+    <RepositoryUrl>https://github.com/johnpierson/Interlude</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 

@@ -16,7 +16,7 @@ is .NET 8 and later.
 ## Install
 
 1. Download the archive for your Dynamo version from
-   [Releases](https://github.com/johntpierson/Interlude/releases).
+   [Releases](https://github.com/johnpierson/Interlude/releases).
 2. **Unblock it before unzipping.** Right-click the `.zip` → Properties → tick **Unblock** → OK.
    Windows marks downloaded files, and the mark propagates to the DLL inside; Dynamo will refuse
    to load a blocked assembly, usually without saying why.
@@ -68,7 +68,7 @@ The graph is running with no UI — a command-line run, a scheduled job, Generat
 `headlessUseDefaults` to `true` on `Form.Show` to return each field's default instead of stopping.
 
 **The dialog opens behind Revit.**
-Please [open an issue](https://github.com/johntpierson/Interlude/issues) with your Revit version.
+Please [open an issue](https://github.com/johnpierson/Interlude/issues) with your Revit version.
 Interlude owns its window to the host's active window, and a case where that fails is a bug worth
 knowing about.
 
@@ -83,9 +83,15 @@ Requires the [.NET 10 SDK](https://dotnet.microsoft.com/download), which compile
 the matrix.
 
 ```powershell
-git clone https://github.com/johntpierson/Interlude.git
+git clone https://github.com/johnpierson/Interlude.git
 cd Interlude
 ./scripts/build-all.ps1 -Pack
 ```
 
 The packages appear under `dist/`, laid out exactly as above.
+
+## Next
+
+- [Node reference](node-reference.md) — every node and every port
+- [Recipes](recipes.md) — worked patterns for real forms
+- [Coming from Data-Shapes](migrating-from-data-shapes.md)

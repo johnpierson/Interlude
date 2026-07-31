@@ -2,7 +2,7 @@
 
 **Declarative forms for Dynamo.** Describe a form with nodes, show it, get typed answers back.
 
-[![build](https://github.com/johntpierson/Interlude/actions/workflows/build.yml/badge.svg)](https://github.com/johntpierson/Interlude/actions/workflows/build.yml)
+[![build](https://github.com/johnpierson/Interlude/actions/workflows/build.yml/badge.svg)](https://github.com/johnpierson/Interlude/actions/workflows/build.yml)
 [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Dynamo 3.0+](https://img.shields.io/badge/Dynamo-3.0%20%7C%203.6%20%7C%204.0-1e88e5.svg)](versions.json)
 [![no dependencies](https://img.shields.io/badge/runtime%20dependencies-none-success.svg)](#zero-dependencies)
@@ -120,7 +120,7 @@ it again. Interlude does not pretend otherwise; it gives you the controls:
 ## Installing
 
 Download the archive for your Dynamo version from
-[Releases](https://github.com/johntpierson/Interlude/releases) and unzip it into your Dynamo
+[Releases](https://github.com/johnpierson/Interlude/releases) and unzip it into your Dynamo
 packages folder. See [docs/installing.md](docs/installing.md).
 
 | Archive | Dynamo | Revit |
@@ -147,8 +147,9 @@ Everything lives under a single **Interlude** category.
 | **Form** | `Show`, `Create`, `Check`, `ToJson`, `FromJson`, `Options`, `Forget`. |
 | **Result** | Typed accessors: `GetString`, `GetNumber`, `GetBool`, `GetDate`, `GetColor`, `GetFilePaths`. |
 
-Full signatures: [`tests/Interlude.Tests/api-surface.txt`](tests/Interlude.Tests/api-surface.txt),
-which is a checked-in snapshot the test suite enforces.
+**[Node reference](docs/node-reference.md)** documents every node and every port.
+**[Recipes](docs/recipes.md)** works through the patterns that come up in real forms — gating a
+dialog, offering several outcomes, wizards, live totals, unattended runs.
 
 ## Forms are documents
 
@@ -207,12 +208,26 @@ hot-reloads a form from a JSON file — which turns "edit the form, rebuild, res
 dotnet run --project tools/Interlude.Preview
 ```
 
-## Design
+## Documentation
 
-[docs/architecture.md](docs/architecture.md) covers the layering, the reactive session, the
-threading model and the trade-offs behind them — including why WPF, why one assembly, and why
-the evaluator re-runs everything on every edit.
+| | |
+| --- | --- |
+| [Installing](docs/installing.md) | Which download, where it goes, what to do when it does not appear |
+| [Node reference](docs/node-reference.md) | Every node and every port |
+| [Recipes](docs/recipes.md) | Worked patterns for real forms |
+| [Coming from Data-Shapes](docs/migrating-from-data-shapes.md) | Node mapping and behavioural differences |
+| [Forms as JSON](docs/form-json.md) | The schema, and what survives a round trip |
+| [Architecture](docs/architecture.md) | Layering, the reactive session, threading, and the reasoning |
+| [Contributing](CONTRIBUTING.md) | Setting up, the rules with teeth, adding a control |
+
+[docs/architecture.md](docs/architecture.md) is the one to read before changing anything
+structural — including why WPF, why one assembly, and why the evaluator re-runs everything on
+every edit.
 
 ## Licence
 
 MIT. See [LICENSE](LICENSE).
+
+Interlude owes an obvious debt to [Data-Shapes](https://github.com/MrMoMoNaRCH/Data-Shapes_Dynamo),
+which established that a Dynamo graph could ask a question properly. This is a different answer to
+the same problem, not a criticism of that one.
