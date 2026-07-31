@@ -1,0 +1,42 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+artifacts/
+dist/
+*.binlog
+
+# Visual Studio / Rider / VS Code
+.vs/
+.idea/
+*.user
+*.suo
+*.userprefs
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# Test results
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+!scripts/packages/
+
+# Dynamo package output
+*.dyn.bak
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Local overrides
+*.local.props
+*.local.json
