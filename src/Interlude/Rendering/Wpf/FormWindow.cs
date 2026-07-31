@@ -22,7 +22,7 @@ namespace Interlude.Rendering.Wpf;
 /// session before this window existed, and none of it is duplicated here.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-internal sealed class FormWindow : Window
+public sealed class FormWindow : Window
 {
     private readonly FormSession _session;
     private readonly FormDefinition _definition;
@@ -31,7 +31,8 @@ internal sealed class FormWindow : Window
 
     private bool _isClosing;
 
-    internal FormWindow(FormDefinition definition, FormSession session, ControlRendererRegistry registry)
+    /// <summary>Builds the window for a form. The session must already be settled.</summary>
+    public FormWindow(FormDefinition definition, FormSession session, ControlRendererRegistry registry)
     {
         _definition = definition;
         _session = session;
@@ -72,10 +73,10 @@ internal sealed class FormWindow : Window
     }
 
     /// <summary>The answers, set exactly once before the window closes.</summary>
-    internal FormResult? Result { get; private set; }
+    public FormResult? Result { get; private set; }
 
-    /// <summary>The built visual tree, keyed by element. Used by the STA smoke tests.</summary>
-    internal RenderContext Context => _context;
+    /// <summary>The built visual tree, keyed by element.</summary>
+    public RenderContext Context => _context;
 
     private FrameworkElement BuildLayout()
     {

@@ -1,0 +1,24 @@
+# Normalize to LF in the repository; check out native on each platform.
+* text=auto
+
+*.cs        text diff=csharp
+*.csproj    text
+*.props     text
+*.targets   text
+*.sln       text eol=crlf
+*.xaml      text
+*.xml       text
+*.json      text
+*.md        text
+*.ps1       text eol=crlf
+*.yml       text
+*.yaml      text
+
+# Binary
+*.png       binary
+*.jpg       binary
+*.ico       binary
+*.dll       binary
+*.pdb       binary
+*.dyn       binary
+*.dyf       binary

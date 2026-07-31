@@ -1,11 +1,11 @@
-using System.Runtime.CompilerServices;
 using System.Windows;
 
-// The renderer's internals — the form window, the composite controls — are exercised by the STA
-// smoke tests. Testing them through reflection or through a public surface nobody else should
-// use would be worse than this one line.
-[assembly: InternalsVisibleTo("Interlude.Tests")]
-[assembly: InternalsVisibleTo("Interlude.Preview")]
+// Deliberately NO InternalsVisibleTo.
+//
+// The XAML compiler emits a *public* XamlGeneratedNamespace.GeneratedInternalTypeHelper into any
+// assembly that has one, and Dynamo turns every public type into a library category — so a single
+// test convenience would put a meaningless "XamlGeneratedNamespace" entry in front of every user.
+// FormWindow is public instead, which the renderer extensibility story wanted anyway.
 
 // Themes/*.xaml is merged into each form window's own resource dictionary at run time.
 // This attribute is what lets those dictionaries be found by pack URI inside this assembly.
