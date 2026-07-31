@@ -16,6 +16,9 @@ public partial class App : Application
     /// <c>Interlude.Preview.exe --export &lt;folder&gt;</c> writes every gallery sample as JSON.
     /// Those files are checked in and validated by the test suite, which is what stops the
     /// documented example forms from drifting away from the schema that reads them.
+    ///
+    /// <c>Interlude.Preview.exe --screenshot &lt;folder&gt;</c> renders every sample in both themes
+    /// to PNG, without showing a window.
     /// </summary>
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -28,6 +31,14 @@ public partial class App : Application
             string.Equals(e.Args[0], "--export", StringComparison.OrdinalIgnoreCase))
         {
             Export(e.Args[1]);
+            Shutdown(0);
+            return;
+        }
+
+        if (e.Args.Length >= 2 &&
+            string.Equals(e.Args[0], "--screenshot", StringComparison.OrdinalIgnoreCase))
+        {
+            Screenshots.CaptureGallery(e.Args[1]);
             Shutdown(0);
             return;
         }

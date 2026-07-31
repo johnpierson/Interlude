@@ -47,8 +47,10 @@ internal sealed class SelectionList : Grid
             Children.Add(_search);
         }
 
-        // A rough row height keeps the list from collapsing to nothing or swallowing the form.
-        double rowHeight = context.ControlHeight - 4d;
+        // Estimated row height, deliberately generous. This caps the list rather than fixing it,
+        // so over-estimating simply lets it size to its content, while under-estimating puts a
+        // scrollbar on a list that was asked to show all its rows.
+        double rowHeight = context.ControlHeight + 4d;
         double listHeight = Math.Max(2, element.VisibleRows) * rowHeight;
 
         if (element.AllowMultiple)
