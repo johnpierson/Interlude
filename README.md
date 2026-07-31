@@ -13,6 +13,12 @@ values and live validation are *described*, not wired.
 
 There are no Revit dependencies. Interlude ships one assembly and nothing else.
 
+<p align="center">
+  <img src="docs/images/every-control-dark.png" alt="A form showing every Interlude control in the dark theme" width="440">
+  &nbsp;
+  <img src="docs/images/validation-light.png" alt="A form with live validation in the light theme" width="330">
+</p>
+
 ---
 
 ## A first form
@@ -65,6 +71,15 @@ Behavior.WithValidation(
 
 Computed values that depend on each other in a loop are rejected when the form is built, before
 a window appears — not discovered as a hang.
+
+<p align="center">
+  <img src="docs/images/conditional-form-light.png" alt="A form where one group is hidden, another is disabled, and a third field is absent entirely" width="400">
+  &nbsp;
+  <img src="docs/images/every-container-dark.png" alt="Cards, group boxes, expanders, grids, tabs and a splitter" width="400">
+</p>
+
+Above: choosing DWG collapses the IFC group away entirely, the unticked check box leaves the
+folder field visible but disabled, and the justification field takes up no space at all.
 
 ## What it looks like
 

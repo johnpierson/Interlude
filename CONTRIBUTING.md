@@ -96,8 +96,15 @@ Then add it to the preview gallery and regenerate the samples:
 
 ```powershell
 dotnet build tools/Interlude.Preview
-./tools/Interlude.Preview/bin/Debug/net10.0-windows/Interlude.Preview.exe --export samples
+$exe = './tools/Interlude.Preview/bin/Debug/net10.0-windows/Interlude.Preview.exe'
+& $exe --export samples            # regenerate samples/ (CI fails if these drift)
+& $exe --screenshot docs/images    # re-render the documentation images
 ```
+
+`--screenshot` renders every sample in both themes without showing a window, which makes a
+rendering change reviewable: a pull request that alters spacing or contrast can show what it did
+rather than describe it. The images are not compared automatically — pixel comparison across
+machines, display scales and font versions produces false failures, not confidence.
 
 Wire exactly one thing in a renderer: the control's change event to
 `RenderContext.ReportValue`. Never wire one control to another — cross-field behaviour belongs to
