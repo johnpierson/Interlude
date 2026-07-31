@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v6
         with:
           # The .NET 10 SDK compiles net8.0-windows as well, so one SDK covers the whole matrix.
           # The 8.0 runtime is not needed: the tests run on net10.0-windows and the 3.0/3.6
