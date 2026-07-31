@@ -1,0 +1,343 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Autodesk.DesignScript.Runtime;
+using Interlude.Model;
+using Interlude.Rendering;
+using Interlude.Rendering.Wpf;
+using Interlude.Runtime;
+using Interlude.Serialization;
+using Interlude.Theming;
+
+namespace Interlude;
+
+/// <summary>
+/// Showing a form and getting the answers back.
+///
+/// A note on re-execution, because it surprises everyone once: Dynamo re-runs a graph whenever
+/// anything upstream changes, and a node that shows a dialog will show it again. Interlude does
+/// not pretend otherwise — it gives you the tools to control it. The <c>trigger</c> port skips the
+/// dialog and returns the last answers when it is false, so a form can be gated behind a button
+/// or a boolean. A form already on screen is never opened twice: a second execution waits for the
+/// first window and returns its result rather than stacking dialogs. And Manual run mode remains
+/// the right setting for any graph built around a form.
+/// </summary>
+public class Form
+{
+    private Form()
+    {
+    }
+
+    /// <summary>
+    /// Shows a form and waits for the user to answer it.
+    ///
+    /// Cancelling returns every field's default value rather than nulls, with
+    /// <c>wasSubmitted</c> false. Check <c>wasSubmitted</c> before acting on the answers; you
+    /// never need to null-check the values themselves.
+    /// </summary>
+    /// <param name="title">Shown in the window's title bar.</param>
+    /// <param name="elements">The form's contents, built with the Input and Layout nodes.</param>
+    /// <param name="trigger">
+    /// Set to false to skip the dialog and return the last answers for this form. Anything else,
+    /// including true, shows it. Doubles as a sequencing input.
+    /// </param>
+    /// <param name="submitText">Caption of the confirm button.</param>
+    /// <param name="cancelText">Caption of the cancel button.</param>
+    /// <param name="width">Window width in pixels.</param>
+    /// <param name="maxHeight">Height at which the form starts scrolling.</param>
+    /// <param name="formId">
+    /// Identifies this form across runs, for remembered answers. Derived from the title and field
+    /// keys when empty.
+    /// </param>
+    /// <param name="rememberValues">Pre-fill the form with the last answers it was submitted with.</param>
+    /// <param name="headlessUseDefaults">
+    /// What to do with no user interface, as in a command-line or scheduled run. False stops the
+    /// graph with an explanation; true returns every field's default.
+    /// </param>
+    /// <param name="theme">Built with the Theme nodes. Null uses the system theme.</param>
+    /// <param name="options">Built with Form.Options, for the less common settings.</param>
+    /// <returns name="values">The answers, keyed by field.</returns>
+    /// <returns name="wasSubmitted">True when the user confirmed rather than cancelled.</returns>
+    /// <returns name="buttonClicked">Which button ended the form.</returns>
+    /// <returns name="form">The full result, for the Result nodes.</returns>
+    /// <search>form,show,dialog,ui,prompt,ask,input,data shapes</search>
+    [MultiReturn(new[] { "values", "wasSubmitted", "buttonClicked", "form" })]
+    public static Dictionary<string, object> Show(
+        string title,
+        List<object> elements,
+        [DefaultArgument("true")] object trigger,
+        string submitText = "Submit",
+        string cancelText = "Cancel",
+        double width = 420,
+        double maxHeight = 800,
+        string formId = "",
+        bool rememberValues = true,
+        bool headlessUseDefaults = false,
+        [DefaultArgument("null")] object? theme = null,
+        [DefaultArgument("null")] object? options = null)
+    {
+        FormDefinition definition = Create(
+            title, elements, submitText, cancelText, width, maxHeight,
+            formId, rememberValues, headlessUseDefaults, theme, options);
+
+        return ShowDefinition(definition, trigger);
+    }
+
+    /// <summary>
+    /// Shows a form that was built with <c>Form.Create</c> or loaded from JSON.
+    /// </summary>
+    /// <param name="form">The form to show.</param>
+    /// <param name="trigger">Set to false to skip the dialog and return the last answers.</param>
+    /// <returns name="values">The answers, keyed by field.</returns>
+    /// <returns name="wasSubmitted">True when the user confirmed rather than cancelled.</returns>
+    /// <returns name="buttonClicked">Which button ended the form.</returns>
+    /// <returns name="form">The full result, for the Result nodes.</returns>
+    /// <search>form,show,definition,json,dialog</search>
+    [MultiReturn(new[] { "values", "wasSubmitted", "buttonClicked", "form" })]
+    public static Dictionary<string, object> ShowDefinition(
+        FormDefinition form,
+        [DefaultArgument("true")] object trigger)
+    {
+        if (form is null)
+        {
+            throw new ArgumentNullException(nameof(form), "There is no form to show.");
+        }
+
+        FormDefinition definition = form.WithResolvedKeys();
+        string identity = definition.ResolveFormId();
+
+        // Exactly false, not merely falsy: an unwired port must not silently skip the dialog.
+        if (trigger is bool gate && !gate)
+        {
+            return Package(Skipped(definition, identity));
+        }
+
+        return Package(FormLatch.Shared.Run(
+            identity,
+            () => ShowOnce(definition, identity),
+            () => FormResult.Cancelled(definition, FormButtonNames.Closed)));
+    }
+
+    /// <summary>
+    /// Builds a form without showing it, for saving to JSON or for showing later.
+    /// </summary>
+    /// <param name="title">Shown in the window's title bar.</param>
+    /// <param name="elements">The form's contents, built with the Input and Layout nodes.</param>
+    /// <param name="submitText">Caption of the confirm button.</param>
+    /// <param name="cancelText">Caption of the cancel button.</param>
+    /// <param name="width">Window width in pixels.</param>
+    /// <param name="maxHeight">Height at which the form starts scrolling.</param>
+    /// <param name="formId">Identifies this form across runs.</param>
+    /// <param name="rememberValues">Pre-fill with the last answers.</param>
+    /// <param name="headlessUseDefaults">Return defaults instead of stopping when there is no UI.</param>
+    /// <param name="theme">Built with the Theme nodes.</param>
+    /// <param name="options">Built with Form.Options.</param>
+    /// <returns name="form">The form definition.</returns>
+    /// <search>form,create,build,definition,template</search>
+    public static FormDefinition Create(
+        string title,
+        List<object> elements,
+        string submitText = "Submit",
+        string cancelText = "Cancel",
+        double width = 420,
+        double maxHeight = 800,
+        string formId = "",
+        bool rememberValues = true,
+        bool headlessUseDefaults = false,
+        [DefaultArgument("null")] object? theme = null,
+        [DefaultArgument("null")] object? options = null)
+    {
+        FormDefinition definition = new()
+        {
+            Title = title ?? string.Empty,
+            Elements = NodeSupport.FlattenElements(elements),
+            Buttons = new FormButtons
+            {
+                SubmitText = string.IsNullOrWhiteSpace(submitText) ? "Submit" : submitText,
+                CancelText = string.IsNullOrWhiteSpace(cancelText) ? "Cancel" : cancelText,
+            },
+            Window = new WindowOptions
+            {
+                Width = width <= 0 ? 420 : width,
+                MaxHeight = maxHeight <= 0 ? 800 : maxHeight,
+            },
+            Theme = theme as ThemeDefinition ?? ThemeDefinition.Default,
+            FormId = formId ?? string.Empty,
+            RememberValues = rememberValues,
+            HeadlessUseDefaults = headlessUseDefaults,
+        };
+
+        if (options is FormOptions extra)
+        {
+            definition = extra.ApplyTo(definition);
+        }
+
+        return definition.WithResolvedKeys();
+    }
+
+    /// <summary>
+    /// The less common form settings, for <c>Form.Show</c>'s options port.
+    /// </summary>
+    /// <param name="description">A paragraph shown above the first field.</param>
+    /// <param name="height">Fixed window height. Null sizes the window to its contents.</param>
+    /// <param name="resizable">Let the user resize the window.</param>
+    /// <param name="showCancel">Show the cancel button.</param>
+    /// <param name="closeOnEscape">Let Escape cancel the form.</param>
+    /// <param name="extraButtons">Extra footer buttons, built with Layout.Button.</param>
+    /// <param name="iconPath">Path to a window icon.</param>
+    /// <returns name="options">The options.</returns>
+    /// <search>options,settings,description,height,resizable,buttons</search>
+    public static FormOptions Options(
+        string description = "",
+        [DefaultArgument("null")] object? height = null,
+        bool resizable = true,
+        bool showCancel = true,
+        bool closeOnEscape = true,
+        [DefaultArgument("null")] object? extraButtons = null,
+        string iconPath = "")
+        => new()
+        {
+            Description = NodeSupport.OrNull(description),
+            Height = NodeSupport.OptionalDouble(height),
+            IsResizable = resizable,
+            ShowCancel = showCancel,
+            CloseOnEscape = closeOnEscape,
+            ExtraButtons = NodeSupport.Items(extraButtons).OfType<ButtonElement>().ToList(),
+            IconPath = NodeSupport.OrNull(iconPath),
+        };
+
+    /// <summary>
+    /// Writes a form to JSON, so it can be saved, reviewed and shared as a document.
+    /// </summary>
+    /// <param name="form">The form to write.</param>
+    /// <param name="indented">Format for reading rather than for size.</param>
+    /// <returns name="json">The form as JSON.</returns>
+    /// <search>json,serialize,save,export,write</search>
+    public static string ToJson(FormDefinition form, bool indented = true)
+        => FormJson.Serialize(form, indented);
+
+    /// <summary>
+    /// Reads a form back from JSON.
+    /// </summary>
+    /// <param name="json">The form as JSON.</param>
+    /// <returns name="form">The form definition.</returns>
+    /// <search>json,deserialize,load,import,read,parse</search>
+    public static FormDefinition FromJson(string json) => FormJson.Deserialize(json);
+
+    /// <summary>
+    /// Reports the problems Interlude can see in a form without showing it: conditions that name
+    /// a field that does not exist, duplicate keys, and computed values that depend on each other
+    /// in a loop.
+    /// </summary>
+    /// <param name="form">The form to check.</param>
+    /// <returns name="isValid">True when nothing was found.</returns>
+    /// <returns name="messages">What was found, if anything.</returns>
+    /// <search>validate,check,lint,problems,warnings,debug</search>
+    [MultiReturn(new[] { "isValid", "messages" })]
+    public static Dictionary<string, object> Check(FormDefinition form)
+    {
+        if (form is null)
+        {
+            return new Dictionary<string, object>
+            {
+                ["isValid"] = false,
+                ["messages"] = new List<string> { "There is no form to check." },
+            };
+        }
+
+        try
+        {
+            FormSession session = new(form);
+
+            return new Dictionary<string, object>
+            {
+                ["isValid"] = session.Warnings.Count == 0,
+                ["messages"] = session.Warnings.ToList(),
+            };
+        }
+        catch (InterludeException ex)
+        {
+            return new Dictionary<string, object>
+            {
+                ["isValid"] = false,
+                ["messages"] = new List<string> { ex.Message },
+            };
+        }
+    }
+
+    /// <summary>
+    /// Forgets the answers remembered for a form, so the next run starts from its defaults.
+    /// </summary>
+    /// <param name="formId">The form's id. Empty forgets every form.</param>
+    /// <returns name="cleared">True once the answers have been forgotten.</returns>
+    /// <search>forget,clear,reset,remember,cache</search>
+    public static bool Forget(string formId = "")
+    {
+        if (string.IsNullOrWhiteSpace(formId))
+        {
+            SessionStore.Instance.Clear();
+        }
+        else
+        {
+            SessionStore.Instance.Remove(formId.Trim());
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// Builds and shows the form once. Called under the latch, so at most one of these is running
+    /// for a given form at a time.
+    /// </summary>
+    private static FormResult ShowOnce(FormDefinition definition, string identity)
+    {
+        IReadOnlyDictionary<string, object?>? remembered = definition.RememberValues
+            ? SessionStore.Instance.TryGetValues(identity)
+            : null;
+
+        FormSession session = new(definition, remembered);
+
+        if (!WindowHost.CanShowWindows())
+        {
+            // No dispatcher: a command-line run, a scheduled job, or a test host. Returning
+            // defaults silently would let a graph appear to succeed having asked nobody
+            // anything, so it has to be opted into.
+            if (!definition.HeadlessUseDefaults)
+            {
+                throw new HeadlessFormException(definition.Title, HostContext.Current);
+            }
+
+            return session.BuildCancelledResult(FormButtonNames.Skipped);
+        }
+
+        IFormRenderer renderer = new WpfFormRenderer();
+        FormResult result = renderer.ShowModal(definition, session);
+
+        // Only a submitted result is remembered. Cancelling must not destroy the answers given
+        // the last time the form was completed.
+        SessionStore.Instance.Save(identity, result);
+        return result;
+    }
+
+    /// <summary>The answer when the trigger gate is closed: last time's, or the defaults.</summary>
+    private static FormResult Skipped(FormDefinition definition, string identity)
+    {
+        if (definition.RememberValues &&
+            SessionStore.Instance.TryGet(identity, out FormResult? remembered) &&
+            remembered is not null)
+        {
+            return remembered;
+        }
+
+        return FormResult.Cancelled(definition, FormButtonNames.Skipped);
+    }
+
+    private static Dictionary<string, object> Package(FormResult result)
+        => new()
+        {
+            ["values"] = result.Values.ToDictionary(pair => pair.Key, pair => pair.Value!),
+            ["wasSubmitted"] = result.WasSubmitted,
+            ["buttonClicked"] = result.ButtonClicked,
+            ["form"] = result,
+        };
+}

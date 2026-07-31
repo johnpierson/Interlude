@@ -66,6 +66,20 @@
   </ItemGroup>
 
   <!--
+    The XAML compiler always emits a PUBLIC XamlGeneratedNamespace.GeneratedInternalTypeHelper,
+    and Dynamo turns every public type into a library category, so leaving it in would put a
+    meaningless "XamlGeneratedNamespace" entry in front of every user. It exists solely to let
+    BAML instantiate INTERNAL types referenced from XAML; Themes/*.xaml references only public
+    ones, which ArchitectureTests and the STA smoke tests both check. The MSBuild property that
+    is supposed to suppress it is not honoured by the .NET SDK, so it is dropped here instead.
+  -->
+  <Target Name="DropGeneratedInternalTypeHelper" AfterTargets="MarkupCompilePass2" BeforeTargets="CoreCompile">
+    <ItemGroup>
+      <Compile Remove="@(Compile)" Condition="'%(Filename)%(Extension)' == 'GeneratedInternalTypeHelper.g.cs'" />
+    </ItemGroup>
+  </Target>
+
+  <!--
     Guard rail for the single most damaging regression this project can have:
     a transitive package sneaking a second DLL into the package's bin folder.
   -->
