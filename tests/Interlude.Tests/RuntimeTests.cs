@@ -90,7 +90,9 @@ public class RuntimeTests
             },
             () => FormResult.Cancelled(form)));
 
-        Assert.True(firstIsRunning.Wait(TimeSpan.FromSeconds(10)));
+        CancellationToken cancellation = TestContext.Current.CancellationToken;
+
+        Assert.True(firstIsRunning.Wait(TimeSpan.FromSeconds(10), cancellation));
         Assert.True(latch.IsShowing("shared"));
 
         Task<FormResult> second = Task.Run(() =>
@@ -110,12 +112,13 @@ public class RuntimeTests
         // The first call is held open until the second has entered and settled into its wait.
         // Without that the second could arrive after the first had already finished, which is a
         // legitimate second showing and would test nothing.
-        Assert.True(secondIsEntering.Wait(TimeSpan.FromSeconds(10)));
-        await Task.Delay(TimeSpan.FromMilliseconds(500));
+        Assert.True(secondIsEntering.Wait(TimeSpan.FromSeconds(10), cancellation));
+        await Task.Delay(TimeSpan.FromMilliseconds(500), cancellation);
 
         releaseFirst.Set();
 
-        FormResult[] results = await Task.WhenAll(first, second).WaitAsync(TimeSpan.FromSeconds(20));
+        FormResult[] results = await Task.WhenAll(first, second)
+            .WaitAsync(TimeSpan.FromSeconds(20), cancellation);
 
         Assert.Equal(1, Volatile.Read(ref windowsOpened));
         Assert.Same(expected, results[0]);

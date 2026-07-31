@@ -23,12 +23,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
-    <PackageReference Include="xunit" Version="2.9.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
+    <PackageReference Include="xunit.v3" Version="3.2.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5" />
 
-    <!-- STA smoke tests need a real single-threaded apartment; WPF controls refuse to exist otherwise. -->
-    <PackageReference Include="Xunit.StaFact" Version="1.1.11" />
+    <!--
+      STA smoke tests need a real single-threaded apartment; WPF controls refuse to exist
+      otherwise. StaFact 2.0 and later are built on xunit v3, which is why this project is on
+      xunit.v3 rather than the v2 `xunit` package.
+    -->
+    <PackageReference Include="Xunit.StaFact" Version="3.0.13" />
 
     <!--
       Referenced with full assets, unlike the shipped project. Interlude's public types carry
