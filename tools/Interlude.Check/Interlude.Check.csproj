@@ -1,0 +1,72 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    THE ONE TOOL THAT SHIPS.
+
+    Unlike the preview harness, this is published and attached to each release, as part of the
+    authoring skill's download. It is not part of the Dynamo package: nothing here ever lands in
+    a folder Revit loads assemblies from, so the "exactly one code assembly" rule that governs
+    src/Interlude is not in play, and a user who never writes a form by hand never downloads it.
+
+    The target framework follows DynamoVersion, exactly as the shipped project's does, because it
+    references that project and the two must agree. A plain solution build gets the default, 4.0,
+    and everything lines up.
+
+    RELEASES BUILD THIS AT 3.0, which is the net8.0-windows one. Interlude's oldest supported host
+    is Dynamo 3.0, whose machines have the .NET 8 desktop runtime and may have nothing newer; a
+    Dynamo 4.0 machine has .NET 10 and may have nothing older. A net8.0 build with LatestMajor
+    roll-forward runs on both, where a net10.0 build runs on one — and a self-contained build that
+    would also run on both costs ninety megabytes to put in a zip beside a Markdown file.
+    See scripts/pack-skill.ps1.
+  -->
+
+  <!-- The same default the shipped project's Directory.Build.props applies, for the same reason:
+       a bare `dotnet build Interlude.sln` has to pick one. -->
+  <PropertyGroup>
+    <DynamoVersion Condition="'$(DynamoVersion)' == ''">4.0</DynamoVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(DynamoVersion)' == '3.0' or '$(DynamoVersion)' == '3.6'">
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <DynamoPackageVersion>3.0.3.7597</DynamoPackageVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(DynamoVersion)' == '4.0'">
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <DynamoPackageVersion>4.0.2.3870</DynamoPackageVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <UseWPF>true</UseWPF>
+    <RollForward>LatestMajor</RollForward>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>interlude-check</AssemblyName>
+    <RootNamespace>Interlude.Check</RootNamespace>
+    <InvariantGlobalization>true</InvariantGlobalization>
+  </PropertyGroup>
+
+  <!--
+    UseWPF because Interlude is a WPF assembly and referencing it drags the desktop framework in
+    whether or not a window is ever created. Checking a form builds a FormSession and no visual
+    tree at all, so this runs headless and is safe in CI.
+  -->
+
+  <!--
+    Which of the three builds is used makes no difference to the answer: they differ only in the
+    Dynamo assemblies they compile against, and neither the serializer nor the session touches one.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Interlude\Interlude.csproj" />
+  </ItemGroup>
+
+  <!--
+    Full assets, for the reason the preview harness documents: Interlude's public types carry
+    [IsVisibleInDynamoLibrary], and .NET must resolve an attribute's assembly whenever anything
+    reflects over the type carrying it. System.Text.Json's enum handling does, so a host without
+    DynamoServices.dll cannot deserialize a form at all. Dynamo always has it; this does not.
+  -->
+  <ItemGroup>
+    <PackageReference Include="DynamoVisualProgramming.ZeroTouchLibrary" Version="$(DynamoPackageVersion)" />
+  </ItemGroup>
+
+</Project>

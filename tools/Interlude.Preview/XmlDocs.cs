@@ -66,10 +66,12 @@ internal sealed class XmlDocs
         {
             string? name = member.Attribute("name")?.Value;
 
-            // Methods for the nodes themselves, types for the family summary each one carries.
+            // Methods for the nodes themselves, types for the family summary each one carries, and
+            // properties for the schema reference, whose rows are the model's own properties.
             if (name is null ||
                 !(name.StartsWith("M:", StringComparison.Ordinal) ||
-                  name.StartsWith("T:", StringComparison.Ordinal)))
+                  name.StartsWith("T:", StringComparison.Ordinal) ||
+                  name.StartsWith("P:", StringComparison.Ordinal)))
             {
                 continue;
             }
@@ -94,6 +96,18 @@ internal sealed class XmlDocs
     /// </summary>
     internal string ForType(Type type)
         => _members.TryGetValue("T:" + type.FullName, out MemberDoc? doc) ? doc.Summary : string.Empty;
+
+    /// <summary>
+    /// The summary on a model property, which is what a schema reference row says.
+    ///
+    /// Looked up against the type that declares the property rather than the one it was reached
+    /// through: a property inherited from <c>FormElement</c> is documented once, on
+    /// <c>FormElement</c>, and the compiler wrote no entry under the derived record.
+    /// </summary>
+    internal string ForProperty(PropertyInfo property)
+        => _members.TryGetValue($"P:{property.DeclaringType!.FullName}.{property.Name}", out MemberDoc? doc)
+            ? doc.Summary
+            : string.Empty;
 
     /// <summary>
     /// Builds the documentation ID the compiler used as the <c>member name</c> attribute:

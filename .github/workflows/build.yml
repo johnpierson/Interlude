@@ -60,7 +60,9 @@ jobs:
           $expected = 'Interlude.dll', 'Interlude.customization.dll'
           $failed = $false
 
-          foreach ($bin in Get-ChildItem dist -Recurse -Directory -Filter bin) {
+          # Only the Dynamo packages. dist/ also holds the authoring skill, whose bin/ is a
+          # command-line checker that never goes near Revit and is deliberately not one assembly.
+          foreach ($bin in Get-ChildItem dist/dynamo-* -Recurse -Directory -Filter bin) {
             $dlls = @(Get-ChildItem $bin.FullName -Filter *.dll | Select-Object -ExpandProperty Name)
             $unexpected = @($dlls | Where-Object { $_ -notin $expected })
             $missing = @($expected | Where-Object { $_ -notin $dlls })
@@ -149,6 +151,30 @@ jobs:
             exit 1
           }
           Write-Host "The node icons are up to date." -ForegroundColor Green
+
+      - name: Verify the skill's schema reference is up to date
+        shell: pwsh
+        run: |
+          # skills/interlude-form/reference/schema.md is what tells the authoring skill which
+          # controls exist. A skill cannot write one it has never heard of, so a control added
+          # without regenerating this ships a skill that silently knows the old schema.
+          $exe = Get-ChildItem tools/Interlude.Preview/bin/Release -Recurse -Filter Interlude.Preview.exe |
+            Select-Object -First 1
+          & $exe.FullName --schema skills/interlude-form/reference/schema.md
+          $changed = git status --porcelain skills
+          if ($changed) {
+            Write-Error "The skill's schema reference is out of date. Run: Interlude.Preview.exe --schema skills/interlude-form/reference/schema.md"
+            Write-Host $changed
+            exit 1
+          }
+          Write-Host "The skill's schema reference is up to date." -ForegroundColor Green
+
+      # Builds the checker and runs it against the samples it ships with. This is the only place
+      # the shipped validator is exercised end to end, and a skill whose validator does not run is
+      # worse than one with no validator: it will report a form as checked either way.
+      - name: Pack the skill
+        shell: pwsh
+        run: ./scripts/pack-skill.ps1 -Configuration Release
 
       - name: Upload packages
         if: always()

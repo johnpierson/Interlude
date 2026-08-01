@@ -139,7 +139,13 @@ dotnet build tools/Interlude.Preview
 $exe = './tools/Interlude.Preview/bin/Debug/net10.0-windows/Interlude.Preview.exe'
 & $exe --export samples            # regenerate samples/ (CI fails if these drift)
 & $exe --screenshot docs/images    # re-render the documentation images
+& $exe --schema skills/interlude-form/reference/schema.md   # the authoring skill's reference
 ```
+
+`--schema` matters for the same reason `--docs` does. The authoring skill can only write controls
+its reference knows about, so a control added without regenerating it ships a skill that silently
+knows the old schema. `SkillTests` fails on the missing discriminator, and CI fails again on the
+file itself.
 
 `--screenshot` renders every sample in both themes without showing a window, which makes a
 rendering change reviewable: a pull request that alters spacing or contrast can show what it did

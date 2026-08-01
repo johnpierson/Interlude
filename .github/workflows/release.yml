@@ -54,18 +54,38 @@ jobs:
           ./scripts/build-all.ps1 -Configuration Release
           ./scripts/pack.ps1 -Configuration Release -Version $env:VERSION
 
+      # The authoring skill is a separate download and shares nothing with the package: no
+      # assembly of its own goes anywhere Revit will look. It carries its own copy of the checker,
+      # which pack-skill.ps1 runs against the bundled samples before it will hand anything over.
+      - name: Pack the skill
+        shell: pwsh
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: ./scripts/pack-skill.ps1 -Configuration Release -Version $env:VERSION
+
       - name: Zip each package
         shell: pwsh
         env:
           VERSION: ${{ steps.version.outputs.version }}
         run: |
           New-Item -ItemType Directory -Path release -Force | Out-Null
-          foreach ($folder in Get-ChildItem dist -Directory) {
+
+          # dist/ also holds the skill, which is not a Dynamo package and is zipped separately
+          # below. Matching the folder name rather than taking everything keeps a future addition
+          # to dist/ from silently becoming an archive called Interlude-1.0.0-dynamowhatever.zip.
+          foreach ($folder in Get-ChildItem dist -Directory -Filter 'dynamo-*') {
             $dynamo = $folder.Name -replace '^dynamo-', ''
             $name = "Interlude-$env:VERSION-dynamo$dynamo.zip"
             Compress-Archive -Path (Join-Path $folder.FullName '*') -DestinationPath (Join-Path 'release' $name)
             Write-Host "packaged $name"
           }
+
+          # Zipped so that unzipping into ~/.claude/skills produces the interlude-form folder,
+          # which is where Claude Code looks. So the folder itself is the archive's root entry,
+          # not its contents.
+          $skill = "Interlude-skill-$env:VERSION.zip"
+          Compress-Archive -Path 'dist/skill/interlude-form' -DestinationPath (Join-Path 'release' $skill)
+          Write-Host "packaged $skill"
 
       - name: Publish the release
         uses: softprops/action-gh-release@v3
@@ -82,3 +102,8 @@ jobs:
             | `dynamo3.0` | 3.0 | 2025 |
             | `dynamo3.6` | 3.6 | 2026 |
             | `dynamo4.0` | 4.0 | 2027 |
+
+            `Interlude-skill` is optional and separate: a Claude Code skill that writes a form
+            from a description of it, with a command-line checker for form files. Unzip it into
+            `~/.claude/skills`. See
+            [skills/interlude-form](https://github.com/johnpierson/Interlude/tree/main/skills/interlude-form).
