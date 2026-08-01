@@ -179,5 +179,5 @@ in seconds.
 
 ## Licence
 
-By contributing you agree that your contribution is licensed under the MIT licence, as the rest of
-the project is.
+By contributing you agree that your contribution is licensed under the BSD 3-Clause licence, as the
+rest of the project is.

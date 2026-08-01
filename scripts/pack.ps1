@@ -123,7 +123,7 @@ foreach ($target in @($manifest.versions | Where-Object { $_.active })) {
     $revitYears = $target.revitYears -join ', '
 
     $pkg = [ordered]@{
-        license          = 'MIT'
+        license          = 'BSD 3-Clause'
         file_hash        = $null
         name             = 'Interlude'
         version          = $Version

@@ -3,7 +3,7 @@
 **Declarative forms for Dynamo.** Describe a form with nodes, show it, get typed answers back.
 
 [![build](https://github.com/johnpierson/Interlude/actions/workflows/build.yml/badge.svg)](https://github.com/johnpierson/Interlude/actions/workflows/build.yml)
-[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![license: BSD 3-Clause](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](LICENSE)
 [![Dynamo 3.0+](https://img.shields.io/badge/Dynamo-3.0%20%7C%203.6%20%7C%204.0-1e88e5.svg)](versions.json)
 [![no dependencies](https://img.shields.io/badge/runtime%20dependencies-none-success.svg)](#zero-dependencies)
 
@@ -275,7 +275,7 @@ that, and why the evaluator re-runs everything on every edit.
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE).
+BSD 3-Clause. See [LICENSE](LICENSE).
 
 Interlude owes an obvious debt to [Data-Shapes](https://github.com/MrMoMoNaRCH/Data-Shapes_Dynamo),
 which established that a Dynamo graph could ask a question properly. This is a different answer to

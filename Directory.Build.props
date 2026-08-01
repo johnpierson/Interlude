@@ -22,6 +22,7 @@
     <Authors>John Pierson</Authors>
     <Company>John Pierson</Company>
     <Copyright>Copyright (c) 2026 John Pierson</Copyright>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     <VersionPrefix Condition="'$(VersionPrefix)' == ''">1.0.0</VersionPrefix>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <FileVersion>$(VersionPrefix).0</FileVersion>
