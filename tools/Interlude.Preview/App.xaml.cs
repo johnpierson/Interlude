@@ -25,6 +25,10 @@ public partial class App : Application
     ///
     /// <c>Interlude.Preview.exe --icons &lt;folder&gt;</c> draws a library icon for every node and
     /// rewrites the resource manifest the icon assembly is built from.
+    ///
+    /// <c>Interlude.Preview.exe --schema &lt;file&gt;</c> writes the element and property reference
+    /// the authoring skill reads, generated from the serializer's own type graph. Checking a form
+    /// file is a separate tool — <c>tools/Interlude.Check</c> — because that one ships.
     /// </summary>
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -61,6 +65,14 @@ public partial class App : Application
             string.Equals(e.Args[0], "--icons", StringComparison.OrdinalIgnoreCase))
         {
             Icons.Generate(e.Args[1]);
+            Shutdown(0);
+            return;
+        }
+
+        if (e.Args.Length >= 2 &&
+            string.Equals(e.Args[0], "--schema", StringComparison.OrdinalIgnoreCase))
+        {
+            SchemaReference.Generate(e.Args[1]);
             Shutdown(0);
             return;
         }

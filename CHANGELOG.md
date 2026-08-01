@@ -40,6 +40,28 @@ package version and `FileVersion` are what move.
 
 ### Added
 
+- **A form can be written from a description of it.** `skills/interlude-form` is a Claude Code
+  skill that turns "ask for a prefix, a check box for sheets, and hide the folder picker unless
+  it's ticked" into a form file, and checks it before handing it over.
+
+  It ships as a **separate download**, `Interlude-skill-<version>.zip`, unzipped into
+  `~/.claude/skills`. Nothing in it goes into a Dynamo package: the "exactly one code assembly"
+  rule is about the folder Revit shares with every other add-in, and this is not that folder.
+
+  The schema reference behind it is generated from the assembly rather than written, because a
+  hand-written list of controls is correct on the day it is written and a skill cannot emit a
+  control it has never heard of. CI regenerates it and fails if the checked-in copy has moved, so
+  adding a control to Interlude cannot ship a skill that still knows the old schema.
+
+- **`interlude-check`, a command-line form checker.** Reads form JSON and reports what is wrong
+  with it: anything the reader would refuse, plus conditions naming fields that do not exist and
+  computed values that depend on each other in a loop. It calls the same `Form.Check` node a graph
+  would, rather than reimplementing the checks — a checker that disagrees with the node is worse
+  than none.
+
+  Exits non-zero, so it belongs in a build. It travels with the skill; it is the first thing
+  Interlude has ever shipped that is not the package.
+
 - **Every node has an icon.** All 112 nodes now carry a drawn icon in Dynamo's library tree and on
   the node itself, in place of the default cube.
 

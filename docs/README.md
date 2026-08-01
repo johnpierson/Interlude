@@ -11,6 +11,7 @@ folder is the detail.
 | **[Node reference](node-reference.md)** | Every node and every port, grouped as the library groups them. |
 | **[Recipes](recipes.md)** | Worked patterns: gating a dialog, several outcomes, wizards, live totals, unattended runs. |
 | **[Coming from Data-Shapes](migrating-from-data-shapes.md)** | Node-by-node mapping, and the behavioural differences — the cancellation contract first. |
+| **[The form skill](../skills/interlude-form/)** | An optional separate download: describe a form and have one written, with a command-line checker for form files. |
 
 ## Going deeper
 
@@ -29,6 +30,10 @@ folder is the detail.
   machine-generated node signatures the test suite enforces.
 - **[`tools/Interlude.Preview`](../tools/Interlude.Preview)** — the harness: sample gallery, live
   theme controls, JSON hot reload, offline screenshot rendering.
+- **[`tools/Interlude.Check`](../tools/Interlude.Check)** — the form checker, and the one tool that
+  ships. It goes out with the skill rather than with the package.
+- **[`skills/interlude-form`](../skills/interlude-form)** — the authoring skill, and the generated
+  schema reference behind it.
 - **[`versions.json`](../versions.json)** — the build matrix.
 - **[`CHANGELOG.md`](../CHANGELOG.md)** — what changed, and when.
 

@@ -217,6 +217,28 @@ should not show a palette diff every time the built-in colours are tuned.
 }
 ```
 
+## Describing a form instead of building one
+
+Because a form is a document, something else can write it. `skills/interlude-form` is a
+[Claude Code](https://claude.com/claude-code) skill that turns a description — *ask for a prefix,
+a check box for sheets, and hide the folder picker unless it is ticked* — into a form file, and
+checks it before handing it over.
+
+It is a **separate download** and no part of the package: unzip `Interlude-skill` from
+[Releases](https://github.com/johnpierson/Interlude/releases) into `~/.claude/skills`. Nothing in
+it goes near your Dynamo packages folder, and you never need it to use Interlude.
+
+The schema reference it works from is generated from the assembly and checked in CI, so a control
+added to Interlude cannot ship a skill that has not heard of it. The bundled checker is useful on
+its own for anything hand-edited:
+
+```powershell
+interlude-check.exe my-form.json
+```
+
+It reports what the reader would refuse, plus conditions naming fields that do not exist and
+computed values that depend on each other in a loop — and exits non-zero, so it belongs in a build.
+
 ## Zero dependencies
 
 Interlude ships exactly **one** file: `Interlude.dll`, plus its XML documentation and the Dynamo
@@ -266,6 +288,7 @@ dotnet run --project tools/Interlude.Preview
 | [Recipes](docs/recipes.md) | Worked patterns for real forms |
 | [Coming from Data-Shapes](docs/migrating-from-data-shapes.md) | Node mapping and behavioural differences |
 | [Forms as JSON](docs/form-json.md) | The schema, and what survives a round trip |
+| [The form skill](skills/interlude-form/) | Describing a form and having one written, and the checker that comes with it |
 | [Architecture](docs/architecture.md) | Layering, the reactive session, threading, and the reasoning |
 | [Contributing](CONTRIBUTING.md) | Setting up, the rules with teeth, adding a control |
 
