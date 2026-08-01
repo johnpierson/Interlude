@@ -40,6 +40,18 @@ package version and `FileVersion` are what move.
 
 ### Added
 
+- **Node help inside the package.** Every one of the 112 nodes now ships a Markdown help page in
+  the package's `doc/` folder, so selecting a node in Dynamo and opening Help shows Interlude's own
+  documentation in the panel beside the graph instead of "no documentation available". The format
+  is Dynamo's own, taken from the fallback docs that ship with Dynamo Core.
+
+  The pages are generated from the shipped assembly — signatures, port names, types and defaults by
+  reflection, prose from the XML documentation file the compiler emits beside the DLL. That is the
+  same file Dynamo reads for its port tooltips, so the help panel and the tooltip cannot say
+  different things, and changing what a node's help says means changing the `///` comment on the
+  node. A test fails when a node has no page; CI regenerates the folder and fails on any
+  difference.
+
 - **`Theme.Neubrutalism`** — the default preset, by name, so a graph can ask for it explicitly and
   choose light or dark rather than following Windows.
 - **`Theme.Create` gained `borderWidth`, `shadowOffset` and `heavyText`** (appended, as the rules

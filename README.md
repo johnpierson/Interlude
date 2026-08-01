@@ -182,7 +182,10 @@ Everything lives under a single **Interlude** category.
 | **Form** | `Show`, `Create`, `Check`, `ToJson`, `FromJson`, `Options`, `Forget`. |
 | **Result** | Typed accessors: `GetString`, `GetNumber`, `GetBool`, `GetDate`, `GetColor`, `GetFilePaths`. |
 
-**[Node reference](docs/node-reference.md)** documents every node and every port.
+**[Node reference](docs/node-reference.md)** documents every node and every port. Every node also
+ships its own help page inside the package, so selecting a node in Dynamo and opening **Help**
+shows it in the panel beside the graph — generated from the assembly, so it cannot drift
+([docs/nodes](docs/nodes/)).
 **[Recipes](docs/recipes.md)** works through the patterns that come up in real forms — gating a
 dialog, offering several outcomes, wizards, live totals, unattended runs.
 
@@ -253,6 +256,7 @@ dotnet run --project tools/Interlude.Preview
 | --- | --- |
 | [Installing](docs/installing.md) | Which download, where it goes, what to do when it does not appear |
 | [Node reference](docs/node-reference.md) | Every node and every port |
+| [Node help](docs/nodes/) | The per-node pages Dynamo shows in its help panel, generated from the assembly |
 | [Recipes](docs/recipes.md) | Worked patterns for real forms |
 | [Coming from Data-Shapes](docs/migrating-from-data-shapes.md) | Node mapping and behavioural differences |
 | [Forms as JSON](docs/form-json.md) | The schema, and what survives a round trip |

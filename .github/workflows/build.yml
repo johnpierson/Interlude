@@ -87,6 +87,22 @@ jobs:
           }
           Write-Host "samples/ is up to date." -ForegroundColor Green
 
+      - name: Verify the node help is up to date
+        shell: pwsh
+        run: |
+          # docs/nodes/ is generated from the shipped assembly and its XML documentation. Help that
+          # disagrees with the node it documents is worse than none, because the reader believes it.
+          $exe = Get-ChildItem tools/Interlude.Preview/bin/Release -Recurse -Filter Interlude.Preview.exe |
+            Select-Object -First 1
+          & $exe.FullName --docs docs/nodes
+          $changed = git status --porcelain docs/nodes
+          if ($changed) {
+            Write-Error "docs/nodes/ is out of date. Run: Interlude.Preview.exe --docs docs/nodes"
+            Write-Host $changed
+            exit 1
+          }
+          Write-Host "docs/nodes/ is up to date." -ForegroundColor Green
+
       - name: Upload packages
         if: always()
         uses: actions/upload-artifact@v7

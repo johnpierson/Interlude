@@ -101,6 +101,52 @@ public class ApiSurfaceTests
     }
 
     /// <summary>
+    /// Every node needs a help file: Dynamo's documentation browser shows it in the panel beside
+    /// the graph, and a node without one shows "no documentation available" instead.
+    ///
+    /// The files are generated — <c>Interlude.Preview.exe --docs docs/nodes</c> — so this is not
+    /// checking that somebody wrote them. It is checking that somebody *re-ran the generator*
+    /// after adding a node, which is the step that gets forgotten. CI additionally regenerates
+    /// them and fails on any difference, which catches the reverse: a file that no longer matches
+    /// the node it documents.
+    /// </summary>
+    [Fact]
+    public void Every_node_has_a_help_file()
+    {
+        string folder = Path.Combine(RepoPaths.Root, "docs", "nodes");
+
+        Assert.True(Directory.Exists(folder),
+            $"The generated node help is missing at {folder}. " +
+            "Run: Interlude.Preview.exe --docs docs/nodes");
+
+        HashSet<string> present = Directory
+            .EnumerateFiles(folder, "*.md")
+            .Select(Path.GetFileNameWithoutExtension)
+            .Select(name => name!)
+            .ToHashSet(StringComparer.Ordinal);
+
+        List<string> missing = new();
+
+        foreach (MethodInfo method in NodeMethods())
+        {
+            string name = $"{method.DeclaringType!.FullName}.{method.Name}";
+
+            // Overloads carry their parameter names in brackets, the way Dynamo's own docs do.
+            bool found = present.Contains(name) ||
+                present.Any(file => file.StartsWith(name + "(", StringComparison.Ordinal));
+
+            if (!found)
+            {
+                missing.Add(name);
+            }
+        }
+
+        Assert.True(missing.Count == 0,
+            "These nodes have no help file. Run: Interlude.Preview.exe --docs docs/nodes\n  " +
+            string.Join("\n  ", missing.Distinct()));
+    }
+
+    /// <summary>
     /// A MultiReturn node must declare its output names, or Dynamo shows a single unnamed port
     /// and every downstream graph has to guess.
     /// </summary>

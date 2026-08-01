@@ -71,6 +71,27 @@ foreach ($target in @($manifest.versions | Where-Object { $_.active })) {
         Copy-Item (Join-Path $buildPath $file) $binPath -Force
     }
 
+    # Node help. Dynamo's documentation browser looks for a folder named exactly 'doc' beside bin/
+    # and matches each Markdown file to a node by its file name, so the panel beside the graph
+    # shows our own help rather than "no documentation available".
+    #
+    # These are generated from the assembly by the preview harness (--docs) and checked in under
+    # docs/nodes; copied rather than generated here because dist/ is wiped on every pack and
+    # anything written straight into it would not survive the next one.
+    $nodeDocs = Join-Path $repoRoot 'docs\nodes'
+    if (Test-Path $nodeDocs) {
+        $docPath = Join-Path $packageRoot 'doc'
+        New-Item -ItemType Directory -Path $docPath -Force | Out-Null
+
+        # Only the node files and their images. The folder's own README explains how they are
+        # generated, which is a thing for contributors rather than something to hand to Dynamo's
+        # documentation browser as if it were a node.
+        Copy-Item (Join-Path $nodeDocs 'Interlude.*') $docPath -Force
+    }
+    else {
+        Write-Warning "docs/nodes is missing: this package will ship without node help."
+    }
+
     # Samples ship in extra/ so a user can open a real form definition without leaving Dynamo.
     $samples = Join-Path $repoRoot 'samples'
     if (Test-Path $samples) {
