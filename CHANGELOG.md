@@ -122,9 +122,13 @@ package version and `FileVersion` are what move.
   cost and it is worth paying once, now, before there are users: the alternative is a node that
   cannot do the thing it exists for. Nothing else about the API moved.
 
-  Guarded by `ListPortTests`, which reads the declarations rather than calling the nodes — none of
-  the existing tests could see this, because from C# a `List<object>` argument behaves identically
-  either way and the difference exists only inside Dynamo's evaluator.
+  `Compute.Sum` had it too, and was missed on the first pass — which is the reason the guard works
+  the way it does. `ListPortTests` reads the *declarations* rather than calling the nodes, because
+  none of the existing tests could see this: from C# a `List<object>` argument behaves identically
+  either way, and the difference exists only inside Dynamo's evaluator. And rather than check a
+  hand-written list of list-shaped ports — the approach that missed `Sum` — it walks **every** port
+  typed as a bare value and fails until each has been classified as one or the other. It found
+  `Layout.Image`'s two the moment it was written.
 
 - **A built-in palette is now serialised by name.** A form's JSON carried all eighteen colours of
   both palettes whenever the theme did not use the stock light and dark ones — three hundred lines

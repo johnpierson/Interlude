@@ -20,7 +20,7 @@
   Format(string template) -> ComputedValue
   If(ConditionExpr condition, object ifTrue = null, object ifFalse = null) -> ComputedValue
   Lookup(string key, List<object> lookupKeys, List<object> lookupValues, object fallback = null) -> ComputedValue
-  Sum(object keys) -> ComputedValue
+  Sum(List<object> keys) -> ComputedValue
 
 ## Condition
   Always(bool value = true) -> ConditionExpr

@@ -37,7 +37,7 @@ public class Compute
     /// <param name="keys">The fields to add.</param>
     /// <returns name="computation">The computation.</returns>
     /// <search>sum,total,add,plus</search>
-    public static ComputedValue Sum(object keys)
+    public static ComputedValue Sum(List<object> keys)
         => new SumComputed
         {
             Keys = NodeSupport.Items(keys).Select(ValueOps.ToStringInvariant).ToList(),

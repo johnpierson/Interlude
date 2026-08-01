@@ -6,7 +6,7 @@ Adds up several fields. Anything that is not a number counts as zero, and a mult
 
 The inputs are:
 
-- `keys` (_object_) — The fields to add.
+- `keys` (_list of object_) — The fields to add.
 
 Returns `computation` — The computation.
 
