@@ -44,3 +44,8 @@ Desktop.ini
 # What the API-surface test actually found, written beside the snapshot on a mismatch so the
 # difference can be diffed. The snapshot itself is checked in; this is the scratch half.
 tests/Interlude.Tests/api-surface.actual.txt
+
+# MCP servers wired up for local development. .mcp.json is normally checked in so a team shares
+# its tooling, but the ones used here point at a Dynamo instance on this machine's localhost and
+# are no use to anybody else.
+.mcp.json
