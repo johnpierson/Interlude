@@ -13,10 +13,10 @@ Prefer this to `Input.DropDown` when the user needs to see the options without o
 The inputs are:
 
 - `label` (_string_) — Caption shown beside the field.
-- `items` (_object_, defaults to `null`) — The values to choose between. Can be any objects.
-- `displayNames` (_object_, defaults to `null`) — What to show for each item. Falls back to each item's own text.
+- `items` (_list of object_, defaults to `null`) — The values to choose between. Can be any objects.
+- `displayNames` (_list of object_, defaults to `null`) — What to show for each item. Falls back to each item's own text.
 - `allowMultiple` (_boolean_, defaults to `true`) — Whether several items can be chosen at once.
-- `defaultValue` (_object_, defaults to `null`) — Which item or items start selected.
+- `defaultValue` (_list of object_, defaults to `null`) — Which item or items start selected.
 - `visibleRows` (_integer_, defaults to `6`) — How many rows are shown before the list scrolls.
 - `key` (_string_, defaults to `""`) — Name of this answer in the results. Derived from the label when empty.
 - `tooltip` (_string_, defaults to `""`) — Hover text.

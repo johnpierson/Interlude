@@ -6,7 +6,7 @@ True when any one of the given conditions is true. An empty list is false.
 
 The inputs are:
 
-- `conditions` (_object_) — The conditions to combine.
+- `conditions` (_list of object_) — The conditions to combine.
 
 Returns `condition` — The condition.
 

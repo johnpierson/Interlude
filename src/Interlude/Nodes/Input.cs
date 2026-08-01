@@ -354,8 +354,8 @@ public class Input
     /// <search>dropdown,combobox,select,choose,list,pick</search>
     public static FormElement DropDown(
         string label,
-        [DefaultArgument("null")] object? items = null,
-        [DefaultArgument("null")] object? displayNames = null,
+        [DefaultArgument("null")] List<object>? items = null,
+        [DefaultArgument("null")] List<object>? displayNames = null,
         [DefaultArgument("null")] object? defaultValue = null,
         string placeholder = "",
         string key = "",
@@ -398,10 +398,10 @@ public class Input
     /// <search>listbox,list,multiselect,select,choose</search>
     public static FormElement ListBox(
         string label,
-        [DefaultArgument("null")] object? items = null,
-        [DefaultArgument("null")] object? displayNames = null,
+        [DefaultArgument("null")] List<object>? items = null,
+        [DefaultArgument("null")] List<object>? displayNames = null,
         bool allowMultiple = true,
-        [DefaultArgument("null")] object? defaultValue = null,
+        [DefaultArgument("null")] List<object>? defaultValue = null,
         int visibleRows = 6,
         string key = "",
         string tooltip = "",
@@ -438,8 +438,8 @@ public class Input
     /// <search>radio,option,choice,exclusive</search>
     public static FormElement RadioButtons(
         string label,
-        [DefaultArgument("null")] object? items = null,
-        [DefaultArgument("null")] object? displayNames = null,
+        [DefaultArgument("null")] List<object>? items = null,
+        [DefaultArgument("null")] List<object>? displayNames = null,
         [DefaultArgument("null")] object? defaultValue = null,
         bool horizontal = false,
         string key = "",
@@ -475,9 +475,9 @@ public class Input
     /// <search>tree,hierarchy,nested,select</search>
     public static FormElement TreeSelect(
         string label,
-        [DefaultArgument("null")] object? nodes = null,
+        [DefaultArgument("null")] List<object>? nodes = null,
         bool allowMultiple = true,
-        [DefaultArgument("null")] object? defaultValue = null,
+        [DefaultArgument("null")] List<object>? defaultValue = null,
         bool expandAll = false,
         string key = "",
         string tooltip = "",
@@ -512,7 +512,7 @@ public class Input
     public static TreeNode TreeItem(
         string displayName,
         [DefaultArgument("null")] object? value = null,
-        [DefaultArgument("null")] object? children = null,
+        [DefaultArgument("null")] List<object>? children = null,
         bool expanded = false,
         bool selectable = true)
         => new()
@@ -590,7 +590,7 @@ public class Input
         string label,
         string defaultValue = "#000000",
         bool showAlpha = false,
-        [DefaultArgument("null")] object? presets = null,
+        [DefaultArgument("null")] List<object>? presets = null,
         string key = "",
         string tooltip = "",
         string helpText = "")

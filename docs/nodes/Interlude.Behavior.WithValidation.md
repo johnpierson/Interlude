@@ -7,7 +7,7 @@ Adds a validation rule, built with the Rule nodes. Rules are checked as the user
 The inputs are:
 
 - `element` (_FormElement_) — The element to check.
-- `rule` (_object_) — One rule, or a list of them.
+- `rule` (_list of object_) — One rule, or a list of them.
 
 Returns `element` — A copy of the element with the rules attached.
 

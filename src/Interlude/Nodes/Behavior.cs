@@ -98,17 +98,15 @@ public class Behavior
     /// <param name="rule">One rule, or a list of them.</param>
     /// <returns name="element">A copy of the element with the rules attached.</returns>
     /// <search>validation,rule,check,validate,constraint</search>
-    public static FormElement WithValidation(FormElement element, object rule)
+    public static FormElement WithValidation(FormElement element, List<object> rule)
     {
         FormElement target = Require(element);
 
+        // A single rule arrives as a one-item list: the port is declared as a list so that
+        // Dynamo hands the whole list over rather than calling this node once per rule, and
+        // DesignScript promotes a lone value into a list on the way in.
         List<ValidationRule> rules = new(target.Rules);
         rules.AddRange(NodeSupport.Items(rule).OfType<ValidationRule>());
-
-        if (rule is ValidationRule single && !rules.Contains(single))
-        {
-            rules.Add(single);
-        }
 
         return target with { Rules = rules };
     }

@@ -216,9 +216,11 @@ public class NodeTests
     [Fact]
     public void Rules_attached_by_node_are_enforced_by_the_session()
     {
+        // A lone rule goes in as a one-item list, which is what DesignScript's promotion does
+        // for a list-typed port given a single value.
         FormElement age = Behavior.WithValidation(
             Input.Number("Age", key: "age"),
-            Rule.Range(18, 120, "Must be an adult."));
+            new List<object> { Rule.Range(18, 120, "Must be an adult.") });
 
         FormSession session = new(Form.Create("Test", Elements(age)));
 

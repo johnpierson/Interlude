@@ -11,7 +11,7 @@
   WithHelp(FormElement element, string tooltip = "", string helpText = "") -> FormElement
   WithKey(FormElement element, string key) -> FormElement
   WithSize(FormElement element, object width = null, object height = null, object labelWidth = null, object margin = null) -> FormElement
-  WithValidation(FormElement element, object rule) -> FormElement
+  WithValidation(FormElement element, List<object> rule) -> FormElement
 
 ## Compute
   Arithmetic(object left, string operation, object right) -> ComputedValue
@@ -19,19 +19,19 @@
   Field(string key) -> ComputedValue
   Format(string template) -> ComputedValue
   If(ConditionExpr condition, object ifTrue = null, object ifFalse = null) -> ComputedValue
-  Lookup(string key, object lookupKeys, object lookupValues, object fallback = null) -> ComputedValue
+  Lookup(string key, List<object> lookupKeys, List<object> lookupValues, object fallback = null) -> ComputedValue
   Sum(object keys) -> ComputedValue
 
 ## Condition
   Always(bool value = true) -> ConditionExpr
-  And(object conditions) -> ConditionExpr
+  And(List<object> conditions) -> ConditionExpr
   AtLeast(string key, object value) -> ConditionExpr
   AtMost(string key, object value) -> ConditionExpr
   Contains(string key, object value, bool ignoreCase = false) -> ConditionExpr
   EndsWith(string key, object value, bool ignoreCase = false) -> ConditionExpr
   Equals(string key, object value, bool ignoreCase = false) -> ConditionExpr
   GreaterThan(string key, object value) -> ConditionExpr
-  In(string key, object values, bool ignoreCase = false) -> ConditionExpr
+  In(string key, List<object> values, bool ignoreCase = false) -> ConditionExpr
   IsChecked(string key) -> ConditionExpr
   IsEmpty(string key) -> ConditionExpr
   IsNotChecked(string key) -> ConditionExpr
@@ -40,7 +40,7 @@
   Matches(string key, string pattern, bool ignoreCase = false) -> ConditionExpr
   Not(ConditionExpr condition) -> ConditionExpr
   NotEquals(string key, object value, bool ignoreCase = false) -> ConditionExpr
-  Or(object conditions) -> ConditionExpr
+  Or(List<object> conditions) -> ConditionExpr
   StartsWith(string key, object value, bool ignoreCase = false) -> ConditionExpr
 
 ## Form
@@ -48,29 +48,29 @@
   Create(string title, List<object> elements, string submitText = "Submit", string cancelText = "Cancel", double width = 420, double maxHeight = 800, string formId = "", bool rememberValues = true, bool headlessUseDefaults = false, object theme = null, object options = null) -> FormDefinition
   Forget(string formId = "") -> bool
   FromJson(string json) -> FormDefinition
-  Options(string description = "", object height = null, bool resizable = true, bool showCancel = true, bool closeOnEscape = true, object extraButtons = null, string iconPath = "") -> FormOptions
+  Options(string description = "", object height = null, bool resizable = true, bool showCancel = true, bool closeOnEscape = true, List<object> extraButtons = null, string iconPath = "") -> FormOptions
   Show(string title, List<object> elements, object trigger = true, string submitText = "Submit", string cancelText = "Cancel", double width = 420, double maxHeight = 800, string formId = "", bool rememberValues = true, bool headlessUseDefaults = false, object theme = null, object options = null) -> {values, wasSubmitted, buttonClicked, form}
   ShowDefinition(FormDefinition form, object trigger = true) -> {values, wasSubmitted, buttonClicked, form}
   ToJson(FormDefinition form, bool indented = true) -> string
 
 ## Input
   CheckBox(string label, bool defaultValue = false, string key = "", string tooltip = "", string helpText = "") -> FormElement
-  ColorPicker(string label, string defaultValue = "#000000", bool showAlpha = false, object presets = null, string key = "", string tooltip = "", string helpText = "") -> FormElement
+  ColorPicker(string label, string defaultValue = "#000000", bool showAlpha = false, List<object> presets = null, string key = "", string tooltip = "", string helpText = "") -> FormElement
   DatePicker(string label, object defaultValue = null, bool includeTime = false, object minimum = null, object maximum = null, string key = "", string tooltip = "", string helpText = "") -> FormElement
   DirectoryPath(string label, string defaultValue = "", string key = "", string tooltip = "", string helpText = "") -> FormElement
-  DropDown(string label, object items = null, object displayNames = null, object defaultValue = null, string placeholder = "", string key = "", string tooltip = "", string helpText = "") -> FormElement
+  DropDown(string label, List<object> items = null, List<object> displayNames = null, object defaultValue = null, string placeholder = "", string key = "", string tooltip = "", string helpText = "") -> FormElement
   FilePath(string label, string defaultValue = "", string filter = "All files|*.*", bool allowMultiple = false, bool forSaving = false, string key = "", string tooltip = "", string helpText = "") -> FormElement
   Integer(string label, int defaultValue = 0, object minimum = null, object maximum = null, int increment = 1, string unit = "", string key = "", string tooltip = "", string helpText = "") -> FormElement
-  ListBox(string label, object items = null, object displayNames = null, bool allowMultiple = true, object defaultValue = null, int visibleRows = 6, string key = "", string tooltip = "", string helpText = "") -> FormElement
+  ListBox(string label, List<object> items = null, List<object> displayNames = null, bool allowMultiple = true, List<object> defaultValue = null, int visibleRows = 6, string key = "", string tooltip = "", string helpText = "") -> FormElement
   Number(string label, double defaultValue = 0, object minimum = null, object maximum = null, double increment = 1, int decimalPlaces = 2, string unit = "", string key = "", string tooltip = "", string helpText = "") -> FormElement
   Password(string label, string placeholder = "", string key = "", string tooltip = "", string helpText = "") -> FormElement
-  RadioButtons(string label, object items = null, object displayNames = null, object defaultValue = null, bool horizontal = false, string key = "", string tooltip = "", string helpText = "") -> FormElement
+  RadioButtons(string label, List<object> items = null, List<object> displayNames = null, object defaultValue = null, bool horizontal = false, string key = "", string tooltip = "", string helpText = "") -> FormElement
   Slider(string label, double minimum = 0, double maximum = 100, double defaultValue = 0, double step = 1, int decimalPlaces = 2, string key = "", string tooltip = "", string helpText = "") -> FormElement
   TextArea(string label, string defaultValue = "", int lines = 4, string placeholder = "", string key = "", string tooltip = "", string helpText = "") -> FormElement
   TextBox(string label, string defaultValue = "", string placeholder = "", string key = "", string tooltip = "", string helpText = "") -> FormElement
   Toggle(string label, bool defaultValue = false, string onText = "On", string offText = "Off", string key = "", string tooltip = "", string helpText = "") -> FormElement
-  TreeItem(string displayName, object value = null, object children = null, bool expanded = false, bool selectable = true) -> TreeNode
-  TreeSelect(string label, object nodes = null, bool allowMultiple = true, object defaultValue = null, bool expandAll = false, string key = "", string tooltip = "", string helpText = "") -> FormElement
+  TreeItem(string displayName, object value = null, List<object> children = null, bool expanded = false, bool selectable = true) -> TreeNode
+  TreeSelect(string label, List<object> nodes = null, bool allowMultiple = true, List<object> defaultValue = null, bool expandAll = false, string key = "", string tooltip = "", string helpText = "") -> FormElement
 
 ## Layout
   Button(string text, string tag = "", bool primary = false) -> FormElement

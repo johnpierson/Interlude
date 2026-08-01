@@ -104,8 +104,8 @@ public class Compute
     /// <search>lookup,map,translate,dictionary,switch</search>
     public static ComputedValue Lookup(
         string key,
-        object lookupKeys,
-        object lookupValues,
+        List<object> lookupKeys,
+        List<object> lookupValues,
         [DefaultArgument("null")] object? fallback = null)
     {
         IReadOnlyList<object?> keys = NodeSupport.Items(lookupKeys);

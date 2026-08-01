@@ -104,6 +104,28 @@ package version and `FileVersion` are what move.
 
 ### Fixed
 
+- **Choice inputs given a list built one control per item instead of one control holding them
+  all.** `Input.ListBox` fed 22 sheets produced 22 separate list boxes, each with one sheet in it
+  and its own copy of the label. `Input.DropDown`, `Input.RadioButtons` and `Input.TreeSelect` did
+  the same, as did `Condition.In`, `Condition.And`, `Condition.Or`, `Compute.Lookup`,
+  `Behavior.WithValidation` and `Form.Options`.
+
+  The cause was a signature mistake with no visible symptom in C#. A zero-touch parameter typed
+  `object` becomes DesignScript `var`, which is rank 0 — a single value. Give a rank-0 port a list
+  and Dynamo does not pass the list, it **replicates**: it calls the node once per item. Declaring
+  the parameter as a collection makes it `var[]`, which takes the list whole, and costs nothing at
+  the other end because DesignScript promotes a lone value into a one-item list on the way in. So
+  these ports still accept a single item exactly as before.
+
+  **This changes those node signatures**, which the append-only rule otherwise forbids. A graph
+  saved against the old ones will show the node as unresolved and need it replaced. That is a real
+  cost and it is worth paying once, now, before there are users: the alternative is a node that
+  cannot do the thing it exists for. Nothing else about the API moved.
+
+  Guarded by `ListPortTests`, which reads the declarations rather than calling the nodes — none of
+  the existing tests could see this, because from C# a `List<object>` argument behaves identically
+  either way and the difference exists only inside Dynamo's evaluator.
+
 - **A built-in palette is now serialised by name.** A form's JSON carried all eighteen colours of
   both palettes whenever the theme did not use the stock light and dark ones — three hundred lines
   in front of a two-field form, and a palette diff in every checked-in form each time the built-in

@@ -11,9 +11,9 @@ A branch that only groups its children should be built with `selectable: false`,
 The inputs are:
 
 - `label` (_string_) — Caption shown beside the field.
-- `nodes` (_object_, defaults to `null`) — The root items of the tree.
+- `nodes` (_list of object_, defaults to `null`) — The root items of the tree.
 - `allowMultiple` (_boolean_, defaults to `true`) — Whether several items can be chosen at once.
-- `defaultValue` (_object_, defaults to `null`) — Which item or items start selected.
+- `defaultValue` (_list of object_, defaults to `null`) — Which item or items start selected.
 - `expandAll` (_boolean_, defaults to `false`) — Whether every branch starts open.
 - `key` (_string_, defaults to `""`) — Name of this answer in the results. Derived from the label when empty.
 - `tooltip` (_string_, defaults to `""`) — Hover text.

@@ -213,7 +213,7 @@ public class Form
         bool resizable = true,
         bool showCancel = true,
         bool closeOnEscape = true,
-        [DefaultArgument("null")] object? extraButtons = null,
+        [DefaultArgument("null")] List<object>? extraButtons = null,
         string iconPath = "")
         => new()
         {

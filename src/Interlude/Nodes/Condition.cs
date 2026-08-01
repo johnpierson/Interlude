@@ -167,7 +167,7 @@ public class Condition
     /// <param name="ignoreCase">Ignore letter case when comparing text.</param>
     /// <returns name="condition">The condition.</returns>
     /// <search>in,one of,among,any of</search>
-    public static ConditionExpr In(string key, object values, bool ignoreCase = false)
+    public static ConditionExpr In(string key, List<object> values, bool ignoreCase = false)
         => Compare(key, ComparisonOperator.In, NodeSupport.Items(values), ignoreCase);
 
     /// <summary>
@@ -194,7 +194,7 @@ public class Condition
     /// <param name="conditions">The conditions to combine.</param>
     /// <returns name="condition">The condition.</returns>
     /// <search>and,all,every,both</search>
-    public static ConditionExpr And(object conditions)
+    public static ConditionExpr And(List<object> conditions)
         => new LogicalCondition
         {
             Operator = LogicalOperator.And,
@@ -207,7 +207,7 @@ public class Condition
     /// <param name="conditions">The conditions to combine.</param>
     /// <returns name="condition">The condition.</returns>
     /// <search>or,any,either</search>
-    public static ConditionExpr Or(object conditions)
+    public static ConditionExpr Or(List<object> conditions)
         => new LogicalCondition
         {
             Operator = LogicalOperator.Or,

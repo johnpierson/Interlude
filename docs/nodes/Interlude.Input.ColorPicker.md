@@ -13,7 +13,7 @@ The inputs are:
 - `label` (_string_) — Caption shown beside the field.
 - `defaultValue` (_string_, defaults to `"#000000"`) — Starting colour, as hex such as "#3366CC".
 - `showAlpha` (_boolean_, defaults to `false`) — Add an opacity slider.
-- `presets` (_object_, defaults to `null`) — Hex colours offered as swatches above the picker.
+- `presets` (_list of object_, defaults to `null`) — Hex colours offered as swatches above the picker.
 - `key` (_string_, defaults to `""`) — Name of this answer in the results. Derived from the label when empty.
 - `tooltip` (_string_, defaults to `""`) — Hover text.
 - `helpText` (_string_, defaults to `""`) — A line of guidance shown under the field.

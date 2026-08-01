@@ -13,7 +13,7 @@ The inputs are:
 - `resizable` (_boolean_, defaults to `true`) — Let the user resize the window.
 - `showCancel` (_boolean_, defaults to `true`) — Show the cancel button.
 - `closeOnEscape` (_boolean_, defaults to `true`) — Let Escape cancel the form.
-- `extraButtons` (_object_, defaults to `null`) — Extra footer buttons, built with Layout.Button.
+- `extraButtons` (_list of object_, defaults to `null`) — Extra footer buttons, built with Layout.Button.
 - `iconPath` (_string_, defaults to `""`) — Path to a window icon.
 
 Returns `options` — The options.
