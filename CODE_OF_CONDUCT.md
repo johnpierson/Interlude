@@ -28,7 +28,7 @@ anywhere someone is representing the project publicly.
 
 ## Reporting
 
-Report a problem to **johntpierson@gmail.com**. Reports are handled privately, and the reporter's
+Report a problem to **sixtysecondrevit@gmail.com**. Reports are handled privately, and the reporter's
 identity is not shared.
 
 Maintainers may edit or remove comments, commits, issues and pull requests that do not follow
