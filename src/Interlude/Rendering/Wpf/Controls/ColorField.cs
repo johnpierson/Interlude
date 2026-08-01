@@ -49,7 +49,7 @@ internal sealed class ColorField : Grid
 
         _swatch = new Border { CornerRadius = new CornerRadius(2), MinHeight = 14 };
         _swatch.SetResourceReference(Border.BorderBrushProperty, ThemeKeys.Border);
-        _swatch.BorderThickness = new Thickness(1);
+        _swatch.SetResourceReference(Border.BorderThicknessProperty, ThemeKeys.BorderThickness);
         opener.Content = _swatch;
 
         SetColumn(opener, 0);
@@ -170,9 +170,9 @@ internal sealed class ColorField : Grid
         Border frame = new()
         {
             Child = panel,
-            BorderThickness = new Thickness(1),
             CornerRadius = new CornerRadius(4),
         };
+        frame.SetResourceReference(Border.BorderThicknessProperty, ThemeKeys.BorderThickness);
         frame.SetResourceReference(Border.BackgroundProperty, ThemeKeys.Surface);
         frame.SetResourceReference(Border.BorderBrushProperty, ThemeKeys.BorderStrong);
         return frame;

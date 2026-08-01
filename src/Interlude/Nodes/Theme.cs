@@ -19,14 +19,15 @@ public class Theme
     }
 
     /// <summary>
-    /// The default theme: follow the Windows light or dark setting, at comfortable spacing.
+    /// The theme a form gets when nobody wires one: neubrutalist, following the Windows light or
+    /// dark setting. Use <c>Theme.Light</c> or <c>Theme.Dark</c> for the quiet, conventional look.
     /// </summary>
     /// <returns name="theme">The theme.</returns>
     /// <search>theme,default,system,auto</search>
     public static ThemeDefinition System() => ThemeDefinition.Default;
 
     /// <summary>
-    /// A light theme.
+    /// A light theme — the conventional one: hairline outlines, rounded corners, no shadows.
     /// </summary>
     /// <param name="accent">Accent colour as hex, such as "#2F6FEB". Empty keeps the default.</param>
     /// <returns name="theme">The theme.</returns>
@@ -39,7 +40,8 @@ public class Theme
         };
 
     /// <summary>
-    /// A dark theme, tuned to sit comfortably over Revit's dark interface.
+    /// A dark theme, tuned to sit comfortably over Revit's dark interface. Conventional, like
+    /// <c>Theme.Light</c>: nothing here is loud.
     /// </summary>
     /// <param name="accent">Accent colour as hex, such as "#4C8DFF". Empty keeps the default.</param>
     /// <returns name="theme">The theme.</returns>
@@ -48,6 +50,30 @@ public class Theme
         => new()
         {
             Mode = AppearanceMode.Dark,
+            Accent = NodeSupport.OptionalColor(NodeSupport.OrNull(accent)),
+        };
+
+    /// <summary>
+    /// Neubrutalism: heavy black outlines, square corners, solid unblurred shadows offset down and
+    /// to the right, loud flat colour, and type set hard. This is what a form looks like when
+    /// nobody supplies a theme.
+    ///
+    /// The style is deliberately undesigned-looking — it borrows from brutalist architecture the
+    /// idea that structure should be visible rather than smoothed over. Every edge is drawn, every
+    /// control sits on its own shadow, and buttons drop onto that shadow when pressed. There is no
+    /// gradient, no blur and no soft grey anywhere in it.
+    /// </summary>
+    /// <param name="dark">Ink on paper, or the whole thing inverted.</param>
+    /// <param name="accent">
+    /// Overrides the loud colour used for buttons and selection, as hex. Empty keeps the preset's
+    /// own — hot pink in light, acid lime in dark.
+    /// </param>
+    /// <returns name="theme">The theme.</returns>
+    /// <search>neubrutalism,neubrutalist,brutal,brutalist,neo,bold,loud,fun,memphis,shadow</search>
+    public static ThemeDefinition Neubrutalism(bool dark = false, string accent = "")
+        => ThemeDefinition.Default with
+        {
+            Mode = dark ? AppearanceMode.Dark : AppearanceMode.Light,
             Accent = NodeSupport.OptionalColor(NodeSupport.OrNull(accent)),
         };
 
@@ -131,8 +157,14 @@ public class Theme
     /// <param name="shape">Rounded, Pill or Square. Pill ignores cornerRadius and uses the control height.</param>
     /// <param name="uppercaseHeaders">Render section and card headings as capitals.</param>
     /// <param name="headerTracking">Space between the letters of a heading, as a fraction of the font size.</param>
+    /// <param name="borderWidth">How thick control outlines are, in pixels.</param>
+    /// <param name="shadowOffset">
+    /// How far a solid, unblurred shadow sits below and right of each control, in pixels. Zero is
+    /// no shadow.
+    /// </param>
+    /// <param name="heavyText">Set labels, headings and buttons in a heavier weight.</param>
     /// <returns name="theme">The theme.</returns>
-    /// <search>theme,custom,style,brand,accent,font,density,pill,shape</search>
+    /// <search>theme,custom,style,brand,accent,font,density,pill,shape,border,shadow</search>
     public static ThemeDefinition Create(
         string mode = "Auto",
         string accent = "",
@@ -144,9 +176,15 @@ public class Theme
         bool reducedMotion = false,
         string shape = "Rounded",
         bool uppercaseHeaders = false,
-        double headerTracking = 0)
+        double headerTracking = 0,
+        double borderWidth = 1,
+        double shadowOffset = 0,
+        bool heavyText = false)
         => new()
         {
+            BorderWidth = Math.Max(0d, borderWidth),
+            ShadowOffset = Math.Max(0d, shadowOffset),
+            HeavyText = heavyText,
             Shape = Enum.TryParse(shape, ignoreCase: true, out ControlShape parsedShape)
                 ? parsedShape
                 : ControlShape.Rounded,
@@ -189,8 +227,8 @@ public class Theme
         ThemeDefinition source = theme ?? ThemeDefinition.Default;
 
         // Both palettes are adjusted, so the override survives a light/dark switch.
-        ThemePalette light = Adjust(source.LightPalette ?? ThemePalette.Light);
-        ThemePalette dark = Adjust(source.DarkPalette ?? ThemePalette.Dark);
+        ThemePalette light = Adjust(source.ResolveLightPalette());
+        ThemePalette dark = Adjust(source.ResolveDarkPalette());
 
         return source with { LightPalette = light, DarkPalette = dark };
 

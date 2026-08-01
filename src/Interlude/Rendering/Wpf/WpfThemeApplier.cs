@@ -2,6 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Effects;
 using Autodesk.DesignScript.Runtime;
 using Interlude.Theming;
 using Microsoft.Win32;
@@ -106,6 +107,7 @@ internal static class WpfThemeApplier
         double radius = theme.EffectiveCornerRadius;
         Set(resources, ThemeKeys.CornerRadius, new CornerRadius(radius));
         Set(resources, ThemeKeys.CornerRadiusValue, radius);
+        Set(resources, ThemeKeys.SmallCornerRadius, new CornerRadius(Math.Min(radius, 4d)));
         Set(resources, ThemeKeys.FontSize, theme.FontSize);
         Set(resources, ThemeKeys.FontSizeSmall, Math.Max(9d, theme.FontSize - 2d));
         Set(resources, ThemeKeys.FontSizeHeading, theme.FontSize * 1.35d);
@@ -116,8 +118,80 @@ internal static class WpfThemeApplier
         Set(resources, ThemeKeys.ControlHeight, theme.ControlHeight);
         Set(resources, ThemeKeys.ControlPadding, new Thickness(theme.BaseSpacing, 2d, theme.BaseSpacing, 2d));
 
+        double border = Math.Max(0d, theme.BorderWidth);
+        Set(resources, ThemeKeys.BorderThickness, new Thickness(border));
+        Set(resources, ThemeKeys.BorderWidthValue, border);
+        Set(resources, ThemeKeys.EdgeThickness, new Thickness(0d, 0d, 0d, border));
+        Set(resources, ThemeKeys.UnderlineThickness, new Thickness(0d, 0d, 0d, Math.Max(2d, border)));
+
+        Set(resources, ThemeKeys.HeadingFontWeight,
+            theme.HeavyText ? FontWeights.Bold : FontWeights.SemiBold);
+        Set(resources, ThemeKeys.LabelFontWeight,
+            theme.HeavyText ? FontWeights.SemiBold : FontWeights.Normal);
+
+        WriteShadows(resources, theme, palette);
+
         Set(resources, ThemeKeys.TransitionDuration,
             new Duration(TimeSpan.FromMilliseconds(theme.ReducedMotion ? 0d : 120d)));
+    }
+
+    /// <summary>
+    /// Writes the two shadow resources and the press transform that goes with them.
+    ///
+    /// The hard shadow is a <see cref="DropShadowEffect"/> with no blur, which is the cheap case:
+    /// there is no blur pass to run, and one frozen instance is shared by every control in the
+    /// window. When the theme offsets nothing, the control shadow key is removed rather than set
+    /// to something invisible — an unresolved lookup leaves <c>Effect</c> null and no control pays
+    /// for a render layer it cannot see.
+    /// </summary>
+    private static void WriteShadows(ResourceDictionary resources, ThemeDefinition theme, ThemePalette palette)
+    {
+        double offset = Math.Max(0d, theme.ShadowOffset);
+
+        if (offset > 0d)
+        {
+            Set(resources, ThemeKeys.ControlShadow, HardShadow(palette, offset));
+            Set(resources, ThemeKeys.CardShadow, HardShadow(palette, offset));
+        }
+        else
+        {
+            resources.Remove(ThemeKeys.ControlShadow);
+
+            DropShadowEffect soft = new()
+            {
+                Color = palette.Shadow.ToColor(),
+                BlurRadius = 12d,
+                ShadowDepth = 2d,
+                Direction = 270d,
+                Opacity = 0.5d,
+            };
+
+            soft.Freeze();
+            Set(resources, ThemeKeys.CardShadow, soft);
+        }
+
+        TranslateTransform press = new(offset, offset);
+        press.Freeze();
+        Set(resources, ThemeKeys.PressTransform, press);
+    }
+
+    private static DropShadowEffect HardShadow(ThemePalette palette, double offset)
+    {
+        DropShadowEffect effect = new()
+        {
+            Color = palette.Shadow.ToColor(),
+            BlurRadius = 0d,
+
+            // ShadowDepth is measured along the direction, so an offset of n down *and* n right
+            // is n times the diagonal. Direction 315 is down and to the right; WPF measures it
+            // anticlockwise from east.
+            ShadowDepth = offset * Math.Sqrt(2d),
+            Direction = 315d,
+            Opacity = 1d,
+        };
+
+        effect.Freeze();
+        return effect;
     }
 
     private static void MergeControlStyles(ResourceDictionary resources)

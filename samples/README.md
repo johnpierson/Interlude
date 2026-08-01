@@ -12,6 +12,8 @@ Worked examples of Interlude forms as JSON. Load one with `Form.FromJson` and sh
 | `computed-values.json` | A quantity takeoff whose totals recalculate as you type. |
 | `validation.json` | Rules that fire while typing, including one that reads another field. |
 | `long-form.json` | Fifty fields, for checking scrolling. |
+| `mono.json` | The monochrome theme: pills, spaced capitals, no colour. |
+| `neubrutalism.json` | The default theme, leaning all the way in. |
 
 ## These are tested
 

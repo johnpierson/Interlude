@@ -21,12 +21,23 @@ against the schema on each build, so they cannot drift.
   "elements": [ ... ],
   "buttons": { "submitText": "Submit", "cancelText": "Cancel", "showCancel": true },
   "window": { "width": 420, "maxHeight": 800, "isResizable": true },
-  "theme": { "mode": "auto", "density": "comfortable", "cornerRadius": 4 }
+  "theme": { "mode": "auto", "preset": "neubrutalist", "borderWidth": 2, "shadowOffset": 4 }
 }
 ```
 
 `schemaVersion` is checked before anything else is read. A file written by a newer Interlude is
 refused with an explanation rather than partly understood.
+
+### The theme
+
+A theme names the built-in palettes it starts from — `"preset"` is `"classic"` or
+`"neubrutalist"` — rather than carrying them. Writing the colours out would put all eighteen of
+them, in both modes, in front of a two-field form, and every checked-in form would show a palette
+diff each time the built-in colours were tuned.
+
+`lightPalette` and `darkPalette` appear only when an author actually replaced one, which is what
+`Theme.WithColors` does. When they appear they are complete: a partly-specified palette is not a
+thing, because a form with three colours filled in and fifteen missing has no defined appearance.
 
 ## Elements
 

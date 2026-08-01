@@ -12,11 +12,12 @@
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
     <Setter Property="Padding" Value="12,4" />
     <Setter Property="MinHeight" Value="{DynamicResource Interlude.ControlHeight}" />
     <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource Interlude.FontFamily}" />
+    <Setter Property="FontWeight" Value="{DynamicResource Interlude.LabelFontWeight}" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="Template">
       <Setter.Value>
@@ -27,6 +28,7 @@
                   BorderThickness="{TemplateBinding BorderThickness}"
                   CornerRadius="{DynamicResource Interlude.CornerRadius}"
                   Padding="{TemplateBinding Padding}"
+                  Effect="{DynamicResource Interlude.ControlShadow}"
                   SnapsToDevicePixels="True">
             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
           </Border>
@@ -41,13 +43,23 @@
               <Setter TargetName="Surface" Property="BorderBrush"
                       Value="{DynamicResource Interlude.Accent}" />
             </Trigger>
+
+            <!--
+                Pressing drops the button onto its own shadow: shift it by the offset and take
+                the shadow away. In a theme with no offset the transform is the identity and the
+                effect was already absent, so this costs nothing and shows nothing.
+            -->
             <Trigger Property="IsPressed" Value="True">
               <Setter TargetName="Surface" Property="Background"
                       Value="{DynamicResource Interlude.SurfaceAlt}" />
+              <Setter TargetName="Surface" Property="Effect" Value="{x:Null}" />
+              <Setter TargetName="Surface" Property="RenderTransform"
+                      Value="{DynamicResource Interlude.PressTransform}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
               <Setter TargetName="Surface" Property="Background"
                       Value="{DynamicResource Interlude.ControlBackgroundDisabled}" />
+              <Setter TargetName="Surface" Property="Effect" Value="{x:Null}" />
               <Setter Property="Foreground" Value="{DynamicResource Interlude.ForegroundDisabled}" />
               <Setter Property="Cursor" Value="Arrow" />
             </Trigger>
@@ -61,8 +73,13 @@
          BasedOn="{StaticResource {x:Type Button}}">
     <Setter Property="Background" Value="{DynamicResource Interlude.Accent}" />
     <Setter Property="Foreground" Value="{DynamicResource Interlude.AccentForeground}" />
-    <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Accent}" />
-    <Setter Property="FontWeight" Value="SemiBold" />
+    <!--
+        The outline stays the theme's border colour rather than following the accent. On a
+        conventional theme the two are near enough that nobody notices; on a neubrutalist one the
+        black outline around a hot-pink button is the entire look.
+    -->
+    <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
+    <Setter Property="FontWeight" Value="{DynamicResource Interlude.HeadingFontWeight}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type Button}">
@@ -72,6 +89,7 @@
                   BorderThickness="{TemplateBinding BorderThickness}"
                   CornerRadius="{DynamicResource Interlude.CornerRadius}"
                   Padding="{TemplateBinding Padding}"
+                  Effect="{DynamicResource Interlude.ControlShadow}"
                   SnapsToDevicePixels="True">
             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
           </Border>
@@ -79,14 +97,18 @@
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="Surface" Property="Background"
                       Value="{DynamicResource Interlude.AccentHover}" />
-              <Setter TargetName="Surface" Property="BorderBrush"
-                      Value="{DynamicResource Interlude.AccentHover}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+              <Setter TargetName="Surface" Property="Effect" Value="{x:Null}" />
+              <Setter TargetName="Surface" Property="RenderTransform"
+                      Value="{DynamicResource Interlude.PressTransform}" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
               <Setter TargetName="Surface" Property="Background"
                       Value="{DynamicResource Interlude.ControlBackgroundDisabled}" />
               <Setter TargetName="Surface" Property="BorderBrush"
                       Value="{DynamicResource Interlude.Border}" />
+              <Setter TargetName="Surface" Property="Effect" Value="{x:Null}" />
               <Setter Property="Foreground" Value="{DynamicResource Interlude.ForegroundDisabled}" />
             </Trigger>
           </ControlTemplate.Triggers>
@@ -152,6 +174,7 @@
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource Interlude.FontFamily}" />
+    <Setter Property="FontWeight" Value="{DynamicResource Interlude.LabelFontWeight}" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
     <Setter Property="Template">
@@ -160,8 +183,8 @@
           <StackPanel Orientation="Horizontal" Background="Transparent">
             <Border x:Name="Box"
                     Width="16" Height="16"
-                    CornerRadius="3"
-                    BorderThickness="1"
+                    CornerRadius="{DynamicResource Interlude.SmallCornerRadius}"
+                    BorderThickness="{DynamicResource Interlude.BorderThickness}"
                     Background="{DynamicResource Interlude.ControlBackground}"
                     BorderBrush="{DynamicResource Interlude.BorderStrong}"
                     VerticalAlignment="Center"
@@ -210,6 +233,7 @@
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource Interlude.FontFamily}" />
+    <Setter Property="FontWeight" Value="{DynamicResource Interlude.LabelFontWeight}" />
     <Setter Property="Cursor" Value="Hand" />
     <Setter Property="Template">
       <Setter.Value>
@@ -218,7 +242,7 @@
             <Grid Width="16" Height="16" VerticalAlignment="Center">
               <Ellipse x:Name="Ring"
                        Stroke="{DynamicResource Interlude.BorderStrong}"
-                       StrokeThickness="1"
+                       StrokeThickness="{DynamicResource Interlude.BorderWidthValue}"
                        Fill="{DynamicResource Interlude.ControlBackground}" />
               <Ellipse x:Name="Dot"
                        Width="8" Height="8"
@@ -254,11 +278,17 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ToggleButton}">
+          <!--
+              The off state uses the plain control background rather than the alternate surface.
+              A theme is free to make that alternate surface a loud colour — the neubrutalist one
+              makes it yellow — and a bright yellow switch reads as on however the knob is placed.
+          -->
           <Border x:Name="Track"
                   CornerRadius="10"
-                  Background="{DynamicResource Interlude.SurfaceAlt}"
+                  Background="{DynamicResource Interlude.ControlBackground}"
                   BorderBrush="{DynamicResource Interlude.BorderStrong}"
-                  BorderThickness="1"
+                  BorderThickness="{DynamicResource Interlude.BorderThickness}"
+                  Effect="{DynamicResource Interlude.ControlShadow}"
                   SnapsToDevicePixels="True">
             <Ellipse x:Name="Knob"
                      Width="14" Height="14"
@@ -296,8 +326,9 @@
           <Border x:Name="Surface"
                   Background="{DynamicResource Interlude.ControlBackground}"
                   BorderBrush="{DynamicResource Interlude.Border}"
-                  BorderThickness="1"
+                  BorderThickness="{DynamicResource Interlude.BorderThickness}"
                   CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                  Effect="{DynamicResource Interlude.ControlShadow}"
                   Padding="{TemplateBinding Padding}">
             <ContentPresenter />
           </Border>
@@ -324,7 +355,7 @@
           <Border x:Name="Surface"
                   Background="{TemplateBinding Background}"
                   BorderBrush="{DynamicResource Interlude.Border}"
-                  BorderThickness="1"
+                  BorderThickness="{DynamicResource Interlude.BorderThickness}"
                   CornerRadius="3" />
           <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">

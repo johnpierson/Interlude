@@ -153,6 +153,22 @@ restyle their UI from underneath them. There is a test for it.
 The XAML in `Themes/` consumes only `{DynamicResource Interlude.*}` keys, so switching light to
 dark is a dictionary update rather than a rebuild.
 
+That leaves the two halves joined by nothing but a string, and a mismatch is silent: an unresolved
+dynamic lookup leaves the property at its default, so a typo'd key renders as merely plain rather
+than broken. [`ThemeResourceTests`](../tests/Interlude.Tests/ThemeResourceTests.cs) scans the XAML
+for the keys it asks for and checks each one against `ThemeKeys` and against what the applier
+actually writes.
+
+One key is *deliberately* left unwritten. `Interlude.ControlShadow` exists only when a theme has a
+shadow offset; a theme without one removes the key, and the unresolved lookup leaves `Effect` null.
+Writing an invisible effect instead would give every control in every form a render layer it could
+not see, so the absence is load bearing and there is a test holding it in place.
+
+Two shadows, not one, because they answer different questions. `Interlude.ControlShadow` is the
+theme's own — hard, unblurred, offset — and applies to everything. `Interlude.CardShadow` is what
+a card gets when *the card* asks for one with `Layout.Card`, and it is always present: hard when
+the theme offsets shadows, soft and blurred when it does not.
+
 Error styling is driven by an *inherited* attached property, `FieldState.HasError`. The renderer
 flags the control it holds; the theme decides which part of a composite control turns red. That
 way the renderer needs no knowledge of any control's visual tree.

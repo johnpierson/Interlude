@@ -359,29 +359,45 @@ Behavior.WithValidation(Input.DatePicker("End"),
 | Node | Parameters |
 | --- | --- |
 | **System** | — |
+| **Neubrutalism** | `dark = false`, `accent = ""` |
 | **Light** / **Dark** | `accent = ""` |
 | **Mono** | `dark = false`, `accent = ""` |
-| **Create** | `mode = "Auto"`, `accent = ""`, `density = "Comfortable"`, `cornerRadius = 4`, `fontSize = 13`, `fontFamily = ""`, `labelWidth = 130`, `reducedMotion = false`, `shape = "Rounded"`, `uppercaseHeaders = false`, `headerTracking = 0` |
+| **Create** | `mode = "Auto"`, `accent = ""`, `density = "Comfortable"`, `cornerRadius = 4`, `fontSize = 13`, `fontFamily = ""`, `labelWidth = 130`, `reducedMotion = false`, `shape = "Rounded"`, `uppercaseHeaders = false`, `headerTracking = 0`, `borderWidth = 1`, `shadowOffset = 0`, `heavyText = false` |
 | **WithColors** | `theme`, `background`, `foreground`, `surface`, `border`, `error` |
+
+**A form with nothing on its theme port is neubrutalist** — that is what `System` returns. Heavy
+black outlines, square corners, solid unblurred shadows offset down and to the right, flat loud
+colour, and type set hard. `Light` and `Dark` are the conventional look and are the way out of it.
 
 `mode` is `Auto`, `Light` or `Dark`; `Auto` follows the Windows app theme. `density` is `Compact`,
 `Comfortable` or `Spacious`. `labelWidth: 0` stacks labels above their controls.
 
 `shape` is `Rounded`, `Pill` or `Square`. **`Pill` ignores `cornerRadius`** and derives the radius
 from the control height instead, because "fully rounded" is a function of how tall a control is.
+Whatever the shape, things a few pixels across — a tick box, a progress cell — clamp their radius,
+because a check box rounded into a circle looks like a radio button.
+
+`borderWidth` and `shadowOffset` are the two knobs the neubrutalist look is built from. The shadow
+is solid and unblurred, offset by that many pixels down and to the right; zero switches it off.
+A card that asks for a shadow with `Layout.Card` keeps getting a *soft* one in themes where
+`shadowOffset` is zero, so the two ideas do not collide.
 
 `uppercaseHeaders` and `headerTracking` are the micro-label treatment: small spaced capitals on
 section, card and tab headings, and on `Layout.Label` headings. Body text is never tracked, where
-letter spacing hurts readability rather than helping it.
+letter spacing hurts readability rather than helping it. `heavyText` sets labels, headings and
+buttons in a heavier weight — thin captions beside three-pixel outlines look like a mistake.
 
 Accent text colour is chosen automatically by contrast, so a bright accent still reads.
 
 Themes apply to the form's own window and nothing else — Revit's UI is never touched.
 
 ```
+Theme.Neubrutalism()            // the default, explicitly
+Theme.Neubrutalism(dark: true, accent: "#00E5FF")
+Theme.Light()                   // the conventional look
 Theme.Mono()                    // black, white, pills, spaced capitals
-Theme.Mono(dark: true)
 Theme.Dark("#4C8DFF")
+Theme.Create(borderWidth: 3, shadowOffset: 6, shape: "Square", heavyText: true)
 Theme.Create(shape: "Pill", uppercaseHeaders: true, headerTracking: 0.08, labelWidth: 0)
 ```
 

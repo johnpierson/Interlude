@@ -34,7 +34,54 @@ internal static class Gallery
         new("Long form", "Fifty fields, for checking scrolling and performance.", LongForm),
         new("Minimal", "The smallest useful form.", Minimal),
         new("Mono", "The monochrome theme: pills, spaced capitals, no colour.", Mono),
+        new("Neubrutalism", "The default theme, leaning all the way in.", Neubrutalism),
     };
+
+    /// <summary>
+    /// The default theme with enough variety to judge it: heavy outlines against flat colour,
+    /// hard shadows under every control, and a card sitting on one of its own.
+    /// </summary>
+    private static FormDefinition Neubrutalism() => new FormDefinition
+    {
+        Title = "Sheet set-up",
+        Description = "Heavy outlines, hard shadows, and no gradients anywhere.",
+        Window = new WindowOptions { Width = 520 },
+        Elements = new FormElement[]
+        {
+            new LabelElement { Text = "Naming", HeadingLevel = 3 },
+            new TextBoxElement { Key = "prefix", Label = "Prefix", Placeholder = "A-1", DefaultValue = "A-1" },
+            new DropdownElement
+            {
+                Key = "discipline",
+                Label = "Discipline",
+                Options = Options("Architectural", "Structural", "Mechanical"),
+            },
+            new IntegerElement { Key = "count", Label = "Sheets", DefaultValue = 12, Minimum = 1, Maximum = 200 },
+            new SeparatorElement { Caption = "Options" },
+            new CheckBoxElement { Key = "titleblock", Content = "Place a title block", DefaultValue = true },
+            new ToggleElement { Key = "revision", Label = "Revision", OnText = "On", OffText = "Off" },
+            new SliderElement
+            {
+                Key = "scale",
+                Label = "Scale",
+                Minimum = 1,
+                Maximum = 10,
+                DefaultValue = 4,
+                DecimalPlaces = 0,
+            },
+            new CardElement
+            {
+                Header = "Progress",
+                Subheader = "Sheets issued this month",
+                HasShadow = true,
+                Children = new FormElement[]
+                {
+                    new ProgressElement { Value = 8, Maximum = 12, Segments = 12, ShowPercentage = false },
+                    new ProgressElement { Value = 8, Maximum = 12 },
+                },
+            },
+        },
+    }.WithResolvedKeys();
 
     /// <summary>
     /// The monochrome theme on a form with enough variety to judge it: pill controls, capitalised

@@ -29,7 +29,7 @@
     <Setter Property="Background" Value="{DynamicResource Interlude.SurfaceAlt}" />
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
     <Setter Property="Padding" Value="8,4" />
     <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSizeSmall}" />
     <Setter Property="FontFamily" Value="{DynamicResource Interlude.FontFamily}" />

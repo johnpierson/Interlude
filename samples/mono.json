@@ -150,6 +150,7 @@
   },
   "theme": {
     "mode": "light",
+    "preset": "classic",
     "lightPalette": {
       "background": {
         "red": 255,
@@ -280,6 +281,9 @@
     },
     "cornerRadius": 4,
     "shape": "pill",
+    "borderWidth": 1,
+    "shadowOffset": 0,
+    "heavyText": false,
     "fontSize": 13,
     "uppercaseHeaders": true,
     "headerTracking": 0.08,

@@ -123,10 +123,11 @@
   Required(string message = "") -> ValidationRule
 
 ## Theme
-  Create(string mode = "Auto", string accent = "", string density = "Comfortable", double cornerRadius = 4, double fontSize = 13, string fontFamily = "", double labelWidth = 130, bool reducedMotion = false, string shape = "Rounded", bool uppercaseHeaders = false, double headerTracking = 0) -> ThemeDefinition
+  Create(string mode = "Auto", string accent = "", string density = "Comfortable", double cornerRadius = 4, double fontSize = 13, string fontFamily = "", double labelWidth = 130, bool reducedMotion = false, string shape = "Rounded", bool uppercaseHeaders = false, double headerTracking = 0, double borderWidth = 1, double shadowOffset = 0, bool heavyText = false) -> ThemeDefinition
   Dark(string accent = "") -> ThemeDefinition
   Light(string accent = "") -> ThemeDefinition
   Mono(bool dark = false, string accent = "") -> ThemeDefinition
+  Neubrutalism(bool dark = false, string accent = "") -> ThemeDefinition
   System() -> ThemeDefinition
   WithColors(ThemeDefinition theme, string background = "", string foreground = "", string surface = "", string border = "", string error = "") -> ThemeDefinition
 

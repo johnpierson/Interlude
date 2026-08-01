@@ -19,10 +19,11 @@
   <Style x:Key="Interlude.FieldSurface" TargetType="{x:Type Border}">
     <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
     <Setter Property="CornerRadius" Value="{DynamicResource Interlude.CornerRadius}" />
     <Setter Property="Padding" Value="{DynamicResource Interlude.ControlPadding}" />
     <Setter Property="MinHeight" Value="{DynamicResource Interlude.ControlHeight}" />
+    <Setter Property="Effect" Value="{DynamicResource Interlude.ControlShadow}" />
     <Style.Triggers>
       <Trigger Property="IsMouseOver" Value="True">
         <Setter Property="BorderBrush" Value="{DynamicResource Interlude.BorderStrong}" />
@@ -41,7 +42,7 @@
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
     <Setter Property="Padding" Value="{DynamicResource Interlude.ControlPadding}" />
     <Setter Property="MinHeight" Value="{DynamicResource Interlude.ControlHeight}" />
     <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
@@ -57,6 +58,7 @@
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}"
                   CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                  Effect="{DynamicResource Interlude.ControlShadow}"
                   SnapsToDevicePixels="True">
             <Grid>
               <TextBlock x:Name="Placeholder"
@@ -78,6 +80,16 @@
           <ControlTemplate.Triggers>
             <Trigger Property="Text" Value="">
               <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
+            </Trigger>
+
+            <!--
+                A text box with no border of its own is one nested inside another control — the
+                numeric field's entry area, or an editable combo box. Its surface is transparent,
+                so a drop shadow would fall from the letters rather than from the box, and the
+                value would render with a black copy of itself offset behind it.
+            -->
+            <Trigger Property="BorderThickness" Value="0">
+              <Setter TargetName="Surface" Property="Effect" Value="{x:Null}" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
               <Setter TargetName="Surface" Property="BorderBrush"
@@ -110,7 +122,7 @@
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
     <Setter Property="Padding" Value="{DynamicResource Interlude.ControlPadding}" />
     <Setter Property="MinHeight" Value="{DynamicResource Interlude.ControlHeight}" />
     <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
@@ -125,6 +137,7 @@
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}"
                   CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                  Effect="{DynamicResource Interlude.ControlShadow}"
                   SnapsToDevicePixels="True">
             <ScrollViewer x:Name="PART_ContentHost"
                           Padding="{TemplateBinding Padding}"
@@ -174,7 +187,7 @@
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
     <Setter Property="Padding" Value="{DynamicResource Interlude.ControlPadding}" />
     <Setter Property="MinHeight" Value="{DynamicResource Interlude.ControlHeight}" />
     <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
@@ -189,6 +202,7 @@
                     BorderBrush="{TemplateBinding BorderBrush}"
                     BorderThickness="{TemplateBinding BorderThickness}"
                     CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                    Effect="{DynamicResource Interlude.ControlShadow}"
                     SnapsToDevicePixels="True">
               <Grid>
                 <Grid.ColumnDefinitions>
@@ -254,7 +268,7 @@
                    Focusable="False">
               <Border Background="{DynamicResource Interlude.Surface}"
                       BorderBrush="{DynamicResource Interlude.BorderStrong}"
-                      BorderThickness="1"
+                      BorderThickness="{DynamicResource Interlude.BorderThickness}"
                       CornerRadius="{DynamicResource Interlude.CornerRadius}"
                       MinWidth="{TemplateBinding ActualWidth}"
                       MaxHeight="{TemplateBinding MaxDropDownHeight}"
@@ -329,33 +343,267 @@
     </Setter>
   </Style>
 
+  <!--
+      The date field, drawn to match everything else.
+
+      Only the closed field is retemplated. The drop-down calendar keeps Windows' own template and
+      is given colours and a font to sit in — templating a whole calendar to gain a few pixels of
+      consistency in a popup that is open for two seconds is not a trade worth making.
+  -->
   <Style TargetType="{x:Type DatePicker}">
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
     <Setter Property="MinHeight" Value="{DynamicResource Interlude.ControlHeight}" />
     <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource Interlude.FontFamily}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type DatePicker}">
+          <Border x:Name="Surface"
+                  Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                  Effect="{DynamicResource Interlude.ControlShadow}"
+                  SnapsToDevicePixels="True">
+            <Grid x:Name="PART_Root">
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+              </Grid.ColumnDefinitions>
+
+              <DatePickerTextBox x:Name="PART_TextBox"
+                                 Grid.Column="0"
+                                 Focusable="{TemplateBinding Focusable}"
+                                 Margin="{DynamicResource Interlude.ControlPadding}"
+                                 VerticalAlignment="Center" />
+
+              <Button x:Name="PART_Button"
+                      Grid.Column="1"
+                      Width="26"
+                      Focusable="False"
+                      Cursor="Hand">
+                <Button.Template>
+                  <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="Hit" Background="Transparent">
+                      <!-- A calendar: a box with a rule under its top edge and two tabs above it. -->
+                      <Path Data="M 0.5 2.5 L 13.5 2.5 L 13.5 13.5 L 0.5 13.5 Z
+                                  M 0.5 5.5 L 13.5 5.5
+                                  M 3.5 0.5 L 3.5 2.5
+                                  M 10.5 0.5 L 10.5 2.5"
+                            Stroke="{DynamicResource Interlude.ForegroundMuted}"
+                            StrokeThickness="1.3"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center" />
+                    </Border>
+                  </ControlTemplate>
+                </Button.Template>
+              </Button>
+
+              <Popup x:Name="PART_Popup"
+                     Placement="Bottom"
+                     PlacementTarget="{Binding ElementName=PART_TextBox}"
+                     StaysOpen="False"
+                     AllowsTransparency="True" />
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter TargetName="Surface" Property="BorderBrush"
+                      Value="{DynamicResource Interlude.BorderStrong}" />
+            </Trigger>
+            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+              <Setter TargetName="Surface" Property="BorderBrush"
+                      Value="{DynamicResource Interlude.Accent}" />
+            </Trigger>
+            <Trigger Property="interlude:FieldState.HasError" Value="True">
+              <Setter TargetName="Surface" Property="BorderBrush"
+                      Value="{DynamicResource Interlude.Error}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="Surface" Property="Background"
+                      Value="{DynamicResource Interlude.ControlBackgroundDisabled}" />
+              <Setter TargetName="Surface" Property="Effect" Value="{x:Null}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
 
   <Style TargetType="{x:Type DatePickerTextBox}">
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="BorderThickness" Value="0" />
-    <Setter Property="Padding" Value="4,0" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinHeight" Value="0" />
+    <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
+    <Setter Property="FontFamily" Value="{DynamicResource Interlude.FontFamily}" />
+    <Setter Property="CaretBrush" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="VerticalContentAlignment" Value="Center" />
   </Style>
 
+  <Style TargetType="{x:Type Calendar}">
+    <Setter Property="Background" Value="{DynamicResource Interlude.Surface}" />
+    <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Interlude.BorderStrong}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
+    <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
+    <Setter Property="FontFamily" Value="{DynamicResource Interlude.FontFamily}" />
+  </Style>
+
+  <!--
+      The slider is drawn here rather than left to the operating system's own. Every other control
+      in a form takes the theme's outline, corner shape and shadow; a stock Windows slider takes
+      none of them, and one hairline track among a page of heavy outlines is the single thing that
+      makes a themed form look half-finished.
+  -->
   <Style TargetType="{x:Type Slider}">
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Accent}" />
     <Setter Property="MinHeight" Value="22" />
     <Setter Property="IsMoveToPointEnabled" Value="True" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type Slider}">
+          <Grid Background="Transparent" VerticalAlignment="Center">
+            <Border x:Name="Rail"
+                    Height="12"
+                    VerticalAlignment="Center"
+                    Background="{DynamicResource Interlude.ControlBackground}"
+                    BorderBrush="{DynamicResource Interlude.Border}"
+                    BorderThickness="{DynamicResource Interlude.BorderThickness}"
+                    CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                    Effect="{DynamicResource Interlude.ControlShadow}"
+                    SnapsToDevicePixels="True" />
+
+            <Track x:Name="PART_Track">
+              <Track.DecreaseRepeatButton>
+                <RepeatButton Command="Slider.DecreaseLarge" Focusable="False" Cursor="Arrow">
+                  <RepeatButton.Template>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                      <!--
+                          Inset so the fill never paints over the rail's own outline: the track
+                          gives this button the whole width up to the thumb, outline included.
+                      -->
+                      <Border Background="Transparent">
+                        <Border Height="6"
+                                Margin="4,0,0,0"
+                                VerticalAlignment="Center"
+                                Background="{DynamicResource Interlude.Accent}" />
+                      </Border>
+                    </ControlTemplate>
+                  </RepeatButton.Template>
+                </RepeatButton>
+              </Track.DecreaseRepeatButton>
+
+              <Track.IncreaseRepeatButton>
+                <RepeatButton Command="Slider.IncreaseLarge" Focusable="False" Cursor="Arrow">
+                  <RepeatButton.Template>
+                    <ControlTemplate TargetType="{x:Type RepeatButton}">
+                      <Border Background="Transparent" />
+                    </ControlTemplate>
+                  </RepeatButton.Template>
+                </RepeatButton>
+              </Track.IncreaseRepeatButton>
+
+              <Track.Thumb>
+                <Thumb Width="14" Height="22" Cursor="Hand">
+                  <Thumb.Template>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                      <Border x:Name="Grip"
+                              Background="{DynamicResource Interlude.Surface}"
+                              BorderBrush="{DynamicResource Interlude.Border}"
+                              BorderThickness="{DynamicResource Interlude.BorderThickness}"
+                              CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                              Effect="{DynamicResource Interlude.ControlShadow}"
+                              SnapsToDevicePixels="True" />
+                      <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                          <Setter TargetName="Grip" Property="Background"
+                                  Value="{DynamicResource Interlude.Accent}" />
+                        </Trigger>
+                        <Trigger Property="IsDragging" Value="True">
+                          <Setter TargetName="Grip" Property="Background"
+                                  Value="{DynamicResource Interlude.Accent}" />
+                        </Trigger>
+                      </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                  </Thumb.Template>
+                </Thumb>
+              </Track.Thumb>
+            </Track>
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter TargetName="Rail" Property="Background"
+                      Value="{DynamicResource Interlude.ControlBackgroundDisabled}" />
+              <Setter TargetName="Rail" Property="Effect" Value="{x:Null}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
 
   <Style TargetType="{x:Type ProgressBar}">
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Accent}" />
-    <Setter Property="Background" Value="{DynamicResource Interlude.SurfaceAlt}" />
-    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />
+    <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ProgressBar}">
+          <Border Background="{TemplateBinding Background}"
+                  BorderBrush="{TemplateBinding BorderBrush}"
+                  BorderThickness="{TemplateBinding BorderThickness}"
+                  CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                  Effect="{DynamicResource Interlude.ControlShadow}"
+                  SnapsToDevicePixels="True">
+            <Grid ClipToBounds="True">
+              <Rectangle x:Name="PART_Track" />
+              <Rectangle x:Name="PART_Indicator"
+                         HorizontalAlignment="Left"
+                         Fill="{TemplateBinding Foreground}" />
+              <Rectangle x:Name="Sweep"
+                         Width="70"
+                         HorizontalAlignment="Left"
+                         Fill="{TemplateBinding Foreground}"
+                         Visibility="Collapsed">
+                <Rectangle.RenderTransform>
+                  <TranslateTransform x:Name="SweepOffset" X="-70" />
+                </Rectangle.RenderTransform>
+              </Rectangle>
+            </Grid>
+          </Border>
+          <ControlTemplate.Triggers>
+            <!--
+                Indeterminate: WPF sizes PART_Indicator from Value, which means nothing here, so
+                it is hidden and a fixed-width block is swept across instead. The travel is a
+                generous constant rather than the measured width — the grid clips it, so a bar
+                narrower than the sweep simply spends longer empty at each end.
+            -->
+            <Trigger Property="IsIndeterminate" Value="True">
+              <Setter TargetName="PART_Indicator" Property="Visibility" Value="Collapsed" />
+              <Setter TargetName="Sweep" Property="Visibility" Value="Visible" />
+              <Trigger.EnterActions>
+                <BeginStoryboard x:Name="SweepStoryboard">
+                  <Storyboard RepeatBehavior="Forever">
+                    <DoubleAnimation Storyboard.TargetName="SweepOffset"
+                                     Storyboard.TargetProperty="X"
+                                     From="-70" To="640" Duration="0:0:1.6" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </Trigger.EnterActions>
+              <Trigger.ExitActions>
+                <StopStoryboard BeginStoryboardName="SweepStoryboard" />
+              </Trigger.ExitActions>
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
 
 </ResourceDictionary>

@@ -83,13 +83,25 @@ folder field visible but disabled, and the justification field takes up no space
 
 ## What it looks like
 
-Interlude styles only the controls it draws, in the form window's own resource dictionary. It
-never writes to the host application's resources, so nothing it does can restyle Revit or Dynamo.
+A form you never themed is **neubrutalist**: heavy black outlines, square corners, solid unblurred
+shadows offset down and to the right, loud flat colour, and type set hard. Press a button and it
+drops onto its own shadow.
+
+<p align="center">
+  <img src="docs/images/neubrutalism-light.png" alt="The default theme: heavy black outlines, hard offset shadows and hot pink" width="400">
+  &nbsp;
+  <img src="docs/images/neubrutalism-dark.png" alt="The default theme in dark mode: white outlines and shadows on near-black" width="400">
+</p>
+
+A default that looks like nothing in particular is a decision too, and it is the wrong one for a
+package whose whole job is the dialog. So the loud option is the one you get for free — and the
+quiet one is one node away:
 
 ```
-Theme.Dark("#4C8DFF")        // follow Revit's dark interface
-Theme.Mono()                 // black, white, pills, spaced capitals
-Theme.Create(mode: "Auto", density: "Compact", labelWidth: 0)
+Theme.Light() / Theme.Dark("#4C8DFF")   // conventional: hairlines, rounded, no shadows
+Theme.Neubrutalism(dark: true)          // the default, explicitly
+Theme.Mono()                            // black, white, pills, spaced capitals
+Theme.Create(borderWidth: 3, shadowOffset: 6, shape: "Square", heavyText: true)
 ```
 
 <p align="center">
@@ -97,6 +109,12 @@ Theme.Create(mode: "Auto", density: "Compact", labelWidth: 0)
   &nbsp;
   <img src="docs/images/mono-dark.png" alt="The monochrome theme in dark mode" width="400">
 </p>
+
+Interlude styles only the controls it draws, in the form window's own resource dictionary. It
+never writes to the host application's resources, so nothing it does can restyle Revit or Dynamo.
+Sliders, date fields and progress bars are drawn by Interlude rather than left to Windows, because
+one stock hairline control among a page of heavy outlines is what makes a themed form look
+half-finished.
 
 Interlude sets its own font — **Comic Neue**, embedded in the assembly rather than named, so a
 form looks the same on every machine instead of depending on what happens to be installed. Name
@@ -154,7 +172,7 @@ Everything lives under a single **Interlude** category.
 | **Condition** | Tests over the form's own answers, for the Behavior nodes. |
 | **Compute** | Values worked out from other answers. |
 | **Rule** | Checks applied while the user types. |
-| **Theme** | Light, dark, accent, density, fonts. |
+| **Theme** | `Neubrutalism` (the default), `Mono`, `Light`, `Dark`, accent, density, fonts, outlines, shadows. |
 | **Form** | `Show`, `Create`, `Check`, `ToJson`, `FromJson`, `Options`, `Forget`. |
 | **Result** | Typed accessors: `GetString`, `GetNumber`, `GetBool`, `GetDate`, `GetColor`, `GetFilePaths`. |
 
@@ -168,6 +186,10 @@ dialog, offering several outcomes, wizards, live totals, unattended runs.
 repository, reviewed in a pull request, diffed between releases, and loaded by a graph that did
 not build it. [`samples/`](samples/) holds worked examples; the test suite validates each of
 them against the schema on every build.
+
+The theme travels with the form, but a built-in palette travels as its *name* — `"preset":
+"neubrutalist"` — rather than as eighteen colours in two modes. A form checked into a repository
+should not show a palette diff every time the built-in colours are tuned.
 
 ```json
 {

@@ -110,6 +110,7 @@ internal static class FieldChrome
             VerticalAlignment = VerticalAlignment.Center,
         };
         caption.SetResourceReference(TextBlock.ForegroundProperty, ThemeKeys.Foreground);
+        caption.SetResourceReference(TextBlock.FontWeightProperty, ThemeKeys.LabelFontWeight);
 
         StackPanel panel = new()
         {

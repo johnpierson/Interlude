@@ -10,30 +10,28 @@
     <Setter Property="CornerRadius" Value="{DynamicResource Interlude.CornerRadius}" />
   </Style>
 
+  <!--
+      The shadow itself is built by the theme applier, because its shape depends on the theme:
+      soft and blurred normally, hard and offset when the theme offsets shadows. A card only says
+      that it wants one.
+  -->
   <Style x:Key="Interlude.CardWithShadow" TargetType="{x:Type Border}"
          BasedOn="{StaticResource Interlude.Card}">
-    <Setter Property="Effect">
-      <Setter.Value>
-        <DropShadowEffect Color="{DynamicResource Interlude.ShadowColor}"
-                          BlurRadius="12"
-                          ShadowDepth="2"
-                          Direction="270"
-                          Opacity="0.5" />
-      </Setter.Value>
-    </Setter>
+    <Setter Property="Effect" Value="{DynamicResource Interlude.CardShadow}" />
   </Style>
 
   <Style x:Key="Interlude.ListSurface" TargetType="{x:Type ScrollViewer}">
     <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type ScrollViewer}">
           <Border Background="{TemplateBinding Background}"
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}"
-                  CornerRadius="{DynamicResource Interlude.CornerRadius}">
+                  CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                  Effect="{DynamicResource Interlude.ControlShadow}">
             <Grid>
               <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -62,7 +60,7 @@
           <Border Background="Transparent">
             <Border x:Name="Grip"
                     Background="{DynamicResource Interlude.Border}"
-                    Width="1"
+                    Width="{DynamicResource Interlude.BorderWidthValue}"
                     HorizontalAlignment="Center" />
           </Border>
           <ControlTemplate.Triggers>
@@ -87,17 +85,18 @@
         <ControlTemplate TargetType="{x:Type GroupBox}">
           <Border Background="{DynamicResource Interlude.Surface}"
                   BorderBrush="{TemplateBinding BorderBrush}"
-                  BorderThickness="1"
-                  CornerRadius="{DynamicResource Interlude.CornerRadius}">
+                  BorderThickness="{DynamicResource Interlude.BorderThickness}"
+                  CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                  Effect="{DynamicResource Interlude.ControlShadow}">
             <DockPanel>
               <Border DockPanel.Dock="Top"
                       Background="{DynamicResource Interlude.SurfaceAlt}"
                       BorderBrush="{TemplateBinding BorderBrush}"
-                      BorderThickness="0,0,0,1"
+                      BorderThickness="{DynamicResource Interlude.EdgeThickness}"
                       Padding="10,6"
                       CornerRadius="{DynamicResource Interlude.CornerRadius}">
                 <ContentPresenter ContentSource="Header"
-                                  TextElement.FontWeight="SemiBold"
+                                  TextElement.FontWeight="{DynamicResource Interlude.HeadingFontWeight}"
                                   TextElement.Foreground="{DynamicResource Interlude.Foreground}" />
               </Border>
               <ContentPresenter Margin="{TemplateBinding Padding}" />
@@ -117,8 +116,9 @@
         <ControlTemplate TargetType="{x:Type Expander}">
           <Border Background="{DynamicResource Interlude.Surface}"
                   BorderBrush="{DynamicResource Interlude.Border}"
-                  BorderThickness="1"
-                  CornerRadius="{DynamicResource Interlude.CornerRadius}">
+                  BorderThickness="{DynamicResource Interlude.BorderThickness}"
+                  CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                  Effect="{DynamicResource Interlude.ControlShadow}">
             <DockPanel>
               <ToggleButton x:Name="Header"
                             DockPanel.Dock="Top"
@@ -138,7 +138,7 @@
                               RenderTransformOrigin="0.5,0.5" />
                         <ContentPresenter Margin="10,0,0,0"
                                           VerticalAlignment="Center"
-                                          TextElement.FontWeight="SemiBold"
+                                          TextElement.FontWeight="{DynamicResource Interlude.HeadingFontWeight}"
                                           TextElement.Foreground="{DynamicResource Interlude.Foreground}" />
                       </StackPanel>
                     </Border>
@@ -181,7 +181,7 @@
           <DockPanel>
             <Border DockPanel.Dock="Top"
                     BorderBrush="{DynamicResource Interlude.Border}"
-                    BorderThickness="0,0,0,1">
+                    BorderThickness="{DynamicResource Interlude.EdgeThickness}">
               <TabPanel IsItemsHost="True" Panel.ZIndex="1" Margin="0,0,0,-1" />
             </Border>
             <Border Background="Transparent" Padding="0,2,0,0">
@@ -204,7 +204,7 @@
           <Border x:Name="Surface"
                   Background="Transparent"
                   BorderBrush="Transparent"
-                  BorderThickness="0,0,0,2"
+                  BorderThickness="{DynamicResource Interlude.UnderlineThickness}"
                   Padding="14,7">
             <ContentPresenter ContentSource="Header" VerticalAlignment="Center" />
           </Border>
@@ -213,7 +213,7 @@
               <Setter TargetName="Surface" Property="BorderBrush"
                       Value="{DynamicResource Interlude.Accent}" />
               <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
-              <Setter Property="FontWeight" Value="SemiBold" />
+              <Setter Property="FontWeight" Value="{DynamicResource Interlude.HeadingFontWeight}" />
             </Trigger>
             <MultiTrigger>
               <MultiTrigger.Conditions>
@@ -233,7 +233,7 @@
   <Style TargetType="{x:Type ListBox}">
     <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource Interlude.FontFamily}" />
@@ -244,7 +244,8 @@
           <Border Background="{TemplateBinding Background}"
                   BorderBrush="{TemplateBinding BorderBrush}"
                   BorderThickness="{TemplateBinding BorderThickness}"
-                  CornerRadius="{DynamicResource Interlude.CornerRadius}">
+                  CornerRadius="{DynamicResource Interlude.CornerRadius}"
+                  Effect="{DynamicResource Interlude.ControlShadow}">
             <ScrollViewer Padding="{TemplateBinding Padding}"
                           VerticalScrollBarVisibility="Auto"
                           HorizontalScrollBarVisibility="Disabled">
@@ -296,7 +297,7 @@
   <Style TargetType="{x:Type TreeView}">
     <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />
     <Setter Property="BorderBrush" Value="{DynamicResource Interlude.Border}" />
-    <Setter Property="BorderThickness" Value="1" />
+    <Setter Property="BorderThickness" Value="{DynamicResource Interlude.BorderThickness}" />
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
     <Setter Property="FontFamily" Value="{DynamicResource Interlude.FontFamily}" />

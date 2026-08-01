@@ -312,10 +312,10 @@ internal sealed class CardRenderer : ContainerRenderer<CardElement>
         {
             TextBlock header = new()
             {
-                FontWeight = FontWeights.SemiBold,
                 FontSize = context.Theme.FontSize * 1.1d,
                 TextWrapping = TextWrapping.Wrap,
             };
+            header.SetResourceReference(TextBlock.FontWeightProperty, ThemeKeys.HeadingFontWeight);
             header.SetResourceReference(TextBlock.ForegroundProperty, ThemeKeys.Foreground);
             HeaderText.Apply(header, element.Header, context);
             body.Children.Add(header);
@@ -349,9 +349,9 @@ internal sealed class CardRenderer : ContainerRenderer<CardElement>
             Child = body,
             Padding = new Thickness(context.Spacing * 1.5d),
             Margin = new Thickness(0, 0, 0, context.Spacing),
-            BorderThickness = new Thickness(1),
         };
 
+        card.SetResourceReference(Border.BorderThicknessProperty, ThemeKeys.BorderThickness);
         card.SetResourceReference(Border.BackgroundProperty, ThemeKeys.Surface);
         card.SetResourceReference(Border.BorderBrushProperty, ThemeKeys.Border);
         card.SetResourceReference(FrameworkElement.StyleProperty,

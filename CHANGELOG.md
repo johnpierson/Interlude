@@ -11,8 +11,35 @@ package version and `FileVersion` are what move.
 
 ## [Unreleased]
 
+### Changed
+
+- **The default form design is now neubrutalist.** A form with nothing wired into its theme port
+  gets heavy black outlines, square corners, solid unblurred shadows offset down and to the right,
+  flat loud colour, and type set hard. Buttons drop onto their own shadow when pressed.
+
+  A default that looks like nothing in particular is a decision too, and it is the wrong one for a
+  package whose whole job is the dialog. `Theme.Light` and `Theme.Dark` are unchanged and remain
+  the conventional look — hairline outlines, rounded corners, no shadows — so the quiet option is
+  one node away rather than unavailable.
+
+- **The slider, the date field and the progress bar are now drawn by Interlude** rather than left
+  to Windows. They were the three controls that ignored the theme's outline, corner shape and
+  shadow, and one stock hairline control among a page of heavy outlines is the single thing that
+  makes a themed form look half-finished. The date field's drop-down calendar keeps Windows' own
+  template, coloured to match.
+
+- **A toggle switch that is off no longer uses the theme's alternate surface colour.** A theme is
+  free to make that colour loud — the neubrutalist one makes it yellow — and a bright yellow switch
+  reads as *on* however the knob is placed.
+
 ### Added
 
+- **`Theme.Neubrutalism`** — the default preset, by name, so a graph can ask for it explicitly and
+  choose light or dark rather than following Windows.
+- **`Theme.Create` gained `borderWidth`, `shadowOffset` and `heavyText`** (appended, as the rules
+  require). `shadowOffset` is a solid, unblurred offset — set it to zero for no shadow. A card that
+  asks for a shadow with `Layout.Card` still gets a soft one in themes that do not offset shadows,
+  so the two ideas do not collide.
 - **`Theme.Mono`** — a monochrome preset: black, white and grey, pill-shaped controls, and small
   spaced capitals for headings. Errors keep a red, deliberately: an error nobody can pick out from
   ordinary text is a usability bug, and no amount of restraint is worth that.
@@ -27,6 +54,12 @@ package version and `FileVersion` are what move.
   counting rather than measuring.
 
 ### Fixed
+
+- **A built-in palette is now serialised by name.** A form's JSON carried all eighteen colours of
+  both palettes whenever the theme did not use the stock light and dark ones — three hundred lines
+  in front of a two-field form, and a palette diff in every checked-in form each time the built-in
+  colours were tuned. Themes now record which preset they started from (`"preset":
+  "neubrutalist"`); a palette is written out only when an author actually replaced one.
 
 - **A "System" category appeared in the library beside "Interlude".** Dynamo imports the base
   types and signature types of every public type, so exceptions deriving from

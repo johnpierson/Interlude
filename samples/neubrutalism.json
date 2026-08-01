@@ -1,0 +1,175 @@
+{
+  "schemaVersion": 1,
+  "title": "Sheet set-up",
+  "description": "Heavy outlines, hard shadows, and no gradients anywhere.",
+  "elements": [
+    {
+      "$type": "label",
+      "text": "Naming",
+      "headingLevel": 3,
+      "wrapText": true,
+      "isMuted": false,
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "placeholder": "A-1",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "defaultValue": "A-1",
+      "isReadOnly": false,
+      "key": "prefix",
+      "label": "Prefix",
+      "rules": []
+    },
+    {
+      "$type": "dropdown",
+      "isEditable": false,
+      "showSearch": false,
+      "options": [
+        {
+          "value": "Architectural",
+          "display": "Architectural",
+          "isEnabled": true
+        },
+        {
+          "value": "Structural",
+          "display": "Structural",
+          "isEnabled": true
+        },
+        {
+          "value": "Mechanical",
+          "display": "Mechanical",
+          "isEnabled": true
+        }
+      ],
+      "selectFirstByDefault": true,
+      "isReadOnly": false,
+      "key": "discipline",
+      "label": "Discipline",
+      "rules": []
+    },
+    {
+      "$type": "integer",
+      "minimum": 1,
+      "maximum": 200,
+      "increment": 1,
+      "showSpinner": true,
+      "defaultValue": 12,
+      "isReadOnly": false,
+      "key": "count",
+      "label": "Sheets",
+      "rules": []
+    },
+    {
+      "$type": "separator",
+      "orientation": "horizontal",
+      "caption": "Options",
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "checkBox",
+      "content": "Place a title block",
+      "defaultValue": true,
+      "isReadOnly": false,
+      "key": "titleblock",
+      "rules": []
+    },
+    {
+      "$type": "toggle",
+      "onText": "On",
+      "offText": "Off",
+      "isReadOnly": false,
+      "key": "revision",
+      "label": "Revision",
+      "rules": []
+    },
+    {
+      "$type": "slider",
+      "minimum": 1,
+      "maximum": 10,
+      "step": 1,
+      "decimalPlaces": 0,
+      "showValue": true,
+      "showTicks": false,
+      "defaultValue": 4,
+      "isReadOnly": false,
+      "key": "scale",
+      "label": "Scale",
+      "rules": []
+    },
+    {
+      "$type": "card",
+      "header": "Progress",
+      "subheader": "Sheets issued this month",
+      "hasShadow": true,
+      "children": [
+        {
+          "$type": "progress",
+          "value": 8,
+          "minimum": 0,
+          "maximum": 12,
+          "isIndeterminate": false,
+          "showPercentage": false,
+          "segments": 12,
+          "key": "",
+          "rules": []
+        },
+        {
+          "$type": "progress",
+          "value": 8,
+          "minimum": 0,
+          "maximum": 12,
+          "isIndeterminate": false,
+          "showPercentage": true,
+          "segments": 0,
+          "key": "",
+          "rules": []
+        }
+      ],
+      "key": "",
+      "rules": []
+    }
+  ],
+  "buttons": {
+    "submitText": "Submit",
+    "cancelText": "Cancel",
+    "showSubmit": true,
+    "showCancel": true,
+    "extraButtons": [],
+    "closeOnEscape": true
+  },
+  "window": {
+    "width": 520,
+    "minWidth": 280,
+    "minHeight": 120,
+    "maxHeight": 800,
+    "isResizable": true,
+    "showInTaskbar": false,
+    "topmost": false
+  },
+  "theme": {
+    "mode": "auto",
+    "preset": "neubrutalist",
+    "cornerRadius": 4,
+    "shape": "square",
+    "borderWidth": 2,
+    "shadowOffset": 4,
+    "heavyText": true,
+    "fontSize": 13,
+    "uppercaseHeaders": true,
+    "headerTracking": 0.05,
+    "density": "comfortable",
+    "reducedMotion": false,
+    "labelWidth": 130,
+    "baseSpacing": 8,
+    "controlHeight": 28,
+    "effectiveCornerRadius": 0
+  },
+  "formId": "",
+  "rememberValues": true,
+  "headlessUseDefaults": false
+}

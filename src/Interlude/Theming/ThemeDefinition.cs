@@ -15,6 +15,24 @@ public enum AppearanceMode
     Dark,
 }
 
+/// <summary>
+/// Which built-in pair of palettes a theme starts from.
+///
+/// This is a name rather than a copy on purpose. A theme that carried the palettes themselves
+/// would serialise every one of the eighteen colours in both modes — three hundred lines of JSON
+/// in front of a two-field form — and a form checked into a repository would show a palette diff
+/// every time the built-in colours were tuned.
+/// </summary>
+[IsVisibleInDynamoLibrary(false)]
+public enum ThemePreset
+{
+    /// <summary>Conventional light and dark: hairline outlines, soft greys, one blue accent.</summary>
+    Classic,
+
+    /// <summary>Neubrutalist: heavy outlines, flat loud colour, hard shadows.</summary>
+    Neubrutalist,
+}
+
 /// <summary>The shape of a control's corners.</summary>
 [IsVisibleInDynamoLibrary(false)]
 public enum ControlShape
@@ -97,6 +115,62 @@ public sealed record ThemePalette
         Shadow = new RgbColor(0, 0, 0, 120),
     };
 
+    /// <summary>
+    /// The neubrutalist light palette: warm paper, pure black ink, and one loud accent.
+    ///
+    /// Every line in this style is the same black, which is the point — neubrutalism gets its
+    /// structure from outline and offset rather than from a hierarchy of greys, so
+    /// <see cref="Border"/> and <see cref="BorderStrong"/> deliberately match.
+    /// </summary>
+    public static readonly ThemePalette Neo = new()
+    {
+        Background = RgbColor.Parse("#FFF4E0"),
+        Surface = RgbColor.Parse("#FFFFFF"),
+        SurfaceAlt = RgbColor.Parse("#FFE55C"),
+        Border = RgbColor.Parse("#000000"),
+        BorderStrong = RgbColor.Parse("#000000"),
+        Foreground = RgbColor.Parse("#000000"),
+        ForegroundMuted = RgbColor.Parse("#4A4238"),
+        ForegroundDisabled = RgbColor.Parse("#9A9186"),
+        ControlBackground = RgbColor.Parse("#FFFFFF"),
+        ControlBackgroundHover = RgbColor.Parse("#FFE55C"),
+        ControlBackgroundDisabled = RgbColor.Parse("#E8E2D6"),
+        Accent = RgbColor.Parse("#FF5C8A"),
+        AccentHover = RgbColor.Parse("#FF87A8"),
+        AccentForeground = RgbColor.Parse("#000000"),
+        Error = RgbColor.Parse("#E5383B"),
+        Warning = RgbColor.Parse("#FF8A00"),
+        Success = RgbColor.Parse("#00B36B"),
+        Shadow = new RgbColor(0, 0, 0, 255),
+    };
+
+    /// <summary>
+    /// The neubrutalist dark palette — the light one inverted rather than dimmed. Black borders
+    /// and black shadows vanish on a dark backdrop, so both become bone white and the accent
+    /// moves to a colour that survives being surrounded by it.
+    /// </summary>
+    public static readonly ThemePalette NeoDark = new()
+    {
+        Background = RgbColor.Parse("#121214"),
+        Surface = RgbColor.Parse("#1E1E22"),
+        SurfaceAlt = RgbColor.Parse("#2C2C33"),
+        Border = RgbColor.Parse("#F2F2F0"),
+        BorderStrong = RgbColor.Parse("#FFFFFF"),
+        Foreground = RgbColor.Parse("#F7F7F5"),
+        ForegroundMuted = RgbColor.Parse("#AFAFB8"),
+        ForegroundDisabled = RgbColor.Parse("#6A6A72"),
+        ControlBackground = RgbColor.Parse("#1E1E22"),
+        ControlBackgroundHover = RgbColor.Parse("#3A3A44"),
+        ControlBackgroundDisabled = RgbColor.Parse("#26262A"),
+        Accent = RgbColor.Parse("#C7F464"),
+        AccentHover = RgbColor.Parse("#D9FF8C"),
+        AccentForeground = RgbColor.Parse("#121214"),
+        Error = RgbColor.Parse("#FF6B6B"),
+        Warning = RgbColor.Parse("#FFC145"),
+        Success = RgbColor.Parse("#5CE1A0"),
+        Shadow = new RgbColor(242, 242, 240, 255),
+    };
+
     /// <summary>The window's own backdrop.</summary>
     public RgbColor Background { get; init; }
 
@@ -177,18 +251,38 @@ public sealed record ThemePalette
 [IsVisibleInDynamoLibrary(false)]
 public sealed record ThemeDefinition
 {
-    /// <summary>The stock theme: follow the system light/dark setting at comfortable density.</summary>
-    public static readonly ThemeDefinition Default = new();
+    /// <summary>
+    /// The theme a form gets when nobody supplies one: neubrutalist, following the system
+    /// light/dark setting at comfortable density.
+    ///
+    /// A default that looks like nothing in particular is a decision too, and it is the wrong one
+    /// for a package whose whole job is the dialog. This is the loud option on purpose. Every part
+    /// of it is a property below, so <c>Theme.Light</c> and <c>Theme.Dark</c> — which take the
+    /// property defaults rather than this — stay the quiet way out.
+    /// </summary>
+    public static readonly ThemeDefinition Default = new()
+    {
+        Preset = ThemePreset.Neubrutalist,
+        Shape = ControlShape.Square,
+        BorderWidth = 2d,
+        ShadowOffset = 4d,
+        HeavyText = true,
+        UppercaseHeaders = true,
+        HeaderTracking = 0.05d,
+    };
 
     public AppearanceMode Mode { get; init; } = AppearanceMode.Auto;
+
+    /// <summary>Which built-in pair of palettes this theme starts from.</summary>
+    public ThemePreset Preset { get; init; } = ThemePreset.Classic;
 
     /// <summary>Replaces the accent colour in whichever palette is active.</summary>
     public RgbColor? Accent { get; init; }
 
-    /// <summary>Replaces the stock light palette outright.</summary>
+    /// <summary>Replaces the preset's light palette outright.</summary>
     public ThemePalette? LightPalette { get; init; }
 
-    /// <summary>Replaces the stock dark palette outright.</summary>
+    /// <summary>Replaces the preset's dark palette outright.</summary>
     public ThemePalette? DarkPalette { get; init; }
 
     public double CornerRadius { get; init; } = 4d;
@@ -199,6 +293,28 @@ public sealed record ThemeDefinition
     /// because "fully rounded" is a function of how tall the control is.
     /// </summary>
     public ControlShape Shape { get; init; } = ControlShape.Rounded;
+
+    /// <summary>
+    /// How thick every control outline is, in pixels. One is a hairline; two or three is the
+    /// heavy outline neubrutalism is built on.
+    /// </summary>
+    public double BorderWidth { get; init; } = 1d;
+
+    /// <summary>
+    /// The distance a control's hard drop shadow is offset down and to the right, in pixels.
+    /// Zero switches it off, which is what every theme but the neubrutalist one wants.
+    ///
+    /// This is a solid, unblurred shadow — the flat rectangle of colour sitting behind a control,
+    /// not a soft glow. Cards asked for a shadow with <c>Layout.Card</c> keep getting a soft one
+    /// when this is zero, so the two ideas do not collide.
+    /// </summary>
+    public double ShadowOffset { get; init; }
+
+    /// <summary>
+    /// Sets field labels, headings and buttons in a heavier weight. Neubrutalism reads as loud
+    /// partly because the type is: thin captions beside three-pixel outlines look like a mistake.
+    /// </summary>
+    public bool HeavyText { get; init; }
 
     public double FontSize { get; init; } = 13d;
 
@@ -247,12 +363,28 @@ public sealed record ThemeDefinition
             _ => systemPrefersDark,
         };
 
-        ThemePalette palette = useDark
-            ? DarkPalette ?? ThemePalette.Dark
-            : LightPalette ?? ThemePalette.Light;
+        ThemePalette palette = useDark ? ResolveDarkPalette() : ResolveLightPalette();
 
         return Accent.HasValue ? palette.WithAccent(Accent.Value) : palette;
     }
+
+    /// <summary>The light palette this theme uses: its own if it has one, otherwise its preset's.</summary>
+    public ThemePalette ResolveLightPalette() => LightPalette ?? PresetLight(Preset);
+
+    /// <summary>The dark palette this theme uses: its own if it has one, otherwise its preset's.</summary>
+    public ThemePalette ResolveDarkPalette() => DarkPalette ?? PresetDark(Preset);
+
+    private static ThemePalette PresetLight(ThemePreset preset) => preset switch
+    {
+        ThemePreset.Neubrutalist => ThemePalette.Neo,
+        _ => ThemePalette.Light,
+    };
+
+    private static ThemePalette PresetDark(ThemePreset preset) => preset switch
+    {
+        ThemePreset.Neubrutalist => ThemePalette.NeoDark,
+        _ => ThemePalette.Dark,
+    };
 
     /// <summary>The spacing scale implied by <see cref="Density"/>, in pixels.</summary>
     public double BaseSpacing => Density switch

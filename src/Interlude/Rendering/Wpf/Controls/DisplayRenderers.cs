@@ -44,7 +44,7 @@ internal sealed class LabelRenderer : ControlRenderer<LabelElement>
             };
 
             text.FontSize = context.Theme.FontSize * scale;
-            text.FontWeight = FontWeights.SemiBold;
+            text.SetResourceReference(TextBlock.FontWeightProperty, ThemeKeys.HeadingFontWeight);
             text.Margin = new Thickness(0, context.Spacing / 2d, 0, context.Spacing / 2d);
 
             // After the font size, never before: the tracking is a fraction of it. Headings take
@@ -158,7 +158,7 @@ internal sealed class SeparatorRenderer : ControlRenderer<SeparatorElement>
         {
             Border vertical = new()
             {
-                Width = 1,
+                Width = context.Theme.BorderWidth,
                 Margin = new Thickness(context.Spacing, 0, context.Spacing, 0),
             };
             vertical.SetResourceReference(Border.BackgroundProperty, ThemeKeys.Border);
@@ -167,7 +167,7 @@ internal sealed class SeparatorRenderer : ControlRenderer<SeparatorElement>
 
         Border line = new()
         {
-            Height = 1,
+            Height = context.Theme.BorderWidth,
             VerticalAlignment = VerticalAlignment.Center,
             Margin = new Thickness(0, context.Spacing, 0, context.Spacing),
         };
@@ -186,8 +186,8 @@ internal sealed class SeparatorRenderer : ControlRenderer<SeparatorElement>
         {
             Text = element.Caption,
             Margin = new Thickness(0, 0, context.Spacing, 0),
-            FontWeight = FontWeights.SemiBold,
         };
+        caption.SetResourceReference(TextBlock.FontWeightProperty, ThemeKeys.HeadingFontWeight);
         caption.SetResourceReference(TextBlock.ForegroundProperty, ThemeKeys.ForegroundMuted);
 
         line.Margin = new Thickness(0);
@@ -236,7 +236,10 @@ internal sealed class ProgressRenderer : ControlRenderer<ProgressElement>
                 Maximum = element.Maximum,
                 Value = element.Value,
                 IsIndeterminate = element.IsIndeterminate,
-                Height = 6,
+
+                // The bar is outlined, so its height has to grow with the outline or a heavy
+                // theme leaves nothing but border where the fill should be.
+                Height = 8d + (context.Theme.BorderWidth * 2d),
                 MinWidth = 120,
                 VerticalAlignment = VerticalAlignment.Center,
             });
@@ -285,10 +288,10 @@ internal sealed class ProgressRenderer : ControlRenderer<ProgressElement>
                 Width = 14,
                 Height = 10,
                 Margin = new Thickness(0, 0, 3, 0),
-                BorderThickness = new Thickness(1),
-                CornerRadius = new CornerRadius(2),
             };
 
+            cell.SetResourceReference(Border.CornerRadiusProperty, ThemeKeys.SmallCornerRadius);
+            cell.SetResourceReference(Border.BorderThicknessProperty, ThemeKeys.BorderThickness);
             cell.SetResourceReference(Border.BorderBrushProperty, ThemeKeys.BorderStrong);
             cell.SetResourceReference(
                 Border.BackgroundProperty,
@@ -350,11 +353,11 @@ internal sealed class FallbackRenderer : IControlRenderer
     {
         Border frame = new()
         {
-            BorderThickness = new Thickness(1),
             CornerRadius = new CornerRadius(3),
             Padding = new Thickness(8),
             Margin = new Thickness(0, 0, 0, context.Spacing / 2d),
         };
+        frame.SetResourceReference(Border.BorderThicknessProperty, ThemeKeys.BorderThickness);
         frame.SetResourceReference(Border.BorderBrushProperty, ThemeKeys.Warning);
 
         StackPanel body = new();
@@ -364,9 +367,9 @@ internal sealed class FallbackRenderer : IControlRenderer
             Text = string.IsNullOrWhiteSpace(element.Label)
                 ? $"Unsupported control: {element.GetType().Name}"
                 : element.Label,
-            FontWeight = FontWeights.SemiBold,
             TextWrapping = TextWrapping.Wrap,
         };
+        heading.SetResourceReference(TextBlock.FontWeightProperty, ThemeKeys.HeadingFontWeight);
         heading.SetResourceReference(TextBlock.ForegroundProperty, ThemeKeys.Warning);
 
         TextBlock detail = new()

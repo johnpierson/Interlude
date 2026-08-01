@@ -301,14 +301,23 @@ exist there. Build the options in the graph each run.
 
 ## Match Revit's theme
 
-`Theme.System()` is the default and follows the Windows app theme, which is usually what Revit
-follows too.
+The default look is neubrutalist — heavy outlines, hard shadows, loud flat colour — and it follows
+the Windows light/dark setting, which is usually what Revit follows too. It is a deliberate choice,
+and it is not the right one for a dialog that has to disappear into a corporate deployment.
 
-To pin it, or to brand it:
+For the conventional look, wire a theme:
 
 ```
+Theme.Light()
 Theme.Dark("#4C8DFF")
 Theme.Create(mode: "Dark", accent: "#F0A500", density: "Compact", cornerRadius: 2)
+```
+
+To keep the default and only turn it down a little, start from it:
+
+```
+Theme.Neubrutalism(dark: true, accent: "#4C8DFF")
+Theme.Create(borderWidth: 1, shadowOffset: 2, shape: "Square", heavyText: true)
 ```
 
 Accent text colour is picked by contrast, so a bright accent still reads.

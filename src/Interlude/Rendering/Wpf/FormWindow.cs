@@ -145,7 +145,7 @@ internal sealed class FormWindow : Window
     {
         Border footer = new()
         {
-            BorderThickness = new Thickness(0, 1, 0, 0),
+            BorderThickness = new Thickness(0, _context.Theme.BorderWidth, 0, 0),
             Padding = new Thickness(_context.Spacing * 2d, _context.Spacing, _context.Spacing * 2d, _context.Spacing * 1.5d),
         };
         footer.SetResourceReference(Border.BorderBrushProperty, ThemeKeys.Border);

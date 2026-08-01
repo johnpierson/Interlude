@@ -139,7 +139,9 @@ Data-Shapes gives you one vertical stack. Interlude has `Layout.Row`, `Grid`, `T
 
 ### Theming
 
-`Theme.Dark`, `Theme.Light`, `Theme.Create` — accent colour, density, corner radius, fonts.
+A form you never theme is neubrutalist: heavy outlines, hard shadows, loud flat colour. If that is
+not what your office wants on screen, `Theme.Light()` or `Theme.Dark()` is the conventional look.
+`Theme.Create` covers accent colour, density, corner radius, outline width, shadows and fonts.
 Scoped to the form's own window; Revit's UI is never touched.
 
 ### Forms are documents
