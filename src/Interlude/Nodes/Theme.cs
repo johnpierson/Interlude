@@ -19,12 +19,16 @@ public class Theme
     }
 
     /// <summary>
-    /// The theme a form gets when nobody wires one: neubrutalist, following the Windows light or
-    /// dark setting. Use <c>Theme.Light</c> or <c>Theme.Dark</c> for the quiet, conventional look.
+    /// The default look, but following the Windows light or dark setting instead of staying light.
+    ///
+    /// A form with nothing on its theme port is light, because the default palette is designed
+    /// around cream and black and the inverted one is a different design rather than the same one
+    /// dimmed. This node is for a graph that would rather match whatever the machine is set to.
     /// </summary>
     /// <returns name="theme">The theme.</returns>
-    /// <search>theme,default,system,auto</search>
-    public static ThemeDefinition System() => ThemeDefinition.Default;
+    /// <search>theme,default,system,auto,follow,windows</search>
+    public static ThemeDefinition System()
+        => ThemeDefinition.Default with { Mode = AppearanceMode.Auto };
 
     /// <summary>
     /// A light theme — the conventional one: hairline outlines, rounded corners, no shadows.

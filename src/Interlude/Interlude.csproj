@@ -66,22 +66,28 @@
   </ItemGroup>
 
   <!--
-    Comic Neue, embedded rather than referenced.
+    Space Grotesk, embedded rather than referenced.
 
     <Resource> puts the font inside Interlude.dll, so the package still ships exactly one file and
     the one-assembly rule holds. Referencing the font by name instead would mean it renders
     correctly only on machines where somebody had installed it, which for a package distributed to
     other people's Revit installs means "almost nowhere".
 
+    These are the STATIC instances, not the variable font Google Fonts distributes. WPF's text
+    stack has no support for variable font axes: it renders the default instance and nothing else,
+    so a variable file would give us one weight and a synthetic, smeared bold for everything the
+    theme sets in heavy type. Four real faces cost about 460 KB and look right.
+
     SIL Open Font License 1.1, no reserved font name. The licence travels with the binary: it is
-    in Fonts/ComicNeue-OFL.txt here, and pack.ps1 copies it into every package's extra/ folder.
+    in Fonts/SpaceGrotesk-OFL.txt here, and pack.ps1 copies it into every package's extra/ folder.
     See THIRD-PARTY-NOTICES.md.
   -->
   <ItemGroup>
-    <Resource Include="Fonts\ComicNeue-Regular.ttf" />
-    <Resource Include="Fonts\ComicNeue-Bold.ttf" />
-    <Resource Include="Fonts\ComicNeue-Light.ttf" />
-    <None Include="Fonts\ComicNeue-OFL.txt" />
+    <Resource Include="Fonts\SpaceGrotesk-Regular.ttf" />
+    <Resource Include="Fonts\SpaceGrotesk-Medium.ttf" />
+    <Resource Include="Fonts\SpaceGrotesk-Bold.ttf" />
+    <Resource Include="Fonts\SpaceGrotesk-Light.ttf" />
+    <None Include="Fonts\SpaceGrotesk-OFL.txt" />
   </ItemGroup>
 
   <!--

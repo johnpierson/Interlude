@@ -13,9 +13,15 @@ package version and `FileVersion` are what move.
 
 ### Changed
 
-- **The default form design is now neubrutalist.** A form with nothing wired into its theme port
-  gets heavy black outlines, square corners, solid unblurred shadows offset down and to the right,
-  flat loud colour, and type set hard. Buttons drop onto their own shadow when pressed.
+- **The default form design is now neubrutalist, in light mode.** A form with nothing wired into
+  its theme port gets heavy black outlines, square corners, solid unblurred shadows offset down and
+  to the right, flat loud colour, and type set hard. Buttons drop onto their own shadow when
+  pressed.
+
+  It no longer follows the Windows light/dark setting. The palette is built around cream and black,
+  and flipping to the inverted one because the machine happens to be set to dark is a different
+  design rather than the same one dimmed. `Theme.System` is now the same look with `mode` set to
+  `Auto`, for a graph that would rather match the machine.
 
   A default that looks like nothing in particular is a decision too, and it is the wrong one for a
   package whose whole job is the dialog. `Theme.Light` and `Theme.Dark` are unchanged and remain
@@ -43,10 +49,17 @@ package version and `FileVersion` are what move.
 - **`Theme.Mono`** — a monochrome preset: black, white and grey, pill-shaped controls, and small
   spaced capitals for headings. Errors keep a red, deliberately: an error nobody can pick out from
   ordinary text is a usability bug, and no amount of restraint is worth that.
-- **Comic Neue is the default font**, embedded inside `Interlude.dll` rather than named, so a form
-  renders the same everywhere instead of depending on what the machine has installed. Override it
-  on `Theme.Create`'s `fontFamily` port. SIL Open Font Licensed; see
+- **Space Grotesk is the default font**, embedded inside `Interlude.dll` rather than named, so a
+  form renders the same everywhere instead of depending on what the machine has installed. It
+  replaces Comic Neue, which was the wrong flavour of playful for this style: neubrutalism is set
+  in heavy grotesques, and Comic Neue has no weight that can hold its own beside a three-pixel
+  outline. Override it on `Theme.Create`'s `fontFamily` port. SIL Open Font Licensed; see
   [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+
+  Four *static* faces are embedded — Light, Regular, Medium, Bold — rather than the variable font
+  Google Fonts distributes. WPF has no support for variable font axes: it renders the default
+  instance and synthesises the rest, which would give a smeared algorithmic bold everywhere
+  `heavyText` asks for weight.
 - **`Theme.Create` gained `shape`, `uppercaseHeaders` and `headerTracking`** (appended, as the
   rules require). `shape: "Pill"` derives its radius from the control height rather than from
   `cornerRadius`, because "fully rounded" depends on how tall a control is.

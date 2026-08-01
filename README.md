@@ -100,9 +100,14 @@ quiet one is one node away:
 ```
 Theme.Light() / Theme.Dark("#4C8DFF")   // conventional: hairlines, rounded, no shadows
 Theme.Neubrutalism(dark: true)          // the default, explicitly
+Theme.System()                          // the default, following the Windows light/dark setting
 Theme.Mono()                            // black, white, pills, spaced capitals
 Theme.Create(borderWidth: 3, shadowOffset: 6, shape: "Square", heavyText: true)
 ```
+
+The default stays **light** rather than following Windows. This palette is built around cream and
+black; flipping to the inverted one because the machine happens to be set to dark is a different
+design, not the same one dimmed. `Theme.System()` is the version that follows.
 
 <p align="center">
   <img src="docs/images/mono-light.png" alt="The monochrome theme: pill-shaped controls and spaced capitals" width="400">
@@ -116,9 +121,10 @@ Sliders, date fields and progress bars are drawn by Interlude rather than left t
 one stock hairline control among a page of heavy outlines is what makes a themed form look
 half-finished.
 
-Interlude sets its own font — **Comic Neue**, embedded in the assembly rather than named, so a
-form looks the same on every machine instead of depending on what happens to be installed. Name
-any other on `Theme.Create`'s `fontFamily` port.
+Interlude sets its own font — **Space Grotesk**, embedded in the assembly rather than named, so a
+form looks the same on every machine instead of depending on what happens to be installed. It is
+the grotesque this style is usually set in: geometric, slightly odd, and heavy enough at Bold to
+hold its own beside a three-pixel outline. Name any other on `Theme.Create`'s `fontFamily` port.
 
 ## Cancelling returns defaults, not nulls
 

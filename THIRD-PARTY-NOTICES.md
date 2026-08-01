@@ -5,22 +5,28 @@ work, listed below.
 
 ---
 
-## Comic Neue
+## Space Grotesk
 
 **Used for:** Interlude's default interface font, embedded inside `Interlude.dll`.
 
-**Copyright:** Copyright 2014 The Comic Neue Project Authors
-(<https://github.com/crozynski/comicneue>)
+**Copyright:** Copyright 2020 The Space Grotesk Project Authors
+(<https://github.com/floriankarsten/space-grotesk>)
 
 **Licence:** SIL Open Font License, Version 1.1. No reserved font name.
 
 The full licence text ships with every Interlude package at
-`extra/ComicNeue-OFL.txt`, and lives in this repository at
-[`src/Interlude/Fonts/ComicNeue-OFL.txt`](src/Interlude/Fonts/ComicNeue-OFL.txt).
+`extra/SpaceGrotesk-OFL.txt`, and lives in this repository at
+[`src/Interlude/Fonts/SpaceGrotesk-OFL.txt`](src/Interlude/Fonts/SpaceGrotesk-OFL.txt).
 
 The OFL permits embedding: *"Permission is hereby granted, free of charge, to any person obtaining
 a copy of the Font Software, to use, study, copy, merge, embed, modify, redistribute, and sell
 modified and unmodified copies of the Font Software."* The font is embedded unmodified.
+
+Four static faces are embedded — Light, Regular, Medium and Bold — taken from the upstream project
+rather than from Google Fonts, which distributes Space Grotesk only as a variable font. WPF has no
+support for variable font axes: it renders the default instance and synthesises everything else,
+which would give a smeared, algorithmic bold for every heading and button the theme sets in heavy
+type.
 
 ### Why it is embedded rather than referenced
 

@@ -252,17 +252,21 @@ public sealed record ThemePalette
 public sealed record ThemeDefinition
 {
     /// <summary>
-    /// The theme a form gets when nobody supplies one: neubrutalist, following the system
-    /// light/dark setting at comfortable density.
+    /// The theme a form gets when nobody supplies one: neubrutalist, light, at comfortable density.
     ///
     /// A default that looks like nothing in particular is a decision too, and it is the wrong one
     /// for a package whose whole job is the dialog. This is the loud option on purpose. Every part
     /// of it is a property below, so <c>Theme.Light</c> and <c>Theme.Dark</c> — which take the
     /// property defaults rather than this — stay the quiet way out.
+    ///
+    /// Light rather than <see cref="AppearanceMode.Auto"/>: this palette is built around cream and
+    /// black, and a form that flips to the inverted one because the machine happens to be set to
+    /// dark is not the same design. <c>Theme.System</c> is the version that follows Windows.
     /// </summary>
     public static readonly ThemeDefinition Default = new()
     {
         Preset = ThemePreset.Neubrutalist,
+        Mode = AppearanceMode.Light,
         Shape = ControlShape.Square,
         BorderWidth = 2d,
         ShadowOffset = 4d,

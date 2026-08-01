@@ -90,7 +90,7 @@ internal static class Gallery
     private static FormDefinition Mono() => new FormDefinition
     {
         Title = "Habit tracking",
-        Description = "Monochrome, pill-shaped, and set in Comic Neue.",
+        Description = "Monochrome, pill-shaped, and set in Space Grotesk.",
         Window = new WindowOptions { Width = 480 },
         Theme = new ThemeDefinition
         {

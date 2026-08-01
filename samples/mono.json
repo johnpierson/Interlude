@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "title": "Habit tracking",
-  "description": "Monochrome, pill-shaped, and set in Comic Neue.",
+  "description": "Monochrome, pill-shaped, and set in Space Grotesk.",
   "elements": [
     {
       "$type": "label",

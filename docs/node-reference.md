@@ -358,16 +358,21 @@ Behavior.WithValidation(Input.DatePicker("End"),
 
 | Node | Parameters |
 | --- | --- |
-| **System** | — |
 | **Neubrutalism** | `dark = false`, `accent = ""` |
+| **System** | — |
 | **Light** / **Dark** | `accent = ""` |
 | **Mono** | `dark = false`, `accent = ""` |
 | **Create** | `mode = "Auto"`, `accent = ""`, `density = "Comfortable"`, `cornerRadius = 4`, `fontSize = 13`, `fontFamily = ""`, `labelWidth = 130`, `reducedMotion = false`, `shape = "Rounded"`, `uppercaseHeaders = false`, `headerTracking = 0`, `borderWidth = 1`, `shadowOffset = 0`, `heavyText = false` |
 | **WithColors** | `theme`, `background`, `foreground`, `surface`, `border`, `error` |
 
-**A form with nothing on its theme port is neubrutalist** — that is what `System` returns. Heavy
-black outlines, square corners, solid unblurred shadows offset down and to the right, flat loud
-colour, and type set hard. `Light` and `Dark` are the conventional look and are the way out of it.
+**A form with nothing on its theme port is neubrutalist, in light mode.** Heavy black outlines,
+square corners, solid unblurred shadows offset down and to the right, flat loud colour, and type
+set hard. `Light` and `Dark` are the conventional look and are the way out of it.
+
+The default does not follow Windows. The palette is built around cream and black, and flipping to
+the inverted one because the machine happens to be set to dark is a different design rather than
+the same one dimmed. `System` is the same look with `mode` set to `Auto`, for a graph that would
+rather match the machine.
 
 `mode` is `Auto`, `Light` or `Dark`; `Auto` follows the Windows app theme. `density` is `Compact`,
 `Comfortable` or `Spacious`. `labelWidth: 0` stacks labels above their controls.
@@ -403,10 +408,14 @@ Theme.Create(shape: "Pill", uppercaseHeaders: true, headerTracking: 0.08, labelW
 
 ### The font
 
-Interlude sets its own font by default: **Comic Neue**, embedded inside `Interlude.dll` so it
+Interlude sets its own font by default: **Space Grotesk**, embedded inside `Interlude.dll` so it
 renders identically on every machine rather than depending on what happens to be installed. Name
 any other font on `Create`'s `fontFamily` port to override it; Interlude falls back to Segoe UI
 Variable Text, Segoe UI and Tahoma if a named font is missing.
+
+Four static faces are embedded — Light, Regular, Medium and Bold — rather than the variable font
+Google Fonts distributes. WPF cannot use variable font axes, so a variable file would give one
+weight and a synthetic bold for everything `heavyText` sets in heavy type.
 
 It is SIL Open Font Licensed — see [THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOTICES.md).
 

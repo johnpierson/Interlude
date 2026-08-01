@@ -120,7 +120,7 @@
     "topmost": false
   },
   "theme": {
-    "mode": "auto",
+    "mode": "light",
     "preset": "neubrutalist",
     "cornerRadius": 4,
     "shape": "square",

@@ -216,7 +216,7 @@ internal static class WpfThemeApplier
     /// hosting arrangement, a trimmed assembly — WPF walks the list rather than dropping to a
     /// serif default that would make every form look broken.
     /// </summary>
-    private const string EmbeddedFont = "./Fonts/#Comic Neue, Segoe UI Variable Text, Segoe UI, Tahoma";
+    private const string EmbeddedFont = "./Fonts/#Space Grotesk, Segoe UI Variable Text, Segoe UI, Tahoma";
 
     private static readonly Uri FontBaseUri = new("pack://application:,,,/Interlude;component/");
 
@@ -236,7 +236,7 @@ internal static class WpfThemeApplier
 
         try
         {
-            // The base-URI overload is what makes "./Fonts/#Comic Neue" resolve against this
+            // The base-URI overload is what makes "./Fonts/#Space Grotesk" resolve against this
             // assembly's resources rather than against the installed font collection.
             return new FontFamily(FontBaseUri, EmbeddedFont);
         }
