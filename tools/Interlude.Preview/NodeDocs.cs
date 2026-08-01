@@ -34,6 +34,22 @@ internal static class NodeDocs
     /// </summary>
     private const string OverloadFormat = "{0}({1})";
 
+    /// <summary>
+    /// Nodes that share another node's example picture.
+    ///
+    /// One graph usually demonstrates several nodes at once — the sample form graph shows a text
+    /// box, a switch and the node that displays them — and its screenshot is the same picture on
+    /// all three pages. Copying a 190 KB image once per node would put it in the package three
+    /// times, and again for each Dynamo version. Each node still gets its own copy of the
+    /// <em>graph</em>, which is small and is what the browser's "open example" needs to find.
+    /// </summary>
+    private static readonly IReadOnlyDictionary<string, string> SharedExampleImages =
+        new Dictionary<string, string>(StringComparer.Ordinal)
+        {
+            ["Interlude.Input.TextBox"] = "Interlude.Form.Show",
+            ["Interlude.Input.Toggle"] = "Interlude.Form.Show",
+        };
+
     internal static void Generate(string folder)
     {
         Directory.CreateDirectory(folder);
@@ -164,20 +180,51 @@ internal static class NodeDocs
             page.AppendLine(family);
         }
 
-        // Dynamo's pages end with an example graph and a picture of it. An image reference to a
-        // file that is not there renders as a broken image in the browser panel, which looks like
-        // a packaging fault — so the section appears only once the picture does.
-        string image = NodeName(node) + "_img.png";
-        if (File.Exists(Path.Combine(folder, image)))
+        AppendExample(page, node, folder);
+        return page.ToString();
+    }
+
+    /// <summary>
+    /// Dynamo's pages end with an example graph and a picture of it, and this matches that: a
+    /// <c>.dyn</c> beside the page is what the documentation browser offers as a graph to open.
+    ///
+    /// The section appears only once there is something to put in it. An image reference to a file
+    /// that is not there renders as a broken image in the browser panel, which reads as a
+    /// packaging fault rather than as a page nobody has illustrated yet.
+    /// </summary>
+    private static void AppendExample(StringBuilder page, MethodInfo node, string folder)
+    {
+        string name = NodeName(node);
+
+        string image = (SharedExampleImages.TryGetValue(name, out string? owner) ? owner : name)
+            + "_img.png";
+
+        string graph = name + ".dyn";
+
+        bool hasImage = File.Exists(Path.Combine(folder, image));
+        bool hasGraph = File.Exists(Path.Combine(folder, graph));
+
+        if (!hasImage && !hasGraph)
         {
-            page.AppendLine();
-            page.AppendLine("___");
-            page.AppendLine("## Example File");
-            page.AppendLine();
-            page.Append("![").Append(ShortName(node)).Append("](./").Append(image).AppendLine(")");
+            return;
         }
 
-        return page.ToString();
+        page.AppendLine();
+        page.AppendLine("___");
+        page.AppendLine("## Example File");
+        page.AppendLine();
+
+        if (hasGraph)
+        {
+            page.Append("An example graph ships beside this page as `").Append(graph)
+                .AppendLine("`.");
+            page.AppendLine();
+        }
+
+        if (hasImage)
+        {
+            page.Append("![").Append(ShortName(node)).Append("](./").Append(image).AppendLine(")");
+        }
     }
 
     private static string Outputs(MethodInfo node, MemberDoc doc)

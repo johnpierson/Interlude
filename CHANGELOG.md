@@ -52,6 +52,13 @@ package version and `FileVersion` are what move.
   node. A test fails when a node has no page; CI regenerates the folder and fails on any
   difference.
 
+  `Form.Show`, `Input.TextBox` and `Input.Toggle` ship an example graph — `Interlude.Form.Show.dyn`
+  and friends, in the same `doc/` folder — which Dynamo's browser offers to open, with a screenshot
+  of it beneath the page. Example files are hand-placed rather than generated, deliberately:
+  everything else in that folder regenerates byte-for-byte, which is what lets CI check it for
+  drift, and rendering a picture on each run would differ between machines and fail every pull
+  request.
+
   Every page also carries its family's shared rules — that choice inputs return the object rather
   than its display name, that a rule on a hidden field is never applied, that every Behavior node
   returns a new element. Those were written down but reachable only by reading the source; somebody
