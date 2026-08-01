@@ -277,6 +277,6 @@ that, and why the evaluator re-runs everything on every edit.
 
 BSD 3-Clause. See [LICENSE](LICENSE).
 
-Interlude owes an obvious debt to [Data-Shapes](https://github.com/MrMoMoNaRCH/Data-Shapes_Dynamo),
+Interlude owes an obvious debt to [Data-Shapes](https://github.com/MostafaElAyoubi/Data-shapes),
 which established that a Dynamo graph could ask a question properly. This is a different answer to
 the same problem, not a criticism of that one.
