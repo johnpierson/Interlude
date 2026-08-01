@@ -2,7 +2,11 @@
 
 `Input.Password(label, placeholder: "", key: "", tooltip: "", helpText: "")`
 
-A masked text field. The answer is returned as plain text.
+A masked text field, showing dots instead of characters as they are typed.
+
+Be clear about what this does and does not give you. **The answer comes back as plain text**, and it is held in memory with the form's other remembered answers for the rest of the Dynamo session — pass `rememberValues: false` to `Form.Show` if that matters. Nothing is written to disk, and nothing is encrypted. The masking stops somebody reading the screen over a shoulder, which is the whole of its job.
+
+There is no default value on purpose: a password baked into a saved graph is a password shared with everybody the graph is sent to.
 
 The inputs are:
 
@@ -15,3 +19,12 @@ The inputs are:
 Returns `element` — The form element.
 
 Search terms: `password`, `secret`, `masked`, `credential`.
+
+___
+## About the Input nodes
+
+The fields a user answers.
+
+Every input returns an element describing the control, not the control itself, and every one takes the same three trailing options: `key`, which names the answer in the results dictionary; `tooltip`; and `helpText`. Leave `key` empty and it is derived from the label — convenient for a quick form, but give real keys to any graph you intend to keep, because renaming a label would otherwise rename the answer.
+
+Choice inputs take the values themselves, not their display names. Selecting an option hands back the original object — a Revit element, a family type, whatever was put in — so the answer is usable directly instead of needing a lookup back from a string.

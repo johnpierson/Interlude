@@ -151,6 +151,19 @@ internal static class NodeDocs
                 .AppendLine(string.Join(", ", doc.Search.Select(term => "`" + term + "`")) + ".");
         }
 
+        // The family's shared rules. A reader who opened this page from the library has not seen
+        // them anywhere else, and they are frequently the thing that decides whether the node does
+        // what was expected.
+        string family = docs.ForType(node.DeclaringType!);
+        if (!string.IsNullOrWhiteSpace(family))
+        {
+            page.AppendLine();
+            page.AppendLine("___");
+            page.Append("## About the ").Append(node.DeclaringType!.Name).AppendLine(" nodes");
+            page.AppendLine();
+            page.AppendLine(family);
+        }
+
         // Dynamo's pages end with an example graph and a picture of it. An image reference to a
         // file that is not there renders as a broken image in the browser panel, which looks like
         // a packaging fault — so the section appears only once the picture does.

@@ -85,6 +85,14 @@ public class Form
 
     /// <summary>
     /// Shows a form that was built with <c>Form.Create</c> or loaded from JSON.
+    ///
+    /// The same dialog as <c>Form.Show</c>, and the same four outputs, differing only in where the
+    /// form came from: a definition rather than a list of elements. This is the show half of the
+    /// document workflow — <c>Form.FromJson</c> then this, and a graph runs a form maintained
+    /// somewhere else entirely.
+    ///
+    /// Everything about re-execution applies here identically: the <c>trigger</c> port, the
+    /// re-entrancy latch, and remembered answers.
     /// </summary>
     /// <param name="form">The form to show.</param>
     /// <param name="trigger">Set to false to skip the dialog and return the last answers.</param>
@@ -120,6 +128,14 @@ public class Form
 
     /// <summary>
     /// Builds a form without showing it, for saving to JSON or for showing later.
+    ///
+    /// Splitting building from showing is what makes a form a document. Build it here, write it
+    /// with <c>Form.ToJson</c>, and the definition can be reviewed in a pull request, diffed
+    /// between releases and loaded by a graph that did not build it.
+    ///
+    /// It is also the way to check a form without a window appearing: feed the result to
+    /// <c>Form.Check</c>. Nothing is drawn and nothing is remembered until it reaches
+    /// <c>Form.ShowDefinition</c>.
     /// </summary>
     /// <param name="title">Shown in the window's title bar.</param>
     /// <param name="elements">The form's contents, built with the Input and Layout nodes.</param>
@@ -177,6 +193,10 @@ public class Form
 
     /// <summary>
     /// The less common form settings, for <c>Form.Show</c>'s options port.
+    ///
+    /// <c>Form.Show</c> already carries the settings most forms need. This holds the rest, so that
+    /// the node everyone uses does not have thirty ports on it — window behaviour, extra buttons,
+    /// and whether a cancel button appears at all.
     /// </summary>
     /// <param name="description">A paragraph shown above the first field.</param>
     /// <param name="height">Fixed window height. Null sizes the window to its contents.</param>
@@ -217,7 +237,16 @@ public class Form
         => FormJson.Serialize(form, indented);
 
     /// <summary>
-    /// Reads a form back from JSON.
+    /// Reads a form back from JSON, as written by <c>Form.ToJson</c>.
+    ///
+    /// This is what lets a graph show a form it did not build: the definition lives in a file
+    /// under version control, and the graph loads and shows it. Change the form, and every graph
+    /// that loads it changes with no graph edited.
+    ///
+    /// The schema version is checked before anything else is read, so a file written by a newer
+    /// Interlude is refused with an explanation rather than half-understood. Feed the result to
+    /// <c>Form.ShowDefinition</c>, and to <c>Form.Check</c> first if the file came from somewhere
+    /// you do not control.
     /// </summary>
     /// <param name="json">The form as JSON.</param>
     /// <returns name="form">The form definition.</returns>

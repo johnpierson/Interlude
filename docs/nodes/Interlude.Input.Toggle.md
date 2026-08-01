@@ -2,7 +2,9 @@
 
 `Input.Toggle(label, defaultValue: false, onText: "On", offText: "Off", key: "", tooltip: "", helpText: "")`
 
-An on/off switch. The answer is true or false.
+An on/off switch. The answer is true or false, exactly as a tick box.
+
+The difference from `Input.CheckBox` is what it says to the reader, not what it returns. A switch reads as a setting that takes effect — a mode being turned on — and it gets its own caption in the label column plus wording for each state. A tick box reads as a statement being agreed to. Pick by which sentence fits.
 
 The inputs are:
 
@@ -17,3 +19,12 @@ The inputs are:
 Returns `element` — The form element.
 
 Search terms: `toggle`, `switch`, `boolean`, `on`, `off`.
+
+___
+## About the Input nodes
+
+The fields a user answers.
+
+Every input returns an element describing the control, not the control itself, and every one takes the same three trailing options: `key`, which names the answer in the results dictionary; `tooltip`; and `helpText`. Leave `key` empty and it is derived from the label — convenient for a quick form, but give real keys to any graph you intend to keep, because renaming a label would otherwise rename the answer.
+
+Choice inputs take the values themselves, not their display names. Selecting an option hands back the original object — a Revit element, a family type, whatever was put in — so the answer is usable directly instead of needing a lookup back from a string.

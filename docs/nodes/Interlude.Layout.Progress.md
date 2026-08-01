@@ -2,7 +2,13 @@
 
 `Layout.Progress(value: 0, maximum: 100, indeterminate: false, segments: 0)`
 
-A progress bar. It shows a fixed value: nothing in the form updates it while it is open.
+A progress bar showing a **fixed** value.
+
+Read that twice before using it. Nothing in the form moves this bar: a form runs while the graph waits, so there is no work going on behind it to report. It is for showing a figure that was already worked out — twelve of twenty sheets issued, sixty per cent of the budget spent — and for that it is a clearer picture than the number alone.
+
+It is not a way to show a long operation running. That happens after the form closes, when there is no form left to draw in.
+
+`segments` above zero draws discrete cells instead of a continuous fill, and cells fill by rounding — five of seven days is five whole cells, because a part-filled cell invites the reader to wonder what a partial day was. Use it for counting, and the continuous bar for measuring.
 
 The inputs are:
 
@@ -14,3 +20,10 @@ The inputs are:
 Returns `element` — The form element.
 
 Search terms: `progress`, `bar`, `percent`, `loading`, `segments`, `steps`.
+
+___
+## About the Layout nodes
+
+Arranging and decorating a form: sections, rows, grids, tabs, and the elements that show something rather than ask something.
+
+Every container takes a list of elements. None of them has a single-element overload, on purpose: with both available, a graph that passes one element to a list port gets replication instead of a container, and produces N containers of one child each rather than one container of N. Pass a list, even a list of one.

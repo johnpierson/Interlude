@@ -32,6 +32,13 @@ public class Theme
 
     /// <summary>
     /// A light theme — the conventional one: hairline outlines, rounded corners, no shadows.
+    ///
+    /// The way out of the neubrutalist default, and the right choice for a form that should look
+    /// like part of the software around it rather than like a thing of its own. Corporate
+    /// deployments usually want this.
+    ///
+    /// Give an <c>accent</c> to brand it. The text drawn on that accent is chosen automatically by
+    /// contrast, so a bright colour still reads.
     /// </summary>
     /// <param name="accent">Accent colour as hex, such as "#2F6FEB". Empty keeps the default.</param>
     /// <returns name="theme">The theme.</returns>
@@ -148,7 +155,26 @@ public class Theme
         };
 
     /// <summary>
-    /// A theme built from scratch.
+    /// A theme built from scratch, with every knob exposed.
+    ///
+    /// The presets are combinations of these ports; when one of them is nearly right, this is how
+    /// you get the rest of the way. Note that it starts from the *conventional* look — hairline
+    /// outlines, rounded corners, no shadows — not from the neubrutalist default, so a theme built
+    /// here is quiet unless you ask for otherwise.
+    ///
+    /// The ports worth understanding:
+    ///
+    /// <c>shape</c> is Rounded, Pill or Square, and **Pill ignores <c>cornerRadius</c>** — it
+    /// derives the radius from the control height instead, because "fully rounded" depends on how
+    /// tall a control is. <c>borderWidth</c> and <c>shadowOffset</c> are what the neubrutalist look
+    /// is built from; the shadow is solid and unblurred, and zero switches it off.
+    /// <c>labelWidth: 0</c> stacks labels above their fields, which is the better shape for a
+    /// narrow form or long captions. <c>uppercaseHeaders</c> and <c>headerTracking</c> apply to
+    /// headings only, never to body text, where letter spacing costs more in readability than it
+    /// returns.
+    ///
+    /// Leave <c>fontFamily</c> empty to keep Interlude's own embedded font, which renders the same
+    /// on every machine. A font named here but not installed falls back to whatever the host has.
     /// </summary>
     /// <param name="mode">Auto, Light or Dark. Auto follows the Windows setting.</param>
     /// <param name="accent">Accent colour as hex. Empty keeps the palette's own accent.</param>

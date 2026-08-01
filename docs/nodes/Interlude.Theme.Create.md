@@ -2,7 +2,15 @@
 
 `Theme.Create(mode: "Auto", accent: "", density: "Comfortable", cornerRadius: 4, fontSize: 13, fontFamily: "", labelWidth: 130, reducedMotion: false, shape: "Rounded", uppercaseHeaders: false, headerTracking: 0, borderWidth: 1, shadowOffset: 0, heavyText: false)`
 
-A theme built from scratch.
+A theme built from scratch, with every knob exposed.
+
+The presets are combinations of these ports; when one of them is nearly right, this is how you get the rest of the way. Note that it starts from the *conventional* look — hairline outlines, rounded corners, no shadows — not from the neubrutalist default, so a theme built here is quiet unless you ask for otherwise.
+
+The ports worth understanding:
+
+`shape` is Rounded, Pill or Square, and **Pill ignores `cornerRadius`** — it derives the radius from the control height instead, because "fully rounded" depends on how tall a control is. `borderWidth` and `shadowOffset` are what the neubrutalist look is built from; the shadow is solid and unblurred, and zero switches it off. `labelWidth: 0` stacks labels above their fields, which is the better shape for a narrow form or long captions. `uppercaseHeaders` and `headerTracking` apply to headings only, never to body text, where letter spacing costs more in readability than it returns.
+
+Leave `fontFamily` empty to keep Interlude's own embedded font, which renders the same on every machine. A font named here but not installed falls back to whatever the host has.
 
 The inputs are:
 
@@ -24,3 +32,10 @@ The inputs are:
 Returns `theme` — The theme.
 
 Search terms: `theme`, `custom`, `style`, `brand`, `accent`, `font`, `density`, `pill`, `shape`, `border`, `shadow`.
+
+___
+## About the Theme nodes
+
+How a form looks. Feed the result into `Form.Show`'s theme port.
+
+A theme is applied to the form's own window and nowhere else. Interlude runs inside Revit and inside Dynamo, and restyling a host application from a package would be an unwelcome surprise no matter how good the styling was.

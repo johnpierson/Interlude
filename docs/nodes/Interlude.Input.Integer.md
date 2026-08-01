@@ -2,7 +2,9 @@
 
 `Input.Integer(label, defaultValue: 0, minimum: null, maximum: null, increment: 1, unit: "", key: "", tooltip: "", helpText: "")`
 
-A whole-number field.
+A whole-number field: counts, quantities, indices — anything a fraction would be nonsense for.
+
+The answer is an integer. Read it with `Result.GetInteger`. This is the node to reach for rather than `Input.Number` with the decimal places set to zero, because that one still hands back 3.0 where this hands back 3, and the difference shows up downstream in list indices and string formatting.
 
 The inputs are:
 
@@ -19,3 +21,12 @@ The inputs are:
 Returns `element` — The form element.
 
 Search terms: `integer`, `whole`, `count`, `int`.
+
+___
+## About the Input nodes
+
+The fields a user answers.
+
+Every input returns an element describing the control, not the control itself, and every one takes the same three trailing options: `key`, which names the answer in the results dictionary; `tooltip`; and `helpText`. Leave `key` empty and it is derived from the label — convenient for a quick form, but give real keys to any graph you intend to keep, because renaming a label would otherwise rename the answer.
+
+Choice inputs take the values themselves, not their display names. Selecting an option hands back the original object — a Revit element, a family type, whatever was put in — so the answer is usable directly instead of needing a lookup back from a string.

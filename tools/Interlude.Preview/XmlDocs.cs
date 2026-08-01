@@ -65,7 +65,11 @@ internal sealed class XmlDocs
         foreach (XElement member in XDocument.Load(path).Descendants("member"))
         {
             string? name = member.Attribute("name")?.Value;
-            if (name is null || !name.StartsWith("M:", StringComparison.Ordinal))
+
+            // Methods for the nodes themselves, types for the family summary each one carries.
+            if (name is null ||
+                !(name.StartsWith("M:", StringComparison.Ordinal) ||
+                  name.StartsWith("T:", StringComparison.Ordinal)))
             {
                 continue;
             }
@@ -78,6 +82,18 @@ internal sealed class XmlDocs
 
     internal MemberDoc For(MethodInfo method)
         => _members.TryGetValue(KeyOf(method), out MemberDoc? doc) ? doc : MemberDoc.Empty;
+
+    /// <summary>
+    /// The summary on the class a node belongs to.
+    ///
+    /// Worth having on every page, because that is where the rules shared by a whole family live —
+    /// that choice inputs return the object rather than its name, that a rule on a hidden field is
+    /// never applied, that every Behavior node returns a new element. A reader who arrived at one
+    /// node from the library has not read the class summary anywhere else, and repeating it beats
+    /// them not knowing it.
+    /// </summary>
+    internal string ForType(Type type)
+        => _members.TryGetValue("T:" + type.FullName, out MemberDoc? doc) ? doc.Summary : string.Empty;
 
     /// <summary>
     /// Builds the documentation ID the compiler used as the <c>member name</c> attribute:

@@ -14,3 +14,10 @@ The inputs are:
 Returns `theme` — The theme.
 
 Search terms: `mono`, `monochrome`, `black`, `white`, `minimal`, `swiss`, `pill`.
+
+___
+## About the Theme nodes
+
+How a form looks. Feed the result into `Form.Show`'s theme port.
+
+A theme is applied to the form's own window and nowhere else. Interlude runs inside Revit and inside Dynamo, and restyling a host application from a package would be an unwelcome surprise no matter how good the styling was.

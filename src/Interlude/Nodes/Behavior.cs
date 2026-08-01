@@ -47,6 +47,14 @@ public class Behavior
 
     /// <summary>
     /// Makes the element required only while the condition holds.
+    ///
+    /// For the field that matters in one case and not in another: a justification demanded only
+    /// when an override was ticked, a folder demanded only when exporting was chosen.
+    ///
+    /// The asterisk beside the label appears and disappears with the condition, so the user is
+    /// never asked for something the form has not yet told them it wants. And a field that is
+    /// required but hidden is not enforced — hidden always wins, so the form can never be blocked
+    /// by a control nobody can see.
     /// </summary>
     /// <param name="element">The element to control.</param>
     /// <param name="condition">Built with the Condition nodes.</param>
@@ -62,6 +70,14 @@ public class Behavior
 
     /// <summary>
     /// Makes the element always required. The form cannot be submitted while it is empty.
+    ///
+    /// Adds the asterisk beside the label as well as enforcing it, which is why this is the node
+    /// to use rather than attaching <c>Rule.Required</c> by hand: a requirement the user only
+    /// discovers by pressing Submit is a worse form.
+    ///
+    /// Remember that false and zero are answers. A tick box is never empty, so requiring one does
+    /// nothing — to insist a box is ticked, use <c>Rule.Required</c>'s sibling test through
+    /// <c>Behavior.RequiredIf</c> with <c>Condition.IsNotChecked</c>, or simply validate it.
     /// </summary>
     /// <param name="element">The element to control.</param>
     /// <param name="message">Wording shown when the field is left empty.</param>
@@ -133,6 +149,13 @@ public class Behavior
 
     /// <summary>
     /// Adds hover text and a line of guidance under the element.
+    ///
+    /// The two are for different readers. <c>tooltip</c> is found only by someone who already
+    /// suspects there is more to know; <c>helpText</c> sits under the field where everyone reads
+    /// it. Put the thing users get wrong in the help text, and the detail in the tooltip.
+    ///
+    /// A line of help under the field it belongs to beats a paragraph of <c>Layout.Label</c> above
+    /// the group, because the reader never has to work out which field it was about.
     /// </summary>
     /// <param name="element">The element to annotate.</param>
     /// <param name="tooltip">Hover text.</param>
@@ -148,6 +171,14 @@ public class Behavior
 
     /// <summary>
     /// Overrides an element's size and spacing. Everything left null stays as the theme decided.
+    ///
+    /// A last resort, and deliberately so. Sizing is the theme's job — set it once with
+    /// <c>Theme.Create</c> and every form in the office agrees — and a form pinned together with
+    /// per-element overrides has to be re-tuned by hand whenever the theme, the density or the
+    /// font changes underneath it.
+    ///
+    /// Where it is genuinely right: one field that has to be wider than the rest because of what
+    /// goes in it, such as a full file path in a column sized for names.
     /// </summary>
     /// <param name="element">The element to size.</param>
     /// <param name="width">Fixed width in pixels.</param>
@@ -176,6 +207,15 @@ public class Behavior
 
     /// <summary>
     /// Makes an input read-only. It stays visible and still contributes its value.
+    ///
+    /// For showing a figure the user should see but not change — a value read from the model, an
+    /// identifier the graph generated.
+    ///
+    /// The difference from <c>Behavior.EnabledIf</c> with a false condition is what it says: a
+    /// disabled field looks broken or not-yet-applicable, while a read-only one looks settled.
+    /// Both still contribute their value to the answers.
+    ///
+    /// <c>Behavior.WithComputed</c> already makes a field read-only, so there is no need for both.
     /// </summary>
     /// <param name="element">The input to lock.</param>
     /// <param name="readOnly">Whether the field is locked.</param>

@@ -2,7 +2,13 @@
 
 `Input.DropDown(label, items: null, displayNames: null, defaultValue: null, placeholder: "", key: "", tooltip: "", helpText: "")`
 
-A drop-down list. The answer is the selected item itself, not its display name.
+A drop-down list, for one choice out of many.
+
+**The answer is the selected item itself, not its display name.** Feed in Revit elements, family types, whatever you have, and pass their names separately as `displayNames`; what comes back is the object you put in, ready to use. This is the difference that removes the lookup-by-name step — and the bug where two things share a name — from the middle of every graph that asks the user to pick something.
+
+With no `defaultValue` and no `placeholder`, the first item starts selected, so the field is never empty. Give a `placeholder` instead when "nothing chosen yet" is a state you want to be able to tell apart, and pair it with `Behavior.Required`.
+
+Above roughly a dozen options this beats `Input.RadioButtons` on space; below about four, radio buttons show every choice at once and save a click.
 
 The inputs are:
 
@@ -18,3 +24,12 @@ The inputs are:
 Returns `element` — The form element.
 
 Search terms: `dropdown`, `combobox`, `select`, `choose`, `list`, `pick`.
+
+___
+## About the Input nodes
+
+The fields a user answers.
+
+Every input returns an element describing the control, not the control itself, and every one takes the same three trailing options: `key`, which names the answer in the results dictionary; `tooltip`; and `helpText`. Leave `key` empty and it is derived from the label — convenient for a quick form, but give real keys to any graph you intend to keep, because renaming a label would otherwise rename the answer.
+
+Choice inputs take the values themselves, not their display names. Selecting an option hands back the original object — a Revit element, a family type, whatever was put in — so the answer is usable directly instead of needing a lookup back from a string.

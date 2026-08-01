@@ -52,6 +52,23 @@ package version and `FileVersion` are what move.
   node. A test fails when a node has no page; CI regenerates the folder and fails on any
   difference.
 
+  Every page also carries its family's shared rules — that choice inputs return the object rather
+  than its display name, that a rule on a hidden field is never applied, that every Behavior node
+  returns a new element. Those were written down but reachable only by reading the source; somebody
+  who arrived at one node from the library had no way to find them.
+
+- **The node documentation itself was substantially rewritten.** 77 of the 112 nodes had summaries
+  under fifteen words — `Input.TextBox` was four — which is enough to name a node and not enough to
+  use one. They now say what the answer's *type and shape* are, which sibling node to prefer and
+  when, and the behaviour that surprises people: that `Input.ListBox` changes the shape of its
+  answer with `allowMultiple`, that a folded `Layout.Expander` still validates and can block
+  submission with an error nobody can see, that `Layout.Progress` cannot animate because the graph
+  is waiting on the form, that an unanchored `Rule.Regex` passes `ABC-1234-oops`, and that
+  `Input.Password` returns plain text and is held in memory with every other answer.
+
+  This lands in Dynamo's port tooltips as well as in the help panel, since both are read from the
+  same file.
+
 - **`Theme.Neubrutalism`** — the default preset, by name, so a graph can ask for it explicitly and
   choose light or dark rather than following Windows.
 - **`Theme.Create` gained `borderWidth`, `shadowOffset` and `heavyText`** (appended, as the rules

@@ -65,6 +65,13 @@ public class Compute
 
     /// <summary>
     /// The current value of another field, passed through unchanged.
+    ///
+    /// The counterpart to <c>Compute.Constant</c>: where that supplies a fixed number to a
+    /// calculation, this supplies a live one. Together they are how the two sides of
+    /// <c>Compute.Arithmetic</c> and the branches of <c>Compute.If</c> get filled in.
+    ///
+    /// On its own it mirrors one field into another, which is worth doing when the same answer
+    /// needs to be visible in two places on a long form.
     /// </summary>
     /// <param name="key">The field to read.</param>
     /// <returns name="computation">The computation.</returns>
@@ -73,7 +80,11 @@ public class Compute
         => new FieldComputed { Key = key ?? string.Empty };
 
     /// <summary>
-    /// A fixed value.
+    /// A fixed value that never changes.
+    ///
+    /// Not useful on its own — a computed field holding a constant is a label with extra steps.
+    /// It exists to be fed into the nodes that take computations on both sides: the number to
+    /// multiply by in <c>Compute.Arithmetic</c>, or either branch of <c>Compute.If</c>.
     /// </summary>
     /// <param name="value">The value.</param>
     /// <returns name="computation">The computation.</returns>
@@ -117,6 +128,15 @@ public class Compute
 
     /// <summary>
     /// Chooses between two values based on a condition.
+    ///
+    /// How a computed field changes its mind: a rate that depends on which discipline was picked,
+    /// a total that switches between metric and imperial. The condition is a Condition node, so it
+    /// reads the form's own answers, and the whole thing recalculates whenever any field it
+    /// touches changes.
+    ///
+    /// Both branches are computations, so either can be a nested <c>Compute.If</c> — which is how
+    /// a three-way choice is written, if not especially readably. Past two levels, a lookup table
+    /// with <c>Compute.Lookup</c> is easier to follow and easier to change.
     /// </summary>
     /// <param name="condition">Built with the Condition nodes.</param>
     /// <param name="ifTrue">A field key, a literal, or a nested computation.</param>

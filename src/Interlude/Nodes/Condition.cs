@@ -128,6 +128,12 @@ public class Condition
 
     /// <summary>
     /// True when the field has an answer.
+    ///
+    /// The usual way to reveal the next step of a form once the previous one is filled in: show
+    /// the options only after a file has been chosen.
+    ///
+    /// Note what counts. False and zero are answers, so an unticked box and a numeric field
+    /// reading 0 are both "not empty". Only blank text and nothing-selected are empty.
     /// </summary>
     /// <param name="key">The field to read.</param>
     /// <returns name="condition">The condition.</returns>
@@ -166,6 +172,13 @@ public class Condition
 
     /// <summary>
     /// True when the field's answer matches a regular expression.
+    ///
+    /// For steering a form on the *shape* of an answer rather than its exact value — revealing the
+    /// sheet-number options only once the prefix looks like a real prefix.
+    ///
+    /// Unanchored patterns match anywhere in the text; add <c>^</c> and <c>$</c> when the whole
+    /// answer has to match. This is the Condition-side twin of <c>Rule.Regex</c>: use that one to
+    /// stop a form being submitted, this one to change what the form shows.
     /// </summary>
     /// <param name="key">The field to read.</param>
     /// <param name="pattern">A .NET regular expression.</param>
@@ -202,7 +215,11 @@ public class Condition
         };
 
     /// <summary>
-    /// Inverts a condition.
+    /// Inverts a condition: true where it was false, and false where it was true.
+    ///
+    /// Often avoidable — there is already <c>Condition.NotEquals</c>, <c>Condition.IsEmpty</c> and
+    /// <c>Condition.IsNotChecked</c> — and the direct one reads better in a graph than a negated
+    /// one. Where this earns its place is inverting something composite: not (A and B).
     /// </summary>
     /// <param name="condition">The condition to invert.</param>
     /// <returns name="condition">The condition.</returns>

@@ -23,6 +23,13 @@ public class Rule
 
     /// <summary>
     /// The field must have an answer.
+    ///
+    /// The exception to the family rule: every other rule passes on an empty field and this one is
+    /// the reason they can, because emptiness is dealt with here rather than in each of them.
+    ///
+    /// <c>Behavior.Required</c> does the same job in one node and adds the asterisk beside the
+    /// label, which is what a user actually reads. Reach for this one when the requirement needs
+    /// wording of its own, or when it is going into a list of rules alongside others.
     /// </summary>
     /// <param name="message">Wording shown when it does not.</param>
     /// <returns name="rule">The rule.</returns>
@@ -31,7 +38,15 @@ public class Rule
         => new RequiredRule { Message = NodeSupport.OrNull(message) };
 
     /// <summary>
-    /// The field's number must fall between the bounds. Either bound can be left out.
+    /// The field's number must fall between the bounds. Either bound can be left out for a
+    /// one-sided range.
+    ///
+    /// Both ends are inclusive: a range of 1 to 10 accepts 1 and accepts 10.
+    ///
+    /// Worth knowing when this is the right tool. <c>Input.Number</c>'s own minimum and maximum
+    /// stop an out-of-range value being *typed*, which is a better experience where it applies.
+    /// This is for the cases that cannot: a bound that depends on another field, or a number
+    /// arriving in a text box.
     /// </summary>
     /// <param name="minimum">Lowest acceptable value.</param>
     /// <param name="maximum">Highest acceptable value.</param>
@@ -51,6 +66,17 @@ public class Rule
 
     /// <summary>
     /// The field's text must match a regular expression.
+    ///
+    /// For codes with a shape: <c>"^[A-Z]{3}-[0-9]{4}$"</c> for ABC-1234. **Anchor it with
+    /// <c>^</c> and <c>$</c>** unless you mean "contains" — an unanchored pattern matches anywhere
+    /// in the text, so without them "ABC-1234-oops" passes.
+    ///
+    /// Always give a <c>message</c>. The pattern is not shown to the user, and "invalid" tells
+    /// somebody staring at a text box nothing they can act on; "Use the form ABC-1234" tells them
+    /// exactly what to type.
+    ///
+    /// An empty field passes, as with every rule but <c>Rule.Required</c>. Pair the two when the
+    /// field is both mandatory and shaped.
     /// </summary>
     /// <param name="pattern">A .NET regular expression.</param>
     /// <param name="message">Wording shown when it does not match.</param>
@@ -86,6 +112,16 @@ public class Rule
 
     /// <summary>
     /// The path the field holds must exist on disk.
+    ///
+    /// Catches the mistyped or moved path while the user is still looking at the form, rather than
+    /// three nodes downstream when the graph fails to open it.
+    ///
+    /// It is checked from the machine running the graph, as the user running it — so a network
+    /// path they cannot reach fails here even though it exists. That is the right answer: the
+    /// graph could not have opened it either.
+    ///
+    /// Do not attach this to a <c>forSaving</c> file field. Naming a file that does not exist yet
+    /// is the entire point of a save dialog.
     /// </summary>
     /// <param name="message">Wording shown when it does not.</param>
     /// <returns name="rule">The rule.</returns>
@@ -95,6 +131,13 @@ public class Rule
 
     /// <summary>
     /// The folder the field holds must exist on disk.
+    ///
+    /// Worth attaching to any export destination, especially one that can be typed rather than
+    /// browsed to: a folder that is not there is the most common reason an otherwise correct
+    /// export run produces nothing.
+    ///
+    /// It checks, and does not create. Making the folder is the graph's job, and if that is what
+    /// you intend then this rule is the wrong one.
     /// </summary>
     /// <param name="message">Wording shown when it does not.</param>
     /// <returns name="rule">The rule.</returns>
