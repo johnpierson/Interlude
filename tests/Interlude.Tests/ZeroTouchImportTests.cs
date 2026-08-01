@@ -1,0 +1,208 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using Xunit;
+
+namespace Interlude.Tests;
+
+/// <summary>
+/// Guards against the failure mode that takes the whole package down at once.
+///
+/// Dynamo imports a zero-touch assembly by reflecting over **every public type in it** and
+/// building a DesignScript AST for every public constructor and method. That happens regardless
+/// of <c>[IsVisibleInDynamoLibrary(false)]</c> — the attribute controls what appears in the
+/// library, not what gets imported. So one type Dynamo's importer cannot parse does not hide one
+/// node: it throws <c>LibraryLoadFailedException</c> and **not a single Interlude node loads**.
+///
+/// It has happened once. <c>RgbColor</c> had a constructor whose <c>alpha</c> parameter defaulted
+/// to <c>255</c>, a <see cref="byte"/>. Dynamo's <c>AstFactory.BuildPrimitiveNodeFromObject</c>
+/// has no case for <see cref="byte"/>, so it asserted "Invalid Input type to make AST node" and
+/// the package appeared completely empty in Dynamo 4.1 with no clue why.
+///
+/// These tests encode the importer's rules so the next one fails here instead — in a build,
+/// with the offending member named — rather than in someone's Revit session.
+/// </summary>
+public class ZeroTouchImportTests
+{
+    /// <summary>
+    /// The types <c>ProtoCore.AST.AssociativeAST.AstFactory.BuildPrimitiveNodeFromObject</c>
+    /// knows how to turn into a literal. Anything else asserts and fails the import.
+    ///
+    /// Deliberately conservative: this list is what Dynamo actually handles, not what it might
+    /// plausibly handle. Widening it means having checked the importer's source.
+    /// </summary>
+    private static readonly HashSet<Type> AstLiteralTypes = new()
+    {
+        typeof(bool),
+        typeof(char),
+        typeof(string),
+        typeof(int),
+        typeof(long),
+        typeof(double),
+        typeof(float),
+    };
+
+    /// <summary>
+    /// Every optional parameter on the public surface must have a default Dynamo can render as a
+    /// literal. This is the exact check that would have caught the RgbColor regression.
+    /// </summary>
+    [Fact]
+    public void Every_optional_parameter_has_a_default_Dynamo_can_import()
+    {
+        List<string> offenders = new();
+
+        foreach (MethodBase member in PublicMembers())
+        {
+            foreach (ParameterInfo parameter in member.GetParameters())
+            {
+                if (!parameter.HasDefaultValue)
+                {
+                    continue;
+                }
+
+                object? value = parameter.DefaultValue;
+
+                // A null default is fine: Dynamo builds a null node for it.
+                if (value is null)
+                {
+                    continue;
+                }
+
+                Type valueType = value.GetType();
+
+                // An enum default arrives boxed as its underlying type, which is usually int —
+                // but a byte- or short-backed enum would not be importable.
+                if (valueType.IsEnum)
+                {
+                    valueType = Enum.GetUnderlyingType(valueType);
+                }
+
+                if (!AstLiteralTypes.Contains(valueType))
+                {
+                    offenders.Add(
+                        $"{Describe(member)} parameter '{parameter.Name}' defaults to a " +
+                        $"{valueType.Name} ({value}), which Dynamo's AstFactory cannot import");
+                }
+            }
+        }
+
+        Assert.True(
+            offenders.Count == 0,
+            "These members would stop the whole assembly loading in Dynamo:\n  " +
+            string.Join("\n  ", offenders));
+    }
+
+    /// <summary>
+    /// The same rule stated where it is easiest to break it by accident. A public constructor is
+    /// imported as a node whether or not anyone wanted one, so its signature is Dynamo's problem
+    /// too.
+    /// </summary>
+    [Fact]
+    public void No_public_constructor_takes_a_parameter_Dynamo_cannot_represent()
+    {
+        List<string> offenders = new();
+
+        foreach (Type type in PublicTypes())
+        {
+            foreach (ConstructorInfo constructor in type.GetConstructors(BindingFlags.Public | BindingFlags.Instance))
+            {
+                foreach (ParameterInfo parameter in constructor.GetParameters())
+                {
+                    // Only defaults are parsed as literals; the parameter's own type is marshalled
+                    // and may be anything.
+                    if (parameter.HasDefaultValue &&
+                        parameter.DefaultValue is not null &&
+                        !AstLiteralTypes.Contains(UnderlyingOf(parameter.DefaultValue.GetType())))
+                    {
+                        offenders.Add($"{type.Name}..ctor parameter '{parameter.Name}'");
+                    }
+                }
+            }
+        }
+
+        Assert.True(offenders.Count == 0, "Unimportable constructors: " + string.Join(", ", offenders));
+    }
+
+    /// <summary>
+    /// Interlude's own value types are the ones most likely to trip this, because they are the
+    /// ones with hand-written constructors. Their byte members are what the regression was about.
+    /// </summary>
+    [Fact]
+    public void The_colour_type_can_still_be_constructed_from_code()
+    {
+        // Regression guard with teeth: the fix must not have removed the ability to build a
+        // colour, only the unimportable default.
+        Model.RgbColor opaque = new(0x33, 0x66, 0xCC);
+        Model.RgbColor translucent = new(0x33, 0x66, 0xCC, 0x80);
+
+        Assert.Equal(255, opaque.Alpha);
+        Assert.Equal(0x80, translucent.Alpha);
+        Assert.Equal("#3366CC", opaque.ToHex());
+    }
+
+    /// <summary>
+    /// Runs Dynamo's actual importer over the built assembly.
+    ///
+    /// The two tests above encode what the importer is believed to do. This one asks it. If the
+    /// belief is ever wrong — a rule missed, a new Dynamo release tightening something — this is
+    /// what notices, and it fails with the same message a user would have seen in Dynamo's
+    /// notification panel.
+    /// </summary>
+    [Fact]
+    public void Dynamo_can_import_the_whole_assembly()
+    {
+        Assembly shipped = typeof(Model.FormDefinition).Assembly;
+
+        ProtoFFI.CLRDLLModule module = new(Path.GetFileName(shipped.Location), shipped);
+
+        // A null type name with an empty alias is how Dynamo imports a whole DLL: every public
+        // type in it gets parsed into a DesignScript class.
+        Exception? failure = Record.Exception(() => module.ImportCodeBlock(null, string.Empty, null));
+
+        Assert.True(
+            failure is null,
+            "Dynamo's importer rejected the assembly, which means NO Interlude nodes would load:\n  " +
+            Flatten(failure));
+    }
+
+    private static string Flatten(Exception? error)
+    {
+        List<string> lines = new();
+
+        for (Exception? current = error; current is not null; current = current.InnerException)
+        {
+            lines.Add($"{current.GetType().Name}: {current.Message}");
+        }
+
+        return string.Join("\n  ", lines);
+    }
+
+    private static Type UnderlyingOf(Type type)
+        => type.IsEnum ? Enum.GetUnderlyingType(type) : type;
+
+    private static IEnumerable<Type> PublicTypes()
+        => typeof(Model.FormDefinition).Assembly.GetExportedTypes();
+
+    /// <summary>Every constructor and method Dynamo's importer will look at.</summary>
+    private static IEnumerable<MethodBase> PublicMembers()
+    {
+        foreach (Type type in PublicTypes())
+        {
+            foreach (ConstructorInfo constructor in type.GetConstructors(BindingFlags.Public | BindingFlags.Instance))
+            {
+                yield return constructor;
+            }
+
+            foreach (MethodInfo method in type.GetMethods(
+                BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly))
+            {
+                yield return method;
+            }
+        }
+    }
+
+    private static string Describe(MethodBase member)
+        => $"{member.DeclaringType?.Name}.{(member is ConstructorInfo ? "ctor" : member.Name)}";
+}

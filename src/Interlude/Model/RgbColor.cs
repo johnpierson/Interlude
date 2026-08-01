@@ -22,7 +22,23 @@ public readonly record struct RgbColor
 
     public static readonly RgbColor White = new(255, 255, 255);
 
-    public RgbColor(byte red, byte green, byte blue, byte alpha = 255)
+    /// <summary>An opaque colour.</summary>
+    public RgbColor(byte red, byte green, byte blue)
+        : this(red, green, blue, 255)
+    {
+    }
+
+    /// <summary>
+    /// A colour with an explicit opacity.
+    /// </summary>
+    /// <remarks>
+    /// The opacity is a separate constructor rather than a parameter defaulting to 255, and it
+    /// has to stay that way. Dynamo imports a zero-touch assembly by building a DesignScript AST
+    /// for every public constructor in it, and its AstFactory has no case for <see cref="byte"/>
+    /// — so a byte-typed default made the import throw, and *no* Interlude node loaded at all.
+    /// ZeroTouchImportTests enforces the rule now.
+    /// </remarks>
+    public RgbColor(byte red, byte green, byte blue, byte alpha)
     {
         Red = red;
         Green = green;

@@ -11,6 +11,17 @@ package version and `FileVersion` are what move.
 
 ## [Unreleased]
 
+### Fixed
+
+- **No nodes appeared in Dynamo at all.** `RgbColor` had a constructor whose `alpha` parameter
+  defaulted to `255` — a `byte`. Dynamo imports a zero-touch assembly by building a DesignScript
+  AST for every public constructor in it, and its `AstFactory` has no case for `byte`, so the
+  import threw `LibraryLoadFailedException` and the whole package failed to load. The opacity is
+  now a separate constructor overload with no default.
+
+  Guarded three ways so it cannot recur: every public member is checked against the importer's
+  rules, and Dynamo's *real* importer is now run over the built assembly on every build.
+
 ## [1.0.0]
 
 First release.

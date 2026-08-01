@@ -65,6 +65,26 @@ INTERLUDE_UPDATE_API=1 dotnet test tests/Interlude.Tests
 Then read the diff before committing it. If the diff shows a line under `REMOVED OR CHANGED`,
 stop and think again.
 
+### Every public member must be importable by Dynamo
+
+Dynamo imports a zero-touch assembly by reflecting over **every public type in it** and building
+a DesignScript AST for every public constructor and method. `[IsVisibleInDynamoLibrary(false)]`
+controls what appears in the *library*; it does not stop a type being *imported*.
+
+So one member Dynamo's importer cannot parse does not hide one node — it throws
+`LibraryLoadFailedException` and **not a single Interlude node loads**. The package appears empty,
+with the reason buried in Dynamo's notification panel.
+
+The rule in practice: **an optional parameter's default must be `null`, `bool`, `char`, `string`,
+`int`, `long`, `double` or `float`.** Nothing else. `byte alpha = 255` is what took the whole
+package down once, because `AstFactory.BuildPrimitiveNodeFromObject` has no case for `byte`.
+Where you need a defaulted value of another type, write a second overload instead.
+
+`ZeroTouchImportTests` enforces this two ways: it checks every public member against the rule,
+and it runs Dynamo's real importer over the built assembly. The second is why the test project
+references `DynamoVisualProgramming.Core` — the one deliberate exception to keeping Dynamo out of
+the tests.
+
 ### Never write to the host's resources
 
 Interlude is a guest in Revit's and Dynamo's process. Theming goes into the **form window's own**
