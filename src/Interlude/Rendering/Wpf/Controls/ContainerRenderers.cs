@@ -204,7 +204,7 @@ internal sealed class GroupBoxRenderer : ContainerRenderer<GroupBoxElement>
 
         return new GroupBox
         {
-            Header = element.Header,
+            Header = HeaderText.Build(element.Header, context),
             Content = body,
             Padding = new Thickness(context.Spacing),
             Margin = new Thickness(0, 0, 0, context.Spacing),
@@ -267,7 +267,7 @@ internal sealed class TabPageRenderer : ContainerRenderer<TabPageElement>
 
         return new TabItem
         {
-            Header = element.Header,
+            Header = HeaderText.Build(element.Header, context),
             Content = new ScrollViewer
             {
                 Content = body,
@@ -292,7 +292,7 @@ internal sealed class ExpanderRenderer : ContainerRenderer<ExpanderElement>
 
         return new Expander
         {
-            Header = element.Header,
+            Header = HeaderText.Build(element.Header, context),
             IsExpanded = element.IsExpanded,
             Content = body,
             Margin = new Thickness(0, 0, 0, context.Spacing),
@@ -312,12 +312,12 @@ internal sealed class CardRenderer : ContainerRenderer<CardElement>
         {
             TextBlock header = new()
             {
-                Text = element.Header,
                 FontWeight = FontWeights.SemiBold,
                 FontSize = context.Theme.FontSize * 1.1d,
                 TextWrapping = TextWrapping.Wrap,
             };
             header.SetResourceReference(TextBlock.ForegroundProperty, ThemeKeys.Foreground);
+            HeaderText.Apply(header, element.Header, context);
             body.Children.Add(header);
         }
 

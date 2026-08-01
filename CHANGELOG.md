@@ -11,7 +11,30 @@ package version and `FileVersion` are what move.
 
 ## [Unreleased]
 
+### Added
+
+- **`Theme.Mono`** — a monochrome preset: black, white and grey, pill-shaped controls, and small
+  spaced capitals for headings. Errors keep a red, deliberately: an error nobody can pick out from
+  ordinary text is a usability bug, and no amount of restraint is worth that.
+- **Comic Neue is the default font**, embedded inside `Interlude.dll` rather than named, so a form
+  renders the same everywhere instead of depending on what the machine has installed. Override it
+  on `Theme.Create`'s `fontFamily` port. SIL Open Font Licensed; see
+  [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+- **`Theme.Create` gained `shape`, `uppercaseHeaders` and `headerTracking`** (appended, as the
+  rules require). `shape: "Pill"` derives its radius from the control height rather than from
+  `cornerRadius`, because "fully rounded" depends on how tall a control is.
+- **`Layout.Progress` gained `segments`** — discrete cells instead of a continuous fill, for
+  counting rather than measuring.
+
 ### Fixed
+
+- **A "System" category appeared in the library beside "Interlude".** Dynamo imports the base
+  types and signature types of every public type, so exceptions deriving from
+  `InvalidOperationException` dragged in `Exception` and `SystemException`, the WPF renderer
+  dragged in `System.Windows`, and the JSON converter dragged in `System.Text.Json`.
+  `[IsVisibleInDynamoLibrary(false)]` cannot help — it hides *our* type, not the framework type
+  behind it. The rendering layer, the exceptions, the live-state types and the JSON converter are
+  now internal, and a test reads the importer's own output to keep it that way.
 
 - **No nodes appeared in Dynamo at all.** `RgbColor` had a constructor whose `alpha` parameter
   defaulted to `255` — a `byte`. Dynamo imports a zero-touch assembly by building a DesignScript

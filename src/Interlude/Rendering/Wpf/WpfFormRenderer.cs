@@ -15,7 +15,7 @@ namespace Interlude.Rendering.Wpf;
 /// other add-in, which is the exact failure mode this package is built to avoid.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class WpfFormRenderer : IFormRenderer
+internal sealed class WpfFormRenderer : IFormRenderer
 {
     private readonly ControlRendererRegistry _registry;
 

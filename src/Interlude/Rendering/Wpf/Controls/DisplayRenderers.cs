@@ -46,6 +46,11 @@ internal sealed class LabelRenderer : ControlRenderer<LabelElement>
             text.FontSize = context.Theme.FontSize * scale;
             text.FontWeight = FontWeights.SemiBold;
             text.Margin = new Thickness(0, context.Spacing / 2d, 0, context.Spacing / 2d);
+
+            // After the font size, never before: the tracking is a fraction of it. Headings take
+            // the micro-label treatment; body text never does, because letter spacing hurts
+            // readability over more than a few words.
+            HeaderText.Apply(text, element.Text, context);
         }
 
         return text;
@@ -219,18 +224,23 @@ internal sealed class ProgressRenderer : ControlRenderer<ProgressElement>
             Margin = new Thickness(0, 0, 0, context.Spacing / 2d),
         };
 
-        ProgressBar bar = new()
+        if (element.Segments > 0 && !element.IsIndeterminate)
         {
-            Minimum = element.Minimum,
-            Maximum = element.Maximum,
-            Value = element.Value,
-            IsIndeterminate = element.IsIndeterminate,
-            Height = 6,
-            MinWidth = 120,
-            VerticalAlignment = VerticalAlignment.Center,
-        };
-
-        host.Children.Add(bar);
+            host.Children.Add(BuildSegments(element, context));
+        }
+        else
+        {
+            host.Children.Add(new ProgressBar
+            {
+                Minimum = element.Minimum,
+                Maximum = element.Maximum,
+                Value = element.Value,
+                IsIndeterminate = element.IsIndeterminate,
+                Height = 6,
+                MinWidth = 120,
+                VerticalAlignment = VerticalAlignment.Center,
+            });
+        }
 
         if (element.ShowPercentage && !element.IsIndeterminate)
         {
@@ -248,6 +258,46 @@ internal sealed class ProgressRenderer : ControlRenderer<ProgressElement>
         }
 
         return host;
+    }
+
+    /// <summary>
+    /// Draws the bar as discrete cells. Cells are filled by rounding, not by proportion: five of
+    /// seven days is five full cells, because a partly-filled cell would invite the reader to
+    /// wonder what a partial day was.
+    /// </summary>
+    private static FrameworkElement BuildSegments(ProgressElement element, RenderContext context)
+    {
+        int count = Math.Min(60, element.Segments);
+        double span = element.Maximum - element.Minimum;
+        double fraction = span <= 0d ? 0d : (element.Value - element.Minimum) / span;
+        int filled = (int)Math.Round(Math.Clamp(fraction, 0d, 1d) * count, MidpointRounding.AwayFromZero);
+
+        StackPanel cells = new()
+        {
+            Orientation = Orientation.Horizontal,
+            VerticalAlignment = VerticalAlignment.Center,
+        };
+
+        for (int i = 0; i < count; i++)
+        {
+            Border cell = new()
+            {
+                Width = 14,
+                Height = 10,
+                Margin = new Thickness(0, 0, 3, 0),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(2),
+            };
+
+            cell.SetResourceReference(Border.BorderBrushProperty, ThemeKeys.BorderStrong);
+            cell.SetResourceReference(
+                Border.BackgroundProperty,
+                i < filled ? ThemeKeys.Accent : ThemeKeys.ControlBackground);
+
+            cells.Children.Add(cell);
+        }
+
+        return cells;
     }
 }
 

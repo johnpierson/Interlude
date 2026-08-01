@@ -33,7 +33,67 @@ internal static class Gallery
         new("Validation", "Rules that fire while typing, including one that reads another field.", Validation),
         new("Long form", "Fifty fields, for checking scrolling and performance.", LongForm),
         new("Minimal", "The smallest useful form.", Minimal),
+        new("Mono", "The monochrome theme: pills, spaced capitals, no colour.", Mono),
     };
+
+    /// <summary>
+    /// The monochrome theme on a form with enough variety to judge it: pill controls, capitalised
+    /// headings, a segmented bar, and the embedded font doing the talking.
+    /// </summary>
+    private static FormDefinition Mono() => new FormDefinition
+    {
+        Title = "Habit tracking",
+        Description = "Monochrome, pill-shaped, and set in Comic Neue.",
+        Window = new WindowOptions { Width = 480 },
+        Theme = new ThemeDefinition
+        {
+            Mode = AppearanceMode.Light,
+            Shape = ControlShape.Pill,
+            UppercaseHeaders = true,
+            HeaderTracking = 0.08d,
+            LightPalette = ThemePalette.Light with
+            {
+                Background = RgbColor.Parse("#FFFFFF"),
+                Surface = RgbColor.Parse("#F7F7F8"),
+                SurfaceAlt = RgbColor.Parse("#EEEEF1"),
+                Border = RgbColor.Parse("#D9D9DE"),
+                BorderStrong = RgbColor.Parse("#9A9AA4"),
+                Foreground = RgbColor.Parse("#16161A"),
+                ForegroundMuted = RgbColor.Parse("#6B6B75"),
+                ControlBackground = RgbColor.Parse("#FFFFFF"),
+                ControlBackgroundHover = RgbColor.Parse("#F2F2F4"),
+                Accent = RgbColor.Parse("#16161A"),
+                AccentHover = RgbColor.Parse("#33333A"),
+                AccentForeground = RgbColor.Parse("#FFFFFF"),
+                Error = RgbColor.Parse("#B3261E"),
+            },
+        },
+        Elements = new FormElement[]
+        {
+            new LabelElement { Text = "This week", HeadingLevel = 3 },
+            new ProgressElement { Value = 6, Maximum = 7, Segments = 7, ShowPercentage = false },
+            new SeparatorElement(),
+            new TextBoxElement { Key = "habit", Label = "Habit", Placeholder = "Drink water" },
+            new DropdownElement
+            {
+                Key = "repeat",
+                Label = "Repeat",
+                Options = Options("Every day", "Weekdays", "Weekends"),
+            },
+            new SliderElement { Key = "target", Label = "Target", Minimum = 1, Maximum = 10, DefaultValue = 7, DecimalPlaces = 0 },
+            new CheckBoxElement { Key = "remind", Content = "Remind me" },
+            new ToggleElement { Key = "active", Label = "Active", OnText = "On", OffText = "Off", DefaultValue = true },
+            new GroupBoxElement
+            {
+                Header = "Advanced",
+                Children = new FormElement[]
+                {
+                    new NumericElement { Key = "streak", Label = "Streak goal", DefaultValue = 30, Unit = "days" },
+                    new ColorPickerElement { Key = "tint", Label = "Tint", DefaultValue = RgbColor.Parse("#16161A") },
+                },
+            },
+        },
+    }.WithResolvedKeys();
 
     private static FormDefinition Minimal() => new FormDefinition
     {

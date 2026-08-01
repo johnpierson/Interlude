@@ -345,14 +345,24 @@ public class Layout
     /// <param name="value">How far along, between 0 and the maximum.</param>
     /// <param name="maximum">The value that counts as complete.</param>
     /// <param name="indeterminate">Show a looping animation instead of a fixed amount.</param>
+    /// <param name="segments">
+    /// Draw the bar as this many discrete cells rather than one continuous fill. Zero is
+    /// continuous. Segments are for counting rather than measuring: "five of seven days" reads
+    /// off a segmented bar at a glance, where a continuous bar at 71% does not.
+    /// </param>
     /// <returns name="element">The form element.</returns>
-    /// <search>progress,bar,percent,loading</search>
-    public static FormElement Progress(double value = 0, double maximum = 100, bool indeterminate = false)
+    /// <search>progress,bar,percent,loading,segments,steps</search>
+    public static FormElement Progress(
+        double value = 0,
+        double maximum = 100,
+        bool indeterminate = false,
+        int segments = 0)
         => new ProgressElement
         {
             Value = value,
             Maximum = maximum <= 0 ? 100 : maximum,
             IsIndeterminate = indeterminate,
+            Segments = Math.Max(0, segments),
         };
 
     /// <summary>

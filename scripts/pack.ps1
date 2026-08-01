@@ -79,6 +79,13 @@ foreach ($target in @($manifest.versions | Where-Object { $_.active })) {
 
     Copy-Item (Join-Path $repoRoot 'LICENSE') (Join-Path $packageRoot 'extra\LICENSE.txt') -Force
 
+    # The SIL Open Font License requires the licence to travel with the font, and the font is
+    # embedded in Interlude.dll. See THIRD-PARTY-NOTICES.md.
+    Copy-Item (Join-Path $repoRoot 'src\Interlude\Fonts\ComicNeue-OFL.txt') `
+              (Join-Path $packageRoot 'extra\ComicNeue-OFL.txt') -Force
+    Copy-Item (Join-Path $repoRoot 'THIRD-PARTY-NOTICES.md') `
+              (Join-Path $packageRoot 'extra\THIRD-PARTY-NOTICES.md') -Force
+
     $engineVersion = "$dynamo.0.0"
     $revitYears = $target.revitYears -join ', '
 

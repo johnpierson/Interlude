@@ -12,7 +12,7 @@ namespace Interlude.Runtime;
 /// evaluated in any order once values have settled.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class DependencyGraph
+internal sealed class DependencyGraph
 {
     private readonly Dictionary<string, HashSet<string>> _dependencies = new(StringComparer.Ordinal);
 

@@ -10,7 +10,7 @@ namespace Interlude.Runtime;
 /// persistence can be added later without the rest of the package noticing.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public interface IResultStore
+internal interface IResultStore
 {
     /// <summary>Retrieves the last submitted result for a form.</summary>
     bool TryGet(string formId, out FormResult? result);
@@ -34,7 +34,7 @@ public interface IResultStore
 /// wrong.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class SessionStore : IResultStore
+internal sealed class SessionStore : IResultStore
 {
     private readonly ConcurrentDictionary<string, FormResult> _results =
         new(StringComparer.Ordinal);

@@ -88,8 +88,19 @@ never writes to the host application's resources, so nothing it does can restyle
 
 ```
 Theme.Dark("#4C8DFF")        // follow Revit's dark interface
+Theme.Mono()                 // black, white, pills, spaced capitals
 Theme.Create(mode: "Auto", density: "Compact", labelWidth: 0)
 ```
+
+<p align="center">
+  <img src="docs/images/mono-light.png" alt="The monochrome theme: pill-shaped controls and spaced capitals" width="400">
+  &nbsp;
+  <img src="docs/images/mono-dark.png" alt="The monochrome theme in dark mode" width="400">
+</p>
+
+Interlude sets its own font — **Comic Neue**, embedded in the assembly rather than named, so a
+form looks the same on every machine instead of depending on what happens to be installed. Name
+any other on `Theme.Create`'s `fontFamily` port.
 
 ## Cancelling returns defaults, not nulls
 

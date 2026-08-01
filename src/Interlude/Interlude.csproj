@@ -66,6 +66,25 @@
   </ItemGroup>
 
   <!--
+    Comic Neue, embedded rather than referenced.
+
+    <Resource> puts the font inside Interlude.dll, so the package still ships exactly one file and
+    the one-assembly rule holds. Referencing the font by name instead would mean it renders
+    correctly only on machines where somebody had installed it, which for a package distributed to
+    other people's Revit installs means "almost nowhere".
+
+    SIL Open Font License 1.1, no reserved font name. The licence travels with the binary: it is
+    in Fonts/ComicNeue-OFL.txt here, and pack.ps1 copies it into every package's extra/ folder.
+    See THIRD-PARTY-NOTICES.md.
+  -->
+  <ItemGroup>
+    <Resource Include="Fonts\ComicNeue-Regular.ttf" />
+    <Resource Include="Fonts\ComicNeue-Bold.ttf" />
+    <Resource Include="Fonts\ComicNeue-Light.ttf" />
+    <None Include="Fonts\ComicNeue-OFL.txt" />
+  </ItemGroup>
+
+  <!--
     The XAML compiler always emits a PUBLIC XamlGeneratedNamespace.GeneratedInternalTypeHelper,
     and Dynamo turns every public type into a library category, so leaving it in would put a
     meaningless "XamlGeneratedNamespace" entry in front of every user. It exists solely to let

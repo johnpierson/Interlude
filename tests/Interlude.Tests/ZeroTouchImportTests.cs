@@ -167,6 +167,62 @@ public class ZeroTouchImportTests
             Flatten(failure));
     }
 
+    /// <summary>
+    /// The library shows one category, not two.
+    ///
+    /// Dynamo imports a type's base classes and everything in its public signatures, so a public
+    /// class deriving from <c>InvalidOperationException</c> puts <c>Exception</c>,
+    /// <c>SystemException</c> and <c>InvalidOperationException</c> in the library, and a public
+    /// method returning a <c>FrameworkElement</c> puts <c>System.Windows</c> there. The result is
+    /// a "System" category sitting next to "Interlude", full of framework types nobody asked for.
+    ///
+    /// <c>[IsVisibleInDynamoLibrary(false)]</c> cannot fix that: it hides *our* type, not the
+    /// framework type behind it. The only fix is to keep those types out of the public surface,
+    /// which is why the rendering layer, the exceptions and the live-state types are internal.
+    ///
+    /// This reads what Dynamo's importer actually produced rather than guessing, and allows only
+    /// the handful of framework types that any assembly unavoidably mentions.
+    /// </summary>
+    [Fact]
+    public void Importing_the_assembly_creates_no_category_but_Interlude()
+    {
+        Assembly shipped = typeof(Model.FormDefinition).Assembly;
+        ProtoFFI.CLRDLLModule module = new(Path.GetFileName(shipped.Location), shipped);
+
+        ProtoCore.AST.AssociativeAST.CodeBlockNode block =
+            (ProtoCore.AST.AssociativeAST.CodeBlockNode)module.ImportCodeBlock(null, string.Empty, null);
+
+        List<string> foreign = block.Body
+            .OfType<ProtoCore.AST.AssociativeAST.ClassDeclNode>()
+            .Select(declaration => declaration.ClassName)
+            .Where(name => !name.StartsWith("Interlude", StringComparison.Ordinal))
+            .Where(name => !IsUnavoidable(name))
+            .Distinct(StringComparer.Ordinal)
+            .OrderBy(name => name, StringComparer.Ordinal)
+            .ToList();
+
+        Assert.True(
+            foreign.Count == 0,
+            "These framework types would appear in Dynamo's library beside Interlude:\n  " +
+            string.Join("\n  ", foreign));
+    }
+
+    /// <summary>
+    /// Framework types that cannot be kept out and do not produce a stray category anyway.
+    ///
+    /// <c>Object</c> and <c>ValueType</c> are every type's ancestors. <c>DateTime</c> and
+    /// <c>TimeSpan</c> are types Dynamo already knows and maps to its own. Interfaces and
+    /// delegates — <c>IEquatable&lt;T&gt;</c> from every record, <c>Func&lt;T&gt;</c>,
+    /// <c>EventHandler&lt;T&gt;</c> — are imported but have nothing callable, so the library
+    /// makes no entry for them.
+    /// </summary>
+    private static bool IsUnavoidable(string name)
+        => name is "System.Object" or "System.ValueType" or "System.DateTime" or "System.TimeSpan"
+           || name.StartsWith("System.IEquatableOf", StringComparison.Ordinal)
+           || name.StartsWith("System.FuncOf", StringComparison.Ordinal)
+           || name.StartsWith("System.ActionOf", StringComparison.Ordinal)
+           || name.StartsWith("System.EventHandlerOf", StringComparison.Ordinal);
+
     private static string Flatten(Exception? error)
     {
         List<string> lines = new();

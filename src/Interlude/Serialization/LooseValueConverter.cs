@@ -25,7 +25,7 @@ namespace Interlude.Serialization;
 /// produce a file that loads without complaint and selects the wrong thing.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class LooseValueConverter : JsonConverter<object?>
+internal sealed class LooseValueConverter : JsonConverter<object?>
 {
     private const string DateMarker = "$date";
     private const string ColorMarker = "$color";

@@ -80,6 +80,15 @@ public sealed record ProgressElement : DisplayElement
     public bool IsIndeterminate { get; init; }
 
     public bool ShowPercentage { get; init; } = true;
+
+    /// <summary>
+    /// Draws the bar as this many discrete cells instead of one continuous fill. Zero, the
+    /// default, is continuous.
+    ///
+    /// Segments are for counting rather than measuring: "five of seven days" reads off a
+    /// segmented bar at a glance, where a continuous bar at 71% does not.
+    /// </summary>
+    public int Segments { get; init; }
 }
 
 /// <summary>

@@ -15,7 +15,7 @@ namespace Interlude.Rendering.Wpf;
 /// control is recoverable; a form that throws is not.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class ControlRendererRegistry
+internal sealed class ControlRendererRegistry
 {
     private readonly Dictionary<Type, IControlRenderer> _renderers = new();
     private readonly FallbackRenderer _fallback = new();

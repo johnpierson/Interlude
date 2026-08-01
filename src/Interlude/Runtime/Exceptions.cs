@@ -7,7 +7,7 @@ namespace Interlude.Runtime;
 
 /// <summary>Base type for the errors Interlude raises on purpose.</summary>
 [IsVisibleInDynamoLibrary(false)]
-public class InterludeException : InvalidOperationException
+internal class InterludeException : InvalidOperationException
 {
     public InterludeException(string message)
         : base(message)
@@ -28,7 +28,7 @@ public class InterludeException : InvalidOperationException
 /// alternative is a dialog that opens and then spins forever on the UI thread.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class FormCycleException : InterludeException
+internal sealed class FormCycleException : InterludeException
 {
     public FormCycleException(IReadOnlyList<string> cycle)
         : base(BuildMessage(cycle))
@@ -58,7 +58,7 @@ public sealed class FormCycleException : InterludeException
 /// instead of throwing.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class HeadlessFormException : InterludeException
+internal sealed class HeadlessFormException : InterludeException
 {
     public HeadlessFormException(string formTitle, HostContext host)
         : base($"The form '{formTitle}' cannot be shown because this Dynamo session has no user " +

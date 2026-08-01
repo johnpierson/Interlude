@@ -182,14 +182,16 @@ Layout.Section("Advanced", [
 | **Image** | `path`, `width = null`, `height = null`, `alternateText = ""` |
 | **Separator** | `caption = ""` |
 | **Spacer** | `size = 8` |
-| **Progress** | `value = 0`, `maximum = 100`, `indeterminate = false` |
+| **Progress** | `value = 0`, `maximum = 100`, `indeterminate = false`, `segments = 0` |
 
 `headingLevel` 1–4 renders as a heading; 0 is body text.
 
 `Markdown` supports headings, **bold**, *italic*, `code`, links, bullet and numbered lists, and
 horizontal rules. It is a deliberate subset — see [architecture](architecture.md).
 
-`Progress` shows a fixed value. Nothing in the form updates it while it is open.
+`Progress` shows a fixed value. Nothing in the form updates it while it is open. Give it
+`segments` to draw discrete cells instead of a continuous fill — "five of seven days" reads off a
+segmented bar at a glance, where a bar at 71% does not.
 
 ### Buttons
 
@@ -358,20 +360,39 @@ Behavior.WithValidation(Input.DatePicker("End"),
 | --- | --- |
 | **System** | — |
 | **Light** / **Dark** | `accent = ""` |
-| **Create** | `mode = "Auto"`, `accent = ""`, `density = "Comfortable"`, `cornerRadius = 4`, `fontSize = 13`, `fontFamily = ""`, `labelWidth = 130`, `reducedMotion = false` |
+| **Mono** | `dark = false`, `accent = ""` |
+| **Create** | `mode = "Auto"`, `accent = ""`, `density = "Comfortable"`, `cornerRadius = 4`, `fontSize = 13`, `fontFamily = ""`, `labelWidth = 130`, `reducedMotion = false`, `shape = "Rounded"`, `uppercaseHeaders = false`, `headerTracking = 0` |
 | **WithColors** | `theme`, `background`, `foreground`, `surface`, `border`, `error` |
 
 `mode` is `Auto`, `Light` or `Dark`; `Auto` follows the Windows app theme. `density` is `Compact`,
 `Comfortable` or `Spacious`. `labelWidth: 0` stacks labels above their controls.
+
+`shape` is `Rounded`, `Pill` or `Square`. **`Pill` ignores `cornerRadius`** and derives the radius
+from the control height instead, because "fully rounded" is a function of how tall a control is.
+
+`uppercaseHeaders` and `headerTracking` are the micro-label treatment: small spaced capitals on
+section, card and tab headings, and on `Layout.Label` headings. Body text is never tracked, where
+letter spacing hurts readability rather than helping it.
 
 Accent text colour is chosen automatically by contrast, so a bright accent still reads.
 
 Themes apply to the form's own window and nothing else — Revit's UI is never touched.
 
 ```
+Theme.Mono()                    // black, white, pills, spaced capitals
+Theme.Mono(dark: true)
 Theme.Dark("#4C8DFF")
-Theme.Create(mode: "Auto", density: "Compact", labelWidth: 0, fontSize: 12)
+Theme.Create(shape: "Pill", uppercaseHeaders: true, headerTracking: 0.08, labelWidth: 0)
 ```
+
+### The font
+
+Interlude sets its own font by default: **Comic Neue**, embedded inside `Interlude.dll` so it
+renders identically on every machine rather than depending on what happens to be installed. Name
+any other font on `Create`'s `fontFamily` port to override it; Interlude falls back to Segoe UI
+Variable Text, Segoe UI and Tahoma if a named font is missing.
+
+It is SIL Open Font Licensed — see [THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOTICES.md).
 
 ---
 

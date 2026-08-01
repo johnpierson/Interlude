@@ -22,7 +22,7 @@ namespace Interlude.Rendering.Wpf;
 /// session before this window existed, and none of it is duplicated here.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class FormWindow : Window
+internal sealed class FormWindow : Window
 {
     private readonly FormSession _session;
     private readonly FormDefinition _definition;

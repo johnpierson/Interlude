@@ -18,7 +18,7 @@ namespace Interlude.Rendering.Wpf;
 /// control to another. All cross-field behaviour belongs to <see cref="FormSession"/>.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public interface IControlRenderer
+internal interface IControlRenderer
 {
     /// <summary>The element type this renderer handles.</summary>
     Type ElementType { get; }
@@ -49,7 +49,7 @@ public interface IControlRenderer
 /// </summary>
 /// <typeparam name="TElement">The element type handled.</typeparam>
 [IsVisibleInDynamoLibrary(false)]
-public abstract class ControlRenderer<TElement> : IControlRenderer
+internal abstract class ControlRenderer<TElement> : IControlRenderer
     where TElement : FormElement
 {
     /// <inheritdoc />

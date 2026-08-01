@@ -26,7 +26,7 @@ namespace Interlude.Rendering.Wpf;
 /// cannot reliably close.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public static class WindowHost
+internal static class WindowHost
 {
     /// <summary>
     /// Shows a window built by <paramref name="build"/> on the right thread and returns its result.

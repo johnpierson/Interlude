@@ -17,7 +17,7 @@ namespace Interlude.Runtime;
 /// finishes, with no dialog visible to explain why.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class FormLatch
+internal sealed class FormLatch
 {
     /// <summary>Generous by design. This bounds a hang, it does not pace anything.</summary>
     public static readonly TimeSpan DefaultTimeout = TimeSpan.FromMinutes(30);

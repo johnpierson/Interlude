@@ -52,6 +52,72 @@ public class Theme
         };
 
     /// <summary>
+    /// A monochrome theme: black, white and grey, pill-shaped controls, and small spaced capitals
+    /// for section headings.
+    ///
+    /// Removing colour forces the layout to carry the design, which is why this style reads as
+    /// deliberate rather than unfinished. Errors keep a red, though — an error nobody can pick out
+    /// from ordinary text is a usability bug, and no amount of restraint is worth that.
+    /// </summary>
+    /// <param name="dark">Ink on paper, or paper on ink.</param>
+    /// <param name="accent">
+    /// Overrides the ink used for buttons and selection, as hex. Empty keeps it monochrome.
+    /// </param>
+    /// <returns name="theme">The theme.</returns>
+    /// <search>mono,monochrome,black,white,minimal,swiss,pill</search>
+    public static ThemeDefinition Mono(bool dark = false, string accent = "")
+        => new()
+        {
+            Mode = dark ? AppearanceMode.Dark : AppearanceMode.Light,
+            LightPalette = MonoPalette(dark: false),
+            DarkPalette = MonoPalette(dark: true),
+            Accent = NodeSupport.OptionalColor(NodeSupport.OrNull(accent)),
+            Shape = ControlShape.Pill,
+            UppercaseHeaders = true,
+            HeaderTracking = 0.08d,
+            Density = ThemeDensity.Comfortable,
+            FontSize = 13d,
+        };
+
+    private static ThemePalette MonoPalette(bool dark) => dark
+        ? ThemePalette.Dark with
+        {
+            Background = RgbColor.Parse("#15161A"),
+            Surface = RgbColor.Parse("#1D1F24"),
+            SurfaceAlt = RgbColor.Parse("#262930"),
+            Border = RgbColor.Parse("#33373F"),
+            BorderStrong = RgbColor.Parse("#5A606B"),
+            Foreground = RgbColor.Parse("#F2F3F5"),
+            ForegroundMuted = RgbColor.Parse("#9BA1AC"),
+            ForegroundDisabled = RgbColor.Parse("#5A606B"),
+            ControlBackground = RgbColor.Parse("#22252B"),
+            ControlBackgroundHover = RgbColor.Parse("#2C3037"),
+            ControlBackgroundDisabled = RgbColor.Parse("#1C1E23"),
+            Accent = RgbColor.Parse("#F2F3F5"),
+            AccentHover = RgbColor.Parse("#FFFFFF"),
+            AccentForeground = RgbColor.Parse("#15161A"),
+            Error = RgbColor.Parse("#FF7A6E"),
+        }
+        : ThemePalette.Light with
+        {
+            Background = RgbColor.Parse("#FFFFFF"),
+            Surface = RgbColor.Parse("#F7F7F8"),
+            SurfaceAlt = RgbColor.Parse("#EEEEF1"),
+            Border = RgbColor.Parse("#D9D9DE"),
+            BorderStrong = RgbColor.Parse("#9A9AA4"),
+            Foreground = RgbColor.Parse("#16161A"),
+            ForegroundMuted = RgbColor.Parse("#6B6B75"),
+            ForegroundDisabled = RgbColor.Parse("#A9A9B2"),
+            ControlBackground = RgbColor.Parse("#FFFFFF"),
+            ControlBackgroundHover = RgbColor.Parse("#F2F2F4"),
+            ControlBackgroundDisabled = RgbColor.Parse("#F0F0F2"),
+            Accent = RgbColor.Parse("#16161A"),
+            AccentHover = RgbColor.Parse("#33333A"),
+            AccentForeground = RgbColor.Parse("#FFFFFF"),
+            Error = RgbColor.Parse("#B3261E"),
+        };
+
+    /// <summary>
     /// A theme built from scratch.
     /// </summary>
     /// <param name="mode">Auto, Light or Dark. Auto follows the Windows setting.</param>
@@ -62,8 +128,11 @@ public class Theme
     /// <param name="fontFamily">Font name. Empty uses the host's interface font.</param>
     /// <param name="labelWidth">Width of the label column. Zero stacks labels above their fields.</param>
     /// <param name="reducedMotion">Switch off transitions.</param>
+    /// <param name="shape">Rounded, Pill or Square. Pill ignores cornerRadius and uses the control height.</param>
+    /// <param name="uppercaseHeaders">Render section and card headings as capitals.</param>
+    /// <param name="headerTracking">Space between the letters of a heading, as a fraction of the font size.</param>
     /// <returns name="theme">The theme.</returns>
-    /// <search>theme,custom,style,brand,accent,font,density</search>
+    /// <search>theme,custom,style,brand,accent,font,density,pill,shape</search>
     public static ThemeDefinition Create(
         string mode = "Auto",
         string accent = "",
@@ -72,9 +141,17 @@ public class Theme
         double fontSize = 13,
         string fontFamily = "",
         double labelWidth = 130,
-        bool reducedMotion = false)
+        bool reducedMotion = false,
+        string shape = "Rounded",
+        bool uppercaseHeaders = false,
+        double headerTracking = 0)
         => new()
         {
+            Shape = Enum.TryParse(shape, ignoreCase: true, out ControlShape parsedShape)
+                ? parsedShape
+                : ControlShape.Rounded,
+            UppercaseHeaders = uppercaseHeaders,
+            HeaderTracking = Math.Max(0d, headerTracking),
             Mode = Enum.TryParse(mode, ignoreCase: true, out AppearanceMode parsedMode)
                 ? parsedMode
                 : AppearanceMode.Auto,

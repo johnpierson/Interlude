@@ -18,7 +18,7 @@ namespace Interlude.Rendering.Wpf;
 /// brush below is scoped to one window and dies with it.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public static class WpfThemeApplier
+internal static class WpfThemeApplier
 {
     private const string ThemeDictionaryUri = "pack://application:,,,/Interlude;component/Themes/Interlude.xaml";
 
@@ -103,8 +103,9 @@ public static class WpfThemeApplier
         Set(resources, ThemeKeys.Success, palette.Success.ToBrush());
         Set(resources, ThemeKeys.ShadowColor, palette.Shadow.ToColor());
 
-        Set(resources, ThemeKeys.CornerRadius, new CornerRadius(theme.CornerRadius));
-        Set(resources, ThemeKeys.CornerRadiusValue, theme.CornerRadius);
+        double radius = theme.EffectiveCornerRadius;
+        Set(resources, ThemeKeys.CornerRadius, new CornerRadius(radius));
+        Set(resources, ThemeKeys.CornerRadiusValue, radius);
         Set(resources, ThemeKeys.FontSize, theme.FontSize);
         Set(resources, ThemeKeys.FontSizeSmall, Math.Max(9d, theme.FontSize - 2d));
         Set(resources, ThemeKeys.FontSizeHeading, theme.FontSize * 1.35d);
@@ -134,6 +135,17 @@ public static class WpfThemeApplier
         resources.MergedDictionaries.Add(new ResourceDictionary { Source = uri });
     }
 
+    /// <summary>
+    /// Interlude's own font, embedded in this assembly.
+    ///
+    /// The trailing fallbacks matter: if the embedded font ever fails to resolve — an unusual
+    /// hosting arrangement, a trimmed assembly — WPF walks the list rather than dropping to a
+    /// serif default that would make every form look broken.
+    /// </summary>
+    private const string EmbeddedFont = "./Fonts/#Comic Neue, Segoe UI Variable Text, Segoe UI, Tahoma";
+
+    private static readonly Uri FontBaseUri = new("pack://application:,,,/Interlude;component/");
+
     private static FontFamily ResolveFontFamily(string? requested)
     {
         if (!string.IsNullOrWhiteSpace(requested))
@@ -144,12 +156,20 @@ public static class WpfThemeApplier
             }
             catch (ArgumentException)
             {
-                // Fall through to the host's font rather than refusing to show the form.
+                // A font name nobody has is not worth refusing to show the form over.
             }
         }
 
-        // Segoe UI Variable on Windows 11, Segoe UI everywhere else, then whatever exists.
-        return new FontFamily("Segoe UI Variable Text, Segoe UI, Tahoma, sans-serif");
+        try
+        {
+            // The base-URI overload is what makes "./Fonts/#Comic Neue" resolve against this
+            // assembly's resources rather than against the installed font collection.
+            return new FontFamily(FontBaseUri, EmbeddedFont);
+        }
+        catch (Exception ex) when (ex is ArgumentException or UriFormatException)
+        {
+            return new FontFamily("Segoe UI Variable Text, Segoe UI, Tahoma");
+        }
     }
 
     private static void Set(ResourceDictionary resources, string key, object value)

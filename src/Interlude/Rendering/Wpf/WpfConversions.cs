@@ -14,7 +14,7 @@ namespace Interlude.Rendering.Wpf;
 /// one file, and the benefit is a model that serializes, tests and evolves without a UI stack.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public static class WpfConversions
+internal static class WpfConversions
 {
     /// <summary>Converts to a WPF colour.</summary>
     public static Color ToColor(this RgbColor color)

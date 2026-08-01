@@ -8,7 +8,7 @@ namespace Interlude.Runtime;
 
 /// <summary>The live value of every field, and the only thing conditions are allowed to see.</summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class FormStateStore : IFormStateReader
+internal sealed class FormStateStore : IFormStateReader
 {
     private readonly Dictionary<string, object?> _values = new(StringComparer.Ordinal);
 
@@ -55,7 +55,7 @@ public sealed class FormStateStore : IFormStateReader
 /// <summary>What changed about an element in one propagation pass.</summary>
 [Flags]
 [IsVisibleInDynamoLibrary(false)]
-public enum StateChangeKind
+internal enum StateChangeKind
 {
     None = 0,
     Value = 1 << 0,
@@ -70,7 +70,7 @@ public enum StateChangeKind
 /// mutable: it is the session's working copy, updated in place and handed to the view.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class ElementRuntimeState
+internal sealed class ElementRuntimeState
 {
     internal ElementRuntimeState(FormElement element)
     {
@@ -110,7 +110,7 @@ public sealed class ElementRuntimeState
 
 /// <summary>One element's change within a propagation batch.</summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class ElementStateChange
+internal sealed class ElementStateChange
 {
     internal ElementStateChange(ElementRuntimeState state, StateChangeKind kind)
     {
@@ -134,7 +134,7 @@ public sealed class ElementStateChange
 /// re-laying-out the window once per affected field.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class FormStateChangedEventArgs : EventArgs
+internal sealed class FormStateChangedEventArgs : EventArgs
 {
     internal FormStateChangedEventArgs(IReadOnlyList<ElementStateChange> changes)
     {

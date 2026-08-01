@@ -15,6 +15,20 @@ public enum AppearanceMode
     Dark,
 }
 
+/// <summary>The shape of a control's corners.</summary>
+[IsVisibleInDynamoLibrary(false)]
+public enum ControlShape
+{
+    /// <summary>Corners rounded by the theme's corner radius.</summary>
+    Rounded,
+
+    /// <summary>Fully rounded ends, so a control reads as a pill or a capsule.</summary>
+    Pill,
+
+    /// <summary>Square corners.</summary>
+    Square,
+}
+
 /// <summary>How tightly a form packs its controls.</summary>
 [IsVisibleInDynamoLibrary(false)]
 public enum ThemeDensity
@@ -179,10 +193,34 @@ public sealed record ThemeDefinition
 
     public double CornerRadius { get; init; } = 4d;
 
+    /// <summary>
+    /// Whether controls read as rounded rectangles, as pills, or as squares. A pill's radius is
+    /// computed from <see cref="ControlHeight"/> rather than from <see cref="CornerRadius"/>,
+    /// because "fully rounded" is a function of how tall the control is.
+    /// </summary>
+    public ControlShape Shape { get; init; } = ControlShape.Rounded;
+
     public double FontSize { get; init; } = 13d;
 
-    /// <summary>Null uses the host's UI font.</summary>
+    /// <summary>
+    /// Null uses Interlude's own font, which is embedded in the assembly and therefore present
+    /// on every machine the package reaches. Name a font here to override it — but remember that
+    /// a font named and not installed falls back to whatever the host happens to have.
+    /// </summary>
     public string? FontFamily { get; init; }
+
+    /// <summary>
+    /// Renders section headers, card headers, tab captions and headings in capitals. Paired with
+    /// <see cref="HeaderTracking"/> this is the "micro-label" treatment: small, spaced capitals
+    /// that read as structure rather than as content.
+    /// </summary>
+    public bool UppercaseHeaders { get; init; }
+
+    /// <summary>
+    /// Extra space between the letters of a header, as a fraction of the font size. Zero is
+    /// normal spacing; 0.1 is a comfortable amount for capitals.
+    /// </summary>
+    public double HeaderTracking { get; init; }
 
     public ThemeDensity Density { get; init; } = ThemeDensity.Comfortable;
 
@@ -230,5 +268,19 @@ public sealed record ThemeDefinition
         ThemeDensity.Compact => 24d,
         ThemeDensity.Spacious => 34d,
         _ => 28d,
+    };
+
+    /// <summary>
+    /// The corner radius controls actually get, once <see cref="Shape"/> has had its say.
+    ///
+    /// A pill is half the control's height rather than some very large number left to the layout
+    /// engine to clamp. Computing it means the shape is the same whatever WPF decides to do with
+    /// an out-of-range radius, and it stays a true capsule at every density.
+    /// </summary>
+    public double EffectiveCornerRadius => Shape switch
+    {
+        ControlShape.Pill => ControlHeight / 2d,
+        ControlShape.Square => 0d,
+        _ => CornerRadius,
     };
 }

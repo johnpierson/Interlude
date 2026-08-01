@@ -85,7 +85,7 @@
   Label(string text, int headingLevel = 0, bool muted = false) -> FormElement
   LinkButton(string text, string url) -> FormElement
   Markdown(string text) -> FormElement
-  Progress(double value = 0, double maximum = 100, bool indeterminate = false) -> FormElement
+  Progress(double value = 0, double maximum = 100, bool indeterminate = false, int segments = 0) -> FormElement
   ResetButton(string text = "Reset") -> FormElement
   Row(List<FormElement> elements, bool equalWidths = false, bool wrap = false, double spacing = -1) -> FormElement
   Scroll(List<FormElement> elements, double maxHeight = 300, bool allowHorizontal = false) -> FormElement
@@ -123,9 +123,10 @@
   Required(string message = "") -> ValidationRule
 
 ## Theme
-  Create(string mode = "Auto", string accent = "", string density = "Comfortable", double cornerRadius = 4, double fontSize = 13, string fontFamily = "", double labelWidth = 130, bool reducedMotion = false) -> ThemeDefinition
+  Create(string mode = "Auto", string accent = "", string density = "Comfortable", double cornerRadius = 4, double fontSize = 13, string fontFamily = "", double labelWidth = 130, bool reducedMotion = false, string shape = "Rounded", bool uppercaseHeaders = false, double headerTracking = 0) -> ThemeDefinition
   Dark(string accent = "") -> ThemeDefinition
   Light(string accent = "") -> ThemeDefinition
+  Mono(bool dark = false, string accent = "") -> ThemeDefinition
   System() -> ThemeDefinition
   WithColors(ThemeDefinition theme, string background = "", string foreground = "", string surface = "", string border = "", string error = "") -> ThemeDefinition
 

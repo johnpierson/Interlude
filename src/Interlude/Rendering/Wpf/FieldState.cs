@@ -12,7 +12,7 @@ namespace Interlude.Rendering.Wpf;
 /// not a code change.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public static class FieldState
+internal static class FieldState
 {
     /// <summary>
     /// Set on a control whose value is currently failing a rule.

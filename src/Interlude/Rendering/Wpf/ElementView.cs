@@ -12,7 +12,7 @@ namespace Interlude.Rendering.Wpf;
 /// track the visual tree.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class ElementView
+internal sealed class ElementView
 {
     internal ElementView(FormElement element, FrameworkElement root, FrameworkElement control, IControlRenderer renderer)
     {

@@ -15,7 +15,7 @@ namespace Interlude.Rendering.Wpf;
 /// free — its renderer only has to produce the control itself.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public static class FieldChrome
+internal static class FieldChrome
 {
     /// <summary>The pieces of chrome the view needs to keep hold of.</summary>
     [IsVisibleInDynamoLibrary(false)]

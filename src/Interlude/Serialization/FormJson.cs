@@ -28,7 +28,7 @@ public static class FormJson
     private static readonly JsonSerializerOptions CompactOptions = CreateOptions(indented: false);
 
     /// <summary>The options used for reading and for indented writing.</summary>
-    public static JsonSerializerOptions Options => WriteOptions;
+    internal static JsonSerializerOptions Options => WriteOptions;
 
     /// <summary>Writes a form as JSON.</summary>
     public static string Serialize(FormDefinition definition, bool indented = true)
@@ -178,7 +178,7 @@ public static class FormJson
 
 /// <summary>Raised when a form file cannot be read.</summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class InterludeJsonException : Runtime.InterludeException
+internal sealed class InterludeJsonException : Runtime.InterludeException
 {
     public InterludeJsonException(string message)
         : base(message)

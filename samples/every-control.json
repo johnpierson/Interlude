@@ -379,6 +379,7 @@
       "maximum": 100,
       "isIndeterminate": false,
       "showPercentage": true,
+      "segments": 0,
       "key": "",
       "rules": []
     },
@@ -412,12 +413,16 @@
   "theme": {
     "mode": "auto",
     "cornerRadius": 4,
+    "shape": "rounded",
     "fontSize": 13,
+    "uppercaseHeaders": false,
+    "headerTracking": 0,
     "density": "comfortable",
     "reducedMotion": false,
     "labelWidth": 130,
     "baseSpacing": 8,
-    "controlHeight": 28
+    "controlHeight": 28,
+    "effectiveCornerRadius": 4
   },
   "formId": "",
   "rememberValues": true,

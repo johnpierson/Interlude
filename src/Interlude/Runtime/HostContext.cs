@@ -16,7 +16,7 @@ namespace Interlude.Runtime;
 /// list here exists to make the resulting error message useful rather than to gate anything.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class HostContext
+internal sealed class HostContext
 {
     /// <summary>
     /// Processes known to run Dynamo graphs with no user interface. Matched case-insensitively

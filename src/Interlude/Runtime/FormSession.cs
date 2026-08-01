@@ -71,7 +71,7 @@ public sealed class FormSession
     }
 
     /// <summary>Raised once per edit, carrying every state change that edit caused.</summary>
-    public event EventHandler<FormStateChangedEventArgs>? Changed;
+    internal event EventHandler<FormStateChangedEventArgs>? Changed;
 
     /// <summary>The form being shown, with keys resolved.</summary>
     public FormDefinition Definition { get; }
@@ -113,13 +113,13 @@ public sealed class FormSession
     public bool IsValid => _states.Values.All(state => !state.IsVisible || state.IsValid);
 
     /// <summary>Current state for an element.</summary>
-    public ElementRuntimeState GetState(FormElement element)
+    internal ElementRuntimeState GetState(FormElement element)
         => _states.TryGetValue(element, out ElementRuntimeState? state)
             ? state
             : throw new ArgumentException("This element is not part of the form.", nameof(element));
 
     /// <summary>Current state for a field, or null when no field uses that key.</summary>
-    public ElementRuntimeState? GetState(string key)
+    internal ElementRuntimeState? GetState(string key)
         => _inputsByKey.TryGetValue(key ?? string.Empty, out InputElement? input) ? _states[input] : null;
 
     /// <summary>Current value of a field.</summary>
@@ -258,7 +258,7 @@ public sealed class FormSession
     }
 
     /// <summary>The first visible field currently failing a rule, for focusing on a failed submit.</summary>
-    public ElementRuntimeState? FirstInvalid()
+    internal ElementRuntimeState? FirstInvalid()
     {
         foreach (FormElement element in _ordered)
         {

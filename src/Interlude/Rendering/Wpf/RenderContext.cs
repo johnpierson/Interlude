@@ -11,7 +11,7 @@ namespace Interlude.Rendering.Wpf;
 
 /// <summary>A button asking the form to do something.</summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class FormActionEventArgs : EventArgs
+internal sealed class FormActionEventArgs : EventArgs
 {
     internal FormActionEventArgs(ButtonAction action, string tag, string? url)
     {
@@ -37,7 +37,7 @@ public sealed class FormActionEventArgs : EventArgs
 /// consequence of that change comes back as a state batch.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-public sealed class RenderContext
+internal sealed class RenderContext
 {
     private readonly Dictionary<FormElement, ElementView> _views = new(ReferenceComparer.Instance);
 
