@@ -166,6 +166,11 @@ packages folder. See [docs/installing.md](docs/installing.md).
 
 Older Revit versions are out of scope: Interlude is .NET 8 and later, matching Dynamo 3.0+.
 
+Confirmed running in Revit 2027, Dynamo Player and Dynamo Sandbox 4.1 and 4.2. Every build is
+checked against Dynamo's real importer on every change.
+[docs/installing.md](docs/installing.md#where-it-has-been-run) records what has been run where, and
+what has not.
+
 ## The node library
 
 Everything lives under a single **Interlude** category.

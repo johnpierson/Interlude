@@ -13,6 +13,35 @@ Not sure which you have? In Dynamo, **Help → About**.
 Dynamo 2.x and Revit 2024 and earlier are out of scope: they run on .NET Framework, and Interlude
 is .NET 8 and later.
 
+## Where it has been run
+
+Interlude is one source compiled three ways, so a host being absent from this table is not a
+statement that it fails there — only that nobody has run it. Recorded so that a bug report can say
+which of these it contradicts.
+
+Last updated 31 July 2026.
+
+| Host | Status |
+| --- | --- |
+| Revit 2027 (Dynamo 4.0) | Confirmed — forms shown and answered |
+| Dynamo Player | Confirmed — forms shown and answered |
+| Dynamo Sandbox 4.1 | Confirmed — forms shown and answered |
+| Dynamo Sandbox 4.2 | Confirmed — forms shown, node help panel read from `doc/` |
+| Revit 2025 (Dynamo 3.0) | Not yet run |
+| Revit 2026 (Dynamo 3.6) | Not yet run |
+| Generative Design, headless | Not yet run |
+
+Dynamo Player is the one worth calling out. It schedules graph evaluation differently from the
+Dynamo window, and a dialog that behaves in one can deadlock or open on the wrong thread in the
+other — so that path is now exercised rather than merely written to the documented behaviour.
+
+Every build is checked against Dynamo's *real* zero-touch importer on every change, which is a
+different thing from being run: it proves the library loads and the nodes appear, not that a form
+draws correctly in a given host.
+
+The untested row that carries actual risk is the headless one. `headlessUseDefaults` has unit tests
+and has never run inside Generative Design.
+
 ## Install
 
 1. Download the archive for your Dynamo version from
@@ -28,6 +57,7 @@ is .NET 8 and later.
      bin\Interlude.dll
      bin\Interlude.xml
      bin\Interlude_DynamoCustomization.xml
+     doc\                 node help, shown in Dynamo's documentation panel
      extra\samples\
    ```
 
@@ -41,6 +71,9 @@ You can also point Dynamo at the folder directly: **Settings → Manage Node and
 
 Place **Interlude → Form → Show**, wire an **Input → TextBox** into its `elements` port, and run
 the graph in **Manual** mode. A dialog should appear.
+
+Right-click either node and choose **Help** to check the documentation came across too: the panel
+should show that node's page, and `Form.Show` offers an example graph to open.
 
 If the category is missing, see below.
 
@@ -57,6 +90,10 @@ category.
 
 **Port names show as `var` with no tooltips.**
 `Interlude.xml` is missing from `bin\`.
+
+**The help panel says there is no documentation for the node.**
+The `doc\` folder is missing. It sits beside `bin\`, not inside it, and Dynamo only looks for that
+exact folder name.
 
 **The dialog appears more than once.**
 Dynamo is in Automatic run mode and something upstream keeps changing. Switch to Manual, or gate
