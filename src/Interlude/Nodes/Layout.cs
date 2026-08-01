@@ -373,7 +373,7 @@ public class Layout
     ///
     /// Supports headings, bold, italic, inline code, links, bullet and numbered lists, and
     /// horizontal rules. Not a full Markdown implementation — no tables, images or block quotes —
-    /// because the alternative was a dependency, and the package ships exactly one assembly.
+    /// because the alternative was a dependency, and the package ships no code it did not write.
     /// Anything unrecognised is shown as the plain text it was written as, so an unsupported
     /// construct degrades into something readable rather than into markup on screen.
     ///

@@ -21,7 +21,7 @@ behaviour, the interesting tests need no UI thread at all.
 
 ## Layers
 
-One assembly, layered by namespace. Enforced by
+One code assembly, layered by namespace. Enforced by
 [`ArchitectureTests`](../tests/Interlude.Tests/ArchitectureTests.cs), not by project references.
 
 | Namespace | What lives there | WPF? |
@@ -44,6 +44,48 @@ directory that Revit shares with every other add-in. A wrong reference caught by
 build; a second DLL shipped to every user costs someone else's Revit install.
 
 The folders mirror the namespaces, so if a physical split ever becomes worth it, it is mechanical.
+
+### The one exception: node icons
+
+A package folder contains a second file ending in `.dll`, and it is worth being precise about why
+the rule bent for it and would not bend again.
+
+Dynamo will not read node icons out of the node library. It looks for a sibling assembly named
+`<AssemblyName>.customization.dll` and pulls PNGs from a resource stream inside it. There is no
+attribute, no folder convention and no manifest entry that does the same job — it is that file or
+Dynamo's default cube on all 112 nodes.
+
+What makes it affordable is that [`Interlude.customization.dll`](../src/Interlude.Icons) contains
+no types and references nothing but the `netstandard` facade. The rule was never really about file
+count; it was about what a file can collide with. A DLL with no types cannot be bound against,
+cannot export a version another package disagrees with, and cannot execute. It is a zip of
+pictures with a `.dll` extension because that is the container Dynamo happens to read.
+
+So the rule is now: **one code assembly, plus one resource assembly that is checked to be inert.**
+That check is real and runs three times — `VerifyResourceOnly` in the project, a type count in
+`build-all.ps1`, and a types-and-references check over the packed folders in CI. The moment the
+icon assembly acquires a type or a package reference, it stops being a picture container and
+starts being the dependency the rule exists to keep out, and all three fail.
+
+### How the icons are made
+
+112 nodes at two sizes is 224 images, and they are drawn rather than hand-authored — by
+[`Icons.cs`](../tools/Interlude.Preview/Icons.cs) in the preview harness, using the same offline
+WPF rendering that produces the documentation screenshots.
+
+They use a **family system**: the plate colour identifies one of the nine categories, and a shared
+vocabulary of about eighty glyphs says what the node does. Glyphs are reused across categories on
+purpose — a calendar is a calendar whether it is `Input.DatePicker`, `Rule.Range` on a date, or
+`Result.GetDate`. In the library tree an icon is drawn at roughly sixteen pixels, which is not
+enough interior to separate `Condition.GreaterThan` from `Condition.AtLeast` however carefully
+they are drawn; colour answers "which family", shape answers "what kind of thing", and the label
+beside the icon does the fine distinguishing it is already there to do.
+
+The PNGs and the compiled `InterludeImages.resources` container are both checked in, and CI
+regenerates and diffs them like it does the samples and the node help. The container is written by
+`ResourceWriter` rather than compiled from a `.resx`, because MSBuild cannot produce the format
+Dynamo reads — see the comment in [`Icons.cs`](../tools/Interlude.Preview/Icons.cs), which records
+what that cost to find out.
 
 ## The reactive session
 

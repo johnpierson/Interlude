@@ -48,8 +48,8 @@ $description = @'
 Declarative forms for Dynamo. Describe a form with nodes, show it, and get typed answers back.
 
 Conditional visibility, computed values and live validation are described declaratively rather
-than wired up. Cancelling returns every field's default rather than nulls. Ships as a single
-assembly with no runtime dependencies.
+than wired up. Cancelling returns every field's default rather than nulls. Ships as one assembly
+with no runtime dependencies, plus a resource file holding the node icons.
 '@
 
 foreach ($target in @($manifest.versions | Where-Object { $_.active })) {
@@ -69,6 +69,18 @@ foreach ($target in @($manifest.versions | Where-Object { $_.active })) {
 
     foreach ($file in @('Interlude.dll', 'Interlude.xml', 'Interlude_DynamoCustomization.xml')) {
         Copy-Item (Join-Path $buildPath $file) $binPath -Force
+    }
+
+    # Node icons. Dynamo looks for them in a sibling assembly whose name is the node library's plus
+    # ".customization", in the same folder, and nowhere else. The same file serves all three Dynamo
+    # versions: it holds PNGs and no code, so there is nothing in it to build per framework.
+    $iconAssembly = Join-Path $repoRoot "src\Interlude.Icons\bin\$Configuration\netstandard2.0\Interlude.customization.dll"
+
+    if (Test-Path $iconAssembly) {
+        Copy-Item $iconAssembly $binPath -Force
+    }
+    else {
+        Write-Warning "The icon assembly is missing: this package's nodes will show Dynamo's default icon. Run scripts/build-all.ps1 first."
     }
 
     # Node help. Dynamo's documentation browser looks for a folder named exactly 'doc' beside bin/

@@ -11,7 +11,8 @@ Interlude is a forms subsystem for Dynamo. A form is a value: nodes build it, a 
 it, and the answers come back in a dictionary you read by name. Conditional visibility, computed
 values and live validation are *described*, not wired.
 
-There are no Revit dependencies. Interlude ships one assembly and nothing else.
+There are no Revit dependencies. Interlude ships one assembly, plus a resource file holding the
+node icons that contains no code at all.
 
 <p align="center">
   <img src="docs/images/every-control-dark.png" alt="A form showing every Interlude control in the dark theme" width="440">
@@ -269,8 +270,8 @@ dotnet run --project tools/Interlude.Preview
 | [Contributing](CONTRIBUTING.md) | Setting up, the rules with teeth, adding a control |
 
 [docs/architecture.md](docs/architecture.md) is the one to read before changing anything
-structural — including why WPF, why one assembly, and why the evaluator re-runs everything on
-every edit.
+structural — including why WPF, why one assembly, why the node icons are the single exception to
+that, and why the evaluator re-runs everything on every edit.
 
 ## Licence
 

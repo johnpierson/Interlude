@@ -1,6 +1,7 @@
 # Installing
 
-Interlude ships one assembly per Dynamo version. Pick the one matching your Dynamo.
+Interlude ships one assembly per Dynamo version, plus a code-free resource file carrying the node
+icons. Pick the download matching your Dynamo.
 
 | Download | Dynamo | Revit |
 | --- | --- | --- |
@@ -57,6 +58,7 @@ and has never run inside Generative Design.
      bin\Interlude.dll
      bin\Interlude.xml
      bin\Interlude_DynamoCustomization.xml
+     bin\Interlude.customization.dll    node icons; contains no code
      doc\                 node help, shown in Dynamo's documentation panel
      extra\samples\
    ```
@@ -81,12 +83,17 @@ If the category is missing, see below.
 
 **The Interlude category does not appear.**
 Almost always the blocked-file problem. Right-click `bin\Interlude.dll` → Properties → tick
-**Unblock**, then restart Dynamo. If it persists, check that all three files are in `bin\` — the
+**Unblock**, then restart Dynamo. If it persists, check that all four files are in `bin\` — the
 `.xml` files are not optional decoration, Dynamo reads them for port names and for the library
 category.
 
 **Nodes appear under strange categories.**
 `Interlude_DynamoCustomization.xml` is missing from `bin\`.
+
+**Every node shows the same default icon.**
+`Interlude.customization.dll` is missing from `bin\`. Dynamo reads node icons only from a file
+with exactly that name sitting beside `Interlude.dll`, and a missing one is not an error to it —
+it just falls back to the default. Nothing else breaks; the nodes work either way.
 
 **Port names show as `var` with no tooltips.**
 `Interlude.xml` is missing from `bin\`.

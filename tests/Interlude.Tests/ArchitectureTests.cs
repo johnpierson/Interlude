@@ -11,7 +11,7 @@ namespace Interlude.Tests;
 /// <summary>
 /// Enforces the layering the package promises.
 ///
-/// Interlude ships exactly one assembly, so layering cannot be enforced by project references.
+/// Interlude ships exactly one code assembly, so layering cannot be enforced by project references.
 /// These tests are the enforcement instead. That is a deliberate trade: every extra assembly
 /// would multiply across three Dynamo builds and every package folder, and a wrong reference
 /// caught by a test is cheaper than a second DLL shipped to every user for ever.

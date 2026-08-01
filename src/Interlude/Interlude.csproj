@@ -1,13 +1,20 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <!--
-    THE ONLY SHIPPED ASSEMBLY.
+    THE ONLY SHIPPED ASSEMBLY THAT CONTAINS CODE.
 
     One Interlude.dll is built per Dynamo version. Pass -p:DynamoVersion=3.0|3.6|4.0
     (scripts/build-all.ps1 drives the matrix from versions.json). Layering between
     Model / Conditions / Validation / Runtime / Rendering / Serialization and the WPF
     code is enforced by namespaces plus ArchitectureTests, not by extra assemblies:
     every additional assembly would multiply across 3 Dynamo builds x N package folders.
+
+    A package folder holds one other file ending in .dll: Interlude.customization.dll,
+    which is how Dynamo insists node icons be delivered and which contains no types and
+    no references at all. See src/Interlude.Icons and docs/architecture.md for why that
+    was worth relaxing the rule for. The check below is unchanged and still exact: the
+    icon assembly is a separate project with its own output, so nothing but Interlude.dll
+    may appear here.
   -->
 
   <!-- DynamoVersion and the per-version output paths are set in Directory.Build.props,
@@ -68,8 +75,8 @@
   <!--
     Space Grotesk, embedded rather than referenced.
 
-    <Resource> puts the font inside Interlude.dll, so the package still ships exactly one file and
-    the one-assembly rule holds. Referencing the font by name instead would mean it renders
+    <Resource> puts the font inside Interlude.dll rather than beside it, so the package does not
+    grow a file to carry it. Referencing the font by name instead would mean it renders
     correctly only on machines where somebody had installed it, which for a package distributed to
     other people's Revit installs means "almost nowhere".
 
@@ -106,7 +113,7 @@
 
   <!--
     Guard rail for the single most damaging regression this project can have:
-    a transitive package sneaking a second DLL into the package's bin folder.
+    a transitive package sneaking another DLL into the package's bin folder.
   -->
 
   <Target Name="VerifyNoExtraAssemblies" AfterTargets="Build" Condition="'$(DisableOutputVerification)' != 'true'">
@@ -114,7 +121,7 @@
       <_UnexpectedOutput Include="$(OutputPath)*.dll" Exclude="$(OutputPath)Interlude.dll" />
     </ItemGroup>
     <Error Condition="'@(_UnexpectedOutput)' != ''"
-           Text="Interlude must ship exactly one assembly, but the build output also contains: @(_UnexpectedOutput->'%(Filename)%(Extension)', ', '). Add ExcludeAssets=&quot;runtime&quot; to the offending PackageReference or remove it." />
+           Text="Interlude must ship exactly one code assembly, but the build output also contains: @(_UnexpectedOutput->'%(Filename)%(Extension)', ', '). Add ExcludeAssets=&quot;runtime&quot; to the offending PackageReference or remove it." />
   </Target>
 
 </Project>

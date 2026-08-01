@@ -40,6 +40,46 @@ package version and `FileVersion` are what move.
 
 ### Added
 
+- **Every node has an icon.** All 112 nodes now carry a drawn icon in Dynamo's library tree and on
+  the node itself, in place of the default cube.
+
+  They use a **family system**. The plate colour identifies the category — Input is pink, Layout
+  yellow, Behavior sky, Condition lime, Compute orange, Rule violet, Result teal, Form white, and
+  Theme is the one inverted plate, near-black with white line work and a pink shadow, which suits a
+  family whose nodes are all about light and dark. The glyph on the plate says what the node does,
+  and glyphs are shared across categories on purpose: a calendar is a calendar whether it is
+  `Input.DatePicker` or `Result.GetDate`.
+
+  That is a deliberate choice against 112 unique drawings. In the library an icon is drawn at about
+  sixteen pixels — a twelve-pixel interior, which cannot separate `Condition.GreaterThan` from
+  `Condition.AtLeast` however carefully it is drawn. Colour answers "which family", shape answers
+  "what kind of thing", and the label beside the icon does the fine distinguishing it is already
+  there to do.
+
+  The icons match the forms: heavy outlines, flat colour, hard unblurred shadows offset down and to
+  the right. They are drawn by the preview harness with the same offline WPF rendering that
+  produces the documentation screenshots, and both the PNGs and the compiled resource container are
+  checked in. Adding a node without an icon fails the generator *and* the test suite, because the
+  symptom otherwise is a default cube nobody notices.
+
+- **A second shipped file, `Interlude.customization.dll`**, and a change to the rule that forbade
+  one.
+
+  Dynamo reads node icons from a sibling assembly named `<AssemblyName>.customization.dll` and from
+  nowhere else — there is no attribute, folder convention or manifest entry that does the same job.
+  So the choice was that file or no icons.
+
+  The rule is now **one code assembly, plus one resource assembly that is checked to be inert**.
+  The new file declares no types and references nothing but the `netstandard` facade: there is
+  nothing in it to bind against, nothing to conflict with another package's copy of a library, and
+  nothing that can execute. The rule was never really about counting files — it was about what a
+  file can collide with in the flat folder Revit shares with every add-in.
+
+  That emptiness is verified rather than asserted, in three places: the project fails to build if it
+  acquires code or a package reference, `build-all.ps1` refuses to package it if it declares a type,
+  and CI re-checks types and references against what was actually packed. Nothing changes for
+  existing installs; a package folder that lacks the file simply shows the old default icons.
+
 - **Node help inside the package.** Every one of the 112 nodes now ships a Markdown help page in
   the package's `doc/` folder, so selecting a node in Dynamo and opening Help shows Interlude's own
   documentation in the panel beside the graph instead of "no documentation available". The format

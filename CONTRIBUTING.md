@@ -32,14 +32,34 @@ Read [docs/architecture.md](docs/architecture.md) before anything structural.
 These are the ones with teeth. Each has a test that fails if it is broken, and each exists
 because breaking it hurts someone else's Revit install rather than ours.
 
-### One assembly, no runtime dependencies
+### One code assembly, no runtime dependencies
 
-Interlude ships exactly `Interlude.dll`. A Dynamo package is unzipped into a flat folder that
-Revit shares with every other add-in, so every extra DLL is a version conflict waiting for the
-user who installs one more package.
+Interlude ships exactly one assembly containing code: `Interlude.dll`. A Dynamo package is
+unzipped into a flat folder that Revit shares with every other add-in, so every extra DLL is a
+version conflict waiting for the user who installs one more package.
 
 Use the BCL, in-box WPF and in-box `System.Text.Json`. If you find yourself wanting a package,
 that is the moment to discuss it in an issue rather than in a pull request.
+
+`Interlude.customization.dll` sits beside it and is the one exception. Dynamo reads node icons
+from a sibling assembly with that name and from nowhere else, so the file has to exist; it is
+tolerable because it holds 224 PNGs, declares no types and references nothing. That is checked in
+three places, and if you ever find yourself wanting to put a class in it, the answer is
+`Interlude.dll`. See [Architecture](docs/architecture.md#the-one-exception-node-icons).
+
+### Every node has an icon
+
+Adding a node means adding it to the catalogue in
+[`tools/Interlude.Preview/Icons.cs`](tools/Interlude.Preview/Icons.cs) and regenerating:
+
+```
+Interlude.Preview.exe --icons src/Interlude.Icons
+```
+
+Pick an existing glyph if one fits — reuse across categories is the design, not a shortcut, and
+the plate colour already says which family the node is in. Both the generator and `NodeIconTests`
+fail until every node is covered and no icon is left over, because a missing icon shows up as
+Dynamo's default cube rather than as an error.
 
 ### The node API is append-only
 
@@ -148,7 +168,8 @@ The `.editorconfig` covers formatting. Beyond that:
 - `dotnet test Interlude.sln` and `./scripts/build-all.ps1` both pass.
 
 CI runs on Windows, builds all three Dynamo versions with warnings as errors, runs the tests, and
-verifies that each packaged folder contains exactly one assembly.
+verifies that each packaged folder contains exactly the two assemblies it should — `Interlude.dll`
+and an `Interlude.customization.dll` with no types and no references.
 
 ## Reporting bugs
 

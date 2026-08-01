@@ -1,7 +1,8 @@
 # Third-party notices
 
-Interlude ships one assembly with no runtime package dependencies. It does embed one third-party
-work, listed below.
+Interlude ships one code assembly with no runtime package dependencies, alongside a resource file
+carrying the node icons. The icons are original work. One third-party work is embedded, listed
+below.
 
 ---
 
@@ -33,7 +34,7 @@ type.
 A font named but not installed renders as whatever the host machine happens to substitute. For a
 package distributed to other people's Revit installations, that means "almost anything." Embedding
 it as a WPF resource puts the font inside `Interlude.dll`, so every form looks the same everywhere
-and the package still ships exactly one file.
+without the package growing a file to carry it.
 
 ### Replacing it
 

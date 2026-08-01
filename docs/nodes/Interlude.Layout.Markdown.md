@@ -4,7 +4,7 @@
 
 A block of Markdown, for anything longer than a sentence.
 
-Supports headings, bold, italic, inline code, links, bullet and numbered lists, and horizontal rules. Not a full Markdown implementation — no tables, images or block quotes — because the alternative was a dependency, and the package ships exactly one assembly. Anything unrecognised is shown as the plain text it was written as, so an unsupported construct degrades into something readable rather than into markup on screen.
+Supports headings, bold, italic, inline code, links, bullet and numbered lists, and horizontal rules. Not a full Markdown implementation — no tables, images or block quotes — because the alternative was a dependency, and the package ships no code it did not write. Anything unrecognised is shown as the plain text it was written as, so an unsupported construct degrades into something readable rather than into markup on screen.
 
 This is where instructions belong when they need structure. For a single line, `Layout.Label` is less machinery.
 

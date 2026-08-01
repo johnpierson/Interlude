@@ -3,7 +3,7 @@
     Builds Interlude once per Dynamo version and verifies each output.
 
 .DESCRIPTION
-    Interlude ships one assembly per supported Dynamo version, driven by versions.json. Each
+    Interlude ships one code assembly per supported Dynamo version, driven by versions.json. Each
     build is verified before it is allowed to become a package: exactly one DLL, the XML
     documentation Dynamo reads for port names, and the customization file that puts the nodes
     under a single library category.
@@ -12,6 +12,12 @@
     package quietly adding a second DLL to the output, which would then be hand-copied into a
     folder Revit shares with every other add-in and would sooner or later collide with someone
     else's copy of the same library.
+
+    The node icons are the one deliberate exception, and they are built here too. Dynamo will only
+    read icons from a sibling assembly named Interlude.customization.dll, so that file has to
+    exist; what makes it harmless is that it holds nothing but PNGs. It is framework-agnostic and
+    therefore built once rather than once per Dynamo version, and it is checked for emptiness
+    before it is allowed anywhere near a package.
 
 .PARAMETER Configuration
     Release by default.
@@ -116,6 +122,35 @@ foreach ($target in $targets) {
 Write-Host ""
 Write-Host "Built $($results.Count) assembly/assemblies:" -ForegroundColor Cyan
 $results | Format-Table Dynamo, TargetFramework, RevitYears, FileVersion -AutoSize
+
+# The icon assembly. Built once for every Dynamo version, because a container of PNGs has no
+# framework surface to get wrong.
+Write-Host "=== Icons ===" -ForegroundColor Cyan
+
+$iconProject = Join-Path $repoRoot 'src\Interlude.Icons\Interlude.Icons.csproj'
+& dotnet build $iconProject -c $Configuration -p:ContinuousIntegrationBuild=true --nologo -v minimal
+
+if ($LASTEXITCODE -ne 0) {
+    throw "Build failed for the icon assembly."
+}
+
+$iconAssembly = Join-Path $repoRoot "src\Interlude.Icons\bin\$Configuration\netstandard2.0\Interlude.customization.dll"
+
+if (-not (Test-Path $iconAssembly)) {
+    throw "Expected the icon assembly at $iconAssembly but it is not there."
+}
+
+# It is allowed to exist because it is inert. If that ever stops being true it stops being worth
+# the second file, so the claim is checked rather than trusted: a resource assembly with types in
+# it is just an ordinary dependency wearing a different name.
+$iconTypes = [System.Reflection.Assembly]::LoadFrom($iconAssembly).GetTypes()
+
+if ($iconTypes.Count -gt 0) {
+    $names = ($iconTypes | Select-Object -ExpandProperty FullName) -join ', '
+    throw "Interlude.customization.dll must contain no types, but it contains $names. It exists only to carry node icons."
+}
+
+Write-Host "  built  : Interlude.customization.dll ($([math]::Round((Get-Item $iconAssembly).Length / 1KB)) KB, no types)" -ForegroundColor Green
 
 if ($Pack) {
     & (Join-Path $PSScriptRoot 'pack.ps1') -Configuration $Configuration

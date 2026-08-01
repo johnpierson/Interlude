@@ -22,6 +22,9 @@ public partial class App : Application
     ///
     /// <c>Interlude.Preview.exe --docs &lt;folder&gt;</c> writes one Dynamo node help file per node,
     /// generated from the shipped assembly and its XML documentation.
+    ///
+    /// <c>Interlude.Preview.exe --icons &lt;folder&gt;</c> draws a library icon for every node and
+    /// rewrites the resource manifest the icon assembly is built from.
     /// </summary>
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -50,6 +53,14 @@ public partial class App : Application
             string.Equals(e.Args[0], "--docs", StringComparison.OrdinalIgnoreCase))
         {
             NodeDocs.Generate(e.Args[1]);
+            Shutdown(0);
+            return;
+        }
+
+        if (e.Args.Length >= 2 &&
+            string.Equals(e.Args[0], "--icons", StringComparison.OrdinalIgnoreCase))
+        {
+            Icons.Generate(e.Args[1]);
             Shutdown(0);
             return;
         }

@@ -47,29 +47,59 @@ jobs:
         shell: pwsh
         run: ./scripts/build-all.ps1 -Configuration Release -Pack
 
-      # The single most damaging regression this package can have is a second DLL appearing
+      # The single most damaging regression this package can have is an unexpected DLL appearing
       # beside Interlude.dll in a folder Revit shares with every other add-in. build-all.ps1
       # already refuses to build one; this repeats the check against what was actually packed.
-      - name: Verify each package ships exactly one assembly
+      #
+      # Two files are allowed, not one. Interlude.customization.dll is how Dynamo requires node
+      # icons to be delivered, and it is tolerable only for as long as it stays inert, so this
+      # checks that too: no types, and nothing referenced beyond the netstandard facade.
+      - name: Verify each package ships only the assemblies it should
         shell: pwsh
         run: |
+          $expected = 'Interlude.dll', 'Interlude.customization.dll'
           $failed = $false
+
           foreach ($bin in Get-ChildItem dist -Recurse -Directory -Filter bin) {
-            $dlls = @(Get-ChildItem $bin.FullName -Filter *.dll)
-            $names = ($dlls | Select-Object -ExpandProperty Name) -join ', '
-            if ($dlls.Count -ne 1 -or $dlls[0].Name -ne 'Interlude.dll') {
-              Write-Error "$($bin.FullName) contains: $names"
+            $dlls = @(Get-ChildItem $bin.FullName -Filter *.dll | Select-Object -ExpandProperty Name)
+            $unexpected = @($dlls | Where-Object { $_ -notin $expected })
+            $missing = @($expected | Where-Object { $_ -notin $dlls })
+
+            if ($unexpected.Count -gt 0) {
+              Write-Error "$($bin.FullName) contains unexpected assemblies: $($unexpected -join ', ')"
               $failed = $true
             }
+            if ($missing.Count -gt 0) {
+              Write-Error "$($bin.FullName) is missing: $($missing -join ', ')"
+              $failed = $true
+            }
+
             foreach ($required in 'Interlude.xml', 'Interlude_DynamoCustomization.xml') {
               if (-not (Test-Path (Join-Path $bin.FullName $required))) {
                 Write-Error "$($bin.FullName) is missing $required"
                 $failed = $true
               }
             }
+
+            $icons = Join-Path $bin.FullName 'Interlude.customization.dll'
+            if (Test-Path $icons) {
+              $assembly = [System.Reflection.Assembly]::LoadFrom($icons)
+              $types = @($assembly.GetTypes())
+              $references = @($assembly.GetReferencedAssemblies() | Where-Object { $_.Name -ne 'netstandard' })
+
+              if ($types.Count -gt 0) {
+                Write-Error "$icons declares types ($(($types | Select-Object -ExpandProperty FullName) -join ', ')). It is allowed to ship only because it holds nothing but node icons."
+                $failed = $true
+              }
+              if ($references.Count -gt 0) {
+                Write-Error "$icons references $(($references | Select-Object -ExpandProperty Name) -join ', '). A resource assembly with dependencies is the regression this check exists to catch."
+                $failed = $true
+              }
+            }
           }
+
           if ($failed) { exit 1 }
-          Write-Host "Every package ships exactly one assembly." -ForegroundColor Green
+          Write-Host "Every package ships one code assembly and one inert resource assembly." -ForegroundColor Green
 
       - name: Verify the samples are up to date
         shell: pwsh
@@ -102,6 +132,23 @@ jobs:
             exit 1
           }
           Write-Host "docs/nodes/ is up to date." -ForegroundColor Green
+
+      - name: Verify the node icons are up to date
+        shell: pwsh
+        run: |
+          # src/Interlude.Icons is generated from the catalogue in tools/Interlude.Preview/Icons.cs,
+          # which the generator itself checks against the assembly in both directions. A node added
+          # without an icon fails here rather than shipping with Dynamo's default cube.
+          $exe = Get-ChildItem tools/Interlude.Preview/bin/Release -Recurse -Filter Interlude.Preview.exe |
+            Select-Object -First 1
+          & $exe.FullName --icons src/Interlude.Icons
+          $changed = git status --porcelain src/Interlude.Icons
+          if ($changed) {
+            Write-Error "src/Interlude.Icons is out of date. Run: Interlude.Preview.exe --icons src/Interlude.Icons"
+            Write-Host $changed
+            exit 1
+          }
+          Write-Host "The node icons are up to date." -ForegroundColor Green
 
       - name: Upload packages
         if: always()
