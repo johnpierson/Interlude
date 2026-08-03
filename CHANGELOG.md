@@ -11,6 +11,8 @@ package version and `FileVersion` are what move.
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-08-03
+
 ### Changed
 
 - **The default form design is now neubrutalist, in light mode.** A form with nothing wired into
@@ -296,5 +298,6 @@ First release.
 - Architecture tests for the layering, library visibility, renderer coverage and schema coverage.
 - An API-surface snapshot, because saved graphs bind to node names and parameter positions.
 
-[Unreleased]: https://github.com/johnpierson/Interlude/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/johnpierson/Interlude/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/johnpierson/Interlude/releases/tag/v1.0.3
 [1.0.0]: https://github.com/johnpierson/Interlude/releases/tag/v1.0.0
