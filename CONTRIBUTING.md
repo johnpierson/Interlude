@@ -166,6 +166,29 @@ The `.editorconfig` covers formatting. Beyond that:
   system does; `TestValidation3` does not.
 - **Prefer a test over a comment** when the thing being protected is behaviour.
 
+## Documentation
+
+`docs/` is published at [johnpierson.github.io/Interlude](https://johnpierson.github.io/Interlude/)
+by `.github/workflows/docs.yml`. It builds on pull requests too, so a broken link fails the branch
+rather than the live site.
+
+```powershell
+py -m venv .venv-docs
+.venv-docs\Scripts\python -m pip install -r docs-requirements.txt
+.venv-docs\Scripts\mkdocs serve          # preview at http://127.0.0.1:8000
+.venv-docs\Scripts\mkdocs build --strict # what CI runs
+```
+
+Two things to know before editing:
+
+- **`docs/nodes/` is generated.** Change the `///` comment on the node and regenerate; a hand
+  edit is overwritten by the next build and fails CI.
+- **A new page must be added to the nav** in `mkdocs.yml`. Strict mode fails on a page that is
+  not, which is deliberate — an unreachable page is one nobody will ever correct.
+
+Links out of `docs/` into `src/`, `tests/` or the repository root stay relative in the source and
+are rewritten into GitHub URLs at build time. See `scripts/mkdocs_hooks.py`.
+
 ## Pull requests
 
 - One idea per pull request.

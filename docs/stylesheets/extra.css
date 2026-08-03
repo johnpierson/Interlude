@@ -1,0 +1,64 @@
+/*
+ * The site wears the package's own colours. These are the accent values from Interlude's default
+ * light and dark themes, verbatim — src/Interlude/Theming/ThemeDefinition.cs, `Light` and `Dark`.
+ * A screenshot of a form and the button beside it should not be two different blues.
+ */
+
+:root,
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:        #2f6feb;
+  --md-primary-fg-color--light: #4c8dff;
+  --md-primary-fg-color--dark:  #2a62d0;
+  --md-primary-bg-color:        #ffffff;
+  --md-primary-bg-color--light: #ffffffb3;
+
+  --md-accent-fg-color:         #2a62d0;
+  --md-accent-fg-color--transparent: #2f6feb1a;
+  --md-accent-bg-color:         #ffffff;
+  --md-accent-bg-color--light:  #ffffffb3;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color:        #4c8dff;
+  --md-primary-fg-color--light: #679eff;
+  --md-primary-fg-color--dark:  #2f6feb;
+  --md-primary-bg-color:        #0e1116;
+  --md-primary-bg-color--light: #0e1116b3;
+
+  --md-accent-fg-color:         #679eff;
+  --md-accent-fg-color--transparent: #4c8dff1a;
+  --md-accent-bg-color:         #0e1116;
+  --md-accent-bg-color--light:  #0e1116b3;
+
+  /* Slate's stock backdrop is a touch blue; Interlude's dark surfaces are neutral greys. */
+  --md-default-bg-color:        #1e2126;
+  --md-code-bg-color:           #262a31;
+}
+
+/* Screenshots of forms are rendered against a page colour of their own. A hairline keeps a light
+ * form from bleeding into a light page, without drawing a box around a dark one. */
+.md-typeset img[src*="/images/"] {
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 4px;
+}
+
+/* Download links to sample graphs. `.dyn` is a file the reader is meant to save, not follow, and
+ * it should not look like an ordinary cross-reference. See docs/samples/index.md. */
+.md-typeset a.dyn-download {
+  display: inline-block;
+  padding: 0.35em 0.9em;
+  border: 1px solid var(--md-primary-fg-color);
+  border-radius: 4px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.md-typeset a.dyn-download:hover,
+.md-typeset a.dyn-download:focus {
+  background-color: var(--md-primary-fg-color);
+  color: var(--md-primary-bg-color);
+}
+
+.md-typeset a.dyn-download::before {
+  content: "↓ ";
+}

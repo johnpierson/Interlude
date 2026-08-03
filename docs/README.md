@@ -10,6 +10,7 @@ folder is the detail.
 | **[Installing](installing.md)** | Which download, where it goes, and what to do when the category does not appear. |
 | **[Node reference](node-reference.md)** | Every node and every port, grouped as the library groups them. |
 | **[Recipes](recipes.md)** | Worked patterns: gating a dialog, several outcomes, wizards, live totals, unattended runs. |
+| **[Sample graphs](samples/index.md)** | Graphs to download and open, and where a new one goes. |
 | **[Coming from Data-Shapes](migrating-from-data-shapes.md)** | Node-by-node mapping, and the behavioural differences — the cancellation contract first. |
 | **[The form skill](../skills/interlude-form/)** | An optional separate download: describe a form and have one written, with a command-line checker for form files. |
 
@@ -36,6 +37,28 @@ folder is the detail.
   schema reference behind it.
 - **[`versions.json`](../versions.json)** — the build matrix.
 - **[`CHANGELOG.md`](../CHANGELOG.md)** — what changed, and when.
+
+## This folder as a website
+
+Everything here is published at
+[johnpierson.github.io/Interlude](https://johnpierson.github.io/Interlude/), built by
+[`.github/workflows/docs.yml`](../.github/workflows/docs.yml) on every push to `main`. The
+Markdown is written to be read on GitHub first and rendered second, so nothing here depends on
+the site existing.
+
+To preview a change:
+
+```powershell
+py -m venv .venv-docs
+.venv-docs\Scripts\python -m pip install -r ../docs-requirements.txt
+.venv-docs\Scripts\mkdocs serve
+```
+
+`mkdocs build --strict` is what CI runs, and it fails on a broken link, a heading anchor that no
+longer exists, or a page missing from the nav in [`mkdocs.yml`](../mkdocs.yml). Links that leave
+this folder — into `src/`, `tests/`, or the repository root — are rewritten into GitHub URLs at
+build time by [`scripts/mkdocs_hooks.py`](../scripts/mkdocs_hooks.py), which is why they can stay
+relative in the source and keep working here.
 
 ## If you read one thing
 

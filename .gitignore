@@ -5,6 +5,12 @@ artifacts/
 dist/
 *.binlog
 
+# The documentation site, built from docs/ by mkdocs. Published by .github/workflows/docs.yml
+# from the artifact it builds, never from a branch, so the output has no business being here.
+site/
+.venv-docs/
+__pycache__/
+
 # Visual Studio / Rider / VS Code
 .vs/
 .idea/

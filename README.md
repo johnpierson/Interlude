@@ -284,6 +284,10 @@ dotnet run --project tools/Interlude.Preview
 
 ## Documentation
 
+All of it is published at **[johnpierson.github.io/Interlude](https://johnpierson.github.io/Interlude/)**,
+built from `docs/` on every push to `main`. The same files read perfectly well here on GitHub; the
+site adds search across every page and downloads for the sample graphs.
+
 | | |
 | --- | --- |
 | [Installing](docs/installing.md) | Which download, where it goes, what to do when it does not appear |
@@ -291,6 +295,7 @@ dotnet run --project tools/Interlude.Preview
 | [Node help](docs/nodes/) | The per-node pages Dynamo shows in its help panel, generated from the assembly |
 | [Recipes](docs/recipes.md) | Worked patterns for real forms |
 | [Coming from Data-Shapes](docs/migrating-from-data-shapes.md) | Node mapping and behavioural differences |
+| [Sample graphs](docs/samples/index.md) | Graphs to download and open, and how to add one |
 | [Forms as JSON](docs/form-json.md) | The schema, and what survives a round trip |
 | [The form skill](skills/interlude-form/) | Describing a form and having one written, and the checker that comes with it |
 | [Architecture](docs/architecture.md) | Layering, the reactive session, threading, and the reasoning |
