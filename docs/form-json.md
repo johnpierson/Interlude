@@ -133,8 +133,20 @@ default of `3.0` does not come back as the integer `3` and quietly change the fo
 
 This is lossy and deliberately visible. A form whose dropdown options are live Revit elements is
 not a portable document — the elements do not exist in another model. Saving one produces a file
-that loads, but whose options are now strings. If you need a portable form that picks Revit
-elements, build the options in the graph and save the form without them.
+that loads, but whose options are now strings.
+
+A portable form that picks Revit elements is therefore written **without** them, and filled in
+after it is loaded:
+
+```
+Form.FromJson ──► Form.WithOptions(key: "levels", items: levels, displayNames: names)
+              ──► Form.ShowDefinition
+```
+
+The file holds the layout, the labels, the conditions and the validation; the graph supplies the
+one thing only the open model knows. The selected option comes back as the element itself, the same
+as it does from `Input.DropDown`. A default in the file naming an option that is no longer there is
+dropped, so the field opens as though the file had never named one.
 
 **Custom predicate rules do not survive.** `CustomPredicateRule` holds a delegate; it round-trips
 as a rule that always passes. Keep those for in-process use.

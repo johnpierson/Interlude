@@ -147,7 +147,8 @@ Scoped to the form's own window; Revit's UI is never touched.
 ### Forms are documents
 
 `Form.ToJson` and `Form.FromJson`. A form can be checked into a repository, reviewed in a pull
-request and loaded by a graph that did not build it.
+request and loaded by a graph that did not build it. `Form.WithOptions` fills a loaded form's
+drop-down or list box with elements from the open model, which no file can carry.
 
 ### Explicit re-execution control
 

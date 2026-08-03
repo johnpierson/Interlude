@@ -53,7 +53,7 @@ the rule bent for it and would not bend again.
 Dynamo will not read node icons out of the node library. It looks for a sibling assembly named
 `<AssemblyName>.customization.dll` and pulls PNGs from a resource stream inside it. There is no
 attribute, no folder convention and no manifest entry that does the same job — it is that file or
-Dynamo's default cube on all 112 nodes.
+Dynamo's default cube on all 113 nodes.
 
 What makes it affordable is that [`Interlude.customization.dll`](../src/Interlude.Icons) contains
 no types and references nothing but the `netstandard` facade. The rule was never really about file
@@ -69,7 +69,7 @@ starts being the dependency the rule exists to keep out, and all three fail.
 
 ### How the icons are made
 
-112 nodes at two sizes is 224 images, and they are drawn rather than hand-authored — by
+113 nodes at two sizes is 226 images, and they are drawn rather than hand-authored — by
 [`Icons.cs`](../tools/Interlude.Preview/Icons.cs) in the preview harness, using the same offline
 WPF rendering that produces the documentation screenshots.
 

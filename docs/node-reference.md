@@ -431,6 +431,7 @@ It is SIL Open Font Licensed — see [THIRD-PARTY-NOTICES.md](../THIRD-PARTY-NOT
 | **Options** | `FormOptions` |
 | **Check** | `isValid`, `messages` |
 | **ToJson** / **FromJson** | `string` / `FormDefinition` |
+| **WithOptions** | `FormDefinition` |
 | **Forget** | `bool` |
 
 ### Show
@@ -459,6 +460,17 @@ New settings arrive through `options` rather than as new ports.
 
 `Check` reports authoring problems without showing anything: conditions naming fields that do not
 exist, duplicate keys, loops between computed values. Worth wiring while building a complex form.
+
+`WithOptions` replaces the options of one drop-down, radio group or list box in a form that already
+exists — the way a form loaded from a file gets its Revit elements, which no file can carry:
+
+```
+Form.WithOptions(form, key, items = null, displayNames = null)
+```
+
+It resolves keys before looking, so a field can be named by the key its label derives. It returns a
+new form and changes nothing in place. Naming a field that does not exist, or one with no options
+to replace, is an error that names the fields it could have filled in.
 
 `Forget` clears remembered answers for one form, or for all of them when given an empty id.
 

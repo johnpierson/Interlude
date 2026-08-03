@@ -52,6 +52,7 @@
   Show(string title, List<object> elements, object trigger = true, string submitText = "Submit", string cancelText = "Cancel", double width = 420, double maxHeight = 800, string formId = "", bool rememberValues = true, bool headlessUseDefaults = false, object theme = null, object options = null) -> {values, wasSubmitted, buttonClicked, form}
   ShowDefinition(FormDefinition form, object trigger = true) -> {values, wasSubmitted, buttonClicked, form}
   ToJson(FormDefinition form, bool indented = true) -> string
+  WithOptions(FormDefinition form, string key, List<object> items = null, List<object> displayNames = null) -> FormDefinition
 
 ## Input
   CheckBox(string label, bool defaultValue = false, string key = "", string tooltip = "", string helpText = "") -> FormElement

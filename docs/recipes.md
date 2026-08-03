@@ -297,6 +297,19 @@ Result.GetList(values, "rooms")   →  the room elements
 A form built this way cannot be saved to JSON and reopened in another model — the elements do not
 exist there. Build the options in the graph each run.
 
+**Or keep the form in a file and fill in the one field the model owns.** `Form.WithOptions` puts a
+graph's objects onto a choice field of a form that already exists, so the layout, labels, conditions
+and validation stay in the checked-in file and only the live data comes from the graph:
+
+```
+read from disk ──► Form.FromJson ──► Form.WithOptions(key: "rooms", items: rooms,
+                                                      displayNames: roomNames)
+                                 ──► Form.ShowDefinition(trigger)
+```
+
+The file holds a placeholder for `rooms` — or nothing at all — and the graph replaces it each run.
+What comes back is still the element. Chain the node once per field.
+
 ---
 
 ## Match Revit's theme

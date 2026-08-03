@@ -398,4 +398,118 @@ public class NodeTests
 
         Assert.Equal(Form.ToJson(form), Form.ToJson(restored));
     }
+
+    /// <summary>
+    /// The point of the node: a form that came out of a file, filled in with objects the file
+    /// could never have carried, and the objects themselves coming back out of the answers.
+    /// </summary>
+    [Fact]
+    public void WithOptions_fills_in_a_choice_field_of_a_form_loaded_from_JSON()
+    {
+        FormDefinition loaded = Form.FromJson(Form.ToJson(Form.Create("Rename", Elements(
+            Input.TextBox("Prefix"),
+            Layout.Section("Scope", new List<FormElement>
+            {
+                Input.ListBox("Levels", new List<object> { "placeholder" }),
+            })))));
+
+        Uri ground = new("https://example.com/level-00");
+        Uri first = new("https://example.com/level-01");
+
+        FormDefinition filled = Form.WithOptions(
+            loaded,
+            "levels",
+            new List<object> { ground, first },
+            new List<object> { "Ground floor", "First floor" });
+
+        ListSelectionElement list = filled.Inputs().OfType<ListSelectionElement>().Single();
+
+        Assert.Equal(new object[] { ground, first }, list.Options.Select(option => option.Value));
+        Assert.Equal(new[] { "Ground floor", "First floor" }, list.Options.Select(option => option.Display));
+
+        FormSession session = new(filled);
+        session.SetValue("levels", new List<object> { first });
+
+        Assert.Same(first, Assert.Single((IEnumerable<object?>)session.GetValue("levels")!));
+    }
+
+    [Fact]
+    public void WithOptions_leaves_the_form_it_was_given_alone()
+    {
+        FormDefinition original = Form.Create("Test", Elements(
+            Input.DropDown("Mode", new List<object> { "a", "b" })));
+
+        Form.WithOptions(original, "mode", new List<object> { "c" });
+
+        Assert.Equal(
+            new object?[] { "a", "b" },
+            original.Inputs().OfType<DropdownElement>().Single().Options.Select(option => option.Value));
+    }
+
+    /// <summary>
+    /// A default written against the options that were in the file cannot survive replacing them,
+    /// and leaving it behind opens the form on nothing instead of on its first option.
+    /// </summary>
+    [Fact]
+    public void WithOptions_drops_a_default_that_the_new_options_do_not_contain()
+    {
+        FormDefinition form = Form.WithOptions(
+            Form.Create("Test", Elements(Input.DropDown("Mode", new List<object> { "a", "b" }, defaultValue: "b"))),
+            "mode",
+            new List<object> { "c", "d" });
+
+        DropdownElement dropdown = form.Inputs().OfType<DropdownElement>().Single();
+
+        Assert.Null(dropdown.DefaultValue);
+        Assert.Equal("c", new FormSession(form).GetValue("mode"));
+    }
+
+    [Fact]
+    public void WithOptions_keeps_a_default_the_new_options_still_contain()
+    {
+        FormDefinition form = Form.WithOptions(
+            Form.Create("Test", Elements(Input.DropDown("Mode", new List<object> { "a", "b" }, defaultValue: "b"))),
+            "mode",
+            new List<object> { "b", "c" });
+
+        Assert.Equal("b", new FormSession(form).GetValue("mode"));
+    }
+
+    /// <summary>A placeholder says "nothing chosen yet" is a state the author wanted.</summary>
+    [Fact]
+    public void WithOptions_leaves_a_placeholder_dropdown_unselected()
+    {
+        FormDefinition form = Form.WithOptions(
+            Form.Create("Test", Elements(
+                Input.DropDown("Mode", new List<object> { "a", "b" }, defaultValue: "b", placeholder: "Pick one"))),
+            "mode",
+            new List<object> { "c", "d" });
+
+        Assert.Null(new FormSession(form).GetValue("mode"));
+    }
+
+    [Fact]
+    public void WithOptions_names_the_fields_it_could_have_filled_in_when_the_key_is_wrong()
+    {
+        FormDefinition form = Form.Create("Test", Elements(
+            Input.TextBox("Prefix"),
+            Input.DropDown("Mode", new List<object> { "a" })));
+
+        InterludeException error = Assert.Throws<InterludeException>(
+            () => Form.WithOptions(form, "levels", new List<object> { "a" }));
+
+        Assert.Contains("levels", error.Message, StringComparison.Ordinal);
+        Assert.Contains("mode", error.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void WithOptions_refuses_a_field_that_has_no_options()
+    {
+        FormDefinition form = Form.Create("Test", Elements(Input.TextBox("Prefix")));
+
+        InterludeException error = Assert.Throws<InterludeException>(
+            () => Form.WithOptions(form, "prefix", new List<object> { "a" }));
+
+        Assert.Contains("TextBox", error.Message, StringComparison.Ordinal);
+    }
 }

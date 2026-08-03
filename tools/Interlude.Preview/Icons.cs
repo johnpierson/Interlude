@@ -194,6 +194,7 @@ internal static class Icons
         new("Form.Show", Glyph.Window, Badge.Play),
         new("Form.ShowDefinition", Glyph.Document, Badge.Play),
         new("Form.ToJson", Glyph.Braces, Badge.ArrowOut),
+        new("Form.WithOptions", Glyph.Stack, Badge.ArrowIn),
 
         // ---- Result: reading the answers back --------------------------------------------------
         new("Result.ButtonClicked", Glyph.Cursor),

@@ -185,7 +185,7 @@ Everything lives under a single **Interlude** category.
 | **Compute** | Values worked out from other answers. |
 | **Rule** | Checks applied while the user types. |
 | **Theme** | `Neubrutalism` (the default), `Mono`, `Light`, `Dark`, accent, density, fonts, outlines, shadows. |
-| **Form** | `Show`, `Create`, `Check`, `ToJson`, `FromJson`, `Options`, `Forget`. |
+| **Form** | `Show`, `Create`, `Check`, `ToJson`, `FromJson`, `WithOptions`, `Options`, `Forget`. |
 | **Result** | Typed accessors: `GetString`, `GetNumber`, `GetBool`, `GetDate`, `GetColor`, `GetFilePaths`. |
 
 **[Node reference](docs/node-reference.md)** documents every node and every port. Every node also
@@ -201,6 +201,10 @@ dialog, offering several outcomes, wizards, live totals, unattended runs.
 repository, reviewed in a pull request, diffed between releases, and loaded by a graph that did
 not build it. [`samples/`](samples/) holds worked examples; the test suite validates each of
 them against the schema on every build.
+
+Live model data still comes from the graph — a file cannot carry Revit elements, because they do
+not exist in another model. `Form.WithOptions` puts them onto a loaded form's drop-down or list box
+before it is shown, so the file keeps the layout and the graph supplies the elements.
 
 The theme travels with the form, but a built-in palette travels as its *name* — `"preset":
 "neubrutalist"` — rather than as eighteen colours in two modes. A form checked into a repository

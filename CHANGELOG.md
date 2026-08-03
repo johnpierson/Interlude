@@ -62,7 +62,29 @@ package version and `FileVersion` are what move.
   Exits non-zero, so it belongs in a build. It travels with the skill; it is the first thing
   Interlude has ever shipped that is not the package.
 
-- **Every node has an icon.** All 112 nodes now carry a drawn icon in Dynamo's library tree and on
+- **`Form.WithOptions`, which fills in a choice field of a form that already exists.** It takes a
+  form, the key of a drop-down, radio group or list box, and the items to put in it, and returns a
+  new form with that field's options replaced.
+
+  It closes the one hole in the forms-as-documents story. A form checked into a repository cannot
+  carry Revit elements — they do not exist in another model, and saving them writes their names and
+  says so in the file — so the only way to ask "which levels?" from a shared form was to stop using
+  the file and rebuild the whole thing in the graph. Now the file holds the layout, the labels, the
+  conditions and the validation, and the graph supplies the one thing only the open model knows:
+
+  ```
+  Form.FromJson ──► Form.WithOptions(key: "levels", items: levels) ──► Form.ShowDefinition
+  ```
+
+  The options behave as they do on `Input.DropDown` and `Input.ListBox`, because they are the same
+  options: the objects go in whole and the selected one comes back as itself. Keys are resolved
+  first, so a field can be named by the key its label derives — the same one its answer arrives
+  under. A default in the file naming an option that is no longer there is dropped, and the field
+  opens as though the file had never named one, rather than opening blank for no visible reason.
+  Naming a field that is not there, or one with nothing to replace, fails with the choice fields
+  listed, because the mistake is nearly always a key spelled two ways.
+
+- **Every node has an icon.** All 113 nodes now carry a drawn icon in Dynamo's library tree and on
   the node itself, in place of the default cube.
 
   They use a **family system**. The plate colour identifies the category — Input is pink, Layout
@@ -72,7 +94,7 @@ package version and `FileVersion` are what move.
   and glyphs are shared across categories on purpose: a calendar is a calendar whether it is
   `Input.DatePicker` or `Result.GetDate`.
 
-  That is a deliberate choice against 112 unique drawings. In the library an icon is drawn at about
+  That is a deliberate choice against 113 unique drawings. In the library an icon is drawn at about
   sixteen pixels — a twelve-pixel interior, which cannot separate `Condition.GreaterThan` from
   `Condition.AtLeast` however carefully it is drawn. Colour answers "which family", shape answers
   "what kind of thing", and the label beside the icon does the fine distinguishing it is already
@@ -102,7 +124,7 @@ package version and `FileVersion` are what move.
   and CI re-checks types and references against what was actually packed. Nothing changes for
   existing installs; a package folder that lacks the file simply shows the old default icons.
 
-- **Node help inside the package.** Every one of the 112 nodes now ships a Markdown help page in
+- **Node help inside the package.** Every one of the 113 nodes now ships a Markdown help page in
   the package's `doc/` folder, so selecting a node in Dynamo and opening Help shows Interlude's own
   documentation in the panel beside the graph instead of "no documentation available". The format
   is Dynamo's own, taken from the fallback docs that ship with Dynamo Core.

@@ -254,6 +254,77 @@ public class Form
     public static FormDefinition FromJson(string json) => FormJson.Deserialize(json);
 
     /// <summary>
+    /// Replaces the options of one choice field in a form that already exists.
+    ///
+    /// This is what makes a form loaded from JSON usable with live model data. A checked-in form
+    /// cannot carry Revit elements — they do not exist in another model, and saving them writes
+    /// their names and says so — so the file holds the layout, the labels, the conditions and the
+    /// validation, and the graph fills in the one field whose contents only the model knows:
+    ///
+    /// <code>Form.FromJson ──► Form.WithOptions(key: "levels", items: levels) ──► Form.ShowDefinition</code>
+    ///
+    /// The options behave exactly as they do on <c>Input.DropDown</c> and <c>Input.ListBox</c>,
+    /// because they are the same options: the values go in whole and the selected one comes back
+    /// as itself, not as its display name.
+    ///
+    /// Keys are resolved before the field is looked for, so a field that derives its key from its
+    /// label can be named by that derived key — the same one the results come back under.
+    ///
+    /// Chain the node once per field. It returns a new form and changes nothing in place, so the
+    /// definition loaded from the file is still there to be shown a second time.
+    /// </summary>
+    /// <param name="form">The form to fill in, usually straight from <c>Form.FromJson</c>.</param>
+    /// <param name="key">Which field to fill in. Must be a drop-down, radio group or list box.</param>
+    /// <param name="items">The values to choose between. Can be any objects.</param>
+    /// <param name="displayNames">What to show for each item. Falls back to each item's own text.</param>
+    /// <returns name="form">The form, with that field's options replaced.</returns>
+    /// <search>options,items,fill,hydrate,revit,elements,json,dropdown,listbox</search>
+    public static FormDefinition WithOptions(
+        FormDefinition form,
+        string key,
+        [DefaultArgument("null")] List<object>? items = null,
+        [DefaultArgument("null")] List<object>? displayNames = null)
+    {
+        if (form is null)
+        {
+            throw new ArgumentNullException(nameof(form), "There is no form to fill in.");
+        }
+
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            throw new InterludeException("Form.WithOptions needs the key of the field to fill in.");
+        }
+
+        string wanted = key.Trim();
+        FormDefinition resolved = form.WithResolvedKeys();
+        IReadOnlyList<OptionItem> options = NodeSupport.Options(items, displayNames);
+
+        FormElement? target = resolved
+            .AllElements()
+            .FirstOrDefault(element => string.Equals(element.Key, wanted, StringComparison.Ordinal));
+
+        if (target is null)
+        {
+            throw new InterludeException(
+                $"This form has no field called \"{wanted}\". " + DescribeChoiceFields(resolved));
+        }
+
+        if (target is not OptionInputElement and not ListSelectionElement)
+        {
+            throw new InterludeException(
+                $"\"{wanted}\" is a {DescribeKind(target)}, which has no options to replace. " +
+                DescribeChoiceFields(resolved));
+        }
+
+        return resolved with
+        {
+            Elements = ElementTree.Rewrite(
+                resolved.Elements,
+                element => ReferenceEquals(element, target) ? WithOptions(element, options) : element),
+        };
+    }
+
+    /// <summary>
     /// Reports the problems Interlude can see in a form without showing it: conditions that name
     /// a field that does not exist, duplicate keys, and computed values that depend on each other
     /// in a loop.
@@ -312,6 +383,87 @@ public class Form
         }
 
         return true;
+    }
+
+    /// <summary>Puts a new set of options on whichever kind of choice input this is.</summary>
+    private static FormElement WithOptions(FormElement element, IReadOnlyList<OptionItem> options)
+    {
+        FormElement replaced = element switch
+        {
+            OptionInputElement choice => choice with { Options = options },
+            ListSelectionElement list => list with { Options = options },
+            _ => element,
+        };
+
+        return replaced is InputElement input ? WithoutStaleDefault(input) : replaced;
+    }
+
+    /// <summary>
+    /// Drops a default value that named an option the new list does not contain.
+    ///
+    /// The default in a checked-in form was written against the options that were in the file, and
+    /// those are exactly what this node has just thrown away. Left in place it selects nothing, so
+    /// the field is cleared back to the state it would have been in had the file never named a
+    /// default — which for a drop-down or a radio group means its first option, the same as any
+    /// choice field written without one. A drop-down with a placeholder is the exception: an
+    /// author who wrote one asked for "nothing chosen yet" to be a state the form can be in.
+    /// </summary>
+    private static InputElement WithoutStaleDefault(InputElement input)
+    {
+        if (input.DefaultValue is null)
+        {
+            return input;
+        }
+
+        object? surviving = input.Coerce(input.DefaultValue);
+
+        bool nothingLeft = surviving is null ||
+            (surviving is System.Collections.IEnumerable items and not string &&
+             !items.Cast<object?>().Any());
+
+        if (!nothingLeft)
+        {
+            return input;
+        }
+
+        InputElement cleared = input with { DefaultValue = null };
+
+        return cleared switch
+        {
+            DropdownElement dropdown when string.IsNullOrEmpty(dropdown.Placeholder)
+                => dropdown with { SelectFirstByDefault = true },
+            DropdownElement dropdown => dropdown,
+            OptionInputElement choice => choice with { SelectFirstByDefault = true },
+            _ => cleared,
+        };
+    }
+
+    /// <summary>The element's kind, as a graph author would say it: "TextBox", "CheckBox".</summary>
+    private static string DescribeKind(FormElement element)
+    {
+        string name = element.GetType().Name;
+
+        return name.EndsWith("Element", StringComparison.Ordinal)
+            ? name[..^"Element".Length]
+            : name;
+    }
+
+    /// <summary>
+    /// Names the fields that do have options, because the mistake behind both failures is almost
+    /// always a key that is spelled differently in the file than in the graph.
+    /// </summary>
+    private static string DescribeChoiceFields(FormDefinition form)
+    {
+        string[] keys = form
+            .AllElements()
+            .Where(element => element is OptionInputElement or ListSelectionElement)
+            .Select(element => element.Key)
+            .Where(key => key.Length > 0)
+            .ToArray();
+
+        return keys.Length == 0
+            ? "It has no drop-downs, radio groups or list boxes to fill in."
+            : "Its choice fields are: " + string.Join(", ", keys) + ".";
     }
 
     /// <summary>
