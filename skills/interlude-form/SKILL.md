@@ -38,7 +38,11 @@ are writing **data, not a graph** — no nodes, no wires.
    ```
    File.FromPath → File.ReadText → Form.FromJson → Form.ShowDefinition
    ```
-   Then `Result.GetString(values, "prefix")` and friends read the answers.
+   Then `Result.GetString(values, "prefix")` and friends read the answers. If any field's options
+   have to come from the model, add the node that supplies them and name the key:
+   ```
+   … → Form.FromJson → Form.WithOptions(key: "levels", items: levels) → Form.ShowDefinition
+   ```
 
 ## Deciding what to ask
 
@@ -48,8 +52,9 @@ questions are the ones that change the document:
 - **Answers that drive the graph.** "Rename views" needs to know whether the answer is a prefix,
   a suffix or a find-and-replace. Guessing produces a form for a different job.
 - **Which choices are fixed.** A drop-down needs its options. If they come from the model — levels,
-  view templates, families — they cannot be in the file, and the form should ask for them a
-  different way. See *Options that are not in the file* in the authoring notes.
+  view templates, families — they cannot be in the file: leave them empty, give the field an
+  explicit key, and let the graph fill them in with `Form.WithOptions`. See *Options that are not
+  in the file* in the authoring notes.
 - **Whether a field is optional.** It changes `requiredIf` and it changes what a cancelled run
   returns.
 

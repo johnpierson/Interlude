@@ -91,12 +91,27 @@ with the options degraded to `{ "$opaque": "Wall <312840>" }`: text, not element
 
 So when the options come from the model, do not invent them. Either:
 
-- leave the input's `options` empty and say plainly that the graph must fill them in with
-  `Input.Dropdown` before showing the form, or
+- leave the input's `options` empty and give the field an explicit `key`, because the graph fills
+  it in by that key with `Form.WithOptions` between loading the form and showing it, or
 - ask the user for the fixed list, if it really is fixed.
 
 Say which you did. A form full of plausible invented level names is worse than an empty one,
 because it looks finished.
+
+The wiring for the first, which is worth putting in the reply whenever a field is left empty:
+
+```
+Form.FromJson ──► Form.WithOptions(key: "levels", items: levels, displayNames: names)
+              ──► Form.ShowDefinition
+```
+
+One `Form.WithOptions` per model-driven field, chained. The elements go in whole and the chosen one
+comes back as the element, so nothing downstream has to look it up by name. The key in the file and
+the key on that node have to match exactly — which is the reason to write the key rather than let it
+be derived from the label, where changing the wording would quietly rename it.
+
+A `defaultValue` on a field the graph fills in is pointless: it names an option that will not be
+there, and Interlude drops it. Leave it out.
 
 ## The theme
 
