@@ -79,8 +79,6 @@ are checked in and left alone.
 
 ## Prose, not tables
 
-## Prose, not tables
-
 Dynamo's 1,039 built-in help files contain no Markdown tables at all, and these match that. The
 tabular reference — every node and port in one page, sortable by eye — is
 [docs/node-reference.md](../node-reference.md), which is written for reading in a browser rather
