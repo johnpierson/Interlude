@@ -1,6 +1,6 @@
 # Interlude
 
-**Declarative forms for Dynamo.** Describe a form with nodes, show it, get typed answers back.
+**Really Great Forms for Dynamo.** Describe a form with nodes, show it, get typed answers back.
 
 [![build](https://github.com/johnpierson/Interlude/actions/workflows/build.yml/badge.svg)](https://github.com/johnpierson/Interlude/actions/workflows/build.yml)
 [![license: BSD 3-Clause](https://img.shields.io/badge/license-BSD--3--Clause-blue.svg)](LICENSE)
