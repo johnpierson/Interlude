@@ -1,64 +1,824 @@
 /*
- * The site wears the package's own colours. These are the accent values from Interlude's default
- * light and dark themes, verbatim — src/Interlude/Theming/ThemeDefinition.cs, `Light` and `Dark`.
- * A screenshot of a form and the button beside it should not be two different blues.
+ * The site, wearing the theme the package ships.
+ *
+ * Every value here is lifted from source, not matched by eye. `ThemeDefinition.Default` is what a
+ * form gets when nobody supplies a theme, and it is deliberately the loud option:
+ *
+ *     Preset = Neubrutalist          BorderWidth = 2      HeavyText = true
+ *     Mode = Light                   ShadowOffset = 4     UppercaseHeaders = true
+ *     Shape = Square (radius 0)      FontSize = 13        HeaderTracking = 0.05
+ *
+ * The palettes are `ThemePalette.Neo` and `ThemePalette.NeoDark` in
+ * src/Interlude/Theming/ThemeDefinition.cs, colour for colour. Light and dark here are those two,
+ * which is why dark is the light one *inverted* rather than dimmed — black outlines and black
+ * shadows disappear on a dark backdrop, so both become bone white and the accent moves from hot
+ * pink to a lime that survives being surrounded by it.
+ *
+ * The hard shadow is `WpfThemeApplier.HardShadow`: a DropShadowEffect with BlurRadius 0 at
+ * direction 315, which is 4px down and 4px right of solid colour. Pressing a control removes the
+ * shadow and translates the surface by the same 4px, so it drops onto where the shadow was. That
+ * is reproduced on anything clickable.
+ *
+ * The one place this deliberately stops short of the product: prose. The node reference is 114
+ * pages of dense text, and setting body copy in spaced capitals because the forms set their
+ * *section headers* that way would be reading the rule and missing the point. Chrome, headings,
+ * blocks and controls are styled hard; paragraphs are left alone.
+ */
+
+/* ---------------------------------------------------------------- font ---
+ *
+ * Space Grotesk, from src/Interlude/Fonts — the same four static faces compiled into
+ * Interlude.dll as WPF resources, copied into the build by scripts/mkdocs_hooks.py. Not Google
+ * Fonts: that is a third-party request for a *different* file, since Google distributes the
+ * variable font and the package vendors the static instances.
+ *
+ * SIL Open Font License 1.1. The licence is published beside them at assets/fonts/, and is in
+ * THIRD-PARTY-NOTICES.md.
+ */
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../assets/fonts/SpaceGrotesk-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../assets/fonts/SpaceGrotesk-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../assets/fonts/SpaceGrotesk-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../assets/fonts/SpaceGrotesk-Bold.ttf") format("truetype");
+}
+
+:root {
+  /* `--md-text-font` and `--md-code-font` are the hooks Material's own `font:` setting writes to,
+   * which it then splices into `--md-text-font-family` *on `body`* — so overriding the -family
+   * variable here would be shadowed for everything inside the page. These are the right end.
+   *
+   * The fallbacks after Interlude's own are the ones WpfThemeApplier.EmbeddedFont falls back to,
+   * in the same order, for the same reason: a missing font should degrade to the host's UI face
+   * rather than to a serif default that makes everything look broken. */
+  --md-text-font: "Space Grotesk", "Segoe UI Variable Text", "Segoe UI", Tahoma;
+
+  /* Space Grotesk has no monospace companion and the forms render no code, so this is the one
+   * thing on the page with no counterpart in the product. A system stack keeps it a local
+   * request, which is the other half of why the text font is vendored. */
+  --md-code-font: ui-monospace, "Cascadia Mono", "Segoe UI Mono", Consolas, "Liberation Mono";
+
+  /* ThemeDefinition.Default: BorderWidth 2, ShadowOffset 4, Shape Square, HeaderTracking 0.05. */
+  --il-border-width: 2px;
+  --il-shadow-offset: 4px;
+  --il-radius: 0;
+  --il-tracking: 0.05em;
+}
+
+/* ------------------------------------------------------------ palettes ---
+ *
+ * ThemePalette.Neo. Warm paper, pure black ink, one loud accent. Border and BorderStrong are the
+ * same black on purpose — the style takes its structure from outline and offset rather than from
+ * a hierarchy of greys.
  */
 
 :root,
 [data-md-color-scheme="default"] {
-  --md-primary-fg-color:        #2f6feb;
-  --md-primary-fg-color--light: #4c8dff;
-  --md-primary-fg-color--dark:  #2a62d0;
-  --md-primary-bg-color:        #ffffff;
-  --md-primary-bg-color--light: #ffffffb3;
+  --il-background: #fff4e0;
+  --il-surface: #ffffff;
+  --il-surface-alt: #ffe55c;
+  --il-border: #000000;
+  --il-foreground: #000000;
+  --il-foreground-muted: #4a4238;
+  --il-foreground-disabled: #9a9186;
+  --il-control-hover: #ffe55c;
+  --il-accent: #ff5c8a;
+  --il-accent-hover: #ff87a8;
+  --il-accent-foreground: #000000;
+  --il-error: #e5383b;
+  --il-warning: #ff8a00;
+  --il-success: #00b36b;
+  --il-shadow: #000000;
 
-  --md-accent-fg-color:         #2a62d0;
-  --md-accent-fg-color--transparent: #2f6feb1a;
-  --md-accent-bg-color:         #ffffff;
-  --md-accent-bg-color--light:  #ffffffb3;
+  --md-default-bg-color: var(--il-background);
+  --md-default-fg-color: var(--il-foreground);
+  --md-default-fg-color--light: var(--il-foreground-muted);
+  --md-default-fg-color--lighter: var(--il-foreground-disabled);
+  --md-default-fg-color--lightest: rgba(0, 0, 0, 0.07);
+
+  /* The header is the form window's own backdrop, not the accent. In a form the accent is a fill
+   * behind black text — the Submit button, a ticked box, the filled part of a slider — and never
+   * a large surface. A hot pink bar across every page would invert that ratio. */
+  --md-primary-fg-color: var(--il-background);
+  --md-primary-fg-color--light: var(--il-background);
+  --md-primary-fg-color--dark: var(--il-background);
+  --md-primary-bg-color: var(--il-foreground);
+  --md-primary-bg-color--light: var(--il-foreground-muted);
+
+  --md-accent-fg-color: var(--il-accent);
+  --md-accent-fg-color--transparent: rgba(255, 92, 138, 0.1);
+  --md-accent-bg-color: var(--il-accent-foreground);
+  --md-accent-bg-color--light: var(--il-accent-foreground);
+
+  --md-typeset-color: var(--il-foreground);
+  --md-typeset-a-color: var(--il-foreground);
+  --md-code-bg-color: var(--il-surface);
+  --md-code-fg-color: var(--il-foreground);
+  --md-footer-bg-color: var(--il-foreground);
+  --md-footer-bg-color--dark: var(--il-foreground);
+  --md-footer-fg-color: var(--il-background);
+  --md-footer-fg-color--light: var(--il-background);
+  --md-footer-fg-color--lighter: rgba(255, 244, 224, 0.7);
+
+  --md-shadow-z1: none;
+  --md-shadow-z2: none;
+  --md-shadow-z3: none;
 }
+
+/*
+ * ThemePalette.NeoDark. The light palette inverted rather than dimmed: bone-white outlines, bone
+ * white shadows, and lime where the pink was.
+ */
 
 [data-md-color-scheme="slate"] {
-  --md-primary-fg-color:        #4c8dff;
-  --md-primary-fg-color--light: #679eff;
-  --md-primary-fg-color--dark:  #2f6feb;
-  --md-primary-bg-color:        #0e1116;
-  --md-primary-bg-color--light: #0e1116b3;
+  --il-background: #121214;
+  --il-surface: #1e1e22;
+  --il-surface-alt: #2c2c33;
+  --il-border: #f2f2f0;
+  --il-foreground: #f7f7f5;
+  --il-foreground-muted: #afafb8;
+  --il-foreground-disabled: #6a6a72;
+  --il-control-hover: #3a3a44;
+  --il-accent: #c7f464;
+  --il-accent-hover: #d9ff8c;
+  --il-accent-foreground: #121214;
+  --il-error: #ff6b6b;
+  --il-warning: #ffc145;
+  --il-success: #5ce1a0;
+  --il-shadow: #f2f2f0;
 
-  --md-accent-fg-color:         #679eff;
-  --md-accent-fg-color--transparent: #4c8dff1a;
-  --md-accent-bg-color:         #0e1116;
-  --md-accent-bg-color--light:  #0e1116b3;
+  --md-default-bg-color: var(--il-background);
+  --md-default-fg-color: var(--il-foreground);
+  --md-default-fg-color--light: var(--il-foreground-muted);
+  --md-default-fg-color--lighter: var(--il-foreground-disabled);
+  --md-default-fg-color--lightest: rgba(247, 247, 245, 0.1);
 
-  /* Slate's stock backdrop is a touch blue; Interlude's dark surfaces are neutral greys. */
-  --md-default-bg-color:        #1e2126;
-  --md-code-bg-color:           #262a31;
+  --md-primary-fg-color: var(--il-background);
+  --md-primary-fg-color--light: var(--il-background);
+  --md-primary-fg-color--dark: var(--il-background);
+  --md-primary-bg-color: var(--il-foreground);
+  --md-primary-bg-color--light: var(--il-foreground-muted);
+
+  --md-accent-fg-color: var(--il-accent);
+  --md-accent-fg-color--transparent: rgba(199, 244, 100, 0.12);
+  --md-accent-bg-color: var(--il-accent-foreground);
+  --md-accent-bg-color--light: var(--il-accent-foreground);
+
+  --md-typeset-color: var(--il-foreground);
+  --md-typeset-a-color: var(--il-foreground);
+  --md-code-bg-color: var(--il-surface);
+  --md-code-fg-color: var(--il-foreground);
+  --md-footer-bg-color: var(--il-surface);
+  --md-footer-bg-color--dark: var(--il-surface);
+  --md-footer-fg-color: var(--il-foreground);
+  --md-footer-fg-color--light: var(--il-foreground);
+  --md-footer-fg-color--lighter: var(--il-foreground-muted);
 }
 
-/* Screenshots of forms are rendered against a page colour of their own. A hairline keeps a light
- * form from bleeding into a light page, without drawing a box around a dark one. */
-.md-typeset img[src*="/images/"] {
-  border: 1px solid var(--md-default-fg-color--lightest);
-  border-radius: 4px;
+/* --------------------------------------------------------------- chrome ---
+ *
+ * The form window is one flat surface with a heavy rule separating the button strip from the
+ * fields. The header and footer of a page are the same idea.
+ */
+
+.md-header {
+  border-bottom: 3px solid var(--il-border);
+  box-shadow: none;
 }
 
-/* Download links to sample graphs. `.dyn` is a file the reader is meant to save, not follow, and
- * it should not look like an ordinary cross-reference. See docs/samples/index.md. */
-.md-typeset a.dyn-download {
-  display: inline-block;
-  padding: 0.35em 0.9em;
-  border: 1px solid var(--md-primary-fg-color);
-  border-radius: 4px;
+.md-header--shadow {
+  box-shadow: none;
+}
+
+.md-tabs {
+  border-bottom: var(--il-border-width) solid var(--il-border);
+}
+
+.md-header__title {
   font-weight: 700;
+  letter-spacing: var(--il-tracking);
+  text-transform: uppercase;
+}
+
+/* Search: a form field, so it gets a form field's outline. */
+.md-search__form {
+  background-color: var(--il-surface);
+  border: var(--il-border-width) solid var(--il-border);
+  border-radius: var(--il-radius);
+  box-shadow: none;
+  color: var(--il-foreground);
+}
+
+.md-search__form:hover {
+  background-color: var(--il-control-hover);
+}
+
+.md-search__input {
+  color: var(--il-foreground);
+}
+
+.md-search__input::placeholder {
+  color: var(--il-foreground-muted);
+}
+
+.md-search__icon,
+.md-search__options .md-icon {
+  color: var(--il-foreground);
+}
+
+.md-search__output {
+  border: var(--il-border-width) solid var(--il-border);
+  border-radius: var(--il-radius);
+  box-shadow: var(--il-shadow-offset) var(--il-shadow-offset) 0 var(--il-shadow);
+}
+
+.md-search-result__meta {
+  background-color: var(--il-surface-alt);
+  color: var(--il-foreground);
+  font-weight: 700;
+  letter-spacing: var(--il-tracking);
+  text-transform: uppercase;
+}
+
+.md-search-result__article--document .md-search-result__title {
+  font-weight: 700;
+}
+
+.md-search-result__item {
+  box-shadow: 0 -1px 0 var(--md-default-fg-color--lightest);
+}
+
+/* ------------------------------------------------------------ navigation ---
+ *
+ * Section labels are the forms' section headers: small, bold, spaced capitals. The selected page
+ * is a filled block, the way a selected item reads in a form.
+ */
+
+.md-nav__title {
+  color: var(--il-foreground);
+  font-weight: 700;
+  letter-spacing: var(--il-tracking);
+  text-transform: uppercase;
+}
+
+.md-nav__link {
+  border-radius: var(--il-radius);
+}
+
+.md-nav__item--section > .md-nav__link {
+  color: var(--il-foreground);
+  font-weight: 700;
+  letter-spacing: var(--il-tracking);
+  text-transform: uppercase;
+}
+
+.md-nav__link--active,
+.md-nav__link--active code {
+  background-color: var(--il-accent);
+  color: var(--il-accent-foreground);
+  font-weight: 700;
+}
+
+.md-nav__link--active {
+  /* The block is drawn wider than the text so it reads as a filled row rather than a highlight,
+   * without shifting anything in the column. */
+  box-shadow: -0.4rem 0 0 var(--il-accent), 0.4rem 0 0 var(--il-accent);
+}
+
+.md-nav__link:focus,
+.md-nav__link:hover {
+  color: var(--il-foreground);
+  text-decoration: underline;
+  text-decoration-color: var(--il-accent);
+  text-decoration-thickness: var(--il-border-width);
+  text-underline-offset: 3px;
+}
+
+.md-nav__link--active:focus,
+.md-nav__link--active:hover {
+  color: var(--il-accent-foreground);
   text-decoration: none;
 }
 
-.md-typeset a.dyn-download:hover,
-.md-typeset a.dyn-download:focus {
-  background-color: var(--md-primary-fg-color);
-  color: var(--md-primary-bg-color);
+/* The table of contents keeps a hairline rather than a heavy one: it is a sidebar, not a block. */
+.md-sidebar--secondary .md-nav__title {
+  border-bottom: var(--il-border-width) solid var(--il-border);
+  padding-bottom: 0.4rem;
+}
+
+/* ---------------------------------------------------------------- links ---
+ *
+ * In a form the accent is never text — AccentForeground is black, because the accent is always a
+ * fill with black on top of it. Pink text on cream is a 2.7:1 contrast ratio and would be
+ * unreadable, so a link is foreground-coloured with the accent as its underline, and hovering
+ * fills the block the way hovering a control does.
+ */
+
+.md-typeset a {
+  color: var(--il-foreground);
+  text-decoration: underline;
+  text-decoration-color: var(--il-accent);
+  text-decoration-thickness: var(--il-border-width);
+  text-underline-offset: 3px;
+}
+
+.md-typeset a:focus,
+.md-typeset a:hover {
+  background-color: var(--il-accent);
+  color: var(--il-accent-foreground);
+  text-decoration-color: var(--il-border);
+}
+
+.md-typeset a:focus code,
+.md-typeset a:hover code {
+  background-color: transparent;
+  color: var(--il-accent-foreground);
+}
+
+/* ------------------------------------------------------------- headings ---
+ *
+ * `UppercaseHeaders` and `HeaderTracking` apply to *section* headers in a form, which is what an
+ * h2 is on a page. Applying it further up would put `INTERLUDE.BEHAVIOR.WITHCOMPUTED` at the top
+ * of 114 pages, and further down would turn the body of a reference page into signage.
+ */
+
+.md-typeset h1 {
+  color: var(--il-foreground);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.md-typeset h2 {
+  border-bottom: var(--il-border-width) solid var(--il-border);
+  font-size: 1.25em;
+  font-weight: 700;
+  letter-spacing: var(--il-tracking);
+  margin-top: 2em;
+  padding-bottom: 0.3em;
+  text-transform: uppercase;
+}
+
+.md-typeset h3 {
+  font-weight: 700;
+}
+
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  font-weight: 500;
+}
+
+.md-typeset h5 {
+  /* Material capitalises h5 by default, which collides with the h2 treatment. */
+  text-transform: none;
+}
+
+/* Anchor links sit in the accent, where they are a deliberate small target rather than prose. */
+.md-typeset .headerlink {
+  color: var(--il-foreground-disabled);
+}
+
+.md-typeset :target .headerlink,
+.md-typeset .headerlink:focus,
+.md-typeset :hover > .headerlink {
+  color: var(--il-accent);
+}
+
+/* ------------------------------------------------------ blocks and code ---
+ *
+ * Everything raised above the backdrop is the same object: a flat surface, a 2px outline in the
+ * border colour, square corners, and a 4px solid shadow down and to the right.
+ */
+
+.md-typeset pre > code,
+.md-typeset .highlight,
+.md-typeset .highlighttable {
+  border-radius: var(--il-radius);
+}
+
+.md-typeset .highlight,
+.md-typeset pre.highlight {
+  /* The wrapper carries the surface as well as the `pre` inside it, or the page colour shows
+   * through the padding along the bottom edge and the block reads as unfinished. */
+  background-color: var(--il-surface);
+  border: var(--il-border-width) solid var(--il-border);
+  box-shadow: var(--il-shadow-offset) var(--il-shadow-offset) 0 var(--il-shadow);
+  /* The shadow is drawn outside the box, so the following block needs room for it. */
+  margin-bottom: calc(1em + var(--il-shadow-offset));
+}
+
+/*
+ * Inline code is the one thing here that deliberately does *not* take a palette colour.
+ *
+ * SurfaceAlt — the yellow — is the obvious choice and was the first attempt, and it is wrong: a
+ * parameter table in the node reference is eight code spans to a row, and filling every one of
+ * them turns the densest page on the site into a wall of highlighter. In a form that yellow is a
+ * hovered control or an alternating row, which is to say one band at a time, and it keeps that
+ * job here — table headers, admonition strips, marked text. A quiet wash reads as a chip on both
+ * the cream backdrop and the white surfaces it sits on top of.
+ */
+.md-typeset code {
+  background-color: rgba(0, 0, 0, 0.06);
+  border-radius: var(--il-radius);
+  color: var(--il-foreground);
+}
+
+[data-md-color-scheme="slate"] .md-typeset code {
+  background-color: rgba(247, 247, 245, 0.09);
+}
+
+/* Inside a block the background is the block's, not the inline highlight. */
+.md-typeset pre > code,
+.md-typeset .highlight code {
+  background-color: transparent;
+}
+
+.md-typeset .highlight > pre {
+  background-color: var(--il-surface);
+}
+
+/* Material's own copy button, made the same object as everything else. */
+.md-code__button,
+.md-clipboard {
+  border-radius: var(--il-radius);
+  color: var(--il-foreground);
+}
+
+.md-code__button:hover,
+.md-clipboard:hover {
+  background-color: var(--il-accent);
+  color: var(--il-accent-foreground);
+}
+
+.md-typeset .md-code__nav {
+  background: transparent;
+}
+
+/* ---------------------------------------------------------- admonitions ---
+ *
+ * A card in a form is a bordered surface with a header strip. These are the same thing: the strip
+ * carries the type colour as a *fill* with foreground text on it, never as coloured type.
+ */
+
+/* The `[class]` is not decoration. Material colours each type's border with a selector one class
+ * more specific than a bare `.md-typeset .admonition`, so without it every note keeps its stock
+ * blue left edge. The attribute selector ties the specificity, and this stylesheet loads last. */
+.md-typeset .admonition[class],
+.md-typeset details[class] {
+  border-color: var(--il-border);
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  background-color: var(--il-surface);
+  border: var(--il-border-width) solid var(--il-border);
+  border-radius: var(--il-radius);
+  box-shadow: var(--il-shadow-offset) var(--il-shadow-offset) 0 var(--il-shadow);
+  font-size: 0.75rem;
+  margin-bottom: calc(1.5625em + var(--il-shadow-offset));
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+  background-color: var(--il-surface-alt);
+  border: none;
+  border-bottom: var(--il-border-width) solid var(--il-border);
+  border-radius: 0;
+  color: var(--il-foreground);
+  font-weight: 700;
+  letter-spacing: var(--il-tracking);
+  margin: 0;
+  padding: 0.5rem 0.6rem 0.5rem 2.2rem;
+  text-transform: uppercase;
+}
+
+/* Material draws the icon tile with ::before and a left rule with ::after. The rule goes: the
+ * outline is the whole structure here. */
+.md-typeset .admonition-title::before,
+.md-typeset summary::before {
+  background-color: var(--il-foreground);
+  left: 0.7rem;
+  top: 0.55rem;
+}
+
+.md-typeset .admonition-title::after,
+.md-typeset summary::after {
+  color: var(--il-foreground);
+}
+
+/* The type colours are the palette's, and each is a fill. Warning and danger are the same values
+ * a form uses for a failed rule and an invalid field. */
+.md-typeset .admonition.note > .admonition-title,
+.md-typeset details.note > summary {
+  background-color: var(--il-accent);
+}
+
+.md-typeset .admonition.tip > .admonition-title,
+.md-typeset details.tip > summary,
+.md-typeset .admonition.success > .admonition-title,
+.md-typeset details.success > summary {
+  background-color: var(--il-success);
+}
+
+.md-typeset .admonition.warning > .admonition-title,
+.md-typeset details.warning > summary {
+  background-color: var(--il-warning);
+}
+
+.md-typeset .admonition.danger > .admonition-title,
+.md-typeset details.danger > summary,
+.md-typeset .admonition.failure > .admonition-title,
+.md-typeset details.failure > summary,
+.md-typeset .admonition.bug > .admonition-title,
+.md-typeset details.bug > summary {
+  background-color: var(--il-error);
+}
+
+/* Every strip carries black text, including on dark, because these are the light palette's fill
+ * colours in both modes and black is what reads on them. This is AccentForeground's rule applied
+ * to the rest of the semantic colours. */
+.md-typeset .admonition.note > .admonition-title,
+.md-typeset details.note > summary,
+.md-typeset .admonition.tip > .admonition-title,
+.md-typeset details.tip > summary,
+.md-typeset .admonition.success > .admonition-title,
+.md-typeset details.success > summary,
+.md-typeset .admonition.warning > .admonition-title,
+.md-typeset details.warning > summary,
+.md-typeset .admonition.danger > .admonition-title,
+.md-typeset details.danger > summary,
+.md-typeset .admonition.failure > .admonition-title,
+.md-typeset details.failure > summary,
+.md-typeset .admonition.bug > .admonition-title,
+.md-typeset details.bug > summary {
+  color: #000000;
+}
+
+/* A code span inside a strip takes the strip's colour rather than the body's. Left alone it is
+ * white type on lime in the dark palette, which is the one combination in the whole set that
+ * cannot be read. This sits after the scheme-specific rule for `code` on purpose: same
+ * specificity, later wins. */
+.md-typeset .admonition-title code,
+.md-typeset summary code {
+  background-color: rgba(0, 0, 0, 0.12);
+  color: inherit;
+}
+
+.md-typeset .admonition.note > .admonition-title::before,
+.md-typeset details.note > summary::before,
+.md-typeset .admonition.tip > .admonition-title::before,
+.md-typeset details.tip > summary::before,
+.md-typeset .admonition.success > .admonition-title::before,
+.md-typeset details.success > summary::before,
+.md-typeset .admonition.warning > .admonition-title::before,
+.md-typeset details.warning > summary::before,
+.md-typeset .admonition.danger > .admonition-title::before,
+.md-typeset details.danger > summary::before,
+.md-typeset .admonition.failure > .admonition-title::before,
+.md-typeset details.failure > summary::before,
+.md-typeset .admonition.bug > .admonition-title::before,
+.md-typeset details.bug > summary::before {
+  background-color: #000000;
+}
+
+.md-typeset .admonition.note > .admonition-title::after,
+.md-typeset details.note > summary::after,
+.md-typeset .admonition.warning > .admonition-title::after,
+.md-typeset details.warning > summary::after,
+.md-typeset .admonition.danger > .admonition-title::after,
+.md-typeset details.danger > summary::after {
+  color: #000000;
+}
+
+/* --------------------------------------------------------------- tables ---
+ *
+ * The header row takes SurfaceAlt, which in the light palette is the yellow a form uses for a
+ * hovered control and an alternating row.
+ */
+
+.md-typeset table:not([class]) {
+  background-color: var(--il-surface);
+  border: var(--il-border-width) solid var(--il-border);
+  border-radius: var(--il-radius);
+  box-shadow: var(--il-shadow-offset) var(--il-shadow-offset) 0 var(--il-shadow);
+  margin-bottom: calc(1.25em + var(--il-shadow-offset));
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--il-surface-alt);
+  border-bottom: var(--il-border-width) solid var(--il-border);
+  color: var(--il-foreground);
+  font-weight: 700;
+  letter-spacing: var(--il-tracking);
+  text-transform: uppercase;
+}
+
+.md-typeset table:not([class]) td {
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  vertical-align: top;
+}
+
+/* Material breaks long words inside a cell, which in the node reference means splitting
+ * `docs/nodes/` across two lines mid-chip. A cell may still wrap between chips; a chip may not
+ * wrap inside itself, because half an identifier is not an identifier. */
+.md-typeset table:not([class]) code {
+  white-space: nowrap;
+}
+
+.md-typeset table:not([class]) tr:hover {
+  background-color: var(--md-accent-fg-color--transparent);
+}
+
+/* Several pages — docs/README.md, docs/samples/index.md — use a two-column table with no header
+ * as a layout. Filled and outlined, that empty row reads as a broken band across the top of the
+ * block, so a header with nothing in any of its cells is removed rather than styled. */
+.md-typeset table:not([class]) thead:not(:has(th:not(:empty))) {
+  display: none;
+}
+
+/* Where :has() is unavailable the row stays, so it at least matches the surface it sits on. */
+.md-typeset table:not([class]) th:empty {
+  background-color: var(--il-surface);
+  border-bottom: none;
+  padding: 0;
+}
+
+/* ----------------------------------------------------------- quotations ---
+ * A bordered surface, but no shadow: a quotation is an aside, not a raised block. */
+
+.md-typeset blockquote {
+  background-color: var(--il-surface);
+  border-left: var(--il-shadow-offset) solid var(--il-accent);
+  color: var(--il-foreground-muted);
+  padding: 0.6rem 0.8rem;
+}
+
+/* ------------------------------------------------------------- controls ---
+ *
+ * The buttons. Interlude.PrimaryButton is an accent fill, a border in the *border* colour rather
+ * than the accent — a black outline around a hot pink button being the entire look — heavy text,
+ * and the hard shadow. Pressing removes the shadow and translates by the offset, which is
+ * `ThemeKeys.PressTransform`.
+ */
+
+.md-typeset a.dyn-download,
+.md-typeset .md-button {
+  background-color: var(--il-accent);
+  border: var(--il-border-width) solid var(--il-border);
+  border-radius: var(--il-radius);
+  box-shadow: var(--il-shadow-offset) var(--il-shadow-offset) 0 var(--il-shadow);
+  color: var(--il-accent-foreground);
+  display: inline-block;
+  font-weight: 700;
+  letter-spacing: var(--il-tracking);
+  margin-bottom: var(--il-shadow-offset);
+  padding: 0.45em 1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: none;
 }
 
 .md-typeset a.dyn-download::before {
   content: "↓ ";
+}
+
+.md-typeset a.dyn-download:focus,
+.md-typeset a.dyn-download:hover,
+.md-typeset .md-button:focus,
+.md-typeset .md-button:hover {
+  background-color: var(--il-accent-hover);
+  border-color: var(--il-border);
+  color: var(--il-accent-foreground);
+}
+
+.md-typeset a.dyn-download:active,
+.md-typeset .md-button:active {
+  box-shadow: none;
+  transform: translate(var(--il-shadow-offset), var(--il-shadow-offset));
+}
+
+/* Tabbed content: the tab strip is a form's tab strip. */
+.md-typeset .tabbed-set > input:checked + label {
+  border-bottom: var(--il-shadow-offset) solid var(--il-accent);
+  color: var(--il-foreground);
+  font-weight: 700;
+}
+
+.md-typeset .tabbed-labels > label {
+  font-weight: 500;
+  letter-spacing: var(--il-tracking);
+  text-transform: uppercase;
+}
+
+.md-typeset .tabbed-content {
+  border: var(--il-border-width) solid var(--il-border);
+  padding: 0.8rem;
+}
+
+/* --------------------------------------------------------------- images ---
+ *
+ * Screenshots of forms already carry the outline and the shadow inside the picture, so adding
+ * another around them would draw a second frame. They get the shadow only.
+ */
+
+.md-typeset img[src*="/images/"] {
+  box-shadow: var(--il-shadow-offset) var(--il-shadow-offset) 0 var(--il-shadow);
+  margin-bottom: var(--il-shadow-offset);
+}
+
+/* ---------------------------------------------------------------- misc ---- */
+
+.md-typeset hr {
+  border-bottom: var(--il-border-width) solid var(--il-border);
+}
+
+.md-typeset kbd {
+  background-color: var(--il-surface);
+  border: var(--il-border-width) solid var(--il-border);
+  border-radius: var(--il-radius);
+  box-shadow: 2px 2px 0 var(--il-shadow);
+  color: var(--il-foreground);
+}
+
+.md-typeset mark {
+  background-color: var(--il-surface-alt);
+  color: var(--il-foreground);
+}
+
+.md-typeset .footnote {
+  color: var(--il-foreground-muted);
+}
+
+.md-footer {
+  border-top: 3px solid var(--il-border);
+}
+
+.md-footer-meta {
+  border-top: var(--il-border-width) solid rgba(255, 244, 224, 0.2);
+}
+
+[data-md-color-scheme="slate"] .md-footer-meta {
+  border-top-color: rgba(247, 247, 245, 0.15);
+}
+
+.md-footer__link:focus,
+.md-footer__link:hover {
+  opacity: 1;
+  text-decoration: underline;
+  text-decoration-color: var(--il-accent);
+  text-decoration-thickness: var(--il-border-width);
+  text-underline-offset: 3px;
+}
+
+/* Anything Material renders as a floating card gets the flat treatment. */
+.md-typeset .md-tooltip,
+.md-dialog {
+  background-color: var(--il-surface);
+  border: var(--il-border-width) solid var(--il-border);
+  border-radius: var(--il-radius);
+  box-shadow: var(--il-shadow-offset) var(--il-shadow-offset) 0 var(--il-shadow);
+  color: var(--il-foreground);
+}
+
+/* Reduced motion is a theme property in the product (`ThemeDefinition.ReducedMotion`, which
+ * suppresses transitions). The press transform is the only motion added here; honour the OS. */
+@media (prefers-reduced-motion: reduce) {
+  .md-typeset a.dyn-download:active,
+  .md-typeset .md-button:active {
+    transform: none;
+  }
+}
+
+/* On a narrow screen the offset shadows cost horizontal room that is not there. The outlines do
+ * the work on their own — which is the same reason a compact form drops to a tighter spacing
+ * scale rather than a different look. */
+@media screen and (max-width: 44.9375em) {
+  :root {
+    --il-shadow-offset: 3px;
+  }
 }

@@ -41,6 +41,10 @@ nav:
 theme:
   name: material
   language: en
+  # No Google Fonts request. The site is set in Space Grotesk, served from the same four static
+  # faces that are compiled into Interlude.dll — see docs/stylesheets/extra.css and the font
+  # copying in scripts/mkdocs_hooks.py.
+  font: false
   icon:
     repo: fontawesome/brands/github
   features:
@@ -57,8 +61,9 @@ theme:
     - content.action.edit
     - content.tooltips
   palette:
-    # The accent follows the package's own default theme: #2F6FEB in light, #4C8DFF in dark.
-    # See src/Interlude/Theming/ThemeDefinition.cs. Exact values are in docs/stylesheets/extra.css.
+    # Light is ThemePalette.Neo and dark is ThemePalette.NeoDark — the two palettes of the
+    # Neubrutalist preset, which is what ThemeDefinition.Default uses and therefore what a form
+    # looks like when nobody themes it. Every value is in docs/stylesheets/extra.css.
     - media: "(prefers-color-scheme)"
       toggle:
         icon: material/brightness-auto
