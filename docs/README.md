@@ -1,6 +1,6 @@
 # Interlude documentation
 
-Declarative forms for Dynamo. Start with the [README](../README.md) for what Interlude is; this
+Really Great Forms for Dynamo. Start with the [README](../README.md) for what Interlude is; this
 folder is the detail.
 
 ## Using it

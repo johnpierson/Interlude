@@ -45,7 +45,7 @@ if (Test-Path $distRoot) {
 }
 
 $description = @'
-Declarative forms for Dynamo. Describe a form with nodes, show it, and get typed answers back.
+Really Great Forms for Dynamo. Describe a form with nodes, show it, and get typed answers back.
 
 Conditional visibility, computed values and live validation are described declaratively rather
 than wired up. Cancelling returns every field's default rather than nulls. Ships as one assembly
