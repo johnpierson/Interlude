@@ -11,6 +11,37 @@ package version and `FileVersion` are what move.
 
 ## [Unreleased]
 
+### Added
+
+- **`Compute.Format` placeholders take a format specifier.** Write `{total:0.00}` for two decimal
+  places, `{total:#,0.00}` for thousands separators, `{rate:0%}` for a fraction shown as a
+  percentage, or `{when:yyyy-MM-dd}` and `{when:HH:mm}` to get a date or a time out of a date field
+  instead of a full ISO timestamp. The wording after the colon is a standard .NET format string.
+
+  The split is at the *first* colon, so a specifier keeps any colons of its own — `{when:HH:mm}`
+  is a time, not a key called `when` with a broken specifier. A specifier the runtime cannot use is
+  ignored and the plain value is shown, on the same grounds as the rest of this layer: a template
+  is re-rendered on every keystroke, and the author may be halfway through typing it.
+
+  Specifiers choose digits, not punctuation. Output stays invariant, so a form authored in London
+  reads identically in Berlin — locale-aware display remains the renderer's job.
+
+### Changed
+
+- **Numbers in a `format` template are written the way a person would write them.** A total that
+  landed on `0.30000000000000004` now reads as `0.3`. Doubles are shown to fifteen significant
+  digits, which is as many as one can actually be trusted for — the digits past that record the
+  gap between the decimal you meant and the nearest double, which is a fact about binary floating
+  point rather than about the form.
+
+  This is display only. The stored answer is unchanged — still the exact double — so results,
+  saved files, lookup matching and equality all behave exactly as before, and only text that a
+  person reads is affected. Anyone string-matching the rendered contents of a computed text field
+  downstream should know the text can now be shorter.
+
+  Note that this rounds; it does not pad. A price of exactly `5.5` still shows as `5.5` unless you
+  ask for `{price:0.00}`, which is why the specifier above is worth writing on anything monetary.
+
 ## [1.0.3] - 2026-08-03
 
 ### Changed

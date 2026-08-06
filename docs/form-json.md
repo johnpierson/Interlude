@@ -101,6 +101,24 @@ Operators: `equals` `notEquals` `greaterThan` `greaterThanOrEqual` `lessThan` `l
 
 Kinds: `constant` `field` `format` `sum` `arithmetic` `lookup` `conditional`.
 
+A `format` template interpolates field values, and a placeholder may say how its value should
+look by adding a .NET format specifier after a colon:
+
+```json
+{
+  "$type": "format",
+  "template": "{quantity} items at £{price:0.00}, ordered {when:yyyy-MM-dd}"
+}
+```
+
+The split is at the *first* colon, so a specifier can contain its own — `{when:HH:mm}` is a time.
+A specifier the runtime cannot use is ignored rather than treated as an error, on the same grounds
+as everything else in this layer: a template is re-rendered on every keystroke.
+
+Without a specifier a number is written the way a person would, so a total that landed on
+`0.30000000000000004` reads as `0.3`. Stored values are unaffected — this is display only, and
+the answer in the result is still the exact double.
+
 ## Rules
 
 ```json

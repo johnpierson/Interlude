@@ -23,10 +23,20 @@ public class Compute
     /// <summary>
     /// Fills field values into a template: <c>"Hello {firstName} {lastName}"</c>. Write a literal
     /// brace by doubling it.
+    ///
+    /// Add a colon to say how a value should look: <c>"Total: £{total:0.00}"</c> gives two decimal
+    /// places, <c>{total:#,0.00}</c> adds thousands separators, and <c>{when:d}</c> or
+    /// <c>{when:HH:mm}</c> turn a date into a date or a time instead of the full timestamp. The
+    /// wording after the colon is a standard .NET format string, and anything the runtime cannot
+    /// use is ignored rather than treated as an error.
+    ///
+    /// Without a colon a number is shown the way a person would write it, so a total that landed
+    /// on <c>0.30000000000000004</c> reads as <c>0.3</c>. Say <c>{total:0.00}</c> when the number
+    /// of decimal places matters — a price with two of them should not shorten to <c>£5.5</c>.
     /// </summary>
     /// <param name="template">The text, with field keys in braces.</param>
     /// <returns name="computation">The computation.</returns>
-    /// <search>format,template,interpolate,text,concat,string</search>
+    /// <search>format,template,interpolate,text,concat,string,decimals,currency,rounding</search>
     public static ComputedValue Format(string template)
         => new FormatComputed { Template = template ?? string.Empty };
 

@@ -205,8 +205,16 @@ For a text summary, `Compute.Format`:
 ```
 Behavior.WithComputed(
     Input.TextBox("Summary", key: "summary"),
-    Compute.Format("{quantity} items for {orderedBy}, £{total} including VAT"))
+    Compute.Format("{quantity} items for {orderedBy}, £{total:0.00} including VAT"))
 ```
+
+The `:0.00` is worth the four characters. Money wants two decimal places whatever the arithmetic
+landed on, and without it a total of exactly `£5.50` shows as `£5.5`. Other specifiers that earn
+their keep: `{total:#,0.00}` for thousands separators, `{when:yyyy-MM-dd}` or `{when:HH:mm}` for a
+date field, and `{rate:0%}` for a fraction you would rather show as a percentage.
+
+Anything the runtime cannot make sense of is ignored rather than raised as an error, so a
+half-typed specifier shows the plain number instead of interrupting.
 
 ---
 

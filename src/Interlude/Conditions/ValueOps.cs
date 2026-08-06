@@ -50,6 +50,38 @@ public static class ValueOps
         }
     }
 
+    /// <summary>
+    /// Renders a value for someone to read, rather than for the form to store.
+    ///
+    /// The difference from <see cref="ToStringInvariant"/> is the last few bits of a double.
+    /// That method is exact because lookup matching, equality and the saved file all depend on a
+    /// value surviving the trip unchanged, and exactness is why <c>0.1 + 0.2</c> comes back as
+    /// <c>0.30000000000000004</c>. On screen that is noise, so display rounds to the fifteen
+    /// digits a double can actually be trusted for and prints <c>0.3</c>.
+    ///
+    /// Still invariant: this decides how many digits to show, not which punctuation to show them
+    /// with. Culture stays the renderer's business.
+    /// </summary>
+    public static string ToDisplayString(object? value)
+    {
+        switch (value)
+        {
+            case double d:
+                return d.ToString("G15", CultureInfo.InvariantCulture);
+            case float f:
+                // Seven digits for a float, for the same reason: beyond that it is recording the
+                // gap between 0.1 and the nearest float rather than anything the user typed.
+                return f.ToString("G7", CultureInfo.InvariantCulture);
+            default:
+                if (TryAsSequence(value, out IReadOnlyList<object?> items))
+                {
+                    return string.Join(", ", items.Select(ToDisplayString));
+                }
+
+                return ToStringInvariant(value);
+        }
+    }
+
     /// <summary>Attempts a numeric reading of <paramref name="value"/>.</summary>
     public static bool TryToDouble(object? value, out double result)
     {

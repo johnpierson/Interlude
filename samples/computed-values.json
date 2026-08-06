@@ -143,7 +143,7 @@
       "wrapText": true,
       "computed": {
         "$type": "format",
-        "template": "{quantity} items for {orderedBy}, £{total} including VAT"
+        "template": "{quantity} items for {orderedBy}, £{total:0.00} including VAT"
       },
       "isReadOnly": true,
       "key": "summary",

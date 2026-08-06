@@ -79,6 +79,15 @@ graph will build. They recalculate in dependency order, and a loop between them 
 the form is built rather than discovered as a hang. Set `isReadOnly` on anything computed unless
 the user is genuinely allowed to override it.
 
+**Put a format specifier on any number a `format` template shows.** Write `{total:0.00}`, not
+`{total}`. Arithmetic on doubles lands on values like `655.2000000000001`, and while a bare
+placeholder now rounds that to something readable, only the specifier pins the number of decimal
+places — money shown as `£5.5` is the failure this prevents. The specifier goes after the first
+colon and is a standard .NET format string: `#,0.00` for thousands separators, `0%` for a fraction
+shown as a percentage, `yyyy-MM-dd` or `HH:mm` for a date field, which otherwise renders as a full
+ISO timestamp. A specifier the runtime cannot use is ignored rather than raised as an error, so
+this is safe to reach for.
+
 **Validation runs while the user types.** A `regex` rule wants a `message` that says what the
 right shape is — "Use the form ABC-1234." — not one that says the value is invalid, which the
 user can already see.

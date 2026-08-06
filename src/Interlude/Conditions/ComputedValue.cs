@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -60,6 +61,12 @@ public sealed record FieldComputed : ComputedValue
 /// <summary>
 /// String interpolation over field values: <c>"Hello {firstName} {lastName}"</c>.
 /// Literal braces are written doubled, as in <see cref="string.Format(string, object[])"/>.
+///
+/// A placeholder may carry a .NET format specifier after a colon — <c>{total:0.00}</c>,
+/// <c>{when:d}</c>, <c>{when:HH:mm}</c> — which is why the split is at the <em>first</em> colon:
+/// everything after it belongs to the specifier, colons and all. A key containing a colon
+/// therefore cannot be written in a template, which only reaches keys set by hand, since
+/// <see cref="Model.FormKeys.Slugify"/> cannot produce one.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
 public sealed record FormatComputed : ComputedValue
@@ -95,8 +102,9 @@ public sealed record FormatComputed : ComputedValue
                     break;
                 }
 
-                string key = Template.Substring(index + 1, close - index - 1).Trim();
-                builder.Append(ValueOps.ToStringInvariant(state.GetValue(key)));
+                (string key, string? spec) = SplitPlaceholder(
+                    Template.Substring(index + 1, close - index - 1));
+                builder.Append(Render(state.GetValue(key), spec));
                 index = close + 1;
                 continue;
             }
@@ -138,7 +146,7 @@ public sealed record FormatComputed : ComputedValue
                 yield break;
             }
 
-            string key = template.Substring(index + 1, close - index - 1).Trim();
+            (string key, _) = SplitPlaceholder(template.Substring(index + 1, close - index - 1));
             if (key.Length > 0)
             {
                 yield return key;
@@ -146,6 +154,62 @@ public sealed record FormatComputed : ComputedValue
 
             index = close + 1;
         }
+    }
+
+    /// <summary>Separates <c>total:0.00</c> into the key and its format specifier.</summary>
+    private static (string Key, string? Spec) SplitPlaceholder(string token)
+    {
+        int colon = token.IndexOf(':');
+        if (colon < 0)
+        {
+            return (token.Trim(), null);
+        }
+
+        string spec = token.Substring(colon + 1).Trim();
+        return (token.Substring(0, colon).Trim(), spec.Length > 0 ? spec : null);
+    }
+
+    /// <summary>
+    /// Renders one placeholder.
+    ///
+    /// A specifier the runtime cannot use falls back to the plain display form rather than
+    /// throwing, on the same grounds as the unterminated placeholder above: the author may be
+    /// halfway through typing it, and a template is re-rendered on every keystroke.
+    /// </summary>
+    private static string Render(object? value, string? spec)
+    {
+        if (spec is null)
+        {
+            return ValueOps.ToDisplayString(value);
+        }
+
+        // A multi-select formats item by item, so "{prices:0.00}" reads as a list of prices
+        // rather than falling back to the unformatted join.
+        if (ValueOps.TryAsSequence(value, out IReadOnlyList<object?> items))
+        {
+            return string.Join(", ", items.Select(item => Render(item, spec)));
+        }
+
+        // Form values are loosely typed: a number that came from JSON or a text box may still be
+        // a string, and "{total:0.00}" should not silently do nothing depending on where the
+        // value came from.
+        object? target = value is string text && ValueOps.TryToDouble(text, out double number)
+            ? number
+            : value;
+
+        if (target is IFormattable formattable)
+        {
+            try
+            {
+                return formattable.ToString(spec, CultureInfo.InvariantCulture);
+            }
+            catch (FormatException)
+            {
+                return ValueOps.ToDisplayString(value);
+            }
+        }
+
+        return ValueOps.ToDisplayString(value);
     }
 }
 
