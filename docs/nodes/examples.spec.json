@@ -1,0 +1,7219 @@
+[
+  {
+    "node": "Interlude.Input.TextBox",
+    "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "placeholder",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Project name",
+      "Tower A",
+      "As it appears on the drawing",
+      "projectName"
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.TextBox: one line of text, shown in a form and read back by key.",
+    "note": "A single line of text. The literals are label, default, placeholder and key — every input takes a key, and an answer comes back under it."
+  },
+  {
+    "node": "Interlude.Input.TextArea",
+    "signature": "Interlude.Input.TextArea@string,string,int,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "lines",
+      "placeholder",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Scope notes",
+      "Trees, kerbs and spot levels.",
+      5,
+      "What the survey covers",
+      "scopeNotes"
+    ],
+    "title": "Site survey",
+    "key": "scopeNotes",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.TextArea: a multi-line note field, shown in a form and read back by key.",
+    "note": "Several lines of text. lines sets how tall the box is; the answer is still one string, with the line breaks inside it."
+  },
+  {
+    "node": "Interlude.Input.Password",
+    "signature": "Interlude.Input.Password@string,string,string,string,string",
+    "ports": [
+      "label",
+      "placeholder",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "API key",
+      "Paste the key from the portal",
+      "apiKey"
+    ],
+    "title": "Publish settings",
+    "key": "apiKey",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.Password: a masked field, shown in a form and read back by key.",
+    "note": "Text that is masked as it is typed. There is no default value port on purpose: a password written into a graph is a password in version control."
+  },
+  {
+    "node": "Interlude.Input.Number",
+    "signature": "Interlude.Input.Number@string,double,var,var,double,int,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "minimum",
+      "maximum",
+      "increment",
+      "decimalPlaces",
+      "unit",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Floor to floor",
+      3.6,
+      2.4,
+      6,
+      0.1,
+      2,
+      "m",
+      "floorToFloor"
+    ],
+    "title": "Site survey",
+    "key": "floorToFloor",
+    "getter": "Interlude.Result.GetNumber@var,string,double",
+    "getterName": "Result.GetNumber",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.Number: a decimal field with bounds and a unit, read back as a number.",
+    "note": "A decimal number. minimum and maximum bound it, increment is the step the spinner takes, and unit is drawn inside the field rather than added to the answer."
+  },
+  {
+    "node": "Interlude.Input.Integer",
+    "signature": "Interlude.Input.Integer@string,int,var,var,int,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "minimum",
+      "maximum",
+      "increment",
+      "unit",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Storeys",
+      12,
+      1,
+      60,
+      1,
+      "",
+      "storeys"
+    ],
+    "title": "Site survey",
+    "key": "storeys",
+    "getter": "Interlude.Result.GetInteger@var,string,int",
+    "getterName": "Result.GetInteger",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.Integer: a whole-number field with bounds, read back as an integer.",
+    "note": "A whole number. The same shape as Input.Number without the decimal places, so the answer is an integer rather than a double that happens to be round."
+  },
+  {
+    "node": "Interlude.Input.Slider",
+    "signature": "Interlude.Input.Slider@string,double,double,double,double,int,string,string,string",
+    "ports": [
+      "label",
+      "minimum",
+      "maximum",
+      "defaultValue",
+      "step",
+      "decimalPlaces",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Glazing ratio",
+      0,
+      1,
+      0.4,
+      0.05,
+      2,
+      "glazingRatio"
+    ],
+    "title": "Facade study",
+    "key": "glazingRatio",
+    "getter": "Interlude.Result.GetNumber@var,string,double",
+    "getterName": "Result.GetNumber",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.Slider: a bounded number dragged rather than typed.",
+    "note": "A number chosen by dragging. Note the port order: minimum and maximum come before defaultValue, because a slider cannot exist without its range."
+  },
+  {
+    "node": "Interlude.Input.CheckBox",
+    "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Include basement",
+      true,
+      "includeBasement"
+    ],
+    "title": "Site survey",
+    "key": "includeBasement",
+    "getter": "Interlude.Result.GetBool@var,string,bool",
+    "getterName": "Result.GetBool",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.CheckBox: a tick box, read back as a boolean.",
+    "note": "A tick box. Use it for a setting that is on or off; Input.Toggle is the same answer with a switch instead, and captions for each state."
+  },
+  {
+    "node": "Interlude.Input.Toggle",
+    "signature": "Interlude.Input.Toggle@string,bool,string,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "onText",
+      "offText",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Publish when done",
+      false,
+      "Publish",
+      "Hold",
+      "publish"
+    ],
+    "title": "Publish settings",
+    "key": "publish",
+    "getter": "Interlude.Result.GetBool@var,string,bool",
+    "getterName": "Result.GetBool",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.Toggle: a switch with a caption for each state.",
+    "note": "A switch. onText and offText name the two states, which is worth doing whenever \"on\" and \"off\" are less clear than the words the job actually uses."
+  },
+  {
+    "node": "Interlude.Behavior.WithKey",
+    "signature": "Interlude.Behavior.WithKey@Interlude.Model.FormElement,string",
+    "ports": [
+      "element",
+      "key"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A"
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      "projectName"
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Behavior.WithKey: names the answer a field comes back under.",
+    "note": "Names the answer. A field with no key gets one derived from its label, which is fine until someone rewords the label and every graph reading that answer stops finding it."
+  },
+  {
+    "node": "Interlude.Behavior.WithHelp",
+    "signature": "Interlude.Behavior.WithHelp@Interlude.Model.FormElement,string,string",
+    "ports": [
+      "element",
+      "tooltip",
+      "helpText"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project code",
+          "TWR-A",
+          "",
+          "projectCode"
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      "The code used on drawings",
+      "Letters, digits and hyphens"
+    ],
+    "title": "Site survey",
+    "key": "projectCode",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Behavior.WithHelp: a tooltip and a line of guidance under a field.",
+    "note": "Two kinds of help. tooltip appears on hover; helpText is always visible under the field. Use helpText for the thing people get wrong."
+  },
+  {
+    "node": "Interlude.Behavior.Required",
+    "signature": "Interlude.Behavior.Required@Interlude.Model.FormElement,string",
+    "ports": [
+      "element",
+      "message"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "",
+          "Required",
+          "projectName"
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      "A project name is needed"
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Behavior.Required: a field that must be answered before the form submits.",
+    "note": "The field must be answered. The message is what the user sees when it is not; write it as the thing to do rather than as the thing that went wrong."
+  },
+  {
+    "node": "Interlude.Behavior.ReadOnly",
+    "signature": "Interlude.Behavior.ReadOnly@Interlude.Model.FormElement,bool",
+    "ports": [
+      "element",
+      "readOnly"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Model path",
+          "C:/Projects/TowerA.rvt",
+          "",
+          "modelPath"
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      true
+    ],
+    "title": "Site survey",
+    "key": "modelPath",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Behavior.ReadOnly: a field shown but not editable.",
+    "note": "Shown but not editable. The answer still comes back, which is the point: it carries a value the graph worked out into the results without letting anyone change it."
+  },
+  {
+    "node": "Interlude.Behavior.WithSize",
+    "signature": "Interlude.Behavior.WithSize@Interlude.Model.FormElement,var,var,var,var",
+    "ports": [
+      "element",
+      "width",
+      "height",
+      "labelWidth",
+      "margin"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Reference",
+          "AB-1234",
+          "",
+          "reference"
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      240,
+      null,
+      90,
+      null
+    ],
+    "title": "Site survey",
+    "key": "reference",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Behavior.WithSize: overrides the width, height, label column or margin of one field.",
+    "note": "Sizes one field against the theme's defaults. Every port takes null to mean leave it alone, so a graph can set the label column without also fixing the height."
+  },
+  {
+    "node": "Interlude.Layout.Label",
+    "signature": "Interlude.Layout.Label@string,int,bool",
+    "ports": [
+      "text",
+      "headingLevel",
+      "muted"
+    ],
+    "args": [
+      "Survey details",
+      2,
+      false
+    ],
+    "title": "Site survey",
+    "description": "Interlude.Layout.Label: a heading or a line of text.",
+    "note": "Text that asks nothing. headingLevel 0 is body text; 1 to 3 are headings, sized by the theme rather than by the graph."
+  },
+  {
+    "node": "Interlude.Layout.Markdown",
+    "signature": "Interlude.Layout.Markdown@string",
+    "ports": [
+      "text"
+    ],
+    "args": [
+      "Levels are read from the **active model**. Close other documents before running."
+    ],
+    "title": "Site survey",
+    "description": "Interlude.Layout.Markdown: formatted prose inside a form.",
+    "note": "Prose with formatting. Bold, italic, lists and links render; the rest is shown as written."
+  },
+  {
+    "node": "Interlude.Layout.Separator",
+    "signature": "Interlude.Layout.Separator@string",
+    "ports": [
+      "caption"
+    ],
+    "args": [
+      "Output"
+    ],
+    "title": "Site survey",
+    "description": "Interlude.Layout.Separator: a rule across the form, optionally captioned.",
+    "note": "A dividing rule. With a caption it names the group that follows, which is lighter than a Section when the form only needs a breath."
+  },
+  {
+    "node": "Interlude.Layout.Spacer",
+    "signature": "Interlude.Layout.Spacer@double",
+    "ports": [
+      "size"
+    ],
+    "args": [
+      24
+    ],
+    "title": "Site survey",
+    "description": "Interlude.Layout.Spacer: a fixed gap.",
+    "note": "A gap of a fixed size. Reach for it when the spacing the theme gives is right everywhere except one place."
+  },
+  {
+    "node": "Interlude.Layout.Progress",
+    "signature": "Interlude.Layout.Progress@double,double,bool,int",
+    "ports": [
+      "value",
+      "maximum",
+      "indeterminate",
+      "segments"
+    ],
+    "args": [
+      3,
+      5,
+      false,
+      5
+    ],
+    "title": "Export",
+    "description": "Interlude.Layout.Progress: a progress bar.",
+    "note": "A progress bar. It shows a value rather than tracking work: a form is answered and then closed, so this reports where a longer job has got to."
+  },
+  {
+    "node": "Interlude.Layout.Button",
+    "signature": "Interlude.Layout.Button@string,string,bool",
+    "ports": [
+      "text",
+      "tag",
+      "primary"
+    ],
+    "args": [
+      "Export and open",
+      "exportOpen",
+      true
+    ],
+    "title": "Export",
+    "description": "Interlude.Layout.Button: an extra button that closes the form with a tag.",
+    "note": "A button beside Submit and Cancel. tag is what Result.ButtonClicked reports, so the graph can tell which one ended the form."
+  },
+  {
+    "node": "Interlude.Layout.LinkButton",
+    "signature": "Interlude.Layout.LinkButton@string,string",
+    "ports": [
+      "text",
+      "url"
+    ],
+    "args": [
+      "Read the standard",
+      "https://dynamobim.org"
+    ],
+    "title": "Site survey",
+    "description": "Interlude.Layout.LinkButton: opens a link in the browser.",
+    "note": "Opens a link and leaves the form alone. Useful for the standard, the wiki page or the ticket that explains why the form asks what it asks."
+  },
+  {
+    "node": "Interlude.Layout.ResetButton",
+    "signature": "Interlude.Layout.ResetButton@string",
+    "ports": [
+      "text"
+    ],
+    "args": [
+      "Start again"
+    ],
+    "title": "Site survey",
+    "description": "Interlude.Layout.ResetButton: puts every field back to its default.",
+    "note": "Puts every field back to its default without closing the form. It does not submit, so nothing downstream runs."
+  },
+  {
+    "node": "Interlude.Layout.Preview",
+    "signature": "Interlude.Layout.Preview@string,var,string,bool",
+    "ports": [
+      "label",
+      "value",
+      "placeholder",
+      "monospaced"
+    ],
+    "args": [
+      "New name",
+      "L01-A-101",
+      "Nothing to show yet",
+      true
+    ],
+    "title": "Rename views",
+    "description": "Interlude.Layout.Preview: shows a value back to the user without asking for it.",
+    "note": "Shows a value rather than asking for one. Wired to a computed value it becomes a live preview of what a rule is about to do."
+  },
+  {
+    "node": "Interlude.Layout.Image",
+    "signature": "Interlude.Layout.Image@string,var,var,string",
+    "ports": [
+      "path",
+      "width",
+      "height",
+      "alternateText"
+    ],
+    "args": [
+      "logo.png",
+      240,
+      null,
+      "Practice logo"
+    ],
+    "title": "Site survey",
+    "description": "Interlude.Layout.Image: a picture from disk.",
+    "note": "A picture from a path. width and height each take null to mean scale from the other, so a logo keeps its proportions."
+  },
+  {
+    "node": "Interlude.Layout.Section",
+    "signature": "Interlude.Layout.Section@string,Interlude.Model.FormElement[],bool,bool",
+    "ports": [
+      "header",
+      "elements",
+      "collapsible",
+      "expanded"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.Integer",
+        "signature": "Interlude.Input.Integer@string,int,var,var,int,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "minimum",
+          "maximum",
+          "increment",
+          "unit",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Storeys",
+          12,
+          1,
+          60,
+          1,
+          "",
+          "storeys"
+        ]
+      }
+    ],
+    "args": [
+      "Project",
+      "$children",
+      true,
+      true
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Layout.Section: a titled group of fields.",
+    "note": "Divides a form into named parts. Collapsible sections let a long form open showing only what usually matters."
+  },
+  {
+    "node": "Interlude.Layout.Card",
+    "signature": "Interlude.Layout.Card@Interlude.Model.FormElement[],string,string,bool",
+    "ports": [
+      "elements",
+      "header",
+      "subheader",
+      "shadow"
+    ],
+    "children": [
+      {
+        "name": "Layout.Label",
+        "signature": "Interlude.Layout.Label@string,int,bool",
+        "ports": [
+          "text",
+          "headingLevel",
+          "muted"
+        ],
+        "args": [
+          "142 views will be renamed.",
+          0,
+          false
+        ]
+      }
+    ],
+    "args": [
+      "$children",
+      "Before you start",
+      "This cannot be undone",
+      true
+    ],
+    "title": "Rename views",
+    "description": "Interlude.Layout.Card: a raised panel for something that deserves emphasis.",
+    "note": "Lifts one part of a form out of it. Used once it draws the eye; used for every group it stops meaning anything."
+  },
+  {
+    "node": "Interlude.Layout.Row",
+    "signature": "Interlude.Layout.Row@Interlude.Model.FormElement[],bool,bool,double",
+    "ports": [
+      "elements",
+      "equalWidths",
+      "wrap",
+      "spacing"
+    ],
+    "children": [
+      {
+        "name": "Input.Number",
+        "signature": "Interlude.Input.Number@string,double,var,var,double,int,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "minimum",
+          "maximum",
+          "increment",
+          "decimalPlaces",
+          "unit",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Width",
+          3.6,
+          0.1,
+          50,
+          0.1,
+          2,
+          "m",
+          "width"
+        ]
+      },
+      {
+        "name": "Input.Number",
+        "signature": "Interlude.Input.Number@string,double,var,var,double,int,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "minimum",
+          "maximum",
+          "increment",
+          "decimalPlaces",
+          "unit",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Depth",
+          2.4,
+          0.1,
+          50,
+          0.1,
+          2,
+          "m",
+          "depth"
+        ]
+      }
+    ],
+    "args": [
+      "$children",
+      true,
+      false,
+      8
+    ],
+    "title": "Room sizes",
+    "key": "width",
+    "getter": "Interlude.Result.GetNumber@var,string,double",
+    "getterName": "Result.GetNumber",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Layout.Row: elements side by side.",
+    "note": "Puts elements side by side. equalWidths divides the space evenly, which is what makes a row of paired fields line up."
+  },
+  {
+    "node": "Interlude.Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "children": [
+      {
+        "name": "Layout.Label",
+        "signature": "Interlude.Layout.Label@string,int,bool",
+        "ports": [
+          "text",
+          "headingLevel",
+          "muted"
+        ],
+        "args": [
+          "Checks",
+          2,
+          false
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Warnings cleared",
+          false,
+          "warnings"
+        ]
+      }
+    ],
+    "args": [
+      "$children",
+      12
+    ],
+    "title": "Model audit",
+    "key": "warnings",
+    "getter": "Interlude.Result.GetBool@var,string,bool",
+    "getterName": "Result.GetBool",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Layout.Column: elements stacked, with a spacing you choose.",
+    "note": "Stacks elements. A form is already a column, so this earns its place when a group needs different spacing from the rest."
+  },
+  {
+    "node": "Interlude.Layout.Expander",
+    "signature": "Interlude.Layout.Expander@string,Interlude.Model.FormElement[],bool",
+    "ports": [
+      "header",
+      "elements",
+      "expanded"
+    ],
+    "children": [
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Overwrite existing",
+          false,
+          "overwrite"
+        ]
+      }
+    ],
+    "args": [
+      "Advanced",
+      "$children",
+      false
+    ],
+    "title": "Export",
+    "key": "overwrite",
+    "getter": "Interlude.Result.GetBool@var,string,bool",
+    "getterName": "Result.GetBool",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Layout.Expander: a group that starts collapsed.",
+    "note": "Hides detail behind a heading. Start it collapsed and the form opens at the size of the common case."
+  },
+  {
+    "node": "Interlude.Layout.Scroll",
+    "signature": "Interlude.Layout.Scroll@Interlude.Model.FormElement[],double,bool",
+    "ports": [
+      "elements",
+      "maxHeight",
+      "allowHorizontal"
+    ],
+    "children": [
+      {
+        "name": "Input.TextArea",
+        "signature": "Interlude.Input.TextArea@string,string,int,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "lines",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Notes",
+          "",
+          12,
+          "",
+          "notes"
+        ]
+      }
+    ],
+    "args": [
+      "$children",
+      200,
+      false
+    ],
+    "title": "Site survey",
+    "key": "notes",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Layout.Scroll: a part of the form that scrolls on its own.",
+    "note": "Scrolls one part of the form rather than the window. The form maxHeight handles the usual case; this is for a long list inside an otherwise short form."
+  },
+  {
+    "node": "Interlude.Layout.Docked",
+    "signature": "Interlude.Layout.Docked@Interlude.Model.FormElement,string",
+    "ports": [
+      "element",
+      "side"
+    ],
+    "children": [
+      {
+        "name": "Layout.Label",
+        "signature": "Interlude.Layout.Label@string,int,bool",
+        "ports": [
+          "text",
+          "headingLevel",
+          "muted"
+        ],
+        "args": [
+          "Legend",
+          0,
+          true
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      "left"
+    ],
+    "title": "Site survey",
+    "description": "Interlude.Layout.Docked: says which edge of a Dock an element belongs to.",
+    "note": "Marks which edge of a Layout.Dock this element wants. On its own it does nothing; it is read by the Dock around it."
+  },
+  {
+    "node": "Interlude.Layout.Dock",
+    "signature": "Interlude.Layout.Dock@Interlude.Model.FormElement[],bool",
+    "ports": [
+      "elements",
+      "lastChildFills"
+    ],
+    "children": [
+      {
+        "name": "Layout.Label",
+        "signature": "Interlude.Layout.Label@string,int,bool",
+        "ports": [
+          "text",
+          "headingLevel",
+          "muted"
+        ],
+        "args": [
+          "Legend",
+          0,
+          true
+        ]
+      },
+      {
+        "name": "Layout.Markdown",
+        "signature": "Interlude.Layout.Markdown@string",
+        "ports": [
+          "text"
+        ],
+        "args": [
+          "The plan fills the space that is left."
+        ]
+      }
+    ],
+    "args": [
+      "$children",
+      true
+    ],
+    "title": "Site survey",
+    "description": "Interlude.Layout.Dock: elements pinned to the edges, the last one filling what is left.",
+    "note": "Pins elements to edges. Each child says which side it wants with Layout.Docked; the last one takes whatever space is left."
+  },
+  {
+    "node": "Interlude.Layout.Split",
+    "signature": "Interlude.Layout.Split@Interlude.Model.FormElement,Interlude.Model.FormElement,bool,double",
+    "ports": [
+      "first",
+      "second",
+      "horizontal",
+      "position"
+    ],
+    "children": [
+      {
+        "name": "Input.ListBox",
+        "signature": "Interlude.Input.ListBox@string,var[],var[],bool,var[],int,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "allowMultiple",
+          "defaultValue",
+          "visibleRows",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Levels",
+          [
+            "Level 00",
+            "Level 01",
+            "Roof"
+          ]
+        ]
+      },
+      {
+        "name": "Layout.Preview",
+        "signature": "Interlude.Layout.Preview@string,var,string,bool",
+        "ports": [
+          "label",
+          "value",
+          "placeholder",
+          "monospaced"
+        ],
+        "args": [
+          "Selected",
+          "Level 00",
+          "",
+          true
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      "$child1",
+      true,
+      0.4
+    ],
+    "title": "Level picker",
+    "description": "Interlude.Layout.Split: two panes with a divider the user can drag.",
+    "note": "Two panes and a draggable divider. position is the fraction the first pane starts with, not a pixel count, so it survives a resized window."
+  },
+  {
+    "node": "Interlude.Layout.TabPage",
+    "signature": "Interlude.Layout.TabPage@string,Interlude.Model.FormElement[]",
+    "ports": [
+      "header",
+      "elements"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "",
+          "projectName"
+        ]
+      }
+    ],
+    "args": [
+      "General",
+      "$children"
+    ],
+    "title": "Settings",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Layout.TabPage: one page of a Tabs container.",
+    "note": "One page of a Layout.Tabs. Shown here on its own, which a form will accept: a page outside a tab strip just renders its contents."
+  },
+  {
+    "node": "Interlude.Layout.Cell",
+    "signature": "Interlude.Layout.Cell@Interlude.Model.FormElement,int,int,int,int",
+    "ports": [
+      "element",
+      "row",
+      "column",
+      "rowSpan",
+      "columnSpan"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Notes",
+          "",
+          "",
+          "notes"
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      0,
+      0,
+      1,
+      2
+    ],
+    "title": "Schedule",
+    "key": "notes",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Layout.Cell: places an element at a row and column of a Grid, optionally spanning.",
+    "note": "Places an element in a Layout.Grid and says how many rows and columns it covers. Outside a grid the position is ignored."
+  },
+  {
+    "node": "Interlude.Layout.Tabs",
+    "signature": "Interlude.Layout.Tabs@Interlude.Model.FormElement[],int",
+    "ports": [
+      "pages",
+      "selectedIndex"
+    ],
+    "children": [
+      {
+        "name": "Layout.TabPage",
+        "signature": "Interlude.Layout.TabPage@string,Interlude.Model.FormElement[]",
+        "ports": [
+          "header",
+          "elements"
+        ],
+        "children": [
+          {
+            "name": "Input.TextBox",
+            "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+            "ports": [
+              "label",
+              "defaultValue",
+              "placeholder",
+              "key",
+              "tooltip",
+              "helpText"
+            ],
+            "args": [
+              "Project name",
+              "Tower A",
+              "",
+              "projectName"
+            ]
+          }
+        ],
+        "args": [
+          "General",
+          "$children"
+        ]
+      },
+      {
+        "name": "Layout.TabPage",
+        "signature": "Interlude.Layout.TabPage@string,Interlude.Model.FormElement[]",
+        "ports": [
+          "header",
+          "elements"
+        ],
+        "children": [
+          {
+            "name": "Input.CheckBox",
+            "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+            "ports": [
+              "label",
+              "defaultValue",
+              "key",
+              "tooltip",
+              "helpText"
+            ],
+            "args": [
+              "Overwrite existing",
+              false,
+              "overwrite"
+            ]
+          }
+        ],
+        "args": [
+          "Advanced",
+          "$children"
+        ]
+      }
+    ],
+    "args": [
+      "$children",
+      0
+    ],
+    "title": "Settings",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Layout.Tabs: pages of a form behind a tab strip.",
+    "note": "Pages behind a tab strip, each one a Layout.TabPage. Every page's fields are answered whether or not the user visited it, so a required field on a tab nobody opened still stops the form."
+  },
+  {
+    "node": "Interlude.Layout.Grid",
+    "signature": "Interlude.Layout.Grid@Interlude.Model.FormElement[],string,double,double",
+    "ports": [
+      "elements",
+      "columns",
+      "columnSpacing",
+      "rowSpacing"
+    ],
+    "children": [
+      {
+        "name": "Layout.Cell",
+        "signature": "Interlude.Layout.Cell@Interlude.Model.FormElement,int,int,int,int",
+        "ports": [
+          "element",
+          "row",
+          "column",
+          "rowSpan",
+          "columnSpan"
+        ],
+        "children": [
+          {
+            "name": "Input.Number",
+            "signature": "Interlude.Input.Number@string,double,var,var,double,int,string,string,string,string",
+            "ports": [
+              "label",
+              "defaultValue",
+              "minimum",
+              "maximum",
+              "increment",
+              "decimalPlaces",
+              "unit",
+              "key",
+              "tooltip",
+              "helpText"
+            ],
+            "args": [
+              "Width",
+              3.6,
+              0.1,
+              50,
+              0.1,
+              2,
+              "m",
+              "width"
+            ]
+          }
+        ],
+        "args": [
+          "$child0",
+          0,
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "name": "Layout.Cell",
+        "signature": "Interlude.Layout.Cell@Interlude.Model.FormElement,int,int,int,int",
+        "ports": [
+          "element",
+          "row",
+          "column",
+          "rowSpan",
+          "columnSpan"
+        ],
+        "children": [
+          {
+            "name": "Input.Number",
+            "signature": "Interlude.Input.Number@string,double,var,var,double,int,string,string,string,string",
+            "ports": [
+              "label",
+              "defaultValue",
+              "minimum",
+              "maximum",
+              "increment",
+              "decimalPlaces",
+              "unit",
+              "key",
+              "tooltip",
+              "helpText"
+            ],
+            "args": [
+              "Depth",
+              2.4,
+              0.1,
+              50,
+              0.1,
+              2,
+              "m",
+              "depth"
+            ]
+          }
+        ],
+        "args": [
+          "$child0",
+          0,
+          1,
+          1,
+          1
+        ]
+      }
+    ],
+    "args": [
+      "$children",
+      "*,*",
+      8,
+      8
+    ],
+    "title": "Room sizes",
+    "key": "width",
+    "getter": "Interlude.Result.GetNumber@var,string,double",
+    "getterName": "Result.GetNumber",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Layout.Grid: elements placed by row and column.",
+    "note": "Places elements by row and column, each wrapped in a Layout.Cell. columns is a Dynamo-style width list: \"*,*\" splits the space evenly, \"auto,*\" sizes the first to its content."
+  },
+  {
+    "node": "Interlude.Input.DropDown",
+    "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+    "ports": [
+      "label",
+      "items",
+      "displayNames",
+      "defaultValue",
+      "placeholder",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Discipline",
+      [
+        "ARC",
+        "STR",
+        "MEP"
+      ],
+      [
+        "Architectural",
+        "Structural",
+        "Services"
+      ],
+      "STR",
+      "Pick one",
+      "discipline"
+    ],
+    "title": "Site survey",
+    "key": "discipline",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.DropDown: one choice from a list.",
+    "note": "One choice from a list. items are the values that come back; displayNames are only what the user reads, so the answer here is \"STR\" rather than \"Structural\"."
+  },
+  {
+    "node": "Interlude.Input.ListBox",
+    "signature": "Interlude.Input.ListBox@string,var[],var[],bool,var[],int,string,string,string",
+    "ports": [
+      "label",
+      "items",
+      "displayNames",
+      "allowMultiple",
+      "defaultValue",
+      "visibleRows",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Levels to export",
+      [
+        "L00",
+        "L01",
+        "L02",
+        "RF"
+      ],
+      [
+        "Level 00",
+        "Level 01",
+        "Level 02",
+        "Roof"
+      ],
+      true,
+      [
+        "L01",
+        "L02"
+      ],
+      4,
+      "levels"
+    ],
+    "title": "Export",
+    "key": "levels",
+    "getter": "Interlude.Result.GetList@var,string",
+    "getterName": "Result.GetList",
+    "getterPorts": [
+      "result",
+      "key"
+    ],
+    "description": "Interlude.Input.ListBox: several choices from a list.",
+    "note": "Several choices at once. With allowMultiple the answer is a list, so read it with Result.GetList rather than Result.GetString."
+  },
+  {
+    "node": "Interlude.Input.RadioButtons",
+    "signature": "Interlude.Input.RadioButtons@string,var[],var[],var,bool,string,string,string",
+    "ports": [
+      "label",
+      "items",
+      "displayNames",
+      "defaultValue",
+      "horizontal",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Units",
+      [
+        "mm",
+        "m",
+        "ft"
+      ],
+      [
+        "Millimetres",
+        "Metres",
+        "Feet and inches"
+      ],
+      "m",
+      false,
+      "units"
+    ],
+    "title": "Export",
+    "key": "units",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.RadioButtons: one choice, with every option visible.",
+    "note": "The same answer as a drop-down, with every option on screen. Worth it up to about five choices, past which a drop-down reads better."
+  },
+  {
+    "node": "Interlude.Input.DatePicker",
+    "signature": "Interlude.Input.DatePicker@string,var,bool,var,var,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "includeTime",
+      "minimum",
+      "maximum",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Survey date",
+      null,
+      false,
+      null,
+      null,
+      "surveyDate"
+    ],
+    "title": "Site survey",
+    "key": "surveyDate",
+    "getter": "Interlude.Result.GetDate@var,string,var",
+    "getterName": "Result.GetDate",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.DatePicker: a date, optionally with a time.",
+    "note": "A date from a calendar. defaultValue left null starts at today; minimum and maximum bound what can be picked. Read it back with Result.GetDate."
+  },
+  {
+    "node": "Interlude.Input.ColorPicker",
+    "signature": "Interlude.Input.ColorPicker@string,string,bool,var[],string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "showAlpha",
+      "presets",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Zone colour",
+      "#E8734A",
+      false,
+      [
+        "#E8734A",
+        "#4A90D9",
+        "#7CB342"
+      ],
+      "zoneColour"
+    ],
+    "title": "Zoning",
+    "key": "zoneColour",
+    "getter": "Interlude.Result.GetColor@var,string",
+    "getterName": "Result.GetColor",
+    "getterPorts": [
+      "result",
+      "key"
+    ],
+    "description": "Interlude.Input.ColorPicker: a colour, read back as a Dynamo colour.",
+    "note": "A colour, written as a hex string. presets put the practice palette one click away. Result.GetColor hands back a Dynamo colour rather than the string."
+  },
+  {
+    "node": "Interlude.Input.FilePath",
+    "signature": "Interlude.Input.FilePath@string,string,string,bool,bool,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "filter",
+      "allowMultiple",
+      "forSaving",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Template file",
+      "",
+      "Revit template (*.rte)|*.rte",
+      false,
+      false,
+      "templateFile"
+    ],
+    "title": "Export",
+    "key": "templateFile",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.FilePath: a file chosen from a browse dialog.",
+    "note": "A file to open or, with forSaving, a name to write. filter is a standard Windows filter string. With allowMultiple the answer is a list, read with Result.GetFilePaths."
+  },
+  {
+    "node": "Interlude.Input.DirectoryPath",
+    "signature": "Interlude.Input.DirectoryPath@string,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Output folder",
+      "",
+      "outputFolder"
+    ],
+    "title": "Export",
+    "key": "outputFolder",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Input.DirectoryPath: a folder chosen from a browse dialog.",
+    "note": "A folder rather than a file. Pair it with Rule.FolderExists when the graph is about to write into whatever comes back."
+  },
+  {
+    "node": "Interlude.Input.TreeSelect",
+    "signature": "Interlude.Input.TreeSelect@string,var[],bool,var[],bool,string,string,string",
+    "ports": [
+      "label",
+      "nodes",
+      "allowMultiple",
+      "defaultValue",
+      "expandAll",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "children": [
+      {
+        "name": "Input.TreeItem",
+        "signature": "Interlude.Input.TreeItem@string,var,var[],bool,bool",
+        "ports": [
+          "displayName",
+          "value",
+          "children",
+          "expanded",
+          "selectable"
+        ],
+        "children": [
+          {
+            "name": "Input.TreeItem",
+            "signature": "Interlude.Input.TreeItem@string,var,var[],bool,bool",
+            "ports": [
+              "displayName",
+              "value",
+              "children",
+              "expanded",
+              "selectable"
+            ],
+            "args": [
+              "Basic Wall",
+              "basicWall",
+              null,
+              false,
+              true
+            ]
+          }
+        ],
+        "args": [
+          "Walls",
+          "walls",
+          "$children",
+          true,
+          false
+        ]
+      },
+      {
+        "name": "Input.TreeItem",
+        "signature": "Interlude.Input.TreeItem@string,var,var[],bool,bool",
+        "ports": [
+          "displayName",
+          "value",
+          "children",
+          "expanded",
+          "selectable"
+        ],
+        "args": [
+          "Doors",
+          "doors",
+          null,
+          false,
+          true
+        ]
+      }
+    ],
+    "args": [
+      "Model categories",
+      "$children",
+      true,
+      null,
+      true,
+      "categories"
+    ],
+    "title": "Model audit",
+    "key": "categories",
+    "getter": "Interlude.Result.GetList@var,string",
+    "getterName": "Result.GetList",
+    "getterPorts": [
+      "result",
+      "key"
+    ],
+    "description": "Interlude.Input.TreeSelect: a nested list to pick from.",
+    "note": "A tree built from Input.TreeItem. A branch can be made unselectable so it only groups its children, which is what \"Walls\" does here."
+  },
+  {
+    "node": "Interlude.Behavior.EnabledIf",
+    "signature": "Interlude.Behavior.EnabledIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+    "ports": [
+      "element",
+      "condition"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Suffix",
+          "-REV",
+          "",
+          "suffix"
+        ]
+      },
+      {
+        "name": "Condition.IsChecked",
+        "signature": "Interlude.Condition.IsChecked@string",
+        "ports": [
+          "key"
+        ],
+        "args": [
+          "addSuffix"
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      "$child1"
+    ],
+    "title": "Rename views",
+    "key": "suffix",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Behavior.EnabledIf: a field that greys out until a condition holds.",
+    "note": "Greys the field out until the condition holds. The field stays on screen, which is the difference from VisibleIf: the user can see what is waiting on them."
+  },
+  {
+    "node": "Interlude.Behavior.VisibleIf",
+    "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+    "ports": [
+      "element",
+      "condition"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Sheet prefix",
+          "A-",
+          "",
+          "sheetPrefix"
+        ]
+      },
+      {
+        "name": "Condition.Equals",
+        "signature": "Interlude.Condition.Equals@string,var,bool",
+        "ports": [
+          "key",
+          "value",
+          "ignoreCase"
+        ],
+        "args": [
+          "scope",
+          "sheets",
+          true
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      "$child1"
+    ],
+    "title": "Export",
+    "key": "sheetPrefix",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Behavior.VisibleIf: a field that appears only when a condition holds.",
+    "note": "Hides the field until the condition holds, and the form resizes around it. A hidden field still answers with its default, so the results have the same shape either way."
+  },
+  {
+    "node": "Interlude.Behavior.RequiredIf",
+    "signature": "Interlude.Behavior.RequiredIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr,string",
+    "ports": [
+      "element",
+      "condition",
+      "message"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Reason",
+          "",
+          "Why the override is needed",
+          "reason"
+        ]
+      },
+      {
+        "name": "Condition.IsChecked",
+        "signature": "Interlude.Condition.IsChecked@string",
+        "ports": [
+          "key"
+        ],
+        "args": [
+          "override"
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      "$child1",
+      "Say why the override is needed"
+    ],
+    "title": "Model audit",
+    "key": "reason",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Behavior.RequiredIf: a field required only when a condition holds.",
+    "note": "Required, but only sometimes. The field can be left empty until the condition holds, at which point the form will not submit without it."
+  },
+  {
+    "node": "Interlude.Behavior.WithComputed",
+    "signature": "Interlude.Behavior.WithComputed@Interlude.Model.FormElement,Interlude.Conditions.ComputedValue",
+    "ports": [
+      "element",
+      "computation"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "New name",
+          "",
+          "Worked out below",
+          "newName"
+        ]
+      },
+      {
+        "name": "Compute.Format",
+        "signature": "Interlude.Compute.Format@string",
+        "ports": [
+          "template"
+        ],
+        "args": [
+          "{prefix}-{level}-101"
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      "$child1"
+    ],
+    "title": "Rename views",
+    "description": "Interlude.Behavior.WithComputed: a field whose value is worked out from the others.",
+    "note": "The value is worked out from other fields and recalculated as they change. Only inputs can carry one: a computed value writes into an answer, and a display element has no answer to write into.",
+    "key": "newName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ]
+  },
+  {
+    "node": "Interlude.Behavior.WithValidation",
+    "signature": "Interlude.Behavior.WithValidation@Interlude.Model.FormElement,var[]",
+    "ports": [
+      "element",
+      "rule"
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project code",
+          "",
+          "Six to ten characters",
+          "projectCode"
+        ]
+      },
+      {
+        "name": "Rule.Length",
+        "signature": "Interlude.Rule.Length@var,var,string",
+        "ports": [
+          "minimum",
+          "maximum",
+          "message"
+        ],
+        "args": [
+          6,
+          10,
+          "Between six and ten characters"
+        ]
+      }
+    ],
+    "args": [
+      "$child0",
+      [
+        "$child1"
+      ]
+    ],
+    "title": "Site survey",
+    "key": "projectCode",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Behavior.WithValidation: rules checked while the user types.",
+    "note": "Rules checked as the user types, not on submit. The rule port takes a list, so several rules can apply to one field and each reports separately."
+  },
+  {
+    "node": "Interlude.Condition.IsChecked",
+    "title": "Rename views",
+    "key": "suffix",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.IsChecked: true while a tick box is ticked.",
+    "note": "A condition is an ingredient: it does nothing until a Behavior node consumes it. Here IsChecked reads the tick box by key, and VisibleIf hides the suffix field until it is ticked. Both fields go into the form together, which is what makes the condition observable.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.CheckBox",
+          "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Add a suffix",
+            true,
+            "addSuffix"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Suffix",
+                "-REV",
+                "",
+                "suffix"
+              ]
+            },
+            {
+              "name": "Condition.IsChecked",
+              "signature": "Interlude.Condition.IsChecked@string",
+              "ports": [
+                "key"
+              ],
+              "args": [
+                "addSuffix"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Rule.Length",
+    "title": "Site survey",
+    "key": "projectCode",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Rule.Length: checks how many characters an answer has.",
+    "note": "A rule is an ingredient: Behavior.WithValidation is what applies it to a field. minimum and maximum each take null to mean unbounded, so this is also how to write \"at least six characters\" on its own.",
+    "graph": {
+      "name": "Behavior.WithValidation",
+      "signature": "Interlude.Behavior.WithValidation@Interlude.Model.FormElement,var[]",
+      "ports": [
+        "element",
+        "rule"
+      ],
+      "args": [
+        "$child0",
+        [
+          "$child1"
+        ]
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Project code",
+            "AB",
+            "Six to ten characters",
+            "projectCode"
+          ]
+        },
+        {
+          "name": "Rule.Length",
+          "signature": "Interlude.Rule.Length@var,var,string",
+          "ports": [
+            "minimum",
+            "maximum",
+            "message"
+          ],
+          "args": [
+            6,
+            10,
+            "Between six and ten characters"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Compute.Format",
+    "title": "Rename views",
+    "key": "newName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Compute.Format: builds a string from other fields as they are typed.",
+    "note": "A computed value is an ingredient: Behavior.WithComputed is what attaches it to a field. Each {name} in the template is a field key, replaced as that field changes, so the answer recalculates while the user types.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Prefix",
+            "L01",
+            "",
+            "prefix"
+          ]
+        },
+        {
+          "name": "Behavior.WithComputed",
+          "signature": "Interlude.Behavior.WithComputed@Interlude.Model.FormElement,Interlude.Conditions.ComputedValue",
+          "ports": [
+            "element",
+            "computation"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "New name",
+                "",
+                "Worked out from the prefix",
+                "newName"
+              ]
+            },
+            {
+              "name": "Compute.Format",
+              "signature": "Interlude.Compute.Format@string",
+              "ports": [
+                "template"
+              ],
+              "args": [
+                "{prefix}-A-101"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.Equals",
+    "title": "Export",
+    "key": "sheetPrefix",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.Equals: true while a field holds a particular value.",
+    "note": "The everyday condition: one field decides whether another applies. It compares against the value the drop-down returns, not the name the user reads, which is why this reads \"sheets\" rather than \"Sheets\".",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.DropDown",
+          "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+          "ports": [
+            "label",
+            "items",
+            "displayNames",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "What to export",
+            [
+              "sheets",
+              "views"
+            ],
+            [
+              "Sheets",
+              "Views"
+            ],
+            "sheets",
+            "Pick one",
+            "scope"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Sheet prefix",
+                "A-",
+                "",
+                "sheetPrefix"
+              ]
+            },
+            {
+              "name": "Condition.Equals",
+              "signature": "Interlude.Condition.Equals@string,var,bool",
+              "ports": [
+                "key",
+                "value",
+                "ignoreCase"
+              ],
+              "args": [
+                "scope",
+                "sheets",
+                true
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.NotEquals",
+    "title": "Export",
+    "key": "viewFilter",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.NotEquals: true while a field holds anything but a particular value.",
+    "note": "The complement of Condition.Equals, and worth preferring over wrapping Equals in Condition.Not: the two read the same to the form and rather differently to whoever opens the graph next.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.DropDown",
+          "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+          "ports": [
+            "label",
+            "items",
+            "displayNames",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "What to export",
+            [
+              "sheets",
+              "views"
+            ],
+            [
+              "Sheets",
+              "Views"
+            ],
+            "views",
+            "Pick one",
+            "scope"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "View filter",
+                "Level*",
+                "Views whose name matches",
+                "viewFilter"
+              ]
+            },
+            {
+              "name": "Condition.NotEquals",
+              "signature": "Interlude.Condition.NotEquals@string,var,bool",
+              "ports": [
+                "key",
+                "value",
+                "ignoreCase"
+              ],
+              "args": [
+                "scope",
+                "sheets",
+                true
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.GreaterThan",
+    "title": "Export",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.GreaterThan: true while a number is above a value.",
+    "note": "Comparisons are type-aware, so a field that holds \"50\" as text still compares as fifty. Strictly above: at exactly 25 this one is false, and Condition.AtLeast is the version that is not.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.Integer",
+          "signature": "Interlude.Input.Integer@string,int,var,var,int,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "minimum",
+            "maximum",
+            "increment",
+            "unit",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Sheets selected",
+            50,
+            0,
+            500,
+            1,
+            "",
+            "sheetCount"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.CheckBox",
+              "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Run in the background",
+                true,
+                "background"
+              ]
+            },
+            {
+              "name": "Condition.GreaterThan",
+              "signature": "Interlude.Condition.GreaterThan@string,var",
+              "ports": [
+                "key",
+                "value"
+              ],
+              "args": [
+                "sheetCount",
+                25
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.AtLeast",
+    "title": "Export",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.AtLeast: true while a number is at or above a value.",
+    "note": "Condition.GreaterThan with the boundary included, which is usually what a limit written in prose means: \"twenty-five or more\" rather than \"more than twenty-five\".",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.Integer",
+          "signature": "Interlude.Input.Integer@string,int,var,var,int,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "minimum",
+            "maximum",
+            "increment",
+            "unit",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Sheets selected",
+            25,
+            0,
+            500,
+            1,
+            "",
+            "sheetCount"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.CheckBox",
+              "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Warn before starting",
+                true,
+                "warn"
+              ]
+            },
+            {
+              "name": "Condition.AtLeast",
+              "signature": "Interlude.Condition.AtLeast@string,var",
+              "ports": [
+                "key",
+                "value"
+              ],
+              "args": [
+                "sheetCount",
+                25
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.LessThan",
+    "title": "Model audit",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.LessThan: true while a number is below a value.",
+    "note": "The mirror of Condition.GreaterThan. A tight tolerance is the case worth warning about, so the extra option appears only once the number drops under a millimetre.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.Number",
+          "signature": "Interlude.Input.Number@string,double,var,var,double,int,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "minimum",
+            "maximum",
+            "increment",
+            "decimalPlaces",
+            "unit",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Tolerance",
+            0.5,
+            0,
+            10,
+            0.1,
+            2,
+            "mm",
+            "tolerance"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.CheckBox",
+              "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Report near misses",
+                true,
+                "reportNearMisses"
+              ]
+            },
+            {
+              "name": "Condition.LessThan",
+              "signature": "Interlude.Condition.LessThan@string,var",
+              "ports": [
+                "key",
+                "value"
+              ],
+              "args": [
+                "tolerance",
+                1
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.AtMost",
+    "title": "Export",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.AtMost: true while a number is at or below a value.",
+    "note": "Condition.LessThan with the boundary included. Pair it with Condition.AtLeast to describe a band, or use Rule.Range when the point is to stop the form rather than to change it.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.Integer",
+          "signature": "Interlude.Input.Integer@string,int,var,var,int,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "minimum",
+            "maximum",
+            "increment",
+            "unit",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Copies",
+            3,
+            1,
+            20,
+            1,
+            "",
+            "copies"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.CheckBox",
+              "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Collate",
+                true,
+                "collate"
+              ]
+            },
+            {
+              "name": "Condition.AtMost",
+              "signature": "Interlude.Condition.AtMost@string,var",
+              "ports": [
+                "key",
+                "value"
+              ],
+              "args": [
+                "copies",
+                5
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.Contains",
+    "title": "Rename views",
+    "key": "planScale",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.Contains: true while a field holds the value somewhere inside it.",
+    "note": "A substring for text, and membership for a list — so the same node asks \"does this name mention Plan\" and \"is this one of the levels ticked\", depending on what the field is.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "View name",
+            "Level 01 - Plan",
+            "",
+            "viewName"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Plan scale",
+                "1:100",
+                "",
+                "planScale"
+              ]
+            },
+            {
+              "name": "Condition.Contains",
+              "signature": "Interlude.Condition.Contains@string,var,bool",
+              "ports": [
+                "key",
+                "value",
+                "ignoreCase"
+              ],
+              "args": [
+                "viewName",
+                "Plan",
+                true
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.StartsWith",
+    "title": "Rename views",
+    "key": "revision",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.StartsWith: true while a field begins with the value.",
+    "note": "Prefixes carry meaning in most sheet numbering, so this is how a form reacts to the discipline without a separate field asking for it.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Sheet number",
+            "A-101",
+            "",
+            "sheetNumber"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Architectural revision",
+                "P01",
+                "",
+                "revision"
+              ]
+            },
+            {
+              "name": "Condition.StartsWith",
+              "signature": "Interlude.Condition.StartsWith@string,var,bool",
+              "ports": [
+                "key",
+                "value",
+                "ignoreCase"
+              ],
+              "args": [
+                "sheetNumber",
+                "A-",
+                true
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.EndsWith",
+    "title": "Export",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.EndsWith: true while a field ends with the value.",
+    "note": "Extensions are the usual reason to ask. ignoreCase matters more here than elsewhere, because a file picked off disk arrives with whatever case it was saved with.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Output file",
+            "model.rvt",
+            "",
+            "outputFile"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.CheckBox",
+              "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Detach from central",
+                true,
+                "detach"
+              ]
+            },
+            {
+              "name": "Condition.EndsWith",
+              "signature": "Interlude.Condition.EndsWith@string,var,bool",
+              "ports": [
+                "key",
+                "value",
+                "ignoreCase"
+              ],
+              "args": [
+                "outputFile",
+                ".rvt",
+                true
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.IsEmpty",
+    "title": "Model audit",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.IsEmpty: true while a field has no answer.",
+    "note": "Blank text, or nothing selected. Note that false and zero are answers rather than emptiness: a cleared tick box is not empty, it is off, which is Condition.IsNotChecked.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Notes",
+            "",
+            "Anything worth recording",
+            "notes"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.CheckBox",
+              "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Skip the report",
+                true,
+                "skipReport"
+              ]
+            },
+            {
+              "name": "Condition.IsEmpty",
+              "signature": "Interlude.Condition.IsEmpty@string",
+              "ports": [
+                "key"
+              ],
+              "args": [
+                "notes"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.IsNotEmpty",
+    "title": "Model audit",
+    "key": "recordedBy",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.IsNotEmpty: true while a field has an answer.",
+    "note": "The usual way to make one field follow on from another: ask who wrote the note only once there is a note to attribute.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Notes",
+            "Checked on site",
+            "Anything worth recording",
+            "notes"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Recorded by",
+                "JP",
+                "",
+                "recordedBy"
+              ]
+            },
+            {
+              "name": "Condition.IsNotEmpty",
+              "signature": "Interlude.Condition.IsNotEmpty@string",
+              "ports": [
+                "key"
+              ],
+              "args": [
+                "notes"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.IsNotChecked",
+    "title": "Export",
+    "key": "template",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.IsNotChecked: true while a tick box or switch is off.",
+    "note": "Reads a tick box the other way up, which is what an \"override the defaults\" section wants: the settings appear when the box is cleared rather than when it is ticked.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.CheckBox",
+          "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Use the practice defaults",
+            false,
+            "useDefaults"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Output template",
+                "A1 landscape",
+                "",
+                "template"
+              ]
+            },
+            {
+              "name": "Condition.IsNotChecked",
+              "signature": "Interlude.Condition.IsNotChecked@string",
+              "ports": [
+                "key"
+              ],
+              "args": [
+                "useDefaults"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.In",
+    "title": "Site survey",
+    "key": "loadCase",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.In: true while a field holds one of several values.",
+    "note": "A list of Condition.Equals folded into one node. Where a form would otherwise grow an Or of three comparisons, this says the same thing in a single port.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.DropDown",
+          "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+          "ports": [
+            "label",
+            "items",
+            "displayNames",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Discipline",
+            [
+              "ARC",
+              "STR",
+              "MEP"
+            ],
+            [
+              "Architectural",
+              "Structural",
+              "Services"
+            ],
+            "STR",
+            "Pick one",
+            "discipline"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Load case",
+                "LC1",
+                "",
+                "loadCase"
+              ]
+            },
+            {
+              "name": "Condition.In",
+              "signature": "Interlude.Condition.In@string,var[],bool",
+              "ports": [
+                "key",
+                "values",
+                "ignoreCase"
+              ],
+              "args": [
+                "discipline",
+                [
+                  "STR",
+                  "MEP"
+                ],
+                true
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.Matches",
+    "title": "Site survey",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.Matches: true while a field matches a regular expression.",
+    "note": "A .NET regular expression, unanchored unless the pattern says otherwise — this one anchors both ends, so it describes the whole answer rather than something found inside it. Rule.Regex is the same test used to stop a form rather than to change it.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Project code",
+            "AB-1234",
+            "Two letters, a dash, four digits",
+            "projectCode"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.CheckBox",
+              "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Register with the practice log",
+                true,
+                "register"
+              ]
+            },
+            {
+              "name": "Condition.Matches",
+              "signature": "Interlude.Condition.Matches@string,string,bool",
+              "ports": [
+                "key",
+                "pattern",
+                "ignoreCase"
+              ],
+              "args": [
+                "projectCode",
+                "^[A-Z]{2}-\\d{4}$",
+                false
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.And",
+    "title": "Rename views",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.And: true while every one of several conditions is true.",
+    "note": "Conditions nest, so an And can hold an Or which holds comparisons. An empty list is true, which means a condition assembled from a list that happened to come back empty lets everything through rather than nothing.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.CheckBox",
+          "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Add a suffix",
+            true,
+            "addSuffix"
+          ]
+        },
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Suffix",
+            "-REV",
+            "",
+            "suffix"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.CheckBox",
+              "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Apply to sheets as well",
+                true,
+                "alsoSheets"
+              ]
+            },
+            {
+              "name": "Condition.And",
+              "signature": "Interlude.Condition.And@var[]",
+              "ports": [
+                "conditions"
+              ],
+              "args": [
+                "$children"
+              ],
+              "children": [
+                {
+                  "name": "Condition.IsChecked",
+                  "signature": "Interlude.Condition.IsChecked@string",
+                  "ports": [
+                    "key"
+                  ],
+                  "args": [
+                    "addSuffix"
+                  ]
+                },
+                {
+                  "name": "Condition.IsNotEmpty",
+                  "signature": "Interlude.Condition.IsNotEmpty@string",
+                  "ports": [
+                    "key"
+                  ],
+                  "args": [
+                    "suffix"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.Or",
+    "title": "Export",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.Or: true while at least one of several conditions is true.",
+    "note": "Asking where to put the files only once there is something to put there. An empty list is false, the opposite of Condition.And, and for the same reason: neither should change the answer when nothing has been said.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.CheckBox",
+          "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Export sheets",
+            false,
+            "sheets"
+          ]
+        },
+        {
+          "name": "Input.CheckBox",
+          "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Export views",
+            true,
+            "views"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.DirectoryPath",
+              "signature": "Interlude.Input.DirectoryPath@string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Output folder",
+                "",
+                "outputFolder"
+              ]
+            },
+            {
+              "name": "Condition.Or",
+              "signature": "Interlude.Condition.Or@var[]",
+              "ports": [
+                "conditions"
+              ],
+              "args": [
+                "$children"
+              ],
+              "children": [
+                {
+                  "name": "Condition.IsChecked",
+                  "signature": "Interlude.Condition.IsChecked@string",
+                  "ports": [
+                    "key"
+                  ],
+                  "args": [
+                    "sheets"
+                  ]
+                },
+                {
+                  "name": "Condition.IsChecked",
+                  "signature": "Interlude.Condition.IsChecked@string",
+                  "ports": [
+                    "key"
+                  ],
+                  "args": [
+                    "views"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.Not",
+    "title": "Export",
+    "key": "template",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.Not: true while the condition inside it is false.",
+    "note": "Useful over a condition that has no opposite of its own — an And, an Or, a Matches. Where there is a named opposite, Condition.IsNotChecked here, prefer it: it says the same thing without the reader having to invert it.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.CheckBox",
+          "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Use the practice defaults",
+            false,
+            "useDefaults"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Output template",
+                "A1 landscape",
+                "",
+                "template"
+              ]
+            },
+            {
+              "name": "Condition.Not",
+              "signature": "Interlude.Condition.Not@Interlude.Conditions.ConditionExpr",
+              "ports": [
+                "condition"
+              ],
+              "args": [
+                "$child0"
+              ],
+              "children": [
+                {
+                  "name": "Condition.IsChecked",
+                  "signature": "Interlude.Condition.IsChecked@string",
+                  "ports": [
+                    "key"
+                  ],
+                  "args": [
+                    "useDefaults"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Condition.Always",
+    "title": "Model audit",
+    "key": "reportName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Condition.Always: true or false regardless of what the form says.",
+    "note": "A constant, for a condition wired from the graph rather than from the form — a boolean worked out upstream, or a placeholder while a form is being built. Set value to false and whatever it controls disappears.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.CheckBox",
+          "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Include linked models",
+            true,
+            "includeLinks"
+          ]
+        },
+        {
+          "name": "Behavior.VisibleIf",
+          "signature": "Interlude.Behavior.VisibleIf@Interlude.Model.FormElement,Interlude.Conditions.ConditionExpr",
+          "ports": [
+            "element",
+            "condition"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Report name",
+                "Audit",
+                "",
+                "reportName"
+              ]
+            },
+            {
+              "name": "Condition.Always",
+              "signature": "Interlude.Condition.Always@bool",
+              "ports": [
+                "value"
+              ],
+              "args": [
+                true
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Rule.Required",
+    "title": "Site survey",
+    "key": "projectCode",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Rule.Required: the field must have an answer.",
+    "note": "The one rule that fails on an empty field — every other rule passes on one, so that an optional field with a range on it stays optional. Behavior.Required is the shorter way to say this when there is nothing else to add.",
+    "graph": {
+      "name": "Behavior.WithValidation",
+      "signature": "Interlude.Behavior.WithValidation@Interlude.Model.FormElement,var[]",
+      "ports": [
+        "element",
+        "rule"
+      ],
+      "args": [
+        "$child0",
+        [
+          "$child1"
+        ]
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Project code",
+            "",
+            "Needed before the form will submit",
+            "projectCode"
+          ]
+        },
+        {
+          "name": "Rule.Required",
+          "signature": "Interlude.Rule.Required@string",
+          "ports": [
+            "message"
+          ],
+          "args": [
+            "A project code is needed"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Rule.Range",
+    "title": "Site survey",
+    "key": "floorToFloor",
+    "getter": "Interlude.Result.GetNumber@var,string,double",
+    "getterName": "Result.GetNumber",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Rule.Range: the field's number must fall between two bounds.",
+    "note": "Either bound takes null to mean unbounded, so this is also how to write \"at least 2.4\" on its own. The bounds on Input.Number stop the spinner; these stop the form, which is what catches a number that was typed rather than stepped.",
+    "graph": {
+      "name": "Behavior.WithValidation",
+      "signature": "Interlude.Behavior.WithValidation@Interlude.Model.FormElement,var[]",
+      "ports": [
+        "element",
+        "rule"
+      ],
+      "args": [
+        "$child0",
+        [
+          "$child1"
+        ]
+      ],
+      "children": [
+        {
+          "name": "Input.Number",
+          "signature": "Interlude.Input.Number@string,double,var,var,double,int,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "minimum",
+            "maximum",
+            "increment",
+            "decimalPlaces",
+            "unit",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Floor to floor",
+            3.6,
+            0,
+            20,
+            0.1,
+            2,
+            "m",
+            "floorToFloor"
+          ]
+        },
+        {
+          "name": "Rule.Range",
+          "signature": "Interlude.Rule.Range@var,var,string",
+          "ports": [
+            "minimum",
+            "maximum",
+            "message"
+          ],
+          "args": [
+            2.4,
+            6,
+            "Between 2.4 and 6.0 metres"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Rule.Regex",
+    "title": "Rename views",
+    "key": "sheetNumber",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Rule.Regex: the field's answer must match a regular expression.",
+    "note": "Worth a message that says what the pattern wants in words: a reader who has just failed a validation is not in a position to read the expression that failed them.",
+    "graph": {
+      "name": "Behavior.WithValidation",
+      "signature": "Interlude.Behavior.WithValidation@Interlude.Model.FormElement,var[]",
+      "ports": [
+        "element",
+        "rule"
+      ],
+      "args": [
+        "$child0",
+        [
+          "$child1"
+        ]
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Sheet number",
+            "A-101",
+            "A letter, a dash, three digits",
+            "sheetNumber"
+          ]
+        },
+        {
+          "name": "Rule.Regex",
+          "signature": "Interlude.Rule.Regex@string,string,bool",
+          "ports": [
+            "pattern",
+            "message",
+            "ignoreCase"
+          ],
+          "args": [
+            "^[A-Z]-\\d{3}$",
+            "Like A-101",
+            false
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Rule.FileExists",
+    "title": "Export",
+    "key": "templateFile",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Rule.FileExists: the file the field holds must exist on disk.",
+    "note": "A path typed rather than browsed to, or one browsed to last week and moved since, both come back as text that looks fine. This is what checks the disk before the graph tries to open it.",
+    "graph": {
+      "name": "Behavior.WithValidation",
+      "signature": "Interlude.Behavior.WithValidation@Interlude.Model.FormElement,var[]",
+      "ports": [
+        "element",
+        "rule"
+      ],
+      "args": [
+        "$child0",
+        [
+          "$child1"
+        ]
+      ],
+      "children": [
+        {
+          "name": "Input.FilePath",
+          "signature": "Interlude.Input.FilePath@string,string,string,bool,bool,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "filter",
+            "allowMultiple",
+            "forSaving",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Template file",
+            "",
+            "Revit template (*.rte)|*.rte",
+            false,
+            false,
+            "templateFile"
+          ]
+        },
+        {
+          "name": "Rule.FileExists",
+          "signature": "Interlude.Rule.FileExists@string",
+          "ports": [
+            "message"
+          ],
+          "args": [
+            "Pick a template that exists"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Rule.FolderExists",
+    "title": "Export",
+    "key": "outputFolder",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Rule.FolderExists: the folder the field holds must exist on disk.",
+    "note": "The Input.DirectoryPath half of Rule.FileExists. Worth adding whenever the graph is about to write into whatever comes back, which is most of the time.",
+    "graph": {
+      "name": "Behavior.WithValidation",
+      "signature": "Interlude.Behavior.WithValidation@Interlude.Model.FormElement,var[]",
+      "ports": [
+        "element",
+        "rule"
+      ],
+      "args": [
+        "$child0",
+        [
+          "$child1"
+        ]
+      ],
+      "children": [
+        {
+          "name": "Input.DirectoryPath",
+          "signature": "Interlude.Input.DirectoryPath@string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Output folder",
+            "",
+            "outputFolder"
+          ]
+        },
+        {
+          "name": "Rule.FolderExists",
+          "signature": "Interlude.Rule.FolderExists@string",
+          "ports": [
+            "message"
+          ],
+          "args": [
+            "Pick a folder that exists"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Rule.CompareTo",
+    "title": "Site survey",
+    "key": "endDate",
+    "getter": "Interlude.Result.GetDate@var,string,var",
+    "getterName": "Result.GetDate",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Rule.CompareTo: the field must compare correctly against another field.",
+    "note": "The only rule that reads a second field, which is what makes \"after the start date\" expressible at all. It is checked on the field it is attached to, so the message appears under the end date rather than between the two.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.DatePicker",
+          "signature": "Interlude.Input.DatePicker@string,var,bool,var,var,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "includeTime",
+            "minimum",
+            "maximum",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Start date",
+            null,
+            false,
+            null,
+            null,
+            "startDate"
+          ]
+        },
+        {
+          "name": "Behavior.WithValidation",
+          "signature": "Interlude.Behavior.WithValidation@Interlude.Model.FormElement,var[]",
+          "ports": [
+            "element",
+            "rule"
+          ],
+          "args": [
+            "$child0",
+            [
+              "$child1"
+            ]
+          ],
+          "children": [
+            {
+              "name": "Input.DatePicker",
+              "signature": "Interlude.Input.DatePicker@string,var,bool,var,var,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "includeTime",
+                "minimum",
+                "maximum",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "End date",
+                null,
+                false,
+                null,
+                null,
+                "endDate"
+              ]
+            },
+            {
+              "name": "Rule.CompareTo",
+              "signature": "Interlude.Rule.CompareTo@string,string,string",
+              "ports": [
+                "otherKey",
+                "operation",
+                "message"
+              ],
+              "args": [
+                "startDate",
+                "GreaterThan",
+                "The end date must be after the start date"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Compute.Field",
+    "title": "Rename views",
+    "key": "sheetTitle",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Compute.Field: the current answer of another field.",
+    "note": "One field mirroring another, and the building block the other Compute nodes are made of: wherever one of them takes a value, a key names a field and this is what reading it looks like on its own.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.TextBox",
+          "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "View name",
+            "Level 01 - Plan",
+            "",
+            "viewName"
+          ]
+        },
+        {
+          "name": "Behavior.WithComputed",
+          "signature": "Interlude.Behavior.WithComputed@Interlude.Model.FormElement,Interlude.Conditions.ComputedValue",
+          "ports": [
+            "element",
+            "computation"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Sheet title",
+                "",
+                "Copied from the view name",
+                "sheetTitle"
+              ]
+            },
+            {
+              "name": "Compute.Field",
+              "signature": "Interlude.Compute.Field@string",
+              "ports": [
+                "key"
+              ],
+              "args": [
+                "viewName"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Compute.Constant",
+    "title": "Export",
+    "key": "plotDriver",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Compute.Constant: a fixed value that never changes.",
+    "note": "A field the user can see but not set. Useful as a branch of Compute.If, and useful on its own to show a settled value in the form rather than leaving it implicit in the graph.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.DropDown",
+          "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+          "ports": [
+            "label",
+            "items",
+            "displayNames",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Paper size",
+            [
+              "A1",
+              "A3"
+            ],
+            [
+              "A1",
+              "A3"
+            ],
+            "A1",
+            "Pick one",
+            "paperSize"
+          ]
+        },
+        {
+          "name": "Behavior.WithComputed",
+          "signature": "Interlude.Behavior.WithComputed@Interlude.Model.FormElement,Interlude.Conditions.ComputedValue",
+          "ports": [
+            "element",
+            "computation"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Plot driver",
+                "",
+                "Fixed by the practice standard",
+                "plotDriver"
+              ]
+            },
+            {
+              "name": "Compute.Constant",
+              "signature": "Interlude.Compute.Constant@var",
+              "ports": [
+                "value"
+              ],
+              "args": [
+                "PDF24"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Compute.Sum",
+    "title": "Export",
+    "key": "total",
+    "getter": "Interlude.Result.GetInteger@var,string,int",
+    "getterName": "Result.GetInteger",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Compute.Sum: several fields added together.",
+    "note": "Anything that is not a number counts as zero, so a half-filled form shows a running total rather than an error, and a multi-select of numbers adds up its own items.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.Integer",
+          "signature": "Interlude.Input.Integer@string,int,var,var,int,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "minimum",
+            "maximum",
+            "increment",
+            "unit",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Sheets",
+            12,
+            0,
+            500,
+            1,
+            "",
+            "sheets"
+          ]
+        },
+        {
+          "name": "Input.Integer",
+          "signature": "Interlude.Input.Integer@string,int,var,var,int,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "minimum",
+            "maximum",
+            "increment",
+            "unit",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Views",
+            8,
+            0,
+            500,
+            1,
+            "",
+            "views"
+          ]
+        },
+        {
+          "name": "Behavior.WithComputed",
+          "signature": "Interlude.Behavior.WithComputed@Interlude.Model.FormElement,Interlude.Conditions.ComputedValue",
+          "ports": [
+            "element",
+            "computation"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.Integer",
+              "signature": "Interlude.Input.Integer@string,int,var,var,int,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "minimum",
+                "maximum",
+                "increment",
+                "unit",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Total to export",
+                0,
+                0,
+                1000,
+                1,
+                "",
+                "total"
+              ]
+            },
+            {
+              "name": "Compute.Sum",
+              "signature": "Interlude.Compute.Sum@var[]",
+              "ports": [
+                "keys"
+              ],
+              "args": [
+                [
+                  "sheets",
+                  "views"
+                ]
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Compute.Arithmetic",
+    "title": "Site survey",
+    "key": "grossArea",
+    "getter": "Interlude.Result.GetNumber@var,string,double",
+    "getterName": "Result.GetNumber",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Compute.Arithmetic: two values combined arithmetically.",
+    "note": "Each side is a field key, a literal, or another computation — which is how a longer expression is built, by nesting one of these inside the next. Dividing by zero gives zero rather than infinity, so a half-filled form shows a number instead of a symbol.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.Number",
+          "signature": "Interlude.Input.Number@string,double,var,var,double,int,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "minimum",
+            "maximum",
+            "increment",
+            "decimalPlaces",
+            "unit",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Floor area",
+            240,
+            0,
+            10000,
+            1,
+            1,
+            "m²",
+            "floorArea"
+          ]
+        },
+        {
+          "name": "Input.Integer",
+          "signature": "Interlude.Input.Integer@string,int,var,var,int,string,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "minimum",
+            "maximum",
+            "increment",
+            "unit",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Storeys",
+            12,
+            1,
+            60,
+            1,
+            "",
+            "storeys"
+          ]
+        },
+        {
+          "name": "Behavior.WithComputed",
+          "signature": "Interlude.Behavior.WithComputed@Interlude.Model.FormElement,Interlude.Conditions.ComputedValue",
+          "ports": [
+            "element",
+            "computation"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.Number",
+              "signature": "Interlude.Input.Number@string,double,var,var,double,int,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "minimum",
+                "maximum",
+                "increment",
+                "decimalPlaces",
+                "unit",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Gross area",
+                0,
+                0,
+                1000000,
+                1,
+                1,
+                "m²",
+                "grossArea"
+              ]
+            },
+            {
+              "name": "Compute.Arithmetic",
+              "signature": "Interlude.Compute.Arithmetic@var,string,var",
+              "ports": [
+                "left",
+                "operation",
+                "right"
+              ],
+              "args": [
+                "floorArea",
+                "Multiply",
+                "storeys"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Compute.Lookup",
+    "title": "Export",
+    "key": "dimensions",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Compute.Lookup: a field's answer mapped through a lookup table.",
+    "note": "The two lists are read in step, so lookupKeys and lookupValues must be the same length. Matching is on the answer's text form, which is why a drop-down's values rather than its display names are what appear on the left.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.DropDown",
+          "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+          "ports": [
+            "label",
+            "items",
+            "displayNames",
+            "defaultValue",
+            "placeholder",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Paper size",
+            [
+              "A0",
+              "A1",
+              "A3"
+            ],
+            [
+              "A0",
+              "A1",
+              "A3"
+            ],
+            "A1",
+            "Pick one",
+            "paperSize"
+          ]
+        },
+        {
+          "name": "Behavior.WithComputed",
+          "signature": "Interlude.Behavior.WithComputed@Interlude.Model.FormElement,Interlude.Conditions.ComputedValue",
+          "ports": [
+            "element",
+            "computation"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "Sheet dimensions",
+                "",
+                "Worked out from the paper size",
+                "dimensions"
+              ]
+            },
+            {
+              "name": "Compute.Lookup",
+              "signature": "Interlude.Compute.Lookup@string,var[],var[],var",
+              "ports": [
+                "key",
+                "lookupKeys",
+                "lookupValues",
+                "fallback"
+              ],
+              "args": [
+                "paperSize",
+                [
+                  "A0",
+                  "A1",
+                  "A3"
+                ],
+                [
+                  "1189 x 841",
+                  "841 x 594",
+                  "420 x 297"
+                ],
+                "unknown"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Compute.If",
+    "title": "Export",
+    "key": "extension",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Compute.If: one of two values, chosen by a condition.",
+    "note": "The Condition nodes reused for a value rather than for visibility. Either branch takes another computation, so a chain of these is how a form expresses a decision table.",
+    "graph": {
+      "name": "Layout.Column",
+      "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+      "ports": [
+        "elements",
+        "spacing"
+      ],
+      "args": [
+        "$children",
+        8
+      ],
+      "children": [
+        {
+          "name": "Input.CheckBox",
+          "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+          "ports": [
+            "label",
+            "defaultValue",
+            "key",
+            "tooltip",
+            "helpText"
+          ],
+          "args": [
+            "Export to PDF",
+            true,
+            "toPdf"
+          ]
+        },
+        {
+          "name": "Behavior.WithComputed",
+          "signature": "Interlude.Behavior.WithComputed@Interlude.Model.FormElement,Interlude.Conditions.ComputedValue",
+          "ports": [
+            "element",
+            "computation"
+          ],
+          "args": [
+            "$child0",
+            "$child1"
+          ],
+          "children": [
+            {
+              "name": "Input.TextBox",
+              "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+              "ports": [
+                "label",
+                "defaultValue",
+                "placeholder",
+                "key",
+                "tooltip",
+                "helpText"
+              ],
+              "args": [
+                "File extension",
+                "",
+                "Follows the tick box",
+                "extension"
+              ]
+            },
+            {
+              "name": "Compute.If",
+              "signature": "Interlude.Compute.If@Interlude.Conditions.ConditionExpr,var,var",
+              "ports": [
+                "condition",
+                "ifTrue",
+                "ifFalse"
+              ],
+              "args": [
+                "$child0",
+                ".pdf",
+                ".dwg"
+              ],
+              "children": [
+                {
+                  "name": "Condition.IsChecked",
+                  "signature": "Interlude.Condition.IsChecked@string",
+                  "ports": [
+                    "key"
+                  ],
+                  "args": [
+                    "toPdf"
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Result.GetString",
+    "name": "Input.TextBox",
+    "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "placeholder",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Project name",
+      "Tower A",
+      "As it appears on the drawing",
+      "projectName"
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Result.GetString: one answer as text.",
+    "note": "The reader to reach for first: almost every field has a sensible text form, and this is it. An empty answer comes back as the fallback rather than as an empty string, so a missing answer and a blank one can be told apart."
+  },
+  {
+    "node": "Interlude.Result.GetNumber",
+    "name": "Input.Number",
+    "signature": "Interlude.Input.Number@string,double,var,var,double,int,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "minimum",
+      "maximum",
+      "increment",
+      "decimalPlaces",
+      "unit",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Floor to floor",
+      3.6,
+      2.4,
+      6,
+      0.1,
+      2,
+      "m",
+      "floorToFloor"
+    ],
+    "title": "Site survey",
+    "key": "floorToFloor",
+    "getter": "Interlude.Result.GetNumber@var,string,double",
+    "getterName": "Result.GetNumber",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Result.GetNumber: one answer as a decimal number.",
+    "note": "Anything that reads as a number comes back as one, including a number typed into a text field. Anything that does not comes back as the fallback rather than as an error, so one odd answer does not stop the graph."
+  },
+  {
+    "node": "Interlude.Result.GetInteger",
+    "name": "Input.Integer",
+    "signature": "Interlude.Input.Integer@string,int,var,var,int,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "minimum",
+      "maximum",
+      "increment",
+      "unit",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Storeys",
+      12,
+      1,
+      60,
+      1,
+      "",
+      "storeys"
+    ],
+    "title": "Site survey",
+    "key": "storeys",
+    "getter": "Interlude.Result.GetInteger@var,string,int",
+    "getterName": "Result.GetInteger",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Result.GetInteger: one answer as a whole number.",
+    "note": "Result.GetNumber rounded to the nearest whole number, away from zero at the halfway point. Worth using over GetNumber wherever the answer counts things, so that downstream nodes taking an integer port get one."
+  },
+  {
+    "node": "Interlude.Result.GetBool",
+    "name": "Input.CheckBox",
+    "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Include basement",
+      true,
+      "includeBasement"
+    ],
+    "title": "Site survey",
+    "key": "includeBasement",
+    "getter": "Interlude.Result.GetBool@var,string,bool",
+    "getterName": "Result.GetBool",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Result.GetBool: one answer as true or false.",
+    "note": "For a tick box or a switch. It also reads \"true\", \"yes\" and 1 as true, which is what makes a form loaded from JSON behave the same as one built in the graph."
+  },
+  {
+    "node": "Interlude.Result.GetDate",
+    "name": "Input.DatePicker",
+    "signature": "Interlude.Input.DatePicker@string,var,bool,var,var,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "includeTime",
+      "minimum",
+      "maximum",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Survey date",
+      null,
+      false,
+      null,
+      null,
+      "surveyDate"
+    ],
+    "title": "Site survey",
+    "key": "surveyDate",
+    "getter": "Interlude.Result.GetDate@var,string,var",
+    "getterName": "Result.GetDate",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Result.GetDate: one answer as a date.",
+    "note": "Comes back as a DateTime that Dynamo's own date nodes accept. The fallback takes null, which is how a date that was never set stays distinguishable from one that happens to be today."
+  },
+  {
+    "node": "Interlude.Result.GetColor",
+    "name": "Input.ColorPicker",
+    "signature": "Interlude.Input.ColorPicker@string,string,bool,var[],string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "showAlpha",
+      "presets",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Zone colour",
+      "#E8734A",
+      false,
+      [
+        "#E8734A",
+        "#4A90D9",
+        "#7CB342"
+      ],
+      "zoneColour"
+    ],
+    "title": "Zoning",
+    "key": "zoneColour",
+    "getter": "Interlude.Result.GetColor@var,string",
+    "getterName": "Result.GetColor",
+    "getterPorts": [
+      "result",
+      "key"
+    ],
+    "description": "Interlude.Result.GetColor: one answer as a Dynamo colour.",
+    "note": "A real colour rather than the hex string the form stores, so it goes straight into a Revit override or a display node without a conversion in between."
+  },
+  {
+    "node": "Interlude.Result.GetList",
+    "name": "Input.ListBox",
+    "signature": "Interlude.Input.ListBox@string,var[],var[],bool,var[],int,string,string,string",
+    "ports": [
+      "label",
+      "items",
+      "displayNames",
+      "allowMultiple",
+      "defaultValue",
+      "visibleRows",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Levels to export",
+      [
+        "L00",
+        "L01",
+        "L02",
+        "RF"
+      ],
+      [
+        "Level 00",
+        "Level 01",
+        "Level 02",
+        "Roof"
+      ],
+      true,
+      [
+        "L01",
+        "L02"
+      ],
+      4,
+      "levels"
+    ],
+    "title": "Export",
+    "key": "levels",
+    "getter": "Interlude.Result.GetList@var,string",
+    "getterName": "Result.GetList",
+    "getterPorts": [
+      "result",
+      "key"
+    ],
+    "description": "Interlude.Result.GetList: one answer as a list.",
+    "note": "For the multi-select fields. A single answer comes back as a one-item list rather than as itself, so downstream nodes see the same shape however many things were picked."
+  },
+  {
+    "node": "Interlude.Result.GetFilePaths",
+    "name": "Input.FilePath",
+    "signature": "Interlude.Input.FilePath@string,string,string,bool,bool,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "filter",
+      "allowMultiple",
+      "forSaving",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Linked models",
+      "",
+      "Revit model (*.rvt)|*.rvt",
+      true,
+      false,
+      "linkedModels"
+    ],
+    "title": "Model audit",
+    "key": "linkedModels",
+    "getter": "Interlude.Result.GetFilePaths@var,string",
+    "getterName": "Result.GetFilePaths",
+    "getterPorts": [
+      "result",
+      "key"
+    ],
+    "description": "Interlude.Result.GetFilePaths: one answer as a list of file paths.",
+    "note": "Result.GetList for the path fields, with the blanks dropped. A file field set to allowMultiple is the case it exists for; on a single file it still hands back a list of one."
+  },
+  {
+    "node": "Interlude.Result.ValueByKey",
+    "name": "Input.DropDown",
+    "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+    "ports": [
+      "label",
+      "items",
+      "displayNames",
+      "defaultValue",
+      "placeholder",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Discipline",
+      [
+        "ARC",
+        "STR",
+        "MEP"
+      ],
+      [
+        "Architectural",
+        "Structural",
+        "Services"
+      ],
+      "STR",
+      "Pick one",
+      "discipline"
+    ],
+    "title": "Site survey",
+    "key": "discipline",
+    "getter": "Interlude.Result.ValueByKey@var,string,var",
+    "getterName": "Result.ValueByKey",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Result.ValueByKey: one answer exactly as the form stored it.",
+    "note": "No conversion at all, which is what the typed readers are built on. Use it when the answer should keep whatever shape it had; use one of the typed readers when the graph downstream needs a particular one."
+  },
+  {
+    "node": "Interlude.Result.HasKey",
+    "name": "Input.TextBox",
+    "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "placeholder",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Sheet prefix",
+      "A-",
+      "",
+      "sheetPrefix"
+    ],
+    "title": "Export",
+    "key": "sheetPrefix",
+    "getter": "Interlude.Result.HasKey@var,string",
+    "getterName": "Result.HasKey",
+    "getterPorts": [
+      "result",
+      "key"
+    ],
+    "description": "Interlude.Result.HasKey: whether the form answered under that key at all.",
+    "note": "Different from an empty answer: a key is missing when the form never had that field, and empty when it had it and nobody filled it in. Worth checking on a form loaded from JSON, where the file decides which fields exist."
+  },
+  {
+    "node": "Interlude.Result.Keys",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "",
+    "getter": "Interlude.Result.Keys@var",
+    "getterName": "Result.Keys",
+    "getterPorts": [
+      "result"
+    ],
+    "description": "Interlude.Result.Keys: every key the form answered under.",
+    "note": "The whole set, sorted, without naming any of them in the graph. This is how a graph handles a form it did not build — from JSON, or one still being designed — and it pairs with Result.Values, which returns them in the same order."
+  },
+  {
+    "node": "Interlude.Result.Values",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "",
+    "getter": "Interlude.Result.Values@var",
+    "getterName": "Result.Values",
+    "getterPorts": [
+      "result"
+    ],
+    "description": "Interlude.Result.Values: every answer the form gave.",
+    "note": "In the same order as Result.Keys, so the two zip together into a dictionary. On its own it is what feeds a node that wants the answers as a list and does not care what they were called."
+  },
+  {
+    "node": "Interlude.Result.WasSubmitted",
+    "name": "Input.TextBox",
+    "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "placeholder",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Project name",
+      "Tower A",
+      "",
+      "projectName"
+    ],
+    "title": "Site survey",
+    "key": "",
+    "getter": "Interlude.Result.WasSubmitted@var",
+    "getterName": "Result.WasSubmitted",
+    "getterPorts": [
+      "result"
+    ],
+    "description": "Interlude.Result.WasSubmitted: whether the user confirmed rather than cancelled.",
+    "note": "The check to make before acting on anything: a cancelled form still returns its answers, because the answers are the defaults. Acting on them regardless is how a graph does the work the user just declined."
+  },
+  {
+    "node": "Interlude.Result.WasCancelled",
+    "name": "Input.TextBox",
+    "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "placeholder",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Project name",
+      "Tower A",
+      "",
+      "projectName"
+    ],
+    "title": "Site survey",
+    "key": "",
+    "getter": "Interlude.Result.WasCancelled@var",
+    "getterName": "Result.WasCancelled",
+    "getterPorts": [
+      "result"
+    ],
+    "description": "Interlude.Result.WasCancelled: whether the user backed out.",
+    "note": "Exactly the opposite of Result.WasSubmitted, and worth preferring wherever the graph is deciding what not to do — the reader should not have to invert a condition in their head to see that a branch is the abort."
+  },
+  {
+    "node": "Interlude.Result.ButtonClicked",
+    "name": "Input.TextBox",
+    "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+    "ports": [
+      "label",
+      "defaultValue",
+      "placeholder",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Project name",
+      "Tower A",
+      "",
+      "projectName"
+    ],
+    "title": "Site survey",
+    "key": "",
+    "getter": "Interlude.Result.ButtonClicked@var",
+    "getterName": "Result.ButtonClicked",
+    "getterPorts": [
+      "result"
+    ],
+    "description": "Interlude.Result.ButtonClicked: which button ended the form.",
+    "note": "\"submit\", \"cancel\", \"closed\", \"skipped\", or the key of a button added through Form.Options. The finer-grained answer where Result.WasSubmitted is only true or false: it is what tells a custom button apart from the ordinary one, and — as this graph shows, with trigger false — a form that never opened reads \"skipped\"."
+  },
+  {
+    "node": "Interlude.Theme.System",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Theme.System: the default look, following the host's light or dark setting.",
+    "note": "What a form uses when nothing is wired to its theme port, so this node is only worth placing to say so on purpose. It follows the host rather than choosing: a form left on it changes with Revit rather than fighting it.",
+    "theme": {
+      "name": "Theme.System",
+      "signature": "Interlude.Theme.System",
+      "ports": [],
+      "args": []
+    }
+  },
+  {
+    "node": "Interlude.Theme.Light",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Theme.Light: a conventional light theme.",
+    "note": "Hairline outlines, rounded corners, no shadows — the way out of the neubrutalist default and the right choice for a form that should look like part of the software around it. Corporate deployments usually want this.",
+    "theme": {
+      "name": "Theme.Light",
+      "signature": "Interlude.Theme.Light@string",
+      "ports": [
+        "accent"
+      ],
+      "args": [
+        "#4A90D9"
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Theme.Dark",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Theme.Dark: a conventional dark theme.",
+    "note": "Tuned to sit comfortably over Revit's dark interface. Prefer Theme.System where the point is to match the host, and this where the form should be dark whatever the host is doing.",
+    "theme": {
+      "name": "Theme.Dark",
+      "signature": "Interlude.Theme.Dark@string",
+      "ports": [
+        "accent"
+      ],
+      "args": [
+        "#E8734A"
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Theme.Neubrutalism",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Theme.Neubrutalism: heavy outlines, square corners and hard shadows.",
+    "note": "The package default, and the reason a form built with no theme at all still looks deliberate. Loud on purpose: a dialog that announces itself is easier to trust than one that could be mistaken for part of the host.",
+    "theme": {
+      "name": "Theme.Neubrutalism",
+      "signature": "Interlude.Theme.Neubrutalism@bool,string",
+      "ports": [
+        "dark",
+        "accent"
+      ],
+      "args": [
+        false,
+        "#FF4F81"
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Theme.Mono",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Theme.Mono: black, white and grey, with pill controls and spaced capitals.",
+    "note": "No colour to carry meaning, which makes it the honest choice when the form has nothing to colour-code, and a poor one when it does.",
+    "theme": {
+      "name": "Theme.Mono",
+      "signature": "Interlude.Theme.Mono@bool,string",
+      "ports": [
+        "dark",
+        "accent"
+      ],
+      "args": [
+        false,
+        "#000000"
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Theme.Create",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Theme.Create: a theme built port by port.",
+    "note": "Where the named themes stop. Everything has a default, so wiring one port changes one thing — this sets a compact density and rounder corners and leaves the rest alone. labelWidth is the one to reach for when a form's labels wrap.",
+    "theme": {
+      "name": "Theme.Create",
+      "signature": "Interlude.Theme.Create@string,string,string,double,double,string,double,bool",
+      "ports": [
+        "mode",
+        "accent",
+        "density",
+        "cornerRadius",
+        "fontSize",
+        "fontFamily",
+        "labelWidth",
+        "reducedMotion"
+      ],
+      "args": [
+        "Light",
+        "#7CB342",
+        "Compact",
+        10,
+        13,
+        "",
+        150,
+        false
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Theme.WithColors",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Theme.WithColors: a theme with its palette replaced.",
+    "note": "Takes a theme and changes its colours, leaving its shape, spacing and type alone — so a practice palette can be dropped onto any of the named themes without rebuilding it. Every colour is optional: the ones left blank keep what the theme had.",
+    "theme": {
+      "name": "Theme.WithColors",
+      "signature": "Interlude.Theme.WithColors@Interlude.Theming.ThemeDefinition,string,string,string,string,string",
+      "ports": [
+        "theme",
+        "background",
+        "foreground",
+        "surface",
+        "border",
+        "error"
+      ],
+      "args": [
+        "$child0",
+        "#FFF8F0",
+        "#1A1A1A",
+        "#FFFFFF",
+        "#1A1A1A",
+        "#D32F2F"
+      ],
+      "children": [
+        {
+          "name": "Theme.Light",
+          "signature": "Interlude.Theme.Light@string",
+          "ports": [
+            "accent"
+          ],
+          "args": [
+            "#E8734A"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Form.Create",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Form.Create: builds a form without showing it.",
+    "note": "The same form Form.Show would put on screen, as a value. That is what makes a form reviewable: it can be written out with Form.ToJson, checked with Form.Check, or held and shown later with Form.ShowDefinition."
+  },
+  {
+    "node": "Interlude.Form.ToJson",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Form.ToJson: writes a form out as JSON.",
+    "note": "A form saved this way is a document: it can be diffed, reviewed in a pull request, and loaded again with Form.FromJson. Wiring it up is the point of the \"Keep it as a document\" group on every one of these graphs."
+  },
+  {
+    "node": "Interlude.Form.Options",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Form.Options: the less common form settings, as one value.",
+    "note": "A description above the fields, a fixed height, whether the dialog resizes, and any extra buttons. They live here rather than on Form.Show because a node with twenty ports is harder to read than one with twelve and a bundle.",
+    "options": {
+      "name": "Form.Options",
+      "signature": "Interlude.Form.Options@string,var,bool,bool,bool,var[],string",
+      "ports": [
+        "description",
+        "height",
+        "resizable",
+        "showCancel",
+        "closeOnEscape",
+        "extraButtons",
+        "iconPath"
+      ],
+      "args": [
+        "Fill this in from the site notes, not from the model.",
+        null,
+        true,
+        true,
+        true,
+        null,
+        ""
+      ]
+    }
+  },
+  {
+    "node": "Interlude.Form.FromJson",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Form.FromJson: reads a form back from JSON.",
+    "note": "The other half of Form.ToJson. The schema version is checked before anything else is read, so a file written by a newer Interlude fails with a sentence about the version rather than with whatever goes wrong first.",
+    "tail": "document",
+    "fillKey": "discipline",
+    "fillItems": [
+      "ARC",
+      "STR",
+      "MEP",
+      "CIV"
+    ]
+  },
+  {
+    "node": "Interlude.Form.WithOptions",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Form.WithOptions: replaces the options of one choice field in a form that already exists.",
+    "note": "What makes a checked-in form usable with live model data. The file cannot carry Revit elements — they do not exist in another model — so it holds the layout, the labels, the conditions and the validation, and the graph fills in the one field whose contents only the model knows.",
+    "tail": "document",
+    "fillKey": "discipline",
+    "fillItems": [
+      "ARC",
+      "STR",
+      "MEP",
+      "CIV"
+    ]
+  },
+  {
+    "node": "Interlude.Form.ShowDefinition",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Form.ShowDefinition: shows a form that was built earlier.",
+    "note": "Form.Show for a form that already exists, with the same trigger, the same remembered answers and the same four outputs. It is what the round trip ends in: a form that came out of a file rather than out of the graph beside it.",
+    "tail": "document",
+    "fillKey": "discipline",
+    "fillItems": [
+      "ARC",
+      "STR",
+      "MEP",
+      "CIV"
+    ]
+  },
+  {
+    "node": "Interlude.Form.Check",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Form.Check: validates a form before anyone sees it.",
+    "note": "Finds what only shows up at run time: a condition naming a key no field has, a computed value that depends on itself, two fields sharing a key. Worth running in a test graph over a checked-in form, where the alternative is a user meeting the problem first.",
+    "tail": "document",
+    "fillKey": "discipline",
+    "fillItems": [
+      "ARC",
+      "STR",
+      "MEP",
+      "CIV"
+    ]
+  },
+  {
+    "node": "Interlude.Form.Forget",
+    "name": "Layout.Column",
+    "signature": "Interlude.Layout.Column@Interlude.Model.FormElement[],double",
+    "ports": [
+      "elements",
+      "spacing"
+    ],
+    "args": [
+      "$children",
+      8
+    ],
+    "children": [
+      {
+        "name": "Input.TextBox",
+        "signature": "Interlude.Input.TextBox@string,string,string,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Project name",
+          "Tower A",
+          "As it appears on the drawing",
+          "projectName"
+        ]
+      },
+      {
+        "name": "Input.DropDown",
+        "signature": "Interlude.Input.DropDown@string,var[],var[],var,string,string,string,string",
+        "ports": [
+          "label",
+          "items",
+          "displayNames",
+          "defaultValue",
+          "placeholder",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Discipline",
+          [
+            "ARC",
+            "STR",
+            "MEP"
+          ],
+          [
+            "Architectural",
+            "Structural",
+            "Services"
+          ],
+          "STR",
+          "Pick one",
+          "discipline"
+        ]
+      },
+      {
+        "name": "Input.CheckBox",
+        "signature": "Interlude.Input.CheckBox@string,bool,string,string,string",
+        "ports": [
+          "label",
+          "defaultValue",
+          "key",
+          "tooltip",
+          "helpText"
+        ],
+        "args": [
+          "Include basement",
+          true,
+          "includeBasement"
+        ]
+      }
+    ],
+    "title": "Site survey",
+    "key": "projectName",
+    "getter": "Interlude.Result.GetString@var,string,string",
+    "getterName": "Result.GetString",
+    "getterPorts": [
+      "result",
+      "key",
+      "fallback"
+    ],
+    "description": "Interlude.Form.Forget: clears the answers remembered for a form.",
+    "note": "Answers are remembered per form between runs, which is what makes a form worth reopening. This is how a graph starts again from the defaults. An empty formId clears every form rather than one, which is a bigger hammer than it looks.",
+    "tail": "forget",
+    "formId": "site-survey"
+  },
+  {
+    "node": "Interlude.Input.TreeItem",
+    "title": "Model audit",
+    "key": "categories",
+    "getter": "Interlude.Result.GetList@var,string",
+    "getterName": "Result.GetList",
+    "getterPorts": [
+      "result",
+      "key"
+    ],
+    "description": "Interlude.Input.TreeItem: one node of a tree, which may hold others.",
+    "note": "The thing Input.TreeSelect is made of, and never useful on its own — hence the TreeSelect at the root of this graph. An item holding children is a branch, and a branch with selectable false only groups them, which is what \"Walls\" does here.",
+    "graph": {
+      "name": "Input.TreeSelect",
+      "signature": "Interlude.Input.TreeSelect@string,var[],bool,var[],bool,string,string,string",
+      "ports": [
+        "label",
+        "nodes",
+        "allowMultiple",
+        "defaultValue",
+        "expandAll",
+        "key",
+        "tooltip",
+        "helpText"
+      ],
+      "args": [
+        "Model categories",
+        "$children",
+        true,
+        null,
+        true,
+        "categories"
+      ],
+      "children": [
+        {
+          "name": "Input.TreeItem",
+          "signature": "Interlude.Input.TreeItem@string,var,var[],bool,bool",
+          "ports": [
+            "displayName",
+            "value",
+            "children",
+            "expanded",
+            "selectable"
+          ],
+          "args": [
+            "Walls",
+            "walls",
+            "$children",
+            true,
+            false
+          ],
+          "children": [
+            {
+              "name": "Input.TreeItem",
+              "signature": "Interlude.Input.TreeItem@string,var,var[],bool,bool",
+              "ports": [
+                "displayName",
+                "value",
+                "children",
+                "expanded",
+                "selectable"
+              ],
+              "args": [
+                "Basic Wall",
+                "basicWall",
+                null,
+                false,
+                true
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Input.TreeItem",
+          "signature": "Interlude.Input.TreeItem@string,var,var[],bool,bool",
+          "ports": [
+            "displayName",
+            "value",
+            "children",
+            "expanded",
+            "selectable"
+          ],
+          "args": [
+            "Doors",
+            "doors",
+            null,
+            false,
+            true
+          ]
+        }
+      ]
+    }
+  }
+]

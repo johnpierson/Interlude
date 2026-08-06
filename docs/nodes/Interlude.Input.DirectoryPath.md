@@ -26,3 +26,14 @@ The fields a user answers.
 Every input returns an element describing the control, not the control itself, and every one takes the same three trailing options: `key`, which names the answer in the results dictionary; `tooltip`; and `helpText`. Leave `key` empty and it is derived from the label — convenient for a quick form, but give real keys to any graph you intend to keep, because renaming a label would otherwise rename the answer.
 
 Choice inputs take the values themselves, not their display names. Selecting an option hands back the original object — a Revit element, a family type, whatever was put in — so the answer is usable directly instead of needing a lookup back from a string.
+
+___
+## Example File
+
+An example graph ships beside this page as `Interlude.Input.DirectoryPath.dyn`.
+
+![Input.DirectoryPath](./Interlude.Input.DirectoryPath_img.png)
+
+The form it builds:
+
+![Input.DirectoryPath form](./Interlude.Input.DirectoryPath_form.png)

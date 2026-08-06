@@ -34,9 +34,14 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $manifest = Get-Content (Join-Path $repoRoot 'versions.json') -Raw | ConvertFrom-Json
 
 if (-not $Version) {
-    # AssemblyVersion is frozen at 1.0.0.0 so graphs never break on upgrade; the package version
-    # is the one that actually moves.
-    $Version = ($manifest.assemblyVersion -split '\.')[0..2] -join '.'
+    # AssemblyVersion is frozen at 1.0.0.0 so graphs never break on upgrade. The number that moves
+    # is VersionPrefix, which is also what the example graphs declare they need — read it from the
+    # one place that holds it rather than keeping a second copy here to fall out of step.
+    $props = Get-Content (Join-Path $repoRoot 'Directory.Build.props') -Raw
+    if ($props -notmatch '<VersionPrefix[^>]*>([\d.]+)</VersionPrefix>') {
+        throw 'No VersionPrefix in Directory.Build.props.'
+    }
+    $Version = $Matches[1]
 }
 
 $distRoot = Join-Path $repoRoot 'dist'

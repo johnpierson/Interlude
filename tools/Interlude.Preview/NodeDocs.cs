@@ -34,22 +34,6 @@ internal static class NodeDocs
     /// </summary>
     private const string OverloadFormat = "{0}({1})";
 
-    /// <summary>
-    /// Nodes that share another node's example picture.
-    ///
-    /// One graph usually demonstrates several nodes at once — the sample form graph shows a text
-    /// box, a switch and the node that displays them — and its screenshot is the same picture on
-    /// all three pages. Copying a 190 KB image once per node would put it in the package three
-    /// times, and again for each Dynamo version. Each node still gets its own copy of the
-    /// <em>graph</em>, which is small and is what the browser's "open example" needs to find.
-    /// </summary>
-    private static readonly IReadOnlyDictionary<string, string> SharedExampleImages =
-        new Dictionary<string, string>(StringComparer.Ordinal)
-        {
-            ["Interlude.Input.TextBox"] = "Interlude.Form.Show",
-            ["Interlude.Input.Toggle"] = "Interlude.Form.Show",
-        };
-
     internal static void Generate(string folder)
     {
         Directory.CreateDirectory(folder);
@@ -196,9 +180,7 @@ internal static class NodeDocs
     {
         string name = NodeName(node);
 
-        string image = (SharedExampleImages.TryGetValue(name, out string? owner) ? owner : name)
-            + "_img.png";
-
+        string image = name + "_img.png";
         string graph = name + ".dyn";
 
         bool hasImage = File.Exists(Path.Combine(folder, image));
@@ -224,6 +206,20 @@ internal static class NodeDocs
         if (hasImage)
         {
             page.Append("![").Append(ShortName(node)).Append("](./").Append(image).AppendLine(")");
+        }
+
+        // The form the graph builds, drawn by the renderer that will draw it at run time. A reader
+        // deciding whether this is the node they want is asking what it looks like, and the graph
+        // picture above answers a different question.
+        string form = name + "_form.png";
+
+        if (File.Exists(Path.Combine(folder, form)))
+        {
+            page.AppendLine();
+            page.AppendLine("The form it builds:");
+            page.AppendLine();
+            page.Append("![").Append(ShortName(node)).Append(" form](./").Append(form)
+                .AppendLine(")");
         }
     }
 

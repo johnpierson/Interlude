@@ -22,3 +22,14 @@ ___
 Arranging and decorating a form: sections, rows, grids, tabs, and the elements that show something rather than ask something.
 
 Every container takes a list of elements. None of them has a single-element overload, on purpose: with both available, a graph that passes one element to a list port gets replication instead of a container, and produces N containers of one child each rather than one container of N. Pass a list, even a list of one.
+
+___
+## Example File
+
+An example graph ships beside this page as `Interlude.Layout.Spacer.dyn`.
+
+![Layout.Spacer](./Interlude.Layout.Spacer_img.png)
+
+The form it builds:
+
+![Layout.Spacer form](./Interlude.Layout.Spacer_form.png)

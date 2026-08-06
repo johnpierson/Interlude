@@ -26,3 +26,14 @@ Checks applied to a field's answer, for use with `Behavior.WithValidation`.
 Rules run as the user types and block submission while any of them fails. A rule on a field the user cannot see is never applied — a hidden field can never stop a form being submitted, which would otherwise mean an error with no control to fix it.
 
 Except for `Rule.Required`, every rule passes on an empty field. Emptiness is `Behavior.Required`'s business, so an optional field with a range on it stays optional.
+
+___
+## Example File
+
+An example graph ships beside this page as `Interlude.Rule.FileExists.dyn`.
+
+![Rule.FileExists](./Interlude.Rule.FileExists_img.png)
+
+The form it builds:
+
+![Rule.FileExists form](./Interlude.Rule.FileExists_form.png)

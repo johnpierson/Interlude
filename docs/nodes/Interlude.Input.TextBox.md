@@ -35,4 +35,8 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.TextBox.dyn`.
 
-![Input.TextBox](./Interlude.Form.Show_img.png)
+![Input.TextBox](./Interlude.Input.TextBox_img.png)
+
+The form it builds:
+
+![Input.TextBox form](./Interlude.Input.TextBox_form.png)

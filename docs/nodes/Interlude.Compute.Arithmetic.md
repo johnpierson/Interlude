@@ -20,3 +20,14 @@ ___
 Values worked out from other answers, for use with `Behavior.WithComputed`.
 
 A computed field is driven by the form rather than by the user: it recalculates whenever anything it reads changes, in dependency order, so a total built on a subtotal is always consistent. Computed values that depend on each other in a loop are rejected when the form is built, before a window appears.
+
+___
+## Example File
+
+An example graph ships beside this page as `Interlude.Compute.Arithmetic.dyn`.
+
+![Compute.Arithmetic](./Interlude.Compute.Arithmetic_img.png)
+
+The form it builds:
+
+![Compute.Arithmetic form](./Interlude.Compute.Arithmetic_form.png)
