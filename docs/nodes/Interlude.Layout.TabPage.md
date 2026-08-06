@@ -27,7 +27,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.TabPage.dyn`.
 
-![Layout.TabPage](./Interlude.Layout.TabPage_img.png)
+![Layout.TabPage](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.TabPage_img.png)
 
 The form it builds:
 

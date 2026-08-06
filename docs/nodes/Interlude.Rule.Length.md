@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Rule.Length.dyn`.
 
-![Rule.Length](./Interlude.Rule.Length_img.png)
+![Rule.Length](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Rule.Length_img.png)
 
 The form it builds:
 

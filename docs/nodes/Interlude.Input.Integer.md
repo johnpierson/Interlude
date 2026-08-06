@@ -36,7 +36,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.Integer.dyn`.
 
-![Input.Integer](./Interlude.Input.Integer_img.png)
+![Input.Integer](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.Integer_img.png)
 
 The form it builds:
 

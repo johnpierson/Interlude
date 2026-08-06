@@ -25,7 +25,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.GetList.dyn`.
 
-![Result.GetList](./Interlude.Result.GetList_img.png)
+![Result.GetList](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.GetList_img.png)
 
 The form it builds:
 

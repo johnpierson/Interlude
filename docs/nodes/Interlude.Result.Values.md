@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.Values.dyn`.
 
-![Result.Values](./Interlude.Result.Values_img.png)
+![Result.Values](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.Values_img.png)
 
 The form it builds:
 

@@ -26,7 +26,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Compute.Constant.dyn`.
 
-![Compute.Constant](./Interlude.Compute.Constant_img.png)
+![Compute.Constant](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Compute.Constant_img.png)
 
 The form it builds:
 

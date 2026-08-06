@@ -39,7 +39,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.FilePath.dyn`.
 
-![Input.FilePath](./Interlude.Input.FilePath_img.png)
+![Input.FilePath](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.FilePath_img.png)
 
 The form it builds:
 

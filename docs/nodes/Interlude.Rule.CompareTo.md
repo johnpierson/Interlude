@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Rule.CompareTo.dyn`.
 
-![Rule.CompareTo](./Interlude.Rule.CompareTo_img.png)
+![Rule.CompareTo](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Rule.CompareTo_img.png)
 
 The form it builds:
 

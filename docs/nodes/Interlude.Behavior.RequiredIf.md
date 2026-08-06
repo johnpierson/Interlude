@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Behavior.RequiredIf.dyn`.
 
-![Behavior.RequiredIf](./Interlude.Behavior.RequiredIf_img.png)
+![Behavior.RequiredIf](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.RequiredIf_img.png)
 
 The form it builds:
 

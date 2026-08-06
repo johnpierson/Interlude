@@ -32,7 +32,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.DirectoryPath.dyn`.
 
-![Input.DirectoryPath](./Interlude.Input.DirectoryPath_img.png)
+![Input.DirectoryPath](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.DirectoryPath_img.png)
 
 The form it builds:
 

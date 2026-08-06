@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Button.dyn`.
 
-![Layout.Button](./Interlude.Layout.Button_img.png)
+![Layout.Button](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Button_img.png)
 
 The form it builds:
 

@@ -34,7 +34,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.TreeItem.dyn`.
 
-![Input.TreeItem](./Interlude.Input.TreeItem_img.png)
+![Input.TreeItem](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.TreeItem_img.png)
 
 The form it builds:
 

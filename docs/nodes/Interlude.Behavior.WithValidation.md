@@ -25,7 +25,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Behavior.WithValidation.dyn`.
 
-![Behavior.WithValidation](./Interlude.Behavior.WithValidation_img.png)
+![Behavior.WithValidation](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.WithValidation_img.png)
 
 The form it builds:
 

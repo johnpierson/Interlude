@@ -39,7 +39,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.DropDown.dyn`.
 
-![Input.DropDown](./Interlude.Input.DropDown_img.png)
+![Input.DropDown](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.DropDown_img.png)
 
 The form it builds:
 

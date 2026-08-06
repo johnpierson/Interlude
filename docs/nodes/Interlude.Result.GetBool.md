@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.GetBool.dyn`.
 
-![Result.GetBool](./Interlude.Result.GetBool_img.png)
+![Result.GetBool](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.GetBool_img.png)
 
 The form it builds:
 

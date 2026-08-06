@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Compute.If.dyn`.
 
-![Compute.If](./Interlude.Compute.If_img.png)
+![Compute.If](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Compute.If_img.png)
 
 The form it builds:
 

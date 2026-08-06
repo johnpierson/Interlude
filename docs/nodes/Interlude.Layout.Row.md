@@ -31,7 +31,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Row.dyn`.
 
-![Layout.Row](./Interlude.Layout.Row_img.png)
+![Layout.Row](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Row_img.png)
 
 The form it builds:
 

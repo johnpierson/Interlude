@@ -176,6 +176,22 @@ internal static class NodeDocs
     /// that is not there renders as a broken image in the browser panel, which reads as a
     /// packaging fault rather than as a page nobody has illustrated yet.
     /// </summary>
+    /// <summary>
+    /// Where the canvas pictures are fetched from rather than shipped.
+    ///
+    /// They are ~200 KB each and there are 114 of them, which is most of the package; the form
+    /// pictures are a tenth of that in total and stay beside the page. So the help panel always
+    /// shows what the node builds, with or without a network, and only the picture of the graph —
+    /// the one a reader consults after deciding they want the node — needs fetching.
+    ///
+    /// Deliberately a branch rather than a version tag. A tag would pin each release's help to the
+    /// pictures it shipped with, which is tidier, but it 404s for every commit made before that
+    /// tag is pushed, and a broken image in the panel reads as a packaging fault. The rule this
+    /// file already follows for the local case is the same one: never point at what is not there.
+    /// </summary>
+    private const string CanvasImages =
+        "https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/";
+
     private static void AppendExample(StringBuilder page, MethodInfo node, string folder)
     {
         string name = NodeName(node);
@@ -205,7 +221,8 @@ internal static class NodeDocs
 
         if (hasImage)
         {
-            page.Append("![").Append(ShortName(node)).Append("](./").Append(image).AppendLine(")");
+            page.Append("![").Append(ShortName(node)).Append("](").Append(CanvasImages).Append(image)
+                .AppendLine(")");
         }
 
         // The form the graph builds, drawn by the renderer that will draw it at run time. A reader

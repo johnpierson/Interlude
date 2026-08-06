@@ -32,7 +32,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Behavior.WithSize.dyn`.
 
-![Behavior.WithSize](./Interlude.Behavior.WithSize_img.png)
+![Behavior.WithSize](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.WithSize_img.png)
 
 The form it builds:
 

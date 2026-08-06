@@ -27,7 +27,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.GreaterThan.dyn`.
 
-![Condition.GreaterThan](./Interlude.Condition.GreaterThan_img.png)
+![Condition.GreaterThan](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.GreaterThan_img.png)
 
 The form it builds:
 

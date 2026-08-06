@@ -25,7 +25,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Behavior.WithKey.dyn`.
 
-![Behavior.WithKey](./Interlude.Behavior.WithKey_img.png)
+![Behavior.WithKey](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.WithKey_img.png)
 
 The form it builds:
 

@@ -29,7 +29,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Grid.dyn`.
 
-![Layout.Grid](./Interlude.Layout.Grid_img.png)
+![Layout.Grid](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Grid_img.png)
 
 The form it builds:
 

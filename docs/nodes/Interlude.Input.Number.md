@@ -41,7 +41,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.Number.dyn`.
 
-![Input.Number](./Interlude.Input.Number_img.png)
+![Input.Number](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.Number_img.png)
 
 The form it builds:
 

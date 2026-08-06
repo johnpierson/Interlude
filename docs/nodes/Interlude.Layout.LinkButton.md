@@ -29,7 +29,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.LinkButton.dyn`.
 
-![Layout.LinkButton](./Interlude.Layout.LinkButton_img.png)
+![Layout.LinkButton](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.LinkButton_img.png)
 
 The form it builds:
 

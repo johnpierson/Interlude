@@ -38,7 +38,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.Slider.dyn`.
 
-![Input.Slider](./Interlude.Input.Slider_img.png)
+![Input.Slider](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.Slider_img.png)
 
 The form it builds:
 

@@ -40,7 +40,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.ListBox.dyn`.
 
-![Input.ListBox](./Interlude.Input.ListBox_img.png)
+![Input.ListBox](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.ListBox_img.png)
 
 The form it builds:
 

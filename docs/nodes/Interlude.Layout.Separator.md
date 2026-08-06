@@ -26,7 +26,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Separator.dyn`.
 
-![Layout.Separator](./Interlude.Layout.Separator_img.png)
+![Layout.Separator](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Separator_img.png)
 
 The form it builds:
 

@@ -24,7 +24,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Form.Forget.dyn`.
 
-![Form.Forget](./Interlude.Form.Forget_img.png)
+![Form.Forget](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Form.Forget_img.png)
 
 The form it builds:
 

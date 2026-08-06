@@ -63,6 +63,25 @@ like. The section appears only once one of these exists: an image reference to a
 there renders as a broken image in the panel, which reads as a packaging fault rather than as a
 page nobody has illustrated yet.
 
+### Only one of the two pictures ships
+
+The canvas pictures are ~200 KB each, and 114 of them was most of the package. So the pages link
+them from `raw.githubusercontent.com` on `main`, [`pack.ps1`](../../scripts/pack.ps1) leaves them
+out of `doc/`, and the package is 7 MB rather than 30 MB.
+
+The form pictures are a tenth of that in total and still ship, which is the half of the trade worth
+keeping: Dynamo renders this panel in an embedded browser, so a machine with no route to GitHub —
+and plenty of practices are locked down that way — gets no canvas picture. It still gets the page,
+the graph, and a picture of the form the node builds, which is what a reader deciding between two
+nodes is looking at anyway.
+
+The link is to a branch rather than to a release tag on purpose. A tag would pin each release's
+help to the pictures it shipped with, which is tidier, but it 404s for every commit made before
+that tag is pushed — and the rule for the local case above is the same one: never point at what is
+not there. **The two ends have to agree**: `NodeDocs.CanvasImages` writes the link and `pack.ps1`
+decides what to copy, and a page pointing at a picture that is in neither place is worse than
+either choice.
+
 Every node gets its own graph rather than sharing one, because a shared graph answers the question
 "what does this package do" and a reader on a node's page is asking "what does *this node* do".
 

@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Theme.Light.dyn`.
 
-![Theme.Light](./Interlude.Theme.Light_img.png)
+![Theme.Light](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Theme.Light_img.png)
 
 The form it builds:
 

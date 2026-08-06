@@ -29,7 +29,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Theme.WithColors.dyn`.
 
-![Theme.WithColors](./Interlude.Theme.WithColors_img.png)
+![Theme.WithColors](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Theme.WithColors_img.png)
 
 The form it builds:
 

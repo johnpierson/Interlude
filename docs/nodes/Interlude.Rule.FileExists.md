@@ -32,7 +32,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Rule.FileExists.dyn`.
 
-![Rule.FileExists](./Interlude.Rule.FileExists_img.png)
+![Rule.FileExists](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Rule.FileExists_img.png)
 
 The form it builds:
 

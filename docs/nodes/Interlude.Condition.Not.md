@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.Not.dyn`.
 
-![Condition.Not](./Interlude.Condition.Not_img.png)
+![Condition.Not](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.Not_img.png)
 
 The form it builds:
 

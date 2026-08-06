@@ -33,7 +33,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Progress.dyn`.
 
-![Layout.Progress](./Interlude.Layout.Progress_img.png)
+![Layout.Progress](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Progress_img.png)
 
 The form it builds:
 

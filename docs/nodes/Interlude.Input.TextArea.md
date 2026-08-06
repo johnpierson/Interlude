@@ -36,7 +36,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.TextArea.dyn`.
 
-![Input.TextArea](./Interlude.Input.TextArea_img.png)
+![Input.TextArea](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.TextArea_img.png)
 
 The form it builds:
 

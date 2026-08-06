@@ -32,7 +32,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Form.Options.dyn`.
 
-![Form.Options](./Interlude.Form.Options_img.png)
+![Form.Options](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Form.Options_img.png)
 
 The form it builds:
 

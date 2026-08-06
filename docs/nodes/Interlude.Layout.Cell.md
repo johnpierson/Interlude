@@ -32,7 +32,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Cell.dyn`.
 
-![Layout.Cell](./Interlude.Layout.Cell_img.png)
+![Layout.Cell](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Cell_img.png)
 
 The form it builds:
 

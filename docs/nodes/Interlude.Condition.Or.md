@@ -26,7 +26,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.Or.dyn`.
 
-![Condition.Or](./Interlude.Condition.Or_img.png)
+![Condition.Or](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.Or_img.png)
 
 The form it builds:
 

@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.In.dyn`.
 
-![Condition.In](./Interlude.Condition.In_img.png)
+![Condition.In](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.In_img.png)
 
 The form it builds:
 

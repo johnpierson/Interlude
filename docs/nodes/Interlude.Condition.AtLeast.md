@@ -27,7 +27,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.AtLeast.dyn`.
 
-![Condition.AtLeast](./Interlude.Condition.AtLeast_img.png)
+![Condition.AtLeast](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.AtLeast_img.png)
 
 The form it builds:
 

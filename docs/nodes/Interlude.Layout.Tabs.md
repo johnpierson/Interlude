@@ -29,7 +29,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Tabs.dyn`.
 
-![Layout.Tabs](./Interlude.Layout.Tabs_img.png)
+![Layout.Tabs](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Tabs_img.png)
 
 The form it builds:
 

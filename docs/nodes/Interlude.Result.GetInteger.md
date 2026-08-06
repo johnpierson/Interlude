@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.GetInteger.dyn`.
 
-![Result.GetInteger](./Interlude.Result.GetInteger_img.png)
+![Result.GetInteger](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.GetInteger_img.png)
 
 The form it builds:
 

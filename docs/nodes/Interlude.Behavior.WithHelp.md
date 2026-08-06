@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Behavior.WithHelp.dyn`.
 
-![Behavior.WithHelp](./Interlude.Behavior.WithHelp_img.png)
+![Behavior.WithHelp](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.WithHelp_img.png)
 
 The form it builds:
 

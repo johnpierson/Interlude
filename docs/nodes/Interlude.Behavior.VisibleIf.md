@@ -25,7 +25,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Behavior.VisibleIf.dyn`.
 
-![Behavior.VisibleIf](./Interlude.Behavior.VisibleIf_img.png)
+![Behavior.VisibleIf](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.VisibleIf_img.png)
 
 The form it builds:
 

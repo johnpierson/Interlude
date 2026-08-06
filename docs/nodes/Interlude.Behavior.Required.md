@@ -29,7 +29,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Behavior.Required.dyn`.
 
-![Behavior.Required](./Interlude.Behavior.Required_img.png)
+![Behavior.Required](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.Required_img.png)
 
 The form it builds:
 

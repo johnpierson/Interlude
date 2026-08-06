@@ -35,7 +35,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.TextBox.dyn`.
 
-![Input.TextBox](./Interlude.Input.TextBox_img.png)
+![Input.TextBox](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.TextBox_img.png)
 
 The form it builds:
 

@@ -27,7 +27,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Theme.Neubrutalism.dyn`.
 
-![Theme.Neubrutalism](./Interlude.Theme.Neubrutalism_img.png)
+![Theme.Neubrutalism](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Theme.Neubrutalism_img.png)
 
 The form it builds:
 

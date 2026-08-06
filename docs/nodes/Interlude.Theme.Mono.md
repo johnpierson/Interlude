@@ -27,7 +27,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Theme.Mono.dyn`.
 
-![Theme.Mono](./Interlude.Theme.Mono_img.png)
+![Theme.Mono](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Theme.Mono_img.png)
 
 The form it builds:
 

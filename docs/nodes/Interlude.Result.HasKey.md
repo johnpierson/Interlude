@@ -25,7 +25,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.HasKey.dyn`.
 
-![Result.HasKey](./Interlude.Result.HasKey_img.png)
+![Result.HasKey](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.HasKey_img.png)
 
 The form it builds:
 

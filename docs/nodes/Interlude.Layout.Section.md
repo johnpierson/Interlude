@@ -31,7 +31,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Section.dyn`.
 
-![Layout.Section](./Interlude.Layout.Section_img.png)
+![Layout.Section](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Section_img.png)
 
 The form it builds:
 

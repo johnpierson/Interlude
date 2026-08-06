@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.ResetButton.dyn`.
 
-![Layout.ResetButton](./Interlude.Layout.ResetButton_img.png)
+![Layout.ResetButton](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.ResetButton_img.png)
 
 The form it builds:
 

@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Spacer.dyn`.
 
-![Layout.Spacer](./Interlude.Layout.Spacer_img.png)
+![Layout.Spacer](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Spacer_img.png)
 
 The form it builds:
 

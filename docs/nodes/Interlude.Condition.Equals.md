@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.Equals.dyn`.
 
-![Condition.Equals](./Interlude.Condition.Equals_img.png)
+![Condition.Equals](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.Equals_img.png)
 
 The form it builds:
 

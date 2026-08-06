@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.IsNotEmpty.dyn`.
 
-![Condition.IsNotEmpty](./Interlude.Condition.IsNotEmpty_img.png)
+![Condition.IsNotEmpty](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.IsNotEmpty_img.png)
 
 The form it builds:
 

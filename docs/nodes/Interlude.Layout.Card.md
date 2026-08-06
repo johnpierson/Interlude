@@ -31,7 +31,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Card.dyn`.
 
-![Layout.Card](./Interlude.Layout.Card_img.png)
+![Layout.Card](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Card_img.png)
 
 The form it builds:
 

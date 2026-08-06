@@ -27,7 +27,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Compute.Lookup.dyn`.
 
-![Compute.Lookup](./Interlude.Compute.Lookup_img.png)
+![Compute.Lookup](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Compute.Lookup_img.png)
 
 The form it builds:
 

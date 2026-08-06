@@ -26,7 +26,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.IsEmpty.dyn`.
 
-![Condition.IsEmpty](./Interlude.Condition.IsEmpty_img.png)
+![Condition.IsEmpty](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.IsEmpty_img.png)
 
 The form it builds:
 

@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.NotEquals.dyn`.
 
-![Condition.NotEquals](./Interlude.Condition.NotEquals_img.png)
+![Condition.NotEquals](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.NotEquals_img.png)
 
 The form it builds:
 

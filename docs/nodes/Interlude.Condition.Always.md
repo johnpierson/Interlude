@@ -26,7 +26,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.Always.dyn`.
 
-![Condition.Always](./Interlude.Condition.Always_img.png)
+![Condition.Always](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.Always_img.png)
 
 The form it builds:
 

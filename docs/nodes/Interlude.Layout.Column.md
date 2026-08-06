@@ -27,7 +27,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Column.dyn`.
 
-![Layout.Column](./Interlude.Layout.Column_img.png)
+![Layout.Column](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Column_img.png)
 
 The form it builds:
 

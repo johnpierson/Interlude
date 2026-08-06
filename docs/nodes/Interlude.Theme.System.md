@@ -22,7 +22,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Theme.System.dyn`.
 
-![Theme.System](./Interlude.Theme.System_img.png)
+![Theme.System](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Theme.System_img.png)
 
 The form it builds:
 

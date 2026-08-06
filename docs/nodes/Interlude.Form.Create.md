@@ -38,7 +38,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Form.Create.dyn`.
 
-![Form.Create](./Interlude.Form.Create_img.png)
+![Form.Create](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Form.Create_img.png)
 
 The form it builds:
 

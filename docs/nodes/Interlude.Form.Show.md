@@ -42,4 +42,4 @@ ___
 
 An example graph ships beside this page as `Interlude.Form.Show.dyn`.
 
-![Form.Show](./Interlude.Form.Show_img.png)
+![Form.Show](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Form.Show_img.png)

@@ -37,7 +37,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.RadioButtons.dyn`.
 
-![Input.RadioButtons](./Interlude.Input.RadioButtons_img.png)
+![Input.RadioButtons](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.RadioButtons_img.png)
 
 The form it builds:
 

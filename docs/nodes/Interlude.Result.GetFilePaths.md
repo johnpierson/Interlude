@@ -27,7 +27,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.GetFilePaths.dyn`.
 
-![Result.GetFilePaths](./Interlude.Result.GetFilePaths_img.png)
+![Result.GetFilePaths](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.GetFilePaths_img.png)
 
 The form it builds:
 

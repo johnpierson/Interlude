@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Rule.Required.dyn`.
 
-![Rule.Required](./Interlude.Rule.Required_img.png)
+![Rule.Required](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Rule.Required_img.png)
 
 The form it builds:
 

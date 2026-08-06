@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.ButtonClicked.dyn`.
 
-![Result.ButtonClicked](./Interlude.Result.ButtonClicked_img.png)
+![Result.ButtonClicked](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.ButtonClicked_img.png)
 
 The form it builds:
 

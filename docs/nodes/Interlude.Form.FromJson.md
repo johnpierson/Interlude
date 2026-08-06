@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Form.FromJson.dyn`.
 
-![Form.FromJson](./Interlude.Form.FromJson_img.png)
+![Form.FromJson](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Form.FromJson_img.png)
 
 The form it builds:
 

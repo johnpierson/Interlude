@@ -34,7 +34,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Form.ShowDefinition.dyn`.
 
-![Form.ShowDefinition](./Interlude.Form.ShowDefinition_img.png)
+![Form.ShowDefinition](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Form.ShowDefinition_img.png)
 
 The form it builds:
 

@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Expander.dyn`.
 
-![Layout.Expander](./Interlude.Layout.Expander_img.png)
+![Layout.Expander](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Expander_img.png)
 
 The form it builds:
 

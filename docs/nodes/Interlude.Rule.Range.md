@@ -32,7 +32,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Rule.Range.dyn`.
 
-![Rule.Range](./Interlude.Rule.Range_img.png)
+![Rule.Range](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Rule.Range_img.png)
 
 The form it builds:
 

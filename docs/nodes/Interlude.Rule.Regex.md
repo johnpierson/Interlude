@@ -34,7 +34,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Rule.Regex.dyn`.
 
-![Rule.Regex](./Interlude.Rule.Regex_img.png)
+![Rule.Regex](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Rule.Regex_img.png)
 
 The form it builds:
 

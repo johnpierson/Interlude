@@ -26,7 +26,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.IsChecked.dyn`.
 
-![Condition.IsChecked](./Interlude.Condition.IsChecked_img.png)
+![Condition.IsChecked](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.IsChecked_img.png)
 
 The form it builds:
 

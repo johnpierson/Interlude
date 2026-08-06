@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.GetDate.dyn`.
 
-![Result.GetDate](./Interlude.Result.GetDate_img.png)
+![Result.GetDate](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.GetDate_img.png)
 
 The form it builds:
 

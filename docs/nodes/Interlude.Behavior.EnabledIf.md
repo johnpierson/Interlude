@@ -25,7 +25,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Behavior.EnabledIf.dyn`.
 
-![Behavior.EnabledIf](./Interlude.Behavior.EnabledIf_img.png)
+![Behavior.EnabledIf](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.EnabledIf_img.png)
 
 The form it builds:
 

@@ -35,7 +35,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.GetColor.dyn`.
 
-![Result.GetColor](./Interlude.Result.GetColor_img.png)
+![Result.GetColor](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.GetColor_img.png)
 
 The form it builds:
 

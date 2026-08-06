@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Rule.FolderExists.dyn`.
 
-![Rule.FolderExists](./Interlude.Rule.FolderExists_img.png)
+![Rule.FolderExists](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Rule.FolderExists_img.png)
 
 The form it builds:
 

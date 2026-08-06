@@ -26,7 +26,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.And.dyn`.
 
-![Condition.And](./Interlude.Condition.And_img.png)
+![Condition.And](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.And_img.png)
 
 The form it builds:
 

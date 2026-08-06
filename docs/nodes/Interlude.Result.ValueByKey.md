@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.ValueByKey.dyn`.
 
-![Result.ValueByKey](./Interlude.Result.ValueByKey_img.png)
+![Result.ValueByKey](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.ValueByKey_img.png)
 
 The form it builds:
 

@@ -39,7 +39,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.DatePicker.dyn`.
 
-![Input.DatePicker](./Interlude.Input.DatePicker_img.png)
+![Input.DatePicker](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.DatePicker_img.png)
 
 The form it builds:
 

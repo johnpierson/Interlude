@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.EndsWith.dyn`.
 
-![Condition.EndsWith](./Interlude.Condition.EndsWith_img.png)
+![Condition.EndsWith](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.EndsWith_img.png)
 
 The form it builds:
 

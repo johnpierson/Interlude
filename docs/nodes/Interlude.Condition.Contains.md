@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.Contains.dyn`.
 
-![Condition.Contains](./Interlude.Condition.Contains_img.png)
+![Condition.Contains](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.Contains_img.png)
 
 The form it builds:
 

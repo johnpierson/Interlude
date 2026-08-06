@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Markdown.dyn`.
 
-![Layout.Markdown](./Interlude.Layout.Markdown_img.png)
+![Layout.Markdown](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Markdown_img.png)
 
 The form it builds:
 

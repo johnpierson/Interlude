@@ -34,7 +34,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.Toggle.dyn`.
 
-![Input.Toggle](./Interlude.Input.Toggle_img.png)
+![Input.Toggle](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.Toggle_img.png)
 
 The form it builds:
 

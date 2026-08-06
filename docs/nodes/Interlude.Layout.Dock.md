@@ -25,7 +25,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Dock.dyn`.
 
-![Layout.Dock](./Interlude.Layout.Dock_img.png)
+![Layout.Dock](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Dock_img.png)
 
 The form it builds:
 

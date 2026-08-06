@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Compute.Format.dyn`.
 
-![Compute.Format](./Interlude.Compute.Format_img.png)
+![Compute.Format](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Compute.Format_img.png)
 
 The form it builds:
 

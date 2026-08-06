@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.WasSubmitted.dyn`.
 
-![Result.WasSubmitted](./Interlude.Result.WasSubmitted_img.png)
+![Result.WasSubmitted](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.WasSubmitted_img.png)
 
 The form it builds:
 

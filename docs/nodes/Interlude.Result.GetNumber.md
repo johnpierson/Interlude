@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.GetNumber.dyn`.
 
-![Result.GetNumber](./Interlude.Result.GetNumber_img.png)
+![Result.GetNumber](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.GetNumber_img.png)
 
 The form it builds:
 

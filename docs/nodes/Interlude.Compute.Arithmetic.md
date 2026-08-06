@@ -26,7 +26,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Compute.Arithmetic.dyn`.
 
-![Compute.Arithmetic](./Interlude.Compute.Arithmetic_img.png)
+![Compute.Arithmetic](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Compute.Arithmetic_img.png)
 
 The form it builds:
 

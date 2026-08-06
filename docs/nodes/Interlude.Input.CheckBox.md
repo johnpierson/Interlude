@@ -34,7 +34,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.CheckBox.dyn`.
 
-![Input.CheckBox](./Interlude.Input.CheckBox_img.png)
+![Input.CheckBox](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.CheckBox_img.png)
 
 The form it builds:
 

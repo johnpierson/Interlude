@@ -27,7 +27,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Condition.AtMost.dyn`.
 
-![Condition.AtMost](./Interlude.Condition.AtMost_img.png)
+![Condition.AtMost](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Condition.AtMost_img.png)
 
 The form it builds:
 

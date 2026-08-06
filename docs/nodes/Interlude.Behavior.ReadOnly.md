@@ -31,7 +31,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Behavior.ReadOnly.dyn`.
 
-![Behavior.ReadOnly](./Interlude.Behavior.ReadOnly_img.png)
+![Behavior.ReadOnly](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.ReadOnly_img.png)
 
 The form it builds:
 

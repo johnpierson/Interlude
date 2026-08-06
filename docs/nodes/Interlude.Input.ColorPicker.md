@@ -36,7 +36,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Input.ColorPicker.dyn`.
 
-![Input.ColorPicker](./Interlude.Input.ColorPicker_img.png)
+![Input.ColorPicker](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Input.ColorPicker_img.png)
 
 The form it builds:
 

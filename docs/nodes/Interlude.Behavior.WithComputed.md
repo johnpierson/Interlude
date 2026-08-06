@@ -25,7 +25,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Behavior.WithComputed.dyn`.
 
-![Behavior.WithComputed](./Interlude.Behavior.WithComputed_img.png)
+![Behavior.WithComputed](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.WithComputed_img.png)
 
 The form it builds:
 

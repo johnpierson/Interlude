@@ -30,7 +30,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Layout.Scroll.dyn`.
 
-![Layout.Scroll](./Interlude.Layout.Scroll_img.png)
+![Layout.Scroll](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Layout.Scroll_img.png)
 
 The form it builds:
 

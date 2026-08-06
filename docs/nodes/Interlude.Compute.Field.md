@@ -28,7 +28,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Compute.Field.dyn`.
 
-![Compute.Field](./Interlude.Compute.Field_img.png)
+![Compute.Field](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Compute.Field_img.png)
 
 The form it builds:
 

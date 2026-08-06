@@ -26,7 +26,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Result.WasCancelled.dyn`.
 
-![Result.WasCancelled](./Interlude.Result.WasCancelled_img.png)
+![Result.WasCancelled](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Result.WasCancelled_img.png)
 
 The form it builds:
 

@@ -45,7 +45,7 @@ ___
 
 An example graph ships beside this page as `Interlude.Theme.Create.dyn`.
 
-![Theme.Create](./Interlude.Theme.Create_img.png)
+![Theme.Create](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Theme.Create_img.png)
 
 The form it builds:
 
