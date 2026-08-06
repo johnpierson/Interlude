@@ -736,7 +736,7 @@
   "NodeLibraryDependencies": [
     {
       "Name": "Interlude",
-      "Version": "1.0.4",
+      "Version": "1.0.5",
       "ReferenceType": "Package",
       "Nodes": [
         "99d1e9e838dfcd039c99ec8b7c24402c",
