@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -60,6 +61,15 @@ public sealed record FieldComputed : ComputedValue
 /// <summary>
 /// String interpolation over field values: <c>"Hello {firstName} {lastName}"</c>.
 /// Literal braces are written doubled, as in <see cref="string.Format(string, object[])"/>.
+///
+/// A placeholder may carry a .NET format specifier after a colon — <c>{sequence:000}</c>,
+/// <c>{total:F2}</c>, <c>{due:yyyy-MM-dd}</c> — which is the difference between a preview that
+/// reads like the name it is previewing and one that reads like a debugger. Without it the only
+/// available rendering is <see cref="ValueOps.ToStringInvariant"/>, which turns 546.0 into "546"
+/// and 0.1 + 0.2 into "0.30000000000000004".
+///
+/// Field keys are slugs and never contain a colon, so the first colon in a placeholder always
+/// separates the key from the specifier.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
 public sealed record FormatComputed : ComputedValue
@@ -95,8 +105,12 @@ public sealed record FormatComputed : ComputedValue
                     break;
                 }
 
-                string key = Template.Substring(index + 1, close - index - 1).Trim();
-                builder.Append(ValueOps.ToStringInvariant(state.GetValue(key)));
+                SplitPlaceholder(
+                    Template.Substring(index + 1, close - index - 1),
+                    out string key,
+                    out string? specifier);
+
+                builder.Append(Render(state.GetValue(key), specifier));
                 index = close + 1;
                 continue;
             }
@@ -138,13 +152,53 @@ public sealed record FormatComputed : ComputedValue
                 yield break;
             }
 
-            string key = template.Substring(index + 1, close - index - 1).Trim();
+            // The specifier is dropped here on purpose: "{total:F2}" depends on `total`, and a
+            // dependency graph that thought otherwise would order the form wrongly.
+            SplitPlaceholder(template.Substring(index + 1, close - index - 1), out string key, out _);
             if (key.Length > 0)
             {
                 yield return key;
             }
 
             index = close + 1;
+        }
+    }
+
+    /// <summary>Separates <c>total</c> from <c>F2</c> in <c>{total:F2}</c>.</summary>
+    private static void SplitPlaceholder(string placeholder, out string key, out string? specifier)
+    {
+        int colon = placeholder.IndexOf(':');
+
+        if (colon < 0)
+        {
+            key = placeholder.Trim();
+            specifier = null;
+            return;
+        }
+
+        key = placeholder.Substring(0, colon).Trim();
+
+        // Deliberately not trimmed: spaces are significant in a format string, where "0 000"
+        // groups differently from "0000".
+        specifier = placeholder.Substring(colon + 1);
+    }
+
+    private static string Render(object? value, string? specifier)
+    {
+        if (string.IsNullOrEmpty(specifier) || value is not IFormattable formattable)
+        {
+            return ValueOps.ToStringInvariant(value);
+        }
+
+        try
+        {
+            return formattable.ToString(specifier, CultureInfo.InvariantCulture);
+        }
+        catch (FormatException)
+        {
+            // A specifier that is wrong, or simply half-typed, shows the plain value rather than
+            // taking the form down. Templates are edited live and are invalid most of the time.
+            return ValueOps.ToStringInvariant(value);
         }
     }
 }
@@ -200,8 +254,10 @@ public sealed record ArithmeticComputed : ComputedValue
 {
     public ArithmeticOperator Operator { get; init; } = ArithmeticOperator.Add;
 
+    [JsonConverter(typeof(ComputedValueConverter))]
     public ComputedValue Left { get; init; } = new ConstantComputed();
 
+    [JsonConverter(typeof(ComputedValueConverter))]
     public ComputedValue Right { get; init; } = new ConstantComputed();
 
     public override IEnumerable<string> DependsOn()
@@ -272,8 +328,10 @@ public sealed record ConditionalComputed : ComputedValue
 {
     public ConditionExpr Condition { get; init; } = ConstantCondition.True;
 
+    [JsonConverter(typeof(ComputedValueConverter))]
     public ComputedValue IfTrue { get; init; } = new ConstantComputed();
 
+    [JsonConverter(typeof(ComputedValueConverter))]
     public ComputedValue IfFalse { get; init; } = new ConstantComputed();
 
     public override IEnumerable<string> DependsOn()

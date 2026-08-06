@@ -101,6 +101,60 @@ Operators: `equals` `notEquals` `greaterThan` `greaterThanOrEqual` `lessThan` `l
 
 Kinds: `constant` `field` `format` `sum` `arithmetic` `lookup` `conditional`.
 
+### Shorthand
+
+Anywhere a computed value is expected, a bare scalar may stand in for the object.
+
+| What you write | What it means |
+| --- | --- |
+| `"quantity"` | the field `quantity` |
+| `"{quantity} each"` | a format template |
+| `12` or `true` | a constant |
+
+**The brace rule** is the whole of it: a string with a brace in it is a template, one without is a
+field key. A key is a slug and never contains a brace, so the two can never be confused. It is
+also the rule the nodes have always followed — `Compute.Arithmetic("quantity", "Multiply",
+"unitPrice")` means the fields — so a string reads the same way on a port and in the file that
+port's graph saved.
+
+These two are the same form:
+
+```json
+"value": "{prefix}{sampleName}"
+"value": { "$type": "format", "template": "{prefix}{sampleName}" }
+```
+
+It nests, which is where it earns its keep — a preview that chooses between two forms reads as
+three lines rather than nine:
+
+```json
+{
+  "$type": "conditional",
+  "condition": { "$type": "comparison", "key": "addNumber", "operator": "isChecked" },
+  "ifTrue":  "{prefix}{sampleName} {startNumber:000}",
+  "ifFalse": "{prefix}{sampleName}"
+}
+```
+
+!!! note "The shorthand is for writing, not for reading back"
+
+    `Form.ToJson` always writes the long form. That keeps a form written by this release readable
+    by every earlier one, and a file a graph wrote has never looked like a file a person wrote
+    anyway — every other default is expanded too.
+
+### Format specifiers
+
+A placeholder may carry a .NET format specifier after a colon:
+
+```json
+"value": "{prefix}{name} {sequence:000} — {total:F2} — {due:yyyy-MM-dd}"
+```
+
+Without one, numbers print the shortest form that round-trips: a total of `546.0` reads `546`, and
+`0.1 + 0.2` reads `0.30000000000000004`. Field keys are slugs and never contain a colon, so the
+first colon always separates the key from the specifier. A specifier .NET rejects outright falls
+back to the plain value rather than taking the form down mid-keystroke.
+
 ## Rules
 
 ```json

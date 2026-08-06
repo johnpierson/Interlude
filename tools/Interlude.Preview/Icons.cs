@@ -114,6 +114,12 @@ internal static class Icons
         new("Layout.Label", Glyph.Lines),
         new("Layout.LinkButton", Glyph.Button, Badge.ArrowOut),
         new("Layout.Markdown", Glyph.Markdown),
+
+        // The eye, as on Behavior.VisibleIf: a preview is the form showing you something rather
+        // than asking you something. The plate colour already says which family it belongs to,
+        // which is exactly the job the colour is doing.
+        new("Layout.Preview", Glyph.Eye),
+
         new("Layout.Progress", Glyph.ProgressBar),
         new("Layout.ResetButton", Glyph.Reset),
         new("Layout.Row", Glyph.Columns),

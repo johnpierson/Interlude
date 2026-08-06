@@ -1,4 +1,6 @@
+using System.Text.Json.Serialization;
 using Autodesk.DesignScript.Runtime;
+using Interlude.Conditions;
 
 namespace Interlude.Model;
 
@@ -46,6 +48,41 @@ public sealed record ImageElement : DisplayElement
 
     /// <summary>Text for assistive technology.</summary>
     public string? AlternateText { get; init; }
+}
+
+/// <summary>
+/// A derived value shown back to the user, live, as the fields it reads are edited.
+///
+/// A preview answers nothing. It carries no key, contributes nothing to a form's results, and is
+/// never validated — which is the whole reason it exists as its own element rather than as a
+/// read-only input carrying a computed value. That arrangement worked, and it is what people
+/// were doing, but it put an answer nobody gave into the results dictionary and drew a text box
+/// the user would try to type into.
+///
+/// Everything a preview reads must already be on the form. Interlude has no notion of the items
+/// a graph is about to operate on, so a form renaming fifty views previews one sample name that
+/// the author supplies — usually as a field's default value, sometimes as a literal in the
+/// template itself.
+/// </summary>
+[IsVisibleInDynamoLibrary(false)]
+public sealed record PreviewElement : DisplayElement
+{
+    /// <summary>
+    /// What to show. Usually a <see cref="FormatComputed"/>, which in JSON may be written as a
+    /// bare template string.
+    /// </summary>
+    [JsonConverter(typeof(ComputedValueConverter))]
+    public ComputedValue? Value { get; init; }
+
+    /// <summary>Shown while the computed value is empty, in the muted colour.</summary>
+    public string? Placeholder { get; init; }
+
+    /// <summary>
+    /// Renders the value in the fixed-width face. Off by default; worth turning on for the things
+    /// previews are usually made of — file names, codes, parameter values — where a proportional
+    /// face makes it harder to spot a doubled space or a missing separator.
+    /// </summary>
+    public bool IsMonospaced { get; init; }
 }
 
 /// <summary>A dividing line.</summary>

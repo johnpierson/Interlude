@@ -38,6 +38,65 @@
     </Style.Triggers>
   </Style>
 
+  <!--
+      A preview: a value the form works out and shows back, live, as its inputs are edited.
+
+      A read-only TextBox rather than a TextBlock, and only for one reason: the text can then be
+      selected and copied, which is most of what people want from a previewed name. Everything
+      that makes a text box read as a field is taken off — no border, no fill, no shadow, no focus
+      ring — and it is dropped from the tab order, because a preview is not somewhere to stop on
+      the way through a form.
+
+      A dedicated template rather than one based on the text box's, whose IsReadOnly trigger fills
+      the surface to say "you cannot type here". That is the right answer for a computed input and
+      the wrong one here: a preview is not a disabled field, it is a piece of the form's prose.
+  -->
+  <Style x:Key="Interlude.PreviewText" TargetType="{x:Type TextBox}">
+    <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Padding" Value="0" />
+    <Setter Property="MinHeight" Value="{DynamicResource Interlude.ControlHeight}" />
+    <Setter Property="FontSize" Value="{DynamicResource Interlude.FontSize}" />
+    <Setter Property="FontFamily" Value="{DynamicResource Interlude.FontFamily}" />
+    <Setter Property="SelectionBrush" Value="{DynamicResource Interlude.Accent}" />
+    <Setter Property="VerticalContentAlignment" Value="Center" />
+    <Setter Property="TextWrapping" Value="Wrap" />
+    <Setter Property="IsReadOnly" Value="True" />
+    <Setter Property="IsReadOnlyCaretVisible" Value="False" />
+    <Setter Property="IsTabStop" Value="False" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type TextBox}">
+          <!-- Transparent rather than unset, so the whole width is hit-testable for selection. -->
+          <Grid Background="Transparent">
+            <TextBlock x:Name="Placeholder"
+                       Text="{Binding RelativeSource={RelativeSource TemplatedParent},
+                                      Path=(interlude:FieldState.Placeholder)}"
+                       Foreground="{DynamicResource Interlude.ForegroundMuted}"
+                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                       TextWrapping="Wrap"
+                       IsHitTestVisible="False"
+                       Visibility="Collapsed" />
+            <ScrollViewer x:Name="PART_ContentHost"
+                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                          Focusable="False"
+                          HorizontalScrollBarVisibility="Hidden"
+                          VerticalScrollBarVisibility="Hidden" />
+          </Grid>
+          <ControlTemplate.Triggers>
+            <Trigger Property="Text" Value="">
+              <Setter TargetName="Placeholder" Property="Visibility" Value="Visible" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+              <Setter Property="Foreground" Value="{DynamicResource Interlude.ForegroundDisabled}" />
+            </Trigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
   <Style TargetType="{x:Type TextBox}">
     <Setter Property="Foreground" Value="{DynamicResource Interlude.Foreground}" />
     <Setter Property="Background" Value="{DynamicResource Interlude.ControlBackground}" />

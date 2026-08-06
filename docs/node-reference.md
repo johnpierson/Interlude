@@ -178,6 +178,7 @@ Layout.Section("Advanced", [
 | Node | Parameters |
 | --- | --- |
 | **Label** | `text`, `headingLevel = 0`, `muted = false` |
+| **Preview** | `label`, `value`, `placeholder = ""`, `monospaced = false` |
 | **Markdown** | `text` |
 | **Image** | `path`, `width = null`, `height = null`, `alternateText = ""` |
 | **Separator** | `caption = ""` |
@@ -188,6 +189,16 @@ Layout.Section("Advanced", [
 
 `Markdown` supports headings, **bold**, *italic*, `code`, links, bullet and numbered lists, and
 horizontal rules. It is a deliberate subset — see [architecture](architecture.md).
+
+`Preview` shows a value the form works out, live, as the fields it reads are edited. `value` is a
+template — `"{prefix}{sample_name}"` — or any `Compute` node. A placeholder may carry a format
+specifier: `{sequence:000}`, `{total:F2}`, `{due:yyyy-MM-dd}`.
+
+A preview **answers nothing**: no key, never in `values`, never validated. That is what separates
+it from a read-only field carrying a computed value — use that one when you need the result back
+out of the form. Everything a preview shows must already be on the form, so a form renaming fifty
+views previews one sample name the author puts there. See
+[Preview what a form is about to do](recipes.md#preview-what-a-form-is-about-to-do).
 
 `Progress` shows a fixed value. Nothing in the form updates it while it is open. Give it
 `segments` to draw discrete cells instead of a continuous fill — "five of seven days" reads off a
@@ -308,7 +319,9 @@ Dividing by zero gives zero rather than infinity, so a half-filled form shows a 
 rather than a symbol.
 
 > **A bare string in an operand port is a field key**, not literal text — that is what it means
-> nine times out of ten in that position. Use `Compute.Constant` when you really do mean the text.
+> nine times out of ten in that position. Unless it contains a brace, in which case it is a
+> template, because a key never does: `Compute.If(c, "{prefix}{name}", "{name}")` needs no
+> `Compute.Format` around either branch. Use `Compute.Constant` when you really do mean the text.
 
 Computed fields become read-only and update whenever anything they read changes, in dependency
 order. **Loops are rejected when the form is built**, before a window appears.

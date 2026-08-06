@@ -30,6 +30,7 @@ internal static class Gallery
         new("Every container", "Stacks, grids, tabs, cards, splitters.", EveryContainer),
         new("Conditional form", "Fields that appear, enable and become required in response to others.", Conditional),
         new("Computed values", "A quantity takeoff whose totals recalculate as you type.", Computed),
+        new("Rename views", "A live preview of a rename rule, following every keystroke.", RenameViews),
         new("Validation", "Rules that fire while typing, including one that reads another field.", Validation),
         new("Long form", "Fifty fields, for checking scrolling and performance.", LongForm),
         new("Minimal", "The smallest useful form.", Minimal),
@@ -417,6 +418,72 @@ internal static class Gallery
                 Computed = new FormatComputed
                 {
                     Template = "{quantity} items for {orderedBy}, £{total} including VAT",
+                },
+            },
+        },
+    }.WithResolvedKeys();
+
+    /// <summary>
+    /// The form the preview element was built for: a rename rule, shown against one name as the
+    /// rule is described.
+    ///
+    /// Note where the sample name comes from. Interlude knows nothing about the fifty views the
+    /// graph is holding, so the author puts one on the form — as an ordinary field with a default,
+    /// which costs a line and earns it back, because the user can paste an awkward name in and see
+    /// what the rule does to it before committing.
+    /// </summary>
+    private static FormDefinition RenameViews() => new FormDefinition
+    {
+        Title = "Rename views",
+        Description = "Describe the rule. The new name follows as you type.",
+        Window = new WindowOptions { Width = 460 },
+        Elements = new FormElement[]
+        {
+            new TextBoxElement
+            {
+                Key = "sampleName",
+                Label = "Sample name",
+                DefaultValue = "L1 - Floor Plan",
+                HelpText = "What the preview is shown against. Paste an awkward one in to try the rule.",
+            },
+            new SeparatorElement(),
+            new TextBoxElement { Key = "prefix", Label = "Prefix", DefaultValue = "WIP_" },
+            new TextBoxElement { Key = "suffix", Label = "Suffix", Placeholder = "none" },
+            new CheckBoxElement { Key = "addNumber", Content = "Number them", DefaultValue = true },
+            new IntegerElement
+            {
+                Key = "startNumber",
+                Label = "Start at",
+                DefaultValue = 1,
+                Minimum = 0,
+                VisibleIf = new ComparisonCondition
+                {
+                    Key = "addNumber",
+                    Operator = ComparisonOperator.IsChecked,
+                },
+            },
+            new SeparatorElement(),
+            new PreviewElement
+            {
+                Label = "New name",
+                Placeholder = "Nothing to rename to yet",
+                IsMonospaced = true,
+                Value = new ConditionalComputed
+                {
+                    Condition = new ComparisonCondition
+                    {
+                        Key = "addNumber",
+                        Operator = ComparisonOperator.IsChecked,
+                    },
+
+                    // The specifier is the whole point of the numbered branch: without it a
+                    // sequence reads 1, 2, 3 where every naming standard ever written wants
+                    // 001, 002, 003.
+                    IfTrue = new FormatComputed
+                    {
+                        Template = "{prefix}{sampleName}{suffix} {startNumber:000}",
+                    },
+                    IfFalse = new FormatComputed { Template = "{prefix}{sampleName}{suffix}" },
                 },
             },
         },

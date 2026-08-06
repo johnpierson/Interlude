@@ -11,6 +11,60 @@ package version and `FileVersion` are what move.
 
 ## [Unreleased]
 
+### Added
+
+- **`Layout.Preview` — a value the form works out and shows back, live, as its inputs are edited.**
+
+  ```
+  Layout.Preview("New name", "{prefix}{sample_name}{suffix}")
+  ```
+
+  This was already possible, by putting a computed value on a read-only text box, and that is what
+  people were doing. It cost three nodes, put an answer nobody gave into the results dictionary,
+  and drew a text box the user would try to type into. A preview has no key, never appears in
+  `values`, is never validated and is not a tab stop. The text is selectable, because the thing
+  people most often want from a previewed name is to paste it somewhere.
+
+  A preview can only read what is already on the form — Interlude has no notion of the fifty
+  elements a graph is about to rename, so the author puts one sample on the form as an ordinary
+  field with a default. That field being editable turns out to be the feature: it is how someone
+  tries the rule against the worst name in the model before committing to it.
+
+- **Format specifiers in templates.** `{sequence:000}` pads to three digits, `{total:F2}` fixes two
+  decimals, `{due:yyyy-MM-dd}` writes a date the way a file name wants it. Any .NET specifier works
+  after the colon; field keys are slugs and never contain one, so the first colon always separates
+  the two. Without a specifier a number prints the shortest form that round-trips, which is why a
+  total of 546.0 used to read `546` and a sequence starting at 1 could not read `001`.
+
+- **A shorthand for computed values in JSON.** A bare scalar may stand in for the object: a string
+  with a brace in it is a template, a string without one is a field key, and a number or boolean is
+  a constant.
+
+  ```json
+  "value": "{prefix}{sampleName}"
+  "ifTrue": "{prefix}{sampleName} {startNumber:000}"
+  "left": "quantity"
+  ```
+
+  The brace rule is the one the nodes have always followed — `Compute.Arithmetic("quantity",
+  "Multiply", "unitPrice")` has meant the fields since the first release — so a string now reads
+  the same way on a port and in the file that port's graph saved. `Form.ToJson` still writes the
+  long form, which keeps a form written by this release readable by every earlier one.
+
+### Changed
+
+- **`Compute.If` and `Compute.Arithmetic` accept a template directly.** A bare string containing a
+  brace is now read as a format template rather than as the key of a field that does not exist, so
+  `Compute.If(c, "{prefix}{name}", "{name}")` no longer needs `Compute.Format` around each branch.
+  A string with no brace is still a field key.
+
+### Fixed
+
+- **`requiredIf` on an element that collects nothing no longer blocks submission for ever.** A
+  label, a container or a preview has no value and never will, so a required one could not be
+  satisfied — and reported no error against any field, because there was no field to report it
+  against. Only elements that produce a value can now be required.
+
 ## [1.0.3] - 2026-08-03
 
 ### Changed

@@ -246,6 +246,16 @@ A run of static text.
 | `wrapText` | boolean | `true` |  |
 | `isMuted` | boolean | `false` | Renders in the muted colour, for captions and asides. |
 
+### `preview`
+
+A derived value shown back to the user, live, as the fields it reads are edited.
+
+| Property | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `value` | computed value | `null` | What to show. Usually a `Conditions.FormatComputed`, which in JSON may be written as a bare template string. |
+| `placeholder` | string | `null` | Shown while the computed value is empty, in the muted colour. |
+| `isMonospaced` | boolean | `false` | Renders the value in the fixed-width face. Off by default; worth turning on for the things previews are usually made of — file names, codes, parameter values — where a proportional face makes it harder to spot a doubled space or a missing separator. |
+
 ### `markdown`
 
 A block of lightweight Markdown: headings, bold, italic, inline code, links, bullet and numbered lists, and rules. This is a small, predictable subset rendered natively rather than a full CommonMark implementation, which would mean either a dependency or a parser far larger than the rest of the package.
