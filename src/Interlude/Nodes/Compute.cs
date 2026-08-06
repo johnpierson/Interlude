@@ -23,6 +23,15 @@ public class Compute
     /// <summary>
     /// Fills field values into a template: <c>"Hello {firstName} {lastName}"</c>. Write a literal
     /// brace by doubling it.
+    ///
+    /// A placeholder may carry a .NET format specifier after a colon, which is usually what stands
+    /// between a template and something worth showing someone: <c>{sequence:000}</c> pads to three
+    /// digits, <c>{total:F2}</c> fixes two decimals, <c>{due:yyyy-MM-dd}</c> writes a date the way
+    /// a file name wants it. Without one, numbers print the shortest form that round-trips, so a
+    /// total of 546.0 reads "546" and 0.1 + 0.2 reads "0.30000000000000004".
+    ///
+    /// To show the result on the form rather than store it, <c>Layout.Preview</c> takes a template
+    /// directly and needs neither this node nor a field to put the answer in.
     /// </summary>
     /// <param name="template">The text, with field keys in braces.</param>
     /// <returns name="computation">The computation.</returns>
@@ -157,14 +166,10 @@ public class Compute
     /// <summary>
     /// Reads an operand port.
     ///
-    /// A bare string is treated as a field key rather than as literal text, because that is what
-    /// it means nine times out of ten in this position. Use <c>Compute.Constant</c> when the
-    /// literal text is genuinely what was wanted.
+    /// A bare string is a field key rather than literal text, because that is what it means nine
+    /// times out of ten in this position — unless it contains a brace, in which case it is a
+    /// template, because a key never does. Use <c>Compute.Constant</c> when the literal text is
+    /// genuinely what was wanted.
     /// </summary>
-    private static ComputedValue Operand(object? value) => value switch
-    {
-        ComputedValue computed => computed,
-        string key when key.Length > 0 => new FieldComputed { Key = key },
-        _ => new ConstantComputed { Value = value },
-    };
+    private static ComputedValue Operand(object? value) => NodeSupport.AsOperand(value);
 }

@@ -107,6 +107,26 @@ internal static class NodeSupport
     };
 
     /// <summary>
+    /// Reads a port that accepts a computation, a field key, or a template.
+    ///
+    /// The brace rule: a bare string with a brace in it is a template, one without is a field key.
+    /// Both readings are wanted in these ports — <c>Compute.Arithmetic("quantity", ...)</c> means
+    /// the field, <c>Layout.Preview("New name", "{prefix}{name}")</c> means the text — and one
+    /// character tells them apart, because a key is a slug and never contains a brace.
+    ///
+    /// The JSON converter applies the same rule to the same slots. That symmetry is the point: a
+    /// string that means one thing on a port and another in the file that port's graph saved would
+    /// be a genuinely nasty thing to debug.
+    /// </summary>
+    internal static ComputedValue AsOperand(object? value) => value switch
+    {
+        ComputedValue computed => computed,
+        string text when text.Contains('{') => new FormatComputed { Template = text },
+        string key when key.Length > 0 => new FieldComputed { Key = key },
+        _ => new ConstantComputed { Value = value },
+    };
+
+    /// <summary>
     /// Applies the shared trailing options every input node carries. Keeping them in one place
     /// is what makes "key, tooltip, helpText" mean the same thing on all twenty of them.
     /// </summary>

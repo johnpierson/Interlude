@@ -115,6 +115,10 @@ public class ListPortTests
             ["Compute.If.ifTrue"] = "one operand",
             ["Compute.If.ifFalse"] = "one operand",
 
+            // One template or one computation. A list on this port replicates into one preview
+            // per item, which is the useful reading and the one lacing already gives.
+            ["Layout.Preview.value"] = "one template, or one computation",
+
             ["Layout.Image.width"] = "one measurement, or null for the picture's own size",
             ["Layout.Image.height"] = "one measurement, or null for the picture's own size",
 

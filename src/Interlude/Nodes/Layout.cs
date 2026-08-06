@@ -369,6 +369,52 @@ public class Layout
         };
 
     /// <summary>
+    /// A value the form works out and shows back, live, as the fields it reads are edited.
+    ///
+    /// <c>value</c> is usually a template — <c>"{prefix}{sample_name}{suffix}"</c> — where each
+    /// name in braces is a field's key. It also accepts any <c>Compute</c> node, for a preview
+    /// that has to choose between two forms:
+    ///
+    /// <code>
+    /// Layout.Preview("New name",
+    ///     Compute.If(Condition.IsChecked("add_number"),
+    ///                Compute.Format("{prefix}{sample_name} {start_number:000}"),
+    ///                Compute.Format("{prefix}{sample_name}")))
+    /// </code>
+    ///
+    /// A placeholder may carry a format specifier after a colon: <c>{start_number:000}</c> pads
+    /// to three digits, <c>{total:F2}</c> fixes two decimals, <c>{due:yyyy-MM-dd}</c> writes a
+    /// date the way a file name wants it.
+    ///
+    /// A preview answers nothing. It has no key, never appears in a form's results, and is never
+    /// validated — which is what separates it from a read-only field carrying a computed value.
+    /// Reach for that instead when you need the value back out of the form.
+    ///
+    /// Everything a preview shows must already be on the form. Interlude knows nothing about the
+    /// items a graph is about to work on, so a form renaming fifty views previews one sample name
+    /// the author supplies — most naturally as the default value of a field the user can edit,
+    /// which doubles as a way to try the rule against an awkward name.
+    /// </summary>
+    /// <param name="label">The caption, shown in the same column as the fields' labels.</param>
+    /// <param name="value">A template string, or a computation from the <c>Compute</c> nodes.</param>
+    /// <param name="placeholder">Shown while the value is empty.</param>
+    /// <param name="monospaced">Render in a fixed-width face, for names, codes and paths.</param>
+    /// <returns name="element">The form element.</returns>
+    /// <search>preview,live,derived,computed,summary,result,format,template</search>
+    public static FormElement Preview(
+        string label,
+        object value,
+        string placeholder = "",
+        bool monospaced = false)
+        => new PreviewElement
+        {
+            Label = label,
+            Value = NodeSupport.AsOperand(value),
+            Placeholder = NodeSupport.OrNull(placeholder),
+            IsMonospaced = monospaced,
+        };
+
+    /// <summary>
     /// A block of Markdown, for anything longer than a sentence.
     ///
     /// Supports headings, bold, italic, inline code, links, bullet and numbered lists, and

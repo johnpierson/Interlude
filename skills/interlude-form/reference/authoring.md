@@ -24,6 +24,7 @@ The question is what the answer *is*, not what the control looks like.
 | A date | `datePicker` |
 | A colour | `colorPicker` |
 | A path | `filePicker` or `folderPicker` |
+| *Nothing* — the form works it out and shows it | `preview` |
 
 Two that get confused: **`radioGroup` versus `dropdown`** is about how many options, not how
 important the choice is — three options in a drop-down hide two of them for no reason, and twelve
@@ -74,10 +75,29 @@ answerable — a folder picker beside the check box that turns it on.
 **`requiredIf` over `required` when a field is conditional.** A required field that is hidden is
 not applied, which is the behaviour you want and is worth knowing before you rely on it.
 
-**Computed values make the form own a field.** A total, a derived code, a preview of a name the
-graph will build. They recalculate in dependency order, and a loop between them is rejected when
-the form is built rather than discovered as a hang. Set `isReadOnly` on anything computed unless
-the user is genuinely allowed to override it.
+**Computed values make the form own a field.** A total, a derived code, a running count. They
+recalculate in dependency order, and a loop between them is rejected when the form is built rather
+than discovered as a hang. Set `isReadOnly` on anything computed unless the user is genuinely
+allowed to override it.
+
+**To *show* a derived value rather than collect one, use `preview`, not a read-only field.** A
+preview has no key, never appears in the answers and is never validated, which is what you want
+for "here is the name this rule will produce". A read-only computed field is for when the graph
+needs the value back out of the form.
+
+```json
+{ "$type": "preview", "label": "New name", "value": "{prefix}{sample_name}{suffix}" }
+```
+
+A preview can only read what is already on the form. Interlude knows nothing about the fifty
+elements the graph is about to rename, so put one sample on the form as an ordinary field with a
+`defaultValue` — which has the side benefit that the user can edit it to try the rule against an
+awkward case. Never invent a mechanism for the form to reach the graph's data; there isn't one.
+
+Templates interpolate but do not transform: there is no find-and-replace, substring or case
+change. If the rule needs those, the graph does the work and the preview can only show the parts
+the form itself can compute — say so in `helpText` rather than previewing something that is not
+quite what will happen.
 
 **Validation runs while the user types.** A `regex` rule wants a `message` that says what the
 right shape is — "Use the form ABC-1234." — not one that says the value is invalid, which the

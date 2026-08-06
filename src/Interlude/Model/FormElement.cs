@@ -36,6 +36,7 @@ namespace Interlude.Model;
 [JsonDerivedType(typeof(FilePickerElement), "filePicker")]
 [JsonDerivedType(typeof(FolderPickerElement), "folderPicker")]
 [JsonDerivedType(typeof(LabelElement), "label")]
+[JsonDerivedType(typeof(PreviewElement), "preview")]
 [JsonDerivedType(typeof(MarkdownElement), "markdown")]
 [JsonDerivedType(typeof(ImageElement), "image")]
 [JsonDerivedType(typeof(SeparatorElement), "separator")]
@@ -146,6 +147,7 @@ public abstract record InputElement : FormElement
     /// When set, this input is driven by the form rather than by the user: its value is
     /// recomputed whenever anything it depends on changes.
     /// </summary>
+    [JsonConverter(typeof(ComputedValueConverter))]
     public ComputedValue? Computed { get; init; }
 
     /// <summary>A read-only input is shown normally but cannot be edited.</summary>

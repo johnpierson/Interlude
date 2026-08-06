@@ -10,6 +10,7 @@ Worked examples of Interlude forms as JSON. Load one with `Form.FromJson` and sh
 | `every-container.json` | Stacks, grids, tabs, cards, splitters. |
 | `conditional-form.json` | Fields that appear, enable and become required in response to others. |
 | `computed-values.json` | A quantity takeoff whose totals recalculate as you type. |
+| `rename-views.json` | A live preview of a rename rule, following every keystroke. |
 | `validation.json` | Rules that fire while typing, including one that reads another field. |
 | `long-form.json` | Fifty fields, for checking scrolling. |
 | `mono.json` | The monochrome theme: pills, spaced capitals, no colour. |

@@ -33,6 +33,7 @@ public sealed class FormSession
     private readonly Dictionary<string, InputElement> _inputsByKey;
     private readonly IReadOnlyList<FormElement> _ordered;
     private readonly IReadOnlyList<string> _computedOrder;
+    private readonly IReadOnlyList<PreviewElement> _previews;
     private readonly List<string> _warnings = new();
 
     private int _propagationDepth;
@@ -63,6 +64,7 @@ public sealed class FormSession
         SeedValues(initialValues);
 
         _computedOrder = BuildComputedOrder();
+        _previews = _ordered.OfType<PreviewElement>().Where(preview => preview.Value is not null).ToList();
         CollectUnknownKeyWarnings();
 
         // Settle the form before anyone can see it: computed values, visibility and validation
@@ -395,6 +397,14 @@ public sealed class FormSession
                     referenced.Add(key);
                 }
             }
+
+            if (element is PreviewElement { Value: not null } preview)
+            {
+                foreach (string key in preview.Value!.DependsOn())
+                {
+                    referenced.Add(key);
+                }
+            }
         }
 
         foreach (string key in referenced.OrderBy(k => k, StringComparer.Ordinal))
@@ -438,6 +448,7 @@ public sealed class FormSession
         try
         {
             EvaluateComputedValues(changes);
+            EvaluatePreviews(changes);
             EvaluateVisibilityAndEnablement(changes);
             EvaluateValidation(changes);
         }
@@ -481,6 +492,29 @@ public sealed class FormSession
         }
     }
 
+    /// <summary>
+    /// Recomputes what each preview shows.
+    ///
+    /// Previews run after the computed values and outside the dependency graph entirely, which
+    /// they can afford to do because they are pure sinks: a preview reads form state and writes
+    /// none, has no key for anything to refer to, and therefore cannot be part of a cycle. All it
+    /// needs is to be evaluated once the values it reads have settled.
+    /// </summary>
+    private void EvaluatePreviews(Dictionary<FormElement, StateChangeKind> changes)
+    {
+        foreach (PreviewElement preview in _previews)
+        {
+            object? next = preview.Value!.Compute(_store);
+            ElementRuntimeState state = _states[preview];
+
+            if (!ValueOps.AreEqual(state.Value, next))
+            {
+                state.Value = next;
+                Mark(changes, preview, StateChangeKind.Value);
+            }
+        }
+    }
+
     private void EvaluateVisibilityAndEnablement(Dictionary<FormElement, StateChangeKind> changes)
     {
         // _ordered is pre-order, so a parent's resolved state is always available to its children.
@@ -500,7 +534,13 @@ public sealed class FormSession
 
             bool visible = parentVisible && (element.VisibleIf?.Evaluate(_store) ?? true);
             bool enabled = parentEnabled && (element.EnabledIf?.Evaluate(_store) ?? true);
-            bool required = visible && (element.RequiredIf?.Evaluate(_store) ?? false);
+
+            // Only an element the user can answer can be required. A preview, a label or a
+            // container has no value and never will, so a RequiredIf on one used to block
+            // submission for ever with no field to point at and no message to explain it.
+            bool required = visible
+                            && element.ProducesValue
+                            && (element.RequiredIf?.Evaluate(_store) ?? false);
 
             if (state.IsVisible != visible)
             {

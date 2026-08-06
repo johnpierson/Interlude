@@ -11,6 +11,7 @@ rather than just the wiring.
 [Progressive disclosure](#progressive-disclosure) ·
 [Cross-field validation](#cross-field-validation) ·
 [A live total](#a-live-total) ·
+[Preview what a form is about to do](#preview-what-a-form-is-about-to-do) ·
 [Remember answers between runs](#remember-answers-between-runs) ·
 [Run a graph unattended](#run-a-graph-unattended) ·
 [Ship a form as a file](#ship-a-form-as-a-file) ·
@@ -200,13 +201,65 @@ them in any order; the dependency graph decides.
 
 A loop (`a` from `b`, `b` from `a`) is rejected when the form is built, with both keys named.
 
-For a text summary, `Compute.Format`:
+For a text summary you want back out of the form, `Compute.Format` into a field:
 
 ```
 Behavior.WithComputed(
     Input.TextBox("Summary", key: "summary"),
     Compute.Format("{quantity} items for {orderedBy}, £{total} including VAT"))
 ```
+
+To show one without collecting it, use `Layout.Preview` instead — see below.
+
+---
+
+## Preview what a form is about to do
+
+**The problem.** A form describes a rename rule, and the user is guessing what it will produce.
+
+**The fix.** `Layout.Preview`. It takes a template and shows the result, live, as the fields it
+reads are edited:
+
+```
+Layout.Preview("New name", "{prefix}{sample_name}{suffix}")
+```
+
+One node. A preview answers nothing: it has no key, never appears in `values`, and is never
+validated. That is the difference between it and a read-only field carrying a computed value —
+reach for that one when you need the result back out of the form, and this one when you just need
+the user to see it.
+
+**Where the sample comes from.** A preview shows one thing, and Interlude knows nothing about the
+fifty views your graph is holding. So put the sample on the form:
+
+```
+Input.TextBox("Sample name", key: "sample_name", defaultValue: firstViewName)
+```
+
+That costs a line and earns it back, because the field is editable: someone can paste the worst
+name in the model into it and see what the rule does before committing to it.
+
+**Choosing between two forms.** `value` accepts any `Compute` node, not just a template:
+
+```
+Layout.Preview("New name",
+    Compute.If(Condition.IsChecked("add_number"),
+               Compute.Format("{prefix}{sample_name} {start_number:000}"),
+               Compute.Format("{prefix}{sample_name}")))
+```
+
+**Numbers.** `{start_number:000}` pads to three digits. Any .NET format specifier works after the
+colon — `{total:F2}`, `{due:yyyy-MM-dd}` — and without one a number prints the shortest form that
+round-trips, so 546.0 reads `546`. This bites in previews more than anywhere else, because a
+preview is the one place the exact characters are the point.
+
+**What a preview cannot do.** Templates interpolate; they do not transform. There is no
+find-and-replace, no substring, no case change. A rename rule of that kind has to be computed in
+the graph, and the preview can only show what the form itself can work out. If that is your rule,
+show the parts you can and say so in the help text rather than previewing something that is not
+quite what will happen.
+
+[`samples/rename-views.json`](../samples/rename-views.json) is this recipe as a working form.
 
 ---
 

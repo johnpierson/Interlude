@@ -86,6 +86,7 @@
   Label(string text, int headingLevel = 0, bool muted = false) -> FormElement
   LinkButton(string text, string url) -> FormElement
   Markdown(string text) -> FormElement
+  Preview(string label, object value, string placeholder = "", bool monospaced = false) -> FormElement
   Progress(double value = 0, double maximum = 100, bool indeterminate = false, int segments = 0) -> FormElement
   ResetButton(string text = "Reset") -> FormElement
   Row(List<FormElement> elements, bool equalWidths = false, bool wrap = false, double spacing = -1) -> FormElement

@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Autodesk.DesignScript.Runtime;
+using Interlude.Conditions;
 using Interlude.Model;
 using Interlude.Runtime;
 using Interlude.Theming;
@@ -54,6 +55,57 @@ internal sealed class LabelRenderer : ControlRenderer<LabelElement>
         }
 
         return text;
+    }
+}
+
+/// <summary>
+/// A live derived value.
+///
+/// Uses the field chrome, unlike every other display element. That is the point of it: a preview
+/// is read as the answer to the fields above it, so its label belongs in the same column as
+/// theirs. The chrome's error line is built and stays collapsed for ever, which costs one
+/// TextBlock and buys the alignment for free.
+///
+/// Nothing here is wired to <see cref="RenderContext.ReportValue"/>. A preview has no key and no
+/// answer to report; the session pushes values in through <see cref="WriteValue"/> and the
+/// traffic is one-way.
+/// </summary>
+[IsVisibleInDynamoLibrary(false)]
+internal sealed class PreviewRenderer : ControlRenderer<PreviewElement>
+{
+    protected override FrameworkElement BuildCore(PreviewElement element, RenderContext context)
+    {
+        TextBox text = new();
+        text.SetResourceReference(FrameworkElement.StyleProperty, "Interlude.PreviewText");
+
+        if (!string.IsNullOrEmpty(element.Placeholder))
+        {
+            FieldState.SetPlaceholder(text, element.Placeholder!);
+        }
+
+        if (element.IsMonospaced)
+        {
+            // Named directly rather than through a theme key: this is one element opting out of
+            // the form's face, not a property of the theme.
+            text.FontFamily = new System.Windows.Media.FontFamily("Consolas, Courier New, monospace");
+        }
+
+        return text;
+    }
+
+    public override object? ReadValue(FrameworkElement control) => ((TextBox)control).Text;
+
+    public override void WriteValue(FrameworkElement control, object? value)
+    {
+        TextBox text = (TextBox)control;
+        string rendered = ValueOps.ToStringInvariant(value);
+
+        // Assigning Text drops any selection the user has made, so only do it when the text has
+        // actually changed — otherwise a keystroke in another field clears a half-made copy.
+        if (!string.Equals(text.Text, rendered, StringComparison.Ordinal))
+        {
+            text.Text = rendered;
+        }
     }
 }
 

@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "title": "Rename views",
+  "description": "Describe the rule. The new name follows as you type.",
+  "elements": [
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "defaultValue": "L1 - Floor Plan",
+      "isReadOnly": false,
+      "key": "sampleName",
+      "label": "Sample name",
+      "helpText": "What the preview is shown against. Paste an awkward one in to try the rule.",
+      "rules": []
+    },
+    {
+      "$type": "separator",
+      "orientation": "horizontal",
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "defaultValue": "WIP_",
+      "isReadOnly": false,
+      "key": "prefix",
+      "label": "Prefix",
+      "rules": []
+    },
+    {
+      "$type": "textBox",
+      "placeholder": "none",
+      "isMultiline": false,
+      "lines": 4,
+      "wrapText": true,
+      "isReadOnly": false,
+      "key": "suffix",
+      "label": "Suffix",
+      "rules": []
+    },
+    {
+      "$type": "checkBox",
+      "content": "Number them",
+      "defaultValue": true,
+      "isReadOnly": false,
+      "key": "addNumber",
+      "rules": []
+    },
+    {
+      "$type": "integer",
+      "minimum": 0,
+      "increment": 1,
+      "showSpinner": true,
+      "defaultValue": 1,
+      "isReadOnly": false,
+      "key": "startNumber",
+      "label": "Start at",
+      "visibleIf": {
+        "$type": "comparison",
+        "key": "addNumber",
+        "operator": "isChecked",
+        "ignoreCase": false
+      },
+      "rules": []
+    },
+    {
+      "$type": "separator",
+      "orientation": "horizontal",
+      "key": "",
+      "rules": []
+    },
+    {
+      "$type": "preview",
+      "value": {
+        "$type": "conditional",
+        "condition": {
+          "$type": "comparison",
+          "key": "addNumber",
+          "operator": "isChecked",
+          "ignoreCase": false
+        },
+        "ifTrue": {
+          "$type": "format",
+          "template": "{prefix}{sampleName}{suffix} {startNumber:000}"
+        },
+        "ifFalse": {
+          "$type": "format",
+          "template": "{prefix}{sampleName}{suffix}"
+        }
+      },
+      "placeholder": "Nothing to rename to yet",
+      "isMonospaced": true,
+      "key": "",
+      "label": "New name",
+      "rules": []
+    }
+  ],
+  "buttons": {
+    "submitText": "Submit",
+    "cancelText": "Cancel",
+    "showSubmit": true,
+    "showCancel": true,
+    "extraButtons": [],
+    "closeOnEscape": true
+  },
+  "window": {
+    "width": 460,
+    "minWidth": 280,
+    "minHeight": 120,
+    "maxHeight": 800,
+    "isResizable": true,
+    "showInTaskbar": false,
+    "topmost": false
+  },
+  "theme": {
+    "mode": "light",
+    "preset": "neubrutalist",
+    "cornerRadius": 4,
+    "shape": "square",
+    "borderWidth": 2,
+    "shadowOffset": 4,
+    "heavyText": true,
+    "fontSize": 13,
+    "uppercaseHeaders": true,
+    "headerTracking": 0.05,
+    "density": "comfortable",
+    "reducedMotion": false,
+    "labelWidth": 130,
+    "baseSpacing": 8,
+    "controlHeight": 28,
+    "effectiveCornerRadius": 0
+  },
+  "formId": "",
+  "rememberValues": true,
+  "headlessUseDefaults": false
+}

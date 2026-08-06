@@ -52,6 +52,7 @@ internal sealed class ControlRendererRegistry
 
         // Display.
         registry.Register(new LabelRenderer());
+        registry.Register(new PreviewRenderer());
         registry.Register(new MarkdownRenderer());
         registry.Register(new ImageRenderer());
         registry.Register(new SeparatorRenderer());
