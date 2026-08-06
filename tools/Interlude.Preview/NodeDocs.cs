@@ -34,22 +34,6 @@ internal static class NodeDocs
     /// </summary>
     private const string OverloadFormat = "{0}({1})";
 
-    /// <summary>
-    /// Nodes that share another node's example picture.
-    ///
-    /// One graph usually demonstrates several nodes at once — the sample form graph shows a text
-    /// box, a switch and the node that displays them — and its screenshot is the same picture on
-    /// all three pages. Copying a 190 KB image once per node would put it in the package three
-    /// times, and again for each Dynamo version. Each node still gets its own copy of the
-    /// <em>graph</em>, which is small and is what the browser's "open example" needs to find.
-    /// </summary>
-    private static readonly IReadOnlyDictionary<string, string> SharedExampleImages =
-        new Dictionary<string, string>(StringComparer.Ordinal)
-        {
-            ["Interlude.Input.TextBox"] = "Interlude.Form.Show",
-            ["Interlude.Input.Toggle"] = "Interlude.Form.Show",
-        };
-
     internal static void Generate(string folder)
     {
         Directory.CreateDirectory(folder);
@@ -192,13 +176,27 @@ internal static class NodeDocs
     /// that is not there renders as a broken image in the browser panel, which reads as a
     /// packaging fault rather than as a page nobody has illustrated yet.
     /// </summary>
+    /// <summary>
+    /// Where the canvas pictures are fetched from rather than shipped.
+    ///
+    /// They are ~200 KB each and there are 114 of them, which is most of the package; the form
+    /// pictures are a tenth of that in total and stay beside the page. So the help panel always
+    /// shows what the node builds, with or without a network, and only the picture of the graph —
+    /// the one a reader consults after deciding they want the node — needs fetching.
+    ///
+    /// Deliberately a branch rather than a version tag. A tag would pin each release's help to the
+    /// pictures it shipped with, which is tidier, but it 404s for every commit made before that
+    /// tag is pushed, and a broken image in the panel reads as a packaging fault. The rule this
+    /// file already follows for the local case is the same one: never point at what is not there.
+    /// </summary>
+    private const string CanvasImages =
+        "https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/";
+
     private static void AppendExample(StringBuilder page, MethodInfo node, string folder)
     {
         string name = NodeName(node);
 
-        string image = (SharedExampleImages.TryGetValue(name, out string? owner) ? owner : name)
-            + "_img.png";
-
+        string image = name + "_img.png";
         string graph = name + ".dyn";
 
         bool hasImage = File.Exists(Path.Combine(folder, image));
@@ -223,7 +221,22 @@ internal static class NodeDocs
 
         if (hasImage)
         {
-            page.Append("![").Append(ShortName(node)).Append("](./").Append(image).AppendLine(")");
+            page.Append("![").Append(ShortName(node)).Append("](").Append(CanvasImages).Append(image)
+                .AppendLine(")");
+        }
+
+        // The form the graph builds, drawn by the renderer that will draw it at run time. A reader
+        // deciding whether this is the node they want is asking what it looks like, and the graph
+        // picture above answers a different question.
+        string form = name + "_form.png";
+
+        if (File.Exists(Path.Combine(folder, form)))
+        {
+            page.AppendLine();
+            page.AppendLine("The form it builds:");
+            page.AppendLine();
+            page.Append("![").Append(ShortName(node)).Append(" form](./").Append(form)
+                .AppendLine(")");
         }
     }
 

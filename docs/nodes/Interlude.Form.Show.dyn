@@ -639,7 +639,7 @@
   "NodeLibraryDependencies": [
     {
       "Name": "Interlude",
-      "Version": "1.0.0",
+      "Version": "1.0.4",
       "ReferenceType": "Package",
       "Nodes": [
         "b1645bfabcf447b28930d863ddd6420d",

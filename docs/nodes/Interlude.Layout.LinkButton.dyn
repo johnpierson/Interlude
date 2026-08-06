@@ -1,0 +1,756 @@
+{
+  "Uuid": "5e5549ca97f35da7513ba7719fbb30b2",
+  "IsCustomNode": false,
+  "Description": "Interlude.Layout.LinkButton: opens a link in the browser.",
+  "Name": "Interlude.Layout.LinkButton",
+  "ElementResolver": {
+    "ResolutionMap": {}
+  },
+  "Inputs": [],
+  "Outputs": [],
+  "Nodes": [
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "a48fe190a9509141254c62d1b0457e7e",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "e5769159da9c806cf3fde94d2e4fb260",
+          "Name": "string",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "906f4316d6e6bbb3c8b050c910c8880a",
+          "Name": "string",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "\"Read the standard\";\n\"https://dynamobim.org\";"
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "266479b9c6b335c299f94ef7730379f2",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "ec85e316297f88d330acc5e9bf77f52a",
+          "Name": "text",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5bd497e50590cdfc8e692ee1ff005a34",
+          "Name": "url",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "9d61a8e508f83ed4c71bf0b943f4dc0c",
+          "Name": "element",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Interlude.Layout.LinkButton@string,string",
+      "Replication": "Auto",
+      "Description": ""
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.CodeBlockNodeModel, DynamoCore",
+      "Id": "3e703b69247f35f4c0b3f635d12c11f8",
+      "NodeType": "CodeBlockNode",
+      "Inputs": [
+        {
+          "Id": "100a1515be914b4abab655832528d71e",
+          "Name": "field",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "3aba5498cd7eb40f35dce377824d3e30",
+          "Name": "list",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Allows for DesignScript code to be authored directly",
+      "Code": "[field];"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.StringInput, CoreNodeModels",
+      "SerializedWidth": 0,
+      "SerializedHeight": 0,
+      "Id": "286d1ddb842fbf26c3447691032a53c0",
+      "NodeType": "StringInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "7039c20a80a5f86de80bd09b82a319dc",
+          "Name": "",
+          "Description": "String",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Creates a string.",
+      "InputValue": "Site survey"
+    },
+    {
+      "ConcreteType": "CoreNodeModels.Input.BoolSelector, CoreNodeModels",
+      "Id": "5cd91298ef0bf96196478e39ae4a17a6",
+      "NodeType": "BooleanInputNode",
+      "Inputs": [],
+      "Outputs": [
+        {
+          "Id": "12e6a0f9b42ff15a7e84fcbf4d025cca",
+          "Name": "",
+          "Description": "Boolean",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Replication": "Disabled",
+      "Description": "Enables selection between True and False",
+      "InputValue": false
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "65d00b81960ce9803ecd22019977e954",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "c114d6bf74022df8f4ce28c7d2b1f90a",
+          "Name": "title",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "e5c40f285c4f20f93ae460b1a4783bce",
+          "Name": "elements",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ea707710d1e3ac4149dfdd511eb92efe",
+          "Name": "trigger",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "d931c3c46c89b59fd3c58313ef2e02a4",
+          "Name": "submitText",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2cbb95afb36352449fd411834e5b888e",
+          "Name": "cancelText",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "3b0468851bce0f5aa132fbc3ad5fee9e",
+          "Name": "width",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "19f311a91de0fe3a79b8136fbdbfda5a",
+          "Name": "maxHeight",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "5e4724fcd6a12b231e49f9a7aefc85a8",
+          "Name": "formId",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "906b9317d040952c7b398a83cee8c8de",
+          "Name": "rememberValues",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a7a42bc1bc54c95c333c4a65d23595b8",
+          "Name": "headlessUseDefaults",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "97331c654c18573229b959bb39d8ea56",
+          "Name": "theme",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a644fed8acfbc4a989389b91b5a5cf2e",
+          "Name": "options",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "a7833661e27b9710c2df86312799c1c4",
+          "Name": "values",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "41e291b2bd5fe1ebf9f3c0757956a926",
+          "Name": "wasSubmitted",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "bd192a7c4eada38bc5037a4f85db0390",
+          "Name": "buttonClicked",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a8e65ee43c9db5cd5f72f66147e9205e",
+          "Name": "form",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Interlude.Form.Show@string,var[],var,string,string,double,double,string,bool,bool,var,var",
+      "Replication": "Auto",
+      "Description": ""
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "2bd25425970f3b60aa4ca185311e3020",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "0b15f6eabe03bc2da1ce8ffb5add127c",
+          "Name": "title",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "80e88a4c55ef4b0148f6d995689b34b2",
+          "Name": "elements",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a402853169dfa460b8645e91ab7d1de4",
+          "Name": "submitText",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "96fb853ec8686ae10d95ec83f1274f84",
+          "Name": "cancelText",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ad89d3b73a270e90d188cfc7854bd69a",
+          "Name": "width",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "dc82201f3c39fd7046d57eafb65711e2",
+          "Name": "maxHeight",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "df1c86b224587e11f9594a4f65da1070",
+          "Name": "formId",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "77b986e11df7e81af8aaeda71b9d3972",
+          "Name": "rememberValues",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "ad252c430a0c1c4ae302a1d53d1d1304",
+          "Name": "headlessUseDefaults",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "a33ff5836a7156689b3f098b7bedec86",
+          "Name": "theme",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "480e1fbbaa51b36aabb083ed784b9d9c",
+          "Name": "options",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "cb6c145a4514f2b92926ddff72e612c0",
+          "Name": "form",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Interlude.Form.Create@string,var[],string,string,double,double,string,bool,bool,var,var",
+      "Replication": "Auto",
+      "Description": ""
+    },
+    {
+      "ConcreteType": "Dynamo.Graph.Nodes.ZeroTouch.DSFunction, DynamoCore",
+      "Id": "935d52224fafbf85fc860e8b74d0710c",
+      "NodeType": "FunctionNode",
+      "Inputs": [
+        {
+          "Id": "ef8ed70825fa3f6bfd24b743befb9fb4",
+          "Name": "form",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        },
+        {
+          "Id": "2b817e6f4a585e74a1cf1573e4167d7e",
+          "Name": "indented",
+          "Description": "",
+          "UsingDefaultValue": true,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "Outputs": [
+        {
+          "Id": "87e1a567409ae864f2ded7eb36b92e66",
+          "Name": "json",
+          "Description": "",
+          "UsingDefaultValue": false,
+          "Level": 2,
+          "UseLevels": false,
+          "KeepListStructure": false
+        }
+      ],
+      "FunctionSignature": "Interlude.Form.ToJson@Interlude.Model.FormDefinition,bool",
+      "Replication": "Auto",
+      "Description": ""
+    }
+  ],
+  "Connectors": [
+    {
+      "Start": "e5769159da9c806cf3fde94d2e4fb260",
+      "End": "ec85e316297f88d330acc5e9bf77f52a",
+      "Id": "eec1fd4dad743cae9de0789f22220472",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "906f4316d6e6bbb3c8b050c910c8880a",
+      "End": "5bd497e50590cdfc8e692ee1ff005a34",
+      "Id": "3ff8474c0f5f09b793ca0503f8c9da44",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "9d61a8e508f83ed4c71bf0b943f4dc0c",
+      "End": "100a1515be914b4abab655832528d71e",
+      "Id": "c134dd1f55ddbf8eacb49cad9cfe6724",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "7039c20a80a5f86de80bd09b82a319dc",
+      "End": "c114d6bf74022df8f4ce28c7d2b1f90a",
+      "Id": "fae3e024ee81bab1a6aec03d7b28fa3a",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3aba5498cd7eb40f35dce377824d3e30",
+      "End": "e5c40f285c4f20f93ae460b1a4783bce",
+      "Id": "6c7a222b75194b2213fe00e5677f37c4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "12e6a0f9b42ff15a7e84fcbf4d025cca",
+      "End": "ea707710d1e3ac4149dfdd511eb92efe",
+      "Id": "ad73e86a4b49f80ddcc3aa9b8a813fdc",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "7039c20a80a5f86de80bd09b82a319dc",
+      "End": "0b15f6eabe03bc2da1ce8ffb5add127c",
+      "Id": "6918b856565b1d09a164b9b3513734c4",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "3aba5498cd7eb40f35dce377824d3e30",
+      "End": "80e88a4c55ef4b0148f6d995689b34b2",
+      "Id": "51194553dcf2ad7a7c55c315b3f7bd44",
+      "IsHidden": "False"
+    },
+    {
+      "Start": "cb6c145a4514f2b92926ddff72e612c0",
+      "End": "ef8ed70825fa3f6bfd24b743befb9fb4",
+      "Id": "5462d05feddf10828ceebd7198cf57a0",
+      "IsHidden": "False"
+    }
+  ],
+  "Dependencies": [],
+  "NodeLibraryDependencies": [
+    {
+      "Name": "Interlude",
+      "Version": "1.0.4",
+      "ReferenceType": "Package",
+      "Nodes": [
+        "266479b9c6b335c299f94ef7730379f2",
+        "65d00b81960ce9803ecd22019977e954",
+        "2bd25425970f3b60aa4ca185311e3020",
+        "935d52224fafbf85fc860e8b74d0710c"
+      ]
+    }
+  ],
+  "EnableLegacyPolyCurveBehavior": null,
+  "Thumbnail": "",
+  "GraphDocumentationURL": null,
+  "ExtensionWorkspaceData": [
+    {
+      "ExtensionGuid": "28992e1d-abb9-417f-8b1b-05e053bee670",
+      "Name": "Properties",
+      "Version": "4.2",
+      "Data": {}
+    }
+  ],
+  "Author": "",
+  "Linting": {
+    "activeLinter": "None",
+    "activeLinterId": "7b75fb44-43fd-4631-a878-29f4d5d8399a",
+    "warningCount": 0,
+    "errorCount": 0
+  },
+  "Bindings": [],
+  "View": {
+    "Dynamo": {
+      "ScaleFactor": 1,
+      "HasRunWithoutCrash": true,
+      "IsVisibleInDynamoLibrary": true,
+      "Version": "4.2.0.5752",
+      "RunType": "Manual",
+      "RunPeriod": "1000"
+    },
+    "Camera": {
+      "Name": "_Background Preview",
+      "EyeX": -17,
+      "EyeY": 24,
+      "EyeZ": 50,
+      "LookX": 12,
+      "LookY": -13,
+      "LookZ": -58,
+      "UpX": 0,
+      "UpY": 1,
+      "UpZ": 0
+    },
+    "ConnectorPins": [],
+    "NodeViews": [
+      {
+        "Id": "a48fe190a9509141254c62d1b0457e7e",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 0,
+        "Y": 0
+      },
+      {
+        "Id": "266479b9c6b335c299f94ef7730379f2",
+        "Name": "Layout.LinkButton",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 430,
+        "Y": 0
+      },
+      {
+        "Id": "286d1ddb842fbf26c3447691032a53c0",
+        "Name": "String",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 790,
+        "Y": -190
+      },
+      {
+        "Id": "3e703b69247f35f4c0b3f635d12c11f8",
+        "Name": "Code Block",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 790,
+        "Y": 30
+      },
+      {
+        "Id": "5cd91298ef0bf96196478e39ae4a17a6",
+        "Name": "Boolean",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 790,
+        "Y": 190
+      },
+      {
+        "Id": "65d00b81960ce9803ecd22019977e954",
+        "Name": "Form.Show",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1080,
+        "Y": 0
+      },
+      {
+        "Id": "2bd25425970f3b60aa4ca185311e3020",
+        "Name": "Form.Create",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 1990,
+        "Y": 40
+      },
+      {
+        "Id": "935d52224fafbf85fc860e8b74d0710c",
+        "Name": "Form.ToJson",
+        "IsSetAsInput": false,
+        "IsSetAsOutput": false,
+        "Excluded": false,
+        "ShowGeometry": true,
+        "X": 2420,
+        "Y": 40
+      }
+    ],
+    "Annotations": [
+      {
+        "Id": "695ad46958d5fa7626edeeb318be459e",
+        "Title": "Describe the field",
+        "DescriptionText": "Opens a link and leaves the form alone. Useful for the standard, the wiki page or the ticket that explains why the form asks what it asks.",
+        "IsExpanded": true,
+        "WidthAdjustment": 0,
+        "HeightAdjustment": 0,
+        "UserSetWidth": 0,
+        "UserSetHeight": 0,
+        "Nodes": [
+          "a48fe190a9509141254c62d1b0457e7e",
+          "266479b9c6b335c299f94ef7730379f2"
+        ],
+        "HasNestedGroups": false,
+        "Left": -30,
+        "Top": -190,
+        "Width": 820,
+        "Height": 620,
+        "FontSize": 36,
+        "GroupStyleId": "883066aa-1fe2-44a4-9bd1-c3df86bfe9f6",
+        "InitialTop": -117,
+        "InitialHeight": 577,
+        "TextblockHeight": 63,
+        "IsOptionalInPortsCollapsed": false,
+        "IsUnconnectedOutPortsCollapsed": false,
+        "HasToggledOptionalInPorts": false,
+        "HasToggledUnconnectedOutPorts": false,
+        "Background": "#FFB8D8"
+      },
+      {
+        "Id": "0e5f27d6dec82cafb1eaf515673b8a0e",
+        "Title": "Show it",
+        "DescriptionText": "trigger is false so the graph runs without opening the dialog: every field comes back with its default and buttonClicked reads \"skipped\". Set it to true to see the form.",
+        "IsExpanded": true,
+        "WidthAdjustment": 0,
+        "HeightAdjustment": 0,
+        "UserSetWidth": 0,
+        "UserSetHeight": 0,
+        "Nodes": [
+          "286d1ddb842fbf26c3447691032a53c0",
+          "3e703b69247f35f4c0b3f635d12c11f8",
+          "5cd91298ef0bf96196478e39ae4a17a6",
+          "65d00b81960ce9803ecd22019977e954"
+        ],
+        "HasNestedGroups": false,
+        "Left": 760,
+        "Top": -350,
+        "Width": 700,
+        "Height": 1180,
+        "FontSize": 36,
+        "GroupStyleId": "4d68be4a-a04d-4945-9dd5-cdf61079d790",
+        "InitialTop": -277,
+        "InitialHeight": 1137,
+        "TextblockHeight": 63,
+        "IsOptionalInPortsCollapsed": false,
+        "IsUnconnectedOutPortsCollapsed": false,
+        "HasToggledOptionalInPorts": false,
+        "HasToggledUnconnectedOutPorts": false,
+        "Background": "#B9F6CA"
+      },
+      {
+        "Id": "42967190159df7436bc462f301a6f214",
+        "Title": "Keep it as a document",
+        "DescriptionText": "Form.Create builds the same form without showing it, and Form.ToJson writes it out. A form saved this way can be reviewed, diffed and loaded again with Form.FromJson.",
+        "IsExpanded": true,
+        "WidthAdjustment": 0,
+        "HeightAdjustment": 0,
+        "UserSetWidth": 0,
+        "UserSetHeight": 0,
+        "Nodes": [
+          "2bd25425970f3b60aa4ca185311e3020",
+          "935d52224fafbf85fc860e8b74d0710c"
+        ],
+        "HasNestedGroups": false,
+        "Left": 1960,
+        "Top": -120,
+        "Width": 880,
+        "Height": 800,
+        "FontSize": 36,
+        "GroupStyleId": "07655dc1-2d65-4fed-8d6a-37235d3e3a8d",
+        "InitialTop": -47,
+        "InitialHeight": 757,
+        "TextblockHeight": 63,
+        "IsOptionalInPortsCollapsed": false,
+        "IsUnconnectedOutPortsCollapsed": false,
+        "HasToggledOptionalInPorts": false,
+        "HasToggledUnconnectedOutPorts": false,
+        "Background": "#D8D8D8"
+      }
+    ],
+    "X": 120,
+    "Y": 260,
+    "Zoom": 0.62
+  }
+}

@@ -54,6 +54,14 @@ public partial class App : Application
         }
 
         if (e.Args.Length >= 2 &&
+            string.Equals(e.Args[0], "--forms", StringComparison.OrdinalIgnoreCase))
+        {
+            NodeExamples.CaptureForms(e.Args[1]);
+            Shutdown(0);
+            return;
+        }
+
+        if (e.Args.Length >= 2 &&
             string.Equals(e.Args[0], "--docs", StringComparison.OrdinalIgnoreCase))
         {
             NodeDocs.Generate(e.Args[1]);

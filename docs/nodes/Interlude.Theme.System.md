@@ -16,3 +16,14 @@ ___
 How a form looks. Feed the result into `Form.Show`'s theme port.
 
 A theme is applied to the form's own window and nowhere else. Interlude runs inside Revit and inside Dynamo, and restyling a host application from a package would be an unwelcome surprise no matter how good the styling was.
+
+___
+## Example File
+
+An example graph ships beside this page as `Interlude.Theme.System.dyn`.
+
+![Theme.System](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Theme.System_img.png)
+
+The form it builds:
+
+![Theme.System form](./Interlude.Theme.System_form.png)

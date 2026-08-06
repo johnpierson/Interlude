@@ -19,3 +19,14 @@ ___
 Adds behaviour to an element: when it is visible, when it is enabled, when it is required, what makes it valid, and what its value is computed from.
 
 Every node here returns a new element rather than changing the one it was given. Elements are values, so the same element can be fed into two different behaviours without one of them affecting the other, and re-running a graph rebuilds the tree from scratch with nothing left over from last time.
+
+___
+## Example File
+
+An example graph ships beside this page as `Interlude.Behavior.EnabledIf.dyn`.
+
+![Behavior.EnabledIf](https://raw.githubusercontent.com/johnpierson/Interlude/main/docs/nodes/Interlude.Behavior.EnabledIf_img.png)
+
+The form it builds:
+
+![Behavior.EnabledIf form](./Interlude.Behavior.EnabledIf_form.png)

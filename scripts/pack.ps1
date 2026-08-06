@@ -34,9 +34,14 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 $manifest = Get-Content (Join-Path $repoRoot 'versions.json') -Raw | ConvertFrom-Json
 
 if (-not $Version) {
-    # AssemblyVersion is frozen at 1.0.0.0 so graphs never break on upgrade; the package version
-    # is the one that actually moves.
-    $Version = ($manifest.assemblyVersion -split '\.')[0..2] -join '.'
+    # AssemblyVersion is frozen at 1.0.0.0 so graphs never break on upgrade. The number that moves
+    # is VersionPrefix, which is also what the example graphs declare they need — read it from the
+    # one place that holds it rather than keeping a second copy here to fall out of step.
+    $props = Get-Content (Join-Path $repoRoot 'Directory.Build.props') -Raw
+    if ($props -notmatch '<VersionPrefix[^>]*>([\d.]+)</VersionPrefix>') {
+        throw 'No VersionPrefix in Directory.Build.props.'
+    }
+    $Version = $Matches[1]
 }
 
 $distRoot = Join-Path $repoRoot 'dist'
@@ -95,10 +100,17 @@ foreach ($target in @($manifest.versions | Where-Object { $_.active })) {
         $docPath = Join-Path $packageRoot 'doc'
         New-Item -ItemType Directory -Path $docPath -Force | Out-Null
 
-        # Only the node files and their images. The folder's own README explains how they are
-        # generated, which is a thing for contributors rather than something to hand to Dynamo's
-        # documentation browser as if it were a node.
-        Copy-Item (Join-Path $nodeDocs 'Interlude.*') $docPath -Force
+        # Only the node files. The folder's own README explains how they are generated, which is a
+        # thing for contributors rather than something to hand to Dynamo's documentation browser
+        # as if it were a node.
+        #
+        # The canvas pictures are excluded: at ~200 KB each across 114 nodes they are most of the
+        # package, and the pages fetch them from the repository instead. The form pictures do ship,
+        # so the help panel shows what a node builds even with no network. Keep this in step with
+        # NodeDocs.CanvasImages — a page pointing at a picture that is neither here nor there is
+        # the one outcome worse than either.
+        Copy-Item (Join-Path $nodeDocs 'Interlude.*') $docPath -Force `
+            -Exclude '*_img.png'
     }
     else {
         Write-Warning "docs/nodes is missing: this package will ship without node help."
