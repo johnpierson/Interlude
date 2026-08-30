@@ -18,7 +18,7 @@ explanations.
 Three things are true of nearly every node here.
 
 **Inputs share three trailing ports.** `key`, `tooltip` and `helpText` mean the same thing on all
-seventeen of them. `key` names the answer in the results; left empty it is derived from the label.
+eighteen of them. `key` names the answer in the results; left empty it is derived from the label.
 
 **Choice inputs take values, not names.** `items` holds the actual objects — Revit elements,
 family types, anything — and `displayNames` holds what to show for each. Selecting an option hands
@@ -125,6 +125,28 @@ hex plus red/green/blue/alpha numbers.
 ```
 Input.FilePath("Template", filter: "Revit files|*.rvt|All files|*.*", key: "template")
 Input.ColorPicker("Tint", defaultValue: "#3366CC", presets: ["#C42B1C", "#1A7F37"])
+```
+
+### Picking in the model
+
+| Node | Parameters |
+| --- | --- |
+| **SelectElements** | `label`, `allowMultiple = true`, `buttonText = ""`, `prompt = ""`, `defaultValue`, `key`, `tooltip`, `helpText` |
+
+A button that starts a pick in the Revit model. The form minimises while the user picks and
+comes back when they finish; Escape keeps whatever was selected before. **The answer is the
+picked Revit element itself** — the same element every Dynamo Revit node accepts — a list of them
+when `allowMultiple` is true, one when false. Read it with `Result.GetList`.
+
+Picking needs Dynamo running inside Revit, but the *node* does not: Interlude still references no
+Revit assembly, and reaches the Revit API that is already loaded through reflection. Anywhere
+else — Sandbox, a saved form opened for review — the button renders disabled with an explanation
+and the rest of the form works normally. Like drop-down options, the picked elements cannot ride
+along in a saved form file; they are live model data, and the field's configuration is what
+round-trips.
+
+```
+Input.SelectElements("Rooms", prompt: "Pick the rooms to renumber, then press Finish.", key: "rooms")
 ```
 
 ---

@@ -235,6 +235,16 @@ A folder path with a Browse button.
 | --- | --- | --- | --- |
 | `initialDirectory` | string | `null` |  |
 
+### `modelSelection`
+
+A button that lets the user pick elements in the host Revit model. A single-select field stores the picked element; a multi-select field stores a list of elements. Outside Revit the button renders disabled, so the same form still opens everywhere.
+
+| Property | Type | Default | Meaning |
+| --- | --- | --- | --- |
+| `allowMultiple` | boolean | `true` |  |
+| `buttonText` | string | `null` | Caption on the button. Null gets a stock "Select in model…". |
+| `prompt` | string | `null` | Text shown in Revit's status bar while picking. |
+
 ### `label`
 
 A run of static text.

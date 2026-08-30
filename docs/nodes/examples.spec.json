@@ -1651,6 +1651,38 @@
     "note": "A folder rather than a file. Pair it with Rule.FolderExists when the graph is about to write into whatever comes back."
   },
   {
+    "node": "Interlude.Input.SelectElements",
+    "signature": "Interlude.Input.SelectElements@string,bool,string,string,var[],string,string,string",
+    "ports": [
+      "label",
+      "allowMultiple",
+      "buttonText",
+      "prompt",
+      "defaultValue",
+      "key",
+      "tooltip",
+      "helpText"
+    ],
+    "args": [
+      "Rooms",
+      true,
+      "Select rooms…",
+      "Pick the rooms to renumber, then press Finish.",
+      null,
+      "rooms"
+    ],
+    "title": "Renumber rooms",
+    "key": "rooms",
+    "getter": "Interlude.Result.GetList@var,string",
+    "getterName": "Result.GetList",
+    "getterPorts": [
+      "result",
+      "key"
+    ],
+    "description": "Interlude.Input.SelectElements: elements picked directly in the Revit model.",
+    "note": "The form minimises while the user picks in the model and comes back when they finish. The answer is the picked Revit elements themselves — usable by any Revit node downstream — read with Result.GetList. Picking needs Dynamo inside Revit; anywhere else the button is disabled and the rest of the form still works."
+  },
+  {
     "node": "Interlude.Input.TreeSelect",
     "signature": "Interlude.Input.TreeSelect@string,var[],bool,var[],bool,string,string,string",
     "ports": [

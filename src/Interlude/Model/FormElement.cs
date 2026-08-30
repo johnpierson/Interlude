@@ -35,6 +35,7 @@ namespace Interlude.Model;
 [JsonDerivedType(typeof(ColorPickerElement), "colorPicker")]
 [JsonDerivedType(typeof(FilePickerElement), "filePicker")]
 [JsonDerivedType(typeof(FolderPickerElement), "folderPicker")]
+[JsonDerivedType(typeof(ModelSelectionElement), "modelSelection")]
 [JsonDerivedType(typeof(LabelElement), "label")]
 [JsonDerivedType(typeof(PreviewElement), "preview")]
 [JsonDerivedType(typeof(MarkdownElement), "markdown")]

@@ -73,6 +73,7 @@ answer.
 | `ColorInputData` | `Input.ColorPicker` |
 | `FilePathData` | `Input.FilePath` |
 | `DirectoryPathData` | `Input.DirectoryPath` |
+| `UI.SelectModelElements Data` | `Input.SelectElements` |
 | `ImageData` | `Layout.Image` |
 | `TextData` | `Layout.Label` or `Layout.Markdown` |
 | `SeparatorData` | `Layout.Separator` |
@@ -198,9 +199,11 @@ Input.CheckBox("Include sheets", key: "includeSheets")    ─┴─► Form.Show
   but Manual is still the right setting.
 - **Containers take lists.** `Layout.Row` takes a list of elements. Passing a single element to a
   list port makes Dynamo replicate the node and produce N one-child rows instead of one row.
-- **No Revit-aware pickers yet.** Data-Shapes has some Revit-specific selection nodes. Interlude
-  has no Revit dependency at all, so those live outside it. `Input.DropDown` with elements as
-  items covers most of the ground.
+- **Picking in the model works the same way.** `Input.SelectElements` minimises the form while
+  the user picks, like Data-Shapes' select buttons — and Interlude still references no Revit
+  assembly, so the same form opens (with the button disabled) everywhere else too. For choosing
+  among elements the graph already collected, `Input.DropDown` with elements as items remains the
+  better shape.
 
 ## Running both
 

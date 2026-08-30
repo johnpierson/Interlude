@@ -12,7 +12,9 @@ it, and the answers come back in a dictionary you read by name. Conditional visi
 values and live validation are *described*, not wired.
 
 There are no Revit dependencies. Interlude ships one assembly, plus a resource file holding the
-node icons that contains no code at all.
+node icons that contains no code at all. Picking elements in the model still works —
+`Input.SelectElements` reaches the Revit API already loaded in the process through reflection,
+and renders as a disabled button anywhere there is no Revit.
 
 <p align="center">
   <img src="docs/images/every-control-dark.png" alt="A form showing every Interlude control in the dark theme" width="440">
@@ -178,7 +180,7 @@ Everything lives under a single **Interlude** category.
 
 | Group | What it does |
 | --- | --- |
-| **Input** | The 17 fields a user answers: text, numbers, sliders, dropdowns, lists, trees, dates, colours, files, folders. |
+| **Input** | The 18 fields a user answers: text, numbers, sliders, dropdowns, lists, trees, dates, colours, files, folders, and elements picked in the Revit model. |
 | **Layout** | Sections, rows, columns, grids, tabs, cards, splitters, and the elements that show rather than ask. |
 | **Behavior** | `VisibleIf`, `EnabledIf`, `RequiredIf`, `Required`, `WithValidation`, `WithComputed`. Each returns a *new* element. |
 | **Condition** | Tests over the form's own answers, for the Behavior nodes. |

@@ -29,7 +29,7 @@ One code assembly, layered by namespace. Enforced by
 | `Interlude.Model` | The form tree: elements, options, keys, colours, spacing | no |
 | `Interlude.Conditions` | Condition and computed-value AST, value coercion | no |
 | `Interlude.Validation` | Rule objects | no |
-| `Interlude.Runtime` | `FormSession`, dependency graph, result store, latch, host detection | no |
+| `Interlude.Runtime` | `FormSession`, dependency graph, result store, latch, host detection, the Revit selection bridge | no |
 | `Interlude.Serialization` | JSON in and out | no |
 | `Interlude.Theming` | `ThemeDefinition`, palettes, resource key names | no |
 | `Interlude.Rendering` | `IFormRenderer` — the renderer contract | no |
@@ -53,7 +53,7 @@ the rule bent for it and would not bend again.
 Dynamo will not read node icons out of the node library. It looks for a sibling assembly named
 `<AssemblyName>.customization.dll` and pulls PNGs from a resource stream inside it. There is no
 attribute, no folder convention and no manifest entry that does the same job — it is that file or
-Dynamo's default cube on all 113 nodes.
+Dynamo's default cube on all 115 nodes.
 
 What makes it affordable is that [`Interlude.customization.dll`](../src/Interlude.Icons) contains
 no types and references nothing but the `netstandard` facade. The rule was never really about file
@@ -69,7 +69,7 @@ starts being the dependency the rule exists to keep out, and all three fail.
 
 ### How the icons are made
 
-113 nodes at two sizes is 226 images, and they are drawn rather than hand-authored — by
+115 nodes at two sizes is 230 images, and they are drawn rather than hand-authored — by
 [`Icons.cs`](../tools/Interlude.Preview/Icons.cs) in the preview harness, using the same offline
 WPF rendering that produces the documentation screenshots.
 
@@ -233,6 +233,34 @@ close.
 The dialog is *owned* to the host window via `WindowInteropHelper` rather than made `Topmost`: an
 owned window stays above Revit without floating above unrelated applications. Centring is done by
 hand because `CenterOwner` only works for a WPF owner and Revit's main window is Win32.
+
+## The Revit selection bridge
+
+`Input.SelectElements` lets a form send the user into the Revit model to pick, and it does so
+without a Revit reference. [`RevitSelectionBridge`](../src/Interlude/Runtime/RevitSelectionBridge.cs)
+reaches everything by reflection over assemblies already loaded in the process: `RevitServices`
+for the active document, `RevitAPIUI` for `PickObject`/`PickObjects`, and `RevitNodes` to wrap
+what came back as the `Revit.Elements.Element` every downstream node expects. A compile-time
+reference would multiply the build matrix by every Revit version and end the zero-dependency
+rule, for three method calls; outside Revit the probe finds nothing, says why, and the control
+renders disabled instead of the assembly failing to import.
+
+The pick is allowed to run because of the threading table above: in Revit the form is shown
+directly on Revit's UI thread, inside the API context Dynamo evaluates in, and `ShowDialog`'s
+nested message loop stays inside it. Stepping the modal form aside is the delicate part, and both
+halves are load-bearing: the window is **minimised, never hidden** — hiding a window shown with
+`ShowDialog` ends the modal session — and every top-level window on the thread that `ShowDialog`
+disabled is re-enabled for exactly the duration of the pick, then re-disabled in a `finally`.
+*Every* window, not the owner: WPF's modal loop disables the whole thread's windows — Revit's
+frame and Dynamo's alike — so re-enabling just the recorded owner leaves a model that shows the
+picking prompt but cannot take a click.
+
+Cancelling a pick (Escape) keeps the previous answer, spotted by the exception's type *name*,
+since `Autodesk.Revit.Exceptions.OperationCanceledException` is not a type Interlude can name.
+The reflection path itself only runs inside Revit, so the tests pin everything around it — the
+honest unavailability, the coercion shapes, the control's behaviour through a fake picker — and
+the real path is checked by running the sample graph in Revit, recorded in
+[installing.md](installing.md#where-it-has-been-run).
 
 ## Culture
 
