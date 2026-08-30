@@ -570,3 +570,20 @@ internal sealed class FolderPickerRenderer : ControlRenderer<FolderPickerElement
     public override void WriteValue(FrameworkElement control, object? value)
         => ((PathBox)control).Text = ValueOps.ToStringInvariant(value);
 }
+
+/// <summary>A pick-in-the-Revit-model field.</summary>
+[IsVisibleInDynamoLibrary(false)]
+internal sealed class ModelSelectionRenderer : ControlRenderer<ModelSelectionElement>
+{
+    protected override FrameworkElement BuildCore(ModelSelectionElement element, RenderContext context)
+    {
+        ModelSelectionBox box = new(element);
+        box.ValueChanged += (_, _) => context.ReportValue(element, box.Value);
+        return box;
+    }
+
+    public override object? ReadValue(FrameworkElement control) => ((ModelSelectionBox)control).Value;
+
+    public override void WriteValue(FrameworkElement control, object? value)
+        => ((ModelSelectionBox)control).Value = value;
+}

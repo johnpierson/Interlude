@@ -20,11 +20,11 @@ Interlude is one source compiled three ways, so a host being absent from this ta
 statement that it fails there — only that nobody has run it. Recorded so that a bug report can say
 which of these it contradicts.
 
-Last updated 31 July 2026.
+Last updated 29 August 2026.
 
 | Host | Status |
 | --- | --- |
-| Revit 2027 (Dynamo 4.0) | Confirmed — forms shown and answered |
+| Revit 2027 (Dynamo 4.0) | Confirmed — forms shown and answered; `Input.SelectElements` picked in the model |
 | Dynamo Player | Confirmed — forms shown and answered |
 | Dynamo Sandbox 4.1 | Confirmed — forms shown and answered |
 | Dynamo Sandbox 4.2 | Confirmed — forms shown, node help panel read from `doc/` |

@@ -674,4 +674,51 @@ public class Input
             Label = label,
             DefaultValue = defaultValue,
         }.WithCommon(key, tooltip, helpText);
+
+    /// <summary>
+    /// A button that lets the user pick elements directly in the Revit model. The form minimises
+    /// while they pick and comes back when they finish, with a summary of what they chose beside
+    /// the button.
+    ///
+    /// **The answer is the picked Revit element itself** — the same element every Dynamo Revit
+    /// node works with — not an id or a name. A multi-select field stores a list of elements and a
+    /// single-select field stores one, read with <c>Result.GetList</c> or straight out of
+    /// <c>values</c>. Pressing Escape during the pick keeps whatever was selected before.
+    ///
+    /// This only works with Dynamo running inside Revit, and Interlude still references no Revit
+    /// assembly: the picking goes through the Revit API that is already loaded in the process.
+    /// Anywhere else — Dynamo Sandbox, a saved form opened for review — the button is disabled
+    /// with an explanation, and the rest of the form works normally.
+    ///
+    /// Elements cannot ride along in a saved form file, for the same reason as drop-down options:
+    /// they do not exist in another model. The field's configuration round-trips; its answer is
+    /// live model data.
+    /// </summary>
+    /// <param name="label">Caption shown beside the field.</param>
+    /// <param name="allowMultiple">Whether several elements can be picked. False ends the pick at the first click.</param>
+    /// <param name="buttonText">Caption on the button. Empty gets "Select in model…".</param>
+    /// <param name="prompt">Text shown in Revit's status bar while picking.</param>
+    /// <param name="defaultValue">Elements the field starts with, from the graph.</param>
+    /// <param name="key">Name of this answer in the results. Derived from the label when empty.</param>
+    /// <param name="tooltip">Hover text.</param>
+    /// <param name="helpText">A line of guidance shown under the field.</param>
+    /// <returns name="element">The form element.</returns>
+    /// <search>select,revit,pick,model,element,selection</search>
+    public static FormElement SelectElements(
+        string label,
+        bool allowMultiple = true,
+        string buttonText = "",
+        string prompt = "",
+        [DefaultArgument("null")] List<object>? defaultValue = null,
+        string key = "",
+        string tooltip = "",
+        string helpText = "")
+        => new ModelSelectionElement
+        {
+            Label = label,
+            AllowMultiple = allowMultiple,
+            ButtonText = NodeSupport.OrNull(buttonText),
+            Prompt = NodeSupport.OrNull(prompt),
+            DefaultValue = defaultValue,
+        }.WithCommon(key, tooltip, helpText);
 }

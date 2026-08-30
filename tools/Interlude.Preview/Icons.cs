@@ -94,6 +94,11 @@ internal static class Icons
         new("Input.Number", Glyph.StepperDecimal),
         new("Input.Password", Glyph.Dots),
         new("Input.RadioButtons", Glyph.Radio),
+
+        // The cursor, as on Result.ButtonClicked: picking is pointing at something. The pink
+        // Input plate already says which family it belongs to.
+        new("Input.SelectElements", Glyph.Cursor),
+
         new("Input.Slider", Glyph.Slider),
         new("Input.TextArea", Glyph.Lines),
         new("Input.TextBox", Glyph.Field),

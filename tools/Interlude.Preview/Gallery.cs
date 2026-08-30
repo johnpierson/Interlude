@@ -211,6 +211,10 @@ internal static class Gallery
             new FilePickerElement { Label = "File", Filter = "Revit files|*.rvt|All files|*.*" },
             new FolderPickerElement { Label = "Folder" },
 
+            // Outside Revit this renders with its button disabled and an explanation, which is
+            // exactly what the screenshot should show: the harness is not Revit.
+            new ModelSelectionElement { Label = "Elements" },
+
             new SeparatorElement { Caption = "Display" },
             new LabelElement { Text = "A heading", HeadingLevel = 3 },
             new LabelElement { Text = "Muted body text sitting under it.", IsMuted = true },

@@ -49,6 +49,7 @@ internal sealed class ControlRendererRegistry
         registry.Register(new ColorPickerRenderer());
         registry.Register(new FilePickerRenderer());
         registry.Register(new FolderPickerRenderer());
+        registry.Register(new ModelSelectionRenderer());
 
         // Display.
         registry.Register(new LabelRenderer());

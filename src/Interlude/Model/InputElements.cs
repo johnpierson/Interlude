@@ -455,3 +455,41 @@ public sealed record FolderPickerElement : InputElement
 
     public override object? Coerce(object? value) => ValueOps.ToStringInvariant(value);
 }
+
+/// <summary>
+/// A button that lets the user pick elements in the host Revit model. A single-select field
+/// stores the picked element; a multi-select field stores a list of elements. Outside Revit the
+/// button renders disabled, so the same form still opens everywhere.
+/// </summary>
+[IsVisibleInDynamoLibrary(false)]
+public sealed record ModelSelectionElement : InputElement
+{
+    public bool AllowMultiple { get; init; } = true;
+
+    /// <summary>Caption on the button. Null gets a stock "Select in model…".</summary>
+    public string? ButtonText { get; init; }
+
+    /// <summary>Text shown in Revit's status bar while picking.</summary>
+    public string? Prompt { get; init; }
+
+    public override object? GetFallbackValue()
+        => AllowMultiple ? Array.Empty<object?>() : null;
+
+    /// <summary>
+    /// Elements pass through untouched — there is nothing to snap them onto and no way to
+    /// inspect them without a Revit reference. Only the single/list shape is normalised.
+    /// </summary>
+    public override object? Coerce(object? value)
+    {
+        if (!AllowMultiple)
+        {
+            return ValueOps.TryAsSequence(value, out IReadOnlyList<object?> items)
+                ? items.FirstOrDefault()
+                : value;
+        }
+
+        return ValueOps.AsList(value)
+            .Where(item => item is not null)
+            .ToList();
+    }
+}

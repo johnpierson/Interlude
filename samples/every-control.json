@@ -342,6 +342,14 @@
       "rules": []
     },
     {
+      "$type": "modelSelection",
+      "allowMultiple": true,
+      "isReadOnly": false,
+      "key": "elements",
+      "label": "Elements",
+      "rules": []
+    },
+    {
       "$type": "separator",
       "orientation": "horizontal",
       "caption": "Display",

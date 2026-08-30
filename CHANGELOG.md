@@ -13,6 +13,17 @@ package version and `FileVersion` are what move.
 
 ### Added
 
+- **`Input.SelectElements` — pick elements directly in the Revit model, from the form.** A button
+  that minimises the form, hands the user Revit's own picking (single or multiple, with an
+  optional status-bar prompt), and brings the form back with a summary of what they chose. The
+  answer is the picked Revit element itself — the same element every Dynamo Revit node accepts —
+  read with `Result.GetList`. Escape keeps whatever was selected before.
+
+  Interlude still references no Revit assembly. The picking reaches the Revit API that is already
+  loaded in the process through reflection, so the one-file, zero-dependency rule holds; outside
+  Revit — Sandbox, a saved form opened for review — the button renders disabled with an
+  explanation and the rest of the form works normally.
+
 - **`Layout.Preview` — a value the form works out and shows back, live, as its inputs are edited.**
 
   ```

@@ -59,6 +59,7 @@ public class RendererSmokeTests
             new ColorPickerElement { Key = "colour", Label = "Colour", Presets = new[] { RgbColor.White } },
             new FilePickerElement { Key = "file", Label = "File" },
             new FolderPickerElement { Key = "folder", Label = "Folder" },
+            new ModelSelectionElement { Key = "elements", Label = "Elements" },
 
             new LabelElement { Text = "A heading", HeadingLevel = 2 },
             new MarkdownElement { Text = "# Title\n\nSome **bold**, some *italic*, `code`, and a [link](https://example.com).\n\n- one\n- two\n\n---" },
