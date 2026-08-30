@@ -11,6 +11,10 @@ package version and `FileVersion` are what move.
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [1.1.0] - 2026-08-29
+
 ### Added
 
 - **`Input.SelectElements` — pick elements directly in the Revit model, from the form.** A button
@@ -363,6 +367,7 @@ First release.
 - Architecture tests for the layering, library visibility, renderer coverage and schema coverage.
 - An API-surface snapshot, because saved graphs bind to node names and parameter positions.
 
-[Unreleased]: https://github.com/johnpierson/Interlude/compare/v1.0.3...HEAD
+[Unreleased]: https://github.com/johnpierson/Interlude/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/johnpierson/Interlude/releases/tag/v1.1.0
 [1.0.3]: https://github.com/johnpierson/Interlude/releases/tag/v1.0.3
 [1.0.0]: https://github.com/johnpierson/Interlude/releases/tag/v1.0.0
