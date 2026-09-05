@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Autodesk.DesignScript.Runtime;
 using Interlude.Model;
+using Interlude.Validation;
 
 namespace Interlude.Serialization;
 
@@ -38,7 +40,15 @@ public static class FormJson
             throw new ArgumentNullException(nameof(definition));
         }
 
-        return JsonSerializer.Serialize(definition, indented ? WriteOptions : CompactOptions);
+        EnsureNoCustomRules(definition);
+        try
+        {
+            return JsonSerializer.Serialize(definition, indented ? WriteOptions : CompactOptions);
+        }
+        catch (JsonException ex)
+        {
+            throw new InterludeJsonException($"This form could not be written: {ex.Message}", ex);
+        }
     }
 
     /// <summary>Reads a form from JSON.</summary>
@@ -58,7 +68,13 @@ public static class FormJson
         try
         {
             FormDefinition? definition = JsonSerializer.Deserialize<FormDefinition>(json, WriteOptions);
-            return definition ?? throw new InterludeJsonException("There is no form here: the JSON was null.");
+            if (definition is null)
+            {
+                throw new InterludeJsonException("There is no form here: the JSON was null.");
+            }
+
+            EnsureNoCustomRules(definition);
+            return definition;
         }
         catch (JsonException ex)
         {
@@ -133,21 +149,45 @@ public static class FormJson
     {
         try
         {
-            using JsonDocument document = JsonDocument.Parse(json);
-
-            if (document.RootElement.ValueKind == JsonValueKind.Object &&
-                document.RootElement.TryGetProperty("schemaVersion", out JsonElement version) &&
-                version.TryGetInt32(out int schemaVersion) &&
-                schemaVersion > FormDefinition.CurrentSchemaVersion)
+            using JsonDocument document = JsonDocument.Parse(json, new JsonDocumentOptions
             {
-                throw new InterludeJsonException(
-                    $"This form uses schema version {schemaVersion}, but this build of Interlude " +
-                    $"understands version {FormDefinition.CurrentSchemaVersion}. Update Interlude to open it.");
+                CommentHandling = JsonCommentHandling.Skip,
+                AllowTrailingCommas = true,
+            });
+
+            if (document.RootElement.ValueKind == JsonValueKind.Object)
+            {
+                foreach (JsonProperty property in document.RootElement.EnumerateObject())
+                {
+                    if (!string.Equals(property.Name, "schemaVersion", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    if (property.Value.TryGetInt32(out int schemaVersion) &&
+                        schemaVersion > FormDefinition.CurrentSchemaVersion)
+                    {
+                        throw new InterludeJsonException(
+                            $"This form uses schema version {schemaVersion}, but this build of Interlude " +
+                            $"understands version {FormDefinition.CurrentSchemaVersion}. Update Interlude to open it.");
+                    }
+
+                    break;
+                }
             }
         }
         catch (JsonException ex)
         {
             throw new InterludeJsonException($"This is not valid JSON: {ex.Message}", ex);
+        }
+    }
+
+    private static void EnsureNoCustomRules(FormDefinition definition)
+    {
+        if (definition.AllElements().Any(element => element.Rules.Any(rule => rule is CustomPredicateRule)))
+        {
+            throw new InterludeJsonException(
+                "Custom validation rules contain executable code and cannot be serialized or restored from JSON.");
         }
     }
 

@@ -281,7 +281,7 @@ internal sealed class DropdownRenderer : ControlRenderer<DropdownElement>
 
         ComboBoxItem? match = combo.Items
             .OfType<ComboBoxItem>()
-            .FirstOrDefault(item => item.Tag is OptionItem option && ValueOps.AreEqual(option.Value, value));
+            .FirstOrDefault(item => item.Tag is OptionItem option && ValueOps.AreStateEqual(option.Value, value));
 
         combo.SelectedItem = match;
 
@@ -337,7 +337,7 @@ internal sealed class RadioGroupRenderer : ControlRenderer<RadioGroupElement>
     {
         foreach (RadioButton button in Buttons(control))
         {
-            bool shouldBeChecked = button.Tag is OptionItem option && ValueOps.AreEqual(option.Value, value);
+            bool shouldBeChecked = button.Tag is OptionItem option && ValueOps.AreStateEqual(option.Value, value);
 
             if (button.IsChecked != shouldBeChecked)
             {

@@ -6,26 +6,6 @@ using Autodesk.DesignScript.Runtime;
 namespace Interlude.Runtime;
 
 /// <summary>
-/// Where a form's answers are kept between runs. The seam exists so that opt-in disk
-/// persistence can be added later without the rest of the package noticing.
-/// </summary>
-[IsVisibleInDynamoLibrary(false)]
-internal interface IResultStore
-{
-    /// <summary>Retrieves the last submitted result for a form.</summary>
-    bool TryGet(string formId, out FormResult? result);
-
-    /// <summary>Records a form's result.</summary>
-    void Save(string formId, FormResult result);
-
-    /// <summary>Forgets one form's result.</summary>
-    void Remove(string formId);
-
-    /// <summary>Forgets everything.</summary>
-    void Clear();
-}
-
-/// <summary>
 /// Remembers what each form was answered with, for the lifetime of the Dynamo process.
 ///
 /// Only submitted results are stored. Cancelling deliberately does not overwrite the cache:
@@ -34,7 +14,7 @@ internal interface IResultStore
 /// wrong.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
-internal sealed class SessionStore : IResultStore
+internal sealed class SessionStore
 {
     private readonly ConcurrentDictionary<string, FormResult> _results =
         new(StringComparer.Ordinal);
@@ -45,7 +25,7 @@ internal sealed class SessionStore : IResultStore
     /// <summary>How many forms currently have remembered answers.</summary>
     public int Count => _results.Count;
 
-    /// <inheritdoc />
+    /// <summary>Retrieves the last submitted result for a form.</summary>
     public bool TryGet(string formId, out FormResult? result)
     {
         if (string.IsNullOrEmpty(formId))
@@ -61,7 +41,7 @@ internal sealed class SessionStore : IResultStore
     public IReadOnlyDictionary<string, object?>? TryGetValues(string formId)
         => TryGet(formId, out FormResult? result) ? result!.Values : null;
 
-    /// <inheritdoc />
+    /// <summary>Records a form's result.</summary>
     public void Save(string formId, FormResult result)
     {
         if (string.IsNullOrEmpty(formId) || result is null)
@@ -78,7 +58,7 @@ internal sealed class SessionStore : IResultStore
         _results[formId] = result;
     }
 
-    /// <inheritdoc />
+    /// <summary>Forgets one form's result.</summary>
     public void Remove(string formId)
     {
         if (!string.IsNullOrEmpty(formId))
@@ -87,6 +67,6 @@ internal sealed class SessionStore : IResultStore
         }
     }
 
-    /// <inheritdoc />
+    /// <summary>Forgets everything.</summary>
     public void Clear() => _results.Clear();
 }

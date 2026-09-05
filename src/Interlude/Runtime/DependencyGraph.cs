@@ -19,8 +19,7 @@ internal sealed class DependencyGraph
     /// <summary>Records that <paramref name="key"/> cannot be evaluated until <paramref name="dependency"/> is.</summary>
     public void AddDependency(string key, string dependency)
     {
-        if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(dependency) ||
-            string.Equals(key, dependency, StringComparison.Ordinal))
+        if (string.IsNullOrEmpty(key) || string.IsNullOrEmpty(dependency))
         {
             return;
         }

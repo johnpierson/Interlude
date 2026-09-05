@@ -310,7 +310,7 @@ public class Layout
     /// <search>dock,side,edge,left,right,top,bottom</search>
     public static FormElement Docked(FormElement element, string side = "Left")
     {
-        DockSide parsed = Enum.TryParse(side, ignoreCase: true, out DockSide value) ? value : DockSide.Left;
+        DockSide parsed = NodeSupport.ParseEnum(side, nameof(side), DockSide.Left);
         return Behavior.Restyle(element, style => style with { Dock = parsed });
     }
 
