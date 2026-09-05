@@ -39,7 +39,7 @@ internal sealed class FormStateStore : IFormStateReader
             return false;
         }
 
-        if (_values.TryGetValue(key, out object? existing) && ValueOps.AreEqual(existing, value))
+        if (_values.TryGetValue(key, out object? existing) && ValueOps.AreStateEqual(existing, value))
         {
             return false;
         }

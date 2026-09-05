@@ -161,7 +161,7 @@ internal sealed class SelectionList : Grid
 
                 _singleList.SelectedItem = _singleList.Items
                     .OfType<ListBoxItem>()
-                    .FirstOrDefault(item => ValueOps.AreEqual(((OptionItem)item.Tag).Value, value));
+                    .FirstOrDefault(item => ValueOps.AreStateEqual(((OptionItem)item.Tag).Value, value));
                 return;
             }
 
@@ -169,7 +169,7 @@ internal sealed class SelectionList : Grid
             foreach (CheckBox box in _checkBoxes)
             {
                 object? optionValue = ((OptionItem)box.Tag).Value;
-                box.IsChecked = selected.Any(item => ValueOps.AreEqual(item, optionValue));
+                box.IsChecked = selected.Any(item => ValueOps.AreStateEqual(item, optionValue));
             }
         }
         finally

@@ -65,11 +65,9 @@ public class Compute
     public static ComputedValue Arithmetic(object left, string operation, object right)
         => new ArithmeticComputed
         {
-            Operator = Enum.TryParse(operation, ignoreCase: true, out ArithmeticOperator parsed)
-                ? parsed
-                : ArithmeticOperator.Add,
-            Left = Operand(left),
-            Right = Operand(right),
+            Operator = NodeSupport.ParseEnum(operation, nameof(operation), ArithmeticOperator.Add),
+            Left = NodeSupport.AsOperand(left),
+            Right = NodeSupport.AsOperand(right),
         };
 
     /// <summary>
@@ -159,17 +157,8 @@ public class Compute
         => new ConditionalComputed
         {
             Condition = condition ?? ConstantCondition.True,
-            IfTrue = Operand(ifTrue),
-            IfFalse = Operand(ifFalse),
+            IfTrue = NodeSupport.AsOperand(ifTrue),
+            IfFalse = NodeSupport.AsOperand(ifFalse),
         };
 
-    /// <summary>
-    /// Reads an operand port.
-    ///
-    /// A bare string is a field key rather than literal text, because that is what it means nine
-    /// times out of ten in this position — unless it contains a brace, in which case it is a
-    /// template, because a key never does. Use <c>Compute.Constant</c> when the literal text is
-    /// genuinely what was wanted.
-    /// </summary>
-    private static ComputedValue Operand(object? value) => NodeSupport.AsOperand(value);
 }

@@ -330,34 +330,12 @@ internal sealed class FormWindow : Window
 
             case ButtonAction.Reset:
                 _session.Reset();
-                RefreshEverything();
                 return;
 
             case ButtonAction.OpenUrl:
                 MarkdownView.OpenExternal(e.Url);
                 return;
         }
-    }
-
-    /// <summary>Pushes every current state into every control, after a wholesale change.</summary>
-    private void RefreshEverything()
-    {
-        _context.IsApplyingState = true;
-        try
-        {
-            foreach (KeyValuePair<FormElement, ElementView> pair in _context.Views)
-            {
-                ElementRuntimeState state = _session.GetState(pair.Key);
-                pair.Value.Renderer.WriteValue(pair.Value.Control, state.Value);
-                pair.Value.ApplyAll(state, _session.ShowAllErrors);
-            }
-        }
-        finally
-        {
-            _context.IsApplyingState = false;
-        }
-
-        UpdateValidationSummary();
     }
 
     private void SubmitForm(string buttonClicked)

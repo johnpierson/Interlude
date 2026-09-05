@@ -231,6 +231,52 @@ public static class ValueOps
     }
 
     /// <summary>
+    /// Equality for stored selections and state snapshots. Reference-backed objects are
+    /// identity-sensitive so two different model objects that render the same way do not
+    /// collapse into one selection. Primitive/value types retain their normal value equality.
+    /// </summary>
+    public static bool AreStateEqual(object? left, object? right)
+    {
+        if (left is null || right is null)
+        {
+            return left is null && right is null;
+        }
+
+        if (ReferenceEquals(left, right))
+        {
+            return true;
+        }
+
+        if (left is string leftText && right is string rightText)
+        {
+            return string.Equals(leftText, rightText, StringComparison.Ordinal);
+        }
+
+        if (left is not IDictionary && right is not IDictionary &&
+            TryAsSequence(left, out IReadOnlyList<object?> leftItems) &&
+            TryAsSequence(right, out IReadOnlyList<object?> rightItems))
+        {
+            if (leftItems.Count != rightItems.Count)
+            {
+                return false;
+            }
+
+            for (int i = 0; i < leftItems.Count; i++)
+            {
+                if (!AreStateEqual(leftItems[i], rightItems[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        Type leftType = left.GetType();
+        return leftType == right.GetType() && leftType.IsValueType && left.Equals(right);
+    }
+
+    /// <summary>
     /// Ordering comparison. Returns false when the two values cannot be ordered, which makes
     /// "greater than" on nonsense inputs simply false rather than an exception mid-keystroke.
     /// </summary>

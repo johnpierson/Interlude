@@ -25,6 +25,7 @@ internal sealed class PathBox : Grid
     private readonly bool _isFolder;
 
     private bool _isWriting;
+    private IReadOnlyList<string>? _selectedPaths;
 
     internal PathBox(FilePickerElement? fileOptions, string? initialDirectory, bool isFolder)
     {
@@ -40,6 +41,7 @@ internal sealed class PathBox : Grid
         {
             if (!_isWriting)
             {
+                _selectedPaths = null;
                 PathChanged?.Invoke(this, EventArgs.Empty);
             }
         };
@@ -77,6 +79,7 @@ internal sealed class PathBox : Grid
             _isWriting = true;
             try
             {
+                _selectedPaths = null;
                 _entry.Text = value ?? string.Empty;
             }
             finally
@@ -87,14 +90,32 @@ internal sealed class PathBox : Grid
     }
 
     /// <summary>The selected paths, split out of the text.</summary>
-    internal IReadOnlyList<string> Paths => _entry.Text
-        .Split(';')
-        .Select(part => part.Trim())
-        .Where(part => part.Length > 0)
-        .ToList();
+    internal IReadOnlyList<string> Paths => _selectedPaths ?? ParsePaths(_entry.Text);
 
     /// <summary>Replaces the selection with a list of paths.</summary>
-    internal void SetPaths(IEnumerable<string> paths) => Text = string.Join("; ", paths);
+    internal void SetPaths(IEnumerable<string> paths)
+    {
+        string[] selected = paths
+            .Where(path => !string.IsNullOrWhiteSpace(path))
+            .ToArray();
+
+        _selectedPaths = selected;
+        _isWriting = true;
+        try
+        {
+            _entry.Text = string.Join("; ", selected);
+        }
+        finally
+        {
+            _isWriting = false;
+        }
+    }
+
+    private static IReadOnlyList<string> ParsePaths(string text)
+        => text.Split(';')
+            .Select(part => part.Trim())
+            .Where(part => part.Length > 0)
+            .ToList();
 
     private void OnBrowse(object sender, RoutedEventArgs e)
     {

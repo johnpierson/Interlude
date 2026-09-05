@@ -64,7 +64,7 @@ public sealed record OptionItem
 
     /// <summary>Finds the option matching <paramref name="value"/>, or null.</summary>
     public static OptionItem? Find(IReadOnlyList<OptionItem> options, object? value)
-        => options.FirstOrDefault(option => ValueOps.AreEqual(option.Value, value));
+        => options.FirstOrDefault(option => ValueOps.AreStateEqual(option.Value, value));
 
     public override string ToString() => Display;
 }

@@ -171,6 +171,11 @@ internal sealed class NumericBox : Border
 
     private void Step(double delta)
     {
+        if (_entry.IsReadOnly || !_entry.IsEnabled || !IsEnabled)
+        {
+            return;
+        }
+
         double next = Clamp(_value + delta);
         if (next.Equals(_value))
         {

@@ -174,7 +174,7 @@ public class FormSessionTests
     }
 
     [Fact]
-    public void A_field_computed_from_its_own_value_settles_instead_of_looping()
+    public void A_field_computed_from_its_own_value_is_rejected_as_a_cycle()
     {
         InputElement self = TestForms.Number("total") with
         {
@@ -186,10 +186,10 @@ public class FormSessionTests
             },
         };
 
-        // A self-edge is dropped by the graph rather than reported as a loop, because a value
-        // reading its own previous state settles immediately instead of diverging.
-        FormSession session = new(TestForms.Form(self));
-        Assert.Equal(1d, session.GetValue("total"));
+        FormCycleException error = Assert.Throws<FormCycleException>(
+            () => new FormSession(TestForms.Form(self)));
+
+        Assert.Equal(new[] { "total" }, error.Cycle);
     }
 
     [Fact]
