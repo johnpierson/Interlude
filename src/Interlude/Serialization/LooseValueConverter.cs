@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json;
@@ -71,6 +72,19 @@ internal sealed class LooseValueConverter : JsonConverter<object?>
                 return;
 
             default:
+                if (value is IDictionary dictionary)
+                {
+                    writer.WriteStartObject();
+                    foreach (DictionaryEntry entry in dictionary)
+                    {
+                        writer.WritePropertyName(ValueOps.ToStringInvariant(entry.Key));
+                        Write(writer, entry.Value, options);
+                    }
+
+                    writer.WriteEndObject();
+                    return;
+                }
+
                 if (ValueOps.TryAsSequence(value, out IReadOnlyList<object?> items))
                 {
                     writer.WriteStartArray();

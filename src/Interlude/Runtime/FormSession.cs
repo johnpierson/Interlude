@@ -205,6 +205,8 @@ public sealed class FormSession
         }
 
         bool anyChanged = false;
+        Dictionary<FormElement, StateChangeKind> directChanges =
+            new(ReferenceComparer<FormElement>.Instance);
 
         foreach (KeyValuePair<string, object?> pair in values)
         {
@@ -222,28 +224,44 @@ public sealed class FormSession
             ElementRuntimeState state = _states[input];
             state.Value = coerced;
             state.IsTouched |= markTouched;
+            directChanges[input] = StateChangeKind.Value;
             anyChanged = true;
         }
 
         if (anyChanged)
         {
-            Propagate(raiseEvent: true, seed: null);
+            Propagate(raiseEvent: true, seed: null, initialChanges: directChanges);
         }
     }
 
     /// <summary>Puts every field back to its default value.</summary>
     public void Reset()
     {
+        Dictionary<FormElement, StateChangeKind> directChanges =
+            new(ReferenceComparer<FormElement>.Instance);
+
         foreach (KeyValuePair<string, InputElement> pair in _inputsByKey)
         {
-            _store.Set(pair.Key, pair.Value.GetEffectiveDefault());
+            object? next = pair.Value.GetEffectiveDefault();
             ElementRuntimeState state = _states[pair.Value];
+            if (!_store.Set(pair.Key, next))
+            {
+                if (state.IsTouched)
+                {
+                    directChanges[pair.Value] = StateChangeKind.Validation;
+                }
+
+                state.IsTouched = false;
+                continue;
+            }
+
             state.Value = _store.GetValue(pair.Key);
             state.IsTouched = false;
+            directChanges[pair.Value] = StateChangeKind.Value;
         }
 
         ShowAllErrors = false;
-        Propagate(raiseEvent: true, seed: null);
+        Propagate(raiseEvent: true, seed: null, initialChanges: directChanges);
     }
 
     /// <summary>
@@ -427,10 +445,21 @@ public sealed class FormSession
     /// where an incremental update misses a dependency. The dependency graph still matters: it
     /// fixes the *order* computed values are evaluated in, and it is what catches cycles.
     /// </summary>
-    private void Propagate(bool raiseEvent, (FormElement Element, StateChangeKind Kind)? seed)
+    private void Propagate(
+        bool raiseEvent,
+        (FormElement Element, StateChangeKind Kind)? seed,
+        Dictionary<FormElement, StateChangeKind>? initialChanges = null)
     {
         Dictionary<FormElement, StateChangeKind> changes =
             new(ReferenceComparer<FormElement>.Instance);
+
+        if (initialChanges is not null)
+        {
+            foreach (KeyValuePair<FormElement, StateChangeKind> change in initialChanges)
+            {
+                changes[change.Key] = change.Value;
+            }
+        }
 
         if (seed.HasValue)
         {

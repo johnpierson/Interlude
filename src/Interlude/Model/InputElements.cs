@@ -283,7 +283,7 @@ public sealed record ListSelectionElement : InputElement
         foreach (object? candidate in ValueOps.AsList(value))
         {
             OptionItem? match = OptionItem.Find(Options, candidate);
-            if (match is not null && !selected.Any(existing => ValueOps.AreEqual(existing, match.Value)))
+            if (match is not null && !selected.Any(existing => ValueOps.AreStateEqual(existing, match.Value)))
             {
                 selected.Add(match.Value);
             }
@@ -327,15 +327,15 @@ public sealed record TreeSelectionElement : InputElement
                 ? items.FirstOrDefault()
                 : value;
 
-            TreeNode? found = selectable.FirstOrDefault(node => ValueOps.AreEqual(node.Value, single));
+            TreeNode? found = selectable.FirstOrDefault(node => ValueOps.AreStateEqual(node.Value, single));
             return found?.Value;
         }
 
         List<object?> selected = new();
         foreach (object? candidate in ValueOps.AsList(value))
         {
-            TreeNode? found = selectable.FirstOrDefault(node => ValueOps.AreEqual(node.Value, candidate));
-            if (found is not null && !selected.Any(existing => ValueOps.AreEqual(existing, found.Value)))
+            TreeNode? found = selectable.FirstOrDefault(node => ValueOps.AreStateEqual(node.Value, candidate));
+            if (found is not null && !selected.Any(existing => ValueOps.AreStateEqual(existing, found.Value)))
             {
                 selected.Add(found.Value);
             }

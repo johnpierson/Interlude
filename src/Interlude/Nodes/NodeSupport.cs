@@ -4,6 +4,7 @@ using System.Linq;
 using Autodesk.DesignScript.Runtime;
 using Interlude.Conditions;
 using Interlude.Model;
+using Interlude.Runtime;
 
 namespace Interlude;
 
@@ -23,7 +24,20 @@ internal static class NodeSupport
 
     /// <summary>Reads an optional numeric port, where null means "no bound".</summary>
     internal static double? OptionalDouble(object? value)
-        => value is null ? null : ValueOps.TryToDouble(value, out double number) ? number : null;
+    {
+        if (value is null || ValueOps.IsEmpty(value))
+        {
+            return null;
+        }
+
+        if (ValueOps.TryToDouble(value, out double number) &&
+            !double.IsNaN(number) && !double.IsInfinity(number))
+        {
+            return number;
+        }
+
+        throw new InterludeException("The supplied numeric value is invalid.");
+    }
 
     /// <summary>Reads an optional whole-number port.</summary>
     internal static int? OptionalInt(object? value)
@@ -35,6 +49,23 @@ internal static class NodeSupport
     /// <summary>Reads an optional date port.</summary>
     internal static DateTime? OptionalDate(object? value)
         => value is null ? null : ValueOps.TryToDateTime(value, out DateTime date) ? date : null;
+
+    /// <summary>Parses a named enum port, preserving an explicit default but rejecting typos.</summary>
+    internal static TEnum ParseEnum<TEnum>(string? value, string parameterName, TEnum defaultValue)
+        where TEnum : struct, Enum
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return defaultValue;
+        }
+
+        if (Enum.TryParse(value, ignoreCase: true, out TEnum parsed) && Enum.IsDefined(parsed))
+        {
+            return parsed;
+        }
+
+        throw new ArgumentException($"Unknown {typeof(TEnum).Name} value '{value}'.", parameterName);
+    }
 
     /// <summary>Reads a colour supplied as an <see cref="RgbColor"/> or as a hex string.</summary>
     internal static RgbColor? OptionalColor(object? value) => value switch
@@ -98,13 +129,6 @@ internal static class NodeSupport
 
         return Items(value).OfType<ConditionExpr>().ToList();
     }
-
-    /// <summary>Wraps a plain value as a computed expression, passing expressions through.</summary>
-    internal static ComputedValue AsComputed(object? value) => value switch
-    {
-        ComputedValue computed => computed,
-        _ => new ConstantComputed { Value = value },
-    };
 
     /// <summary>
     /// Reads a port that accepts a computation, a field key, or a template.

@@ -181,7 +181,7 @@ public class Theme
     /// <param name="density">Compact, Comfortable or Spacious.</param>
     /// <param name="cornerRadius">How rounded controls are, in pixels.</param>
     /// <param name="fontSize">Base text size, in pixels.</param>
-    /// <param name="fontFamily">Font name. Empty uses the host's interface font.</param>
+    /// <param name="fontFamily">Font name. Empty keeps Interlude's embedded font.</param>
     /// <param name="labelWidth">Width of the label column. Zero stacks labels above their fields.</param>
     /// <param name="reducedMotion">Switch off transitions.</param>
     /// <param name="shape">Rounded, Pill or Square. Pill ignores cornerRadius and uses the control height.</param>
@@ -215,18 +215,12 @@ public class Theme
             BorderWidth = Math.Max(0d, borderWidth),
             ShadowOffset = Math.Max(0d, shadowOffset),
             HeavyText = heavyText,
-            Shape = Enum.TryParse(shape, ignoreCase: true, out ControlShape parsedShape)
-                ? parsedShape
-                : ControlShape.Rounded,
+            Shape = NodeSupport.ParseEnum(shape, nameof(shape), ControlShape.Rounded),
             UppercaseHeaders = uppercaseHeaders,
             HeaderTracking = Math.Max(0d, headerTracking),
-            Mode = Enum.TryParse(mode, ignoreCase: true, out AppearanceMode parsedMode)
-                ? parsedMode
-                : AppearanceMode.Auto,
+            Mode = NodeSupport.ParseEnum(mode, nameof(mode), AppearanceMode.Auto),
             Accent = NodeSupport.OptionalColor(NodeSupport.OrNull(accent)),
-            Density = Enum.TryParse(density, ignoreCase: true, out ThemeDensity parsedDensity)
-                ? parsedDensity
-                : ThemeDensity.Comfortable,
+            Density = NodeSupport.ParseEnum(density, nameof(density), ThemeDensity.Comfortable),
             CornerRadius = Math.Max(0, cornerRadius),
             FontSize = fontSize <= 0 ? 13 : fontSize,
             FontFamily = NodeSupport.OrNull(fontFamily),

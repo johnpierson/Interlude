@@ -107,16 +107,22 @@ internal sealed class SelectionTree : Grid
                     if (entry.CheckBox is not null)
                     {
                         entry.CheckBox.IsChecked =
-                            selected.Any(item => ValueOps.AreEqual(item, entry.Node.Value));
+                            selected.Any(item => ValueOps.AreStateEqual(item, entry.Node.Value));
                     }
                 }
 
                 return;
             }
 
+            // Clear first so null and unmatched values cannot leave the previous answer selected.
             foreach (Entry entry in _entries)
             {
-                if (selected.Any(item => ValueOps.AreEqual(item, entry.Node.Value)))
+                entry.Item.IsSelected = false;
+            }
+
+            foreach (Entry entry in _entries)
+            {
+                if (selected.Any(item => ValueOps.AreStateEqual(item, entry.Node.Value)))
                 {
                     entry.Item.IsSelected = true;
                     ExpandAncestors(entry.Item);

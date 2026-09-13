@@ -79,7 +79,7 @@ internal sealed class DateTimeField : Grid
             return date.Date;
         }
 
-        return TryParseTime(_time.Text, out TimeSpan time) ? date.Date + time : date.Date;
+        return TryParseTime(_time.Text, out TimeSpan time) ? date.Date + time : null;
     }
 
     /// <summary>Sets the moment without raising <see cref="DateChanged"/>.</summary>
@@ -112,18 +112,12 @@ internal sealed class DateTimeField : Grid
     }
 
     /// <summary>
-    /// Accepts "9:30", "09:30" and "0930", in the user's culture or the invariant one. People
-    /// type times loosely, and rejecting a legible one is worse than accepting a sloppy one.
+    /// Accepts "9:30", "09:30" and "0930", in the user's culture or the invariant one. Values
+    /// must be a time of day; a negative or multi-day duration is not a valid clock time.
     /// </summary>
     private static bool TryParseTime(string text, out TimeSpan time)
     {
         string trimmed = (text ?? string.Empty).Trim();
-
-        if (TimeSpan.TryParse(trimmed, CultureInfo.CurrentCulture, out time) ||
-            TimeSpan.TryParse(trimmed, CultureInfo.InvariantCulture, out time))
-        {
-            return true;
-        }
 
         if (trimmed.Length == 4 && int.TryParse(trimmed, NumberStyles.None, CultureInfo.InvariantCulture, out int digits))
         {
@@ -135,6 +129,13 @@ internal sealed class DateTimeField : Grid
                 time = new TimeSpan(hours, minutes, 0);
                 return true;
             }
+        }
+
+        if ((TimeSpan.TryParse(trimmed, CultureInfo.CurrentCulture, out time) ||
+             TimeSpan.TryParse(trimmed, CultureInfo.InvariantCulture, out time)) &&
+            time >= TimeSpan.Zero && time < TimeSpan.FromDays(1))
+        {
+            return true;
         }
 
         time = default;

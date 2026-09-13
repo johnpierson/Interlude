@@ -160,9 +160,7 @@ public class Rule
         => new ComparisonRule
         {
             OtherKey = otherKey ?? string.Empty,
-            Operator = Enum.TryParse(operation, ignoreCase: true, out ComparisonOperator parsed)
-                ? parsed
-                : ComparisonOperator.GreaterThan,
+            Operator = NodeSupport.ParseEnum(operation, nameof(operation), ComparisonOperator.GreaterThan),
             Message = NodeSupport.OrNull(message),
         };
 }

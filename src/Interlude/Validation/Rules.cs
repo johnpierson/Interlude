@@ -33,7 +33,8 @@ public sealed record RangeRule : ValidationRule
             return ValidationOutcome.Valid;
         }
 
-        if (!ValueOps.TryToDouble(value, out double number))
+        if (!ValueOps.TryToDouble(value, out double number) ||
+            double.IsNaN(number) || double.IsInfinity(number))
         {
             return Fail("Enter a number.");
         }
@@ -265,8 +266,8 @@ public sealed record ComparisonRule : ValidationRule
 }
 
 /// <summary>
-/// An arbitrary predicate supplied in code. Not serializable: a form carrying one of these
-/// round-trips through JSON as a rule that always passes, so keep custom rules for in-process use.
+/// An arbitrary predicate supplied in code. Not serializable: <see cref="Serialization.FormJson"/>
+/// rejects forms carrying one so executable code cannot be lost at a JSON boundary.
 /// </summary>
 [IsVisibleInDynamoLibrary(false)]
 public sealed record CustomPredicateRule : ValidationRule

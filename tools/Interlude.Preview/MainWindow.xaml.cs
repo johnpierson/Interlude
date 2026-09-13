@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Interlude.Model;
@@ -36,6 +38,7 @@ public partial class MainWindow : Window
     };
 
     private FileSystemWatcher? _watcher;
+    private CancellationTokenSource? _reloadCancellation;
     private string? _loadedPath;
     private FormDefinition? _loaded;
     private bool _isLoading = true;
@@ -235,42 +238,81 @@ public partial class MainWindow : Window
 
     private void OnFileChanged(object sender, FileSystemEventArgs e)
     {
-        if (HotReloadBox.IsChecked != true || _loadedPath is null)
-        {
-            return;
-        }
+        _ = Dispatcher.InvokeAsync(ScheduleReload);
+    }
 
-        Dispatcher.InvokeAsync(() =>
+    private void ScheduleReload()
+    {
+        CancelPendingReload();
+        CancellationTokenSource cancellation = new();
+        _reloadCancellation = cancellation;
+        _ = ReloadFileAsync(cancellation);
+    }
+
+    private async Task ReloadFileAsync(CancellationTokenSource cancellation)
+    {
+        try
         {
-            try
+            // Editors write in stages; debounce the first notification and retry without blocking
+            // the dispatcher while the file is still locked or half-written.
+            await Task.Delay(80, cancellation.Token);
+
+            if (HotReloadBox.IsChecked != true || _loadedPath is null)
             {
-                // Editors write in stages, so the first notification often arrives while the file
-                // is still locked or half-written. Retrying briefly is simpler and more reliable
-                // than trying to guess when the editor has finished.
-                for (int attempt = 0; attempt < 5; attempt++)
+                return;
+            }
+
+            string path = _loadedPath;
+            for (int attempt = 0; attempt < 5; attempt++)
+            {
+                try
                 {
-                    try
+                    _loaded = FormJson.Load(path);
+                    Refresh();
+                    OnShowForm(this, new RoutedEventArgs());
+                    return;
+                }
+                catch (Exception error) when (error is IOException or InterludeException)
+                {
+                    if (attempt == 4)
                     {
-                        _loaded = FormJson.Load(_loadedPath!);
-                        Refresh();
-                        OnShowForm(this, new RoutedEventArgs());
+                        SummaryText.Text = "Could not reload: " + error.Message;
                         return;
                     }
-                    catch (Exception error) when (error is IOException or InterludeException)
-                    {
-                        System.Threading.Thread.Sleep(80);
-                    }
+
+                    await Task.Delay(80, cancellation.Token);
                 }
             }
-            catch (Exception error)
+        }
+        catch (OperationCanceledException) when (cancellation.IsCancellationRequested)
+        {
+            // A newer file notification superseded this reload.
+        }
+        catch (Exception error)
+        {
+            SummaryText.Text = "Could not reload: " + error.Message;
+        }
+        finally
+        {
+            if (ReferenceEquals(_reloadCancellation, cancellation))
             {
-                SummaryText.Text = "Could not reload: " + error.Message;
+                _reloadCancellation = null;
             }
-        });
+
+            cancellation.Dispose();
+        }
+    }
+
+    private void CancelPendingReload()
+    {
+        _reloadCancellation?.Cancel();
+        _reloadCancellation = null;
     }
 
     private void DisposeWatcher()
     {
+        CancelPendingReload();
+
         if (_watcher is null)
         {
             return;
