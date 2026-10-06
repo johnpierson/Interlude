@@ -90,6 +90,14 @@ jobs:
       - name: Publish the release
         uses: softprops/action-gh-release@v3
         with:
+          # Named rather than taken from the ref, because half the ways this workflow starts have
+          # no tag in the ref at all. On a tag push the two agree; on a manual run there is nothing
+          # to fall back to, and the action fails at the last step having already built everything.
+          #
+          # A tag that does not exist yet is created when the draft below is published, at the
+          # commit this ran on — so a manual run is a way to cut a release without tagging first,
+          # rather than a way to release something untagged.
+          tag_name: v${{ steps.version.outputs.version }}
           files: release/*.zip
           generate_release_notes: true
           draft: true
