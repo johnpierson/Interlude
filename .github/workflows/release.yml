@@ -101,9 +101,10 @@ jobs:
           files: release/*.zip
           generate_release_notes: true
           draft: true
+          # Links are absolute: a release page resolves relative ones against /releases/, not the
+          # repository. Paragraphs are one line each because release notes keep hard line breaks.
           body: |
-            Download the archive matching your Dynamo version and unzip it into your Dynamo
-            packages folder. See [docs/installing.md](docs/installing.md).
+            Download the archive matching your Dynamo version and unzip it into your Dynamo packages folder. See [docs/installing.md](https://github.com/johnpierson/Interlude/blob/v${{ steps.version.outputs.version }}/docs/installing.md).
 
             | Archive | Dynamo | Revit |
             | --- | --- | --- |
@@ -111,7 +112,4 @@ jobs:
             | `dynamo3.6` | 3.6 | 2026 |
             | `dynamo4.0` | 4.0 | 2027 |
 
-            `Interlude-skill` is optional and separate: a Claude Code skill that writes a form
-            from a description of it, with a command-line checker for form files. Unzip it into
-            `~/.claude/skills`. See
-            [skills/interlude-form](https://github.com/johnpierson/Interlude/tree/main/skills/interlude-form).
+            `Interlude-skill` is optional and separate: a Claude Code skill that writes a form from a description of it, with a command-line checker for form files. Unzip it into `~/.claude/skills`. See [skills/interlude-form](https://github.com/johnpierson/Interlude/tree/v${{ steps.version.outputs.version }}/skills/interlude-form).
