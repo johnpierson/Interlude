@@ -13,6 +13,38 @@ package version and `FileVersion` are what move.
 
 Nothing yet.
 
+## [1.1.1] - 2026-10-05
+
+### Changed
+
+- **A misspelt option is an error rather than a silent default.** `Compute.Arithmetic`,
+  `Rule.CompareTo`, `Layout.Docked` and `Theme.Create` used to read an unknown `operation`,
+  `side`, `shape`, `mode` or `density` as their default, so `"Mulitply"` quietly added. They now
+  say which value they did not recognise. Leaving the port empty still takes the default.
+- **An optional size or range given something that is not a number now says so** instead of
+  being ignored — `width`, `height`, `minimum`, `maximum` and the like. That includes NaN and
+  infinity. Leaving the port empty is still fine.
+- **A form holding a custom validation rule can no longer be written to JSON.** The rule is a
+  function from the graph and has no JSON form, so it used to vanish on the way out and the
+  reloaded form stopped validating. Writing such a form now fails with an error naming the cause.
+
+### Fixed
+
+- **Choice inputs no longer confuse different objects that print the same text.** Selections were
+  matched on display text as a fallback, and Revit elements of one kind often print alike — every
+  `Revision`, or sheets that share a name. In a multi-select `Input.ListBox`, ticking one ticked
+  them all, and the answer collapsed to the first item in the list. Objects are now matched by
+  identity; numbers, text and other plain values still match by value.
+- **A time typed as `0930` is half past nine**, not 930 days added to the date. Text that is not a
+  time of day now leaves the field without a value instead of quietly meaning midnight.
+- **`Rule.Range` rejects NaN and infinity** rather than letting them through.
+- **A read-only number field ignores its spinner.**
+- **A single-select tree clears its highlight** when its value is cleared.
+- **A file path containing a semicolon survives the file dialog** instead of being split in two.
+- **Resetting a form, or setting several values at once, updates the fields that depend on them.**
+- **Nested values in a form's answers survive a round trip through JSON** as objects rather than
+  text.
+
 ## [1.1.0] - 2026-08-29
 
 ### Added
@@ -367,7 +399,8 @@ First release.
 - Architecture tests for the layering, library visibility, renderer coverage and schema coverage.
 - An API-surface snapshot, because saved graphs bind to node names and parameter positions.
 
-[Unreleased]: https://github.com/johnpierson/Interlude/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/johnpierson/Interlude/compare/v1.1.1...HEAD
+[1.1.1]: https://github.com/johnpierson/Interlude/releases/tag/v1.1.1
 [1.1.0]: https://github.com/johnpierson/Interlude/releases/tag/v1.1.0
 [1.0.3]: https://github.com/johnpierson/Interlude/releases/tag/v1.0.3
 [1.0.0]: https://github.com/johnpierson/Interlude/releases/tag/v1.0.0

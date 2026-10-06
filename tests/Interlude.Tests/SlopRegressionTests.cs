@@ -49,6 +49,25 @@ public class SlopRegressionTests
     }
 
     [Fact]
+    public void Multi_select_keeps_every_chosen_object_when_they_share_text()
+    {
+        // Revit elements of one class (every Revision, sheets with the same name) render the same
+        // text. Matching on that text collapsed the answer to the first item in the list.
+        SameTextObject first = new(1);
+        SameTextObject second = new(2);
+        SameTextObject third = new(3);
+        OptionItem[] options = { OptionItem.FromValue(first), OptionItem.FromValue(second), OptionItem.FromValue(third) };
+
+        ListSelectionElement list = new() { AllowMultiple = true, Options = options };
+        IReadOnlyList<object?> chosen = Assert.IsAssignableFrom<IReadOnlyList<object?>>(
+            list.Coerce(new object[] { second, third }));
+
+        Assert.Equal(2, chosen.Count);
+        Assert.Same(second, chosen[0]);
+        Assert.Same(third, chosen[1]);
+    }
+
+    [Fact]
     public void Range_rejects_non_finite_numbers()
     {
         RangeRule rule = new() { Minimum = 0d, Maximum = 10d };
