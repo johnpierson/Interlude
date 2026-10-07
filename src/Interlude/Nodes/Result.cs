@@ -340,8 +340,37 @@ public class Result
 
                 return converted;
 
+            case not null when result.GetType().FullName == BuiltinDictionaryTypeName:
+                return FromBuiltinDictionary(result);
+
             default:
                 return new Dictionary<string, object?>(StringComparer.Ordinal);
         }
+    }
+
+    // Form.Show's `values` port reaches downstream nodes as DesignScript's own dictionary, which
+    // implements none of the .NET dictionary interfaces. It lives in DesignScriptBuiltin.dll, which
+    // the ZeroTouchLibrary package does not carry, so it is read through its public surface by name
+    // rather than by reference.
+    private const string BuiltinDictionaryTypeName = "DesignScript.Builtin.Dictionary";
+
+    private static IReadOnlyDictionary<string, object?> FromBuiltinDictionary(object dictionary)
+    {
+        Dictionary<string, object?> converted = new(StringComparer.Ordinal);
+        Type type = dictionary.GetType();
+        var keysProperty = type.GetProperty("Keys");
+        var valueAtKey = type.GetMethod("ValueAtKey", new[] { typeof(string) });
+        if (keysProperty?.GetValue(dictionary) is not System.Collections.IEnumerable keys || valueAtKey is null)
+        {
+            return converted;
+        }
+
+        foreach (object? key in keys)
+        {
+            string name = ValueOps.ToStringInvariant(key);
+            converted[name] = valueAtKey.Invoke(dictionary, new object[] { name });
+        }
+
+        return converted;
     }
 }

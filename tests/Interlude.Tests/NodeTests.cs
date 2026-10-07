@@ -341,6 +341,19 @@ public class NodeTests
     }
 
     [Fact]
+    public void Result_nodes_read_the_values_port_as_Dynamo_hands_it_downstream()
+    {
+        // In a graph the `values` port arrives as DesignScript's own dictionary, not a .NET one.
+        var values = DesignScript.Builtin.Dictionary.ByKeysValues(
+            new List<string> { "name", "height" },
+            new List<object> { "Ada", 1.75 });
+
+        Assert.Equal("Ada", Result.ValueByKey(values, "name"));
+        Assert.Equal(1.75d, Result.GetNumber(values, "height"));
+        Assert.Equal(new[] { "height", "name" }, Result.Keys(values).OrderBy(key => key));
+    }
+
+    [Fact]
     public void Result_accessors_fall_back_rather_than_returning_null()
     {
         Dictionary<string, object?> empty = new();
