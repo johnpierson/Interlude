@@ -11,7 +11,12 @@ package version and `FileVersion` are what move.
 
 ## [Unreleased]
 
-Nothing yet.
+### Fixed
+
+- **`Result.*` nodes now read `Form.Show`'s `values` port in a graph.** Dynamo hands that port
+  downstream as its own `DesignScript.Builtin.Dictionary`, which none of the nodes recognised, so
+  every key quietly returned its fallback — `Result.ValueByKey` gave `null` for answers the user
+  had plainly filled in. Wiring the `form` port worked, and still does.
 
 ## [1.1.1] - 2026-10-05
 
