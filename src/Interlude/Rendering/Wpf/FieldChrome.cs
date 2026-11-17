@@ -99,8 +99,9 @@ internal static class FieldChrome
         {
             Text = " *",
             Visibility = Visibility.Collapsed,
-            VerticalAlignment = VerticalAlignment.Center,
+            VerticalAlignment = VerticalAlignment.Top,
         };
+        DockPanel.SetDock(marker, Dock.Right);
         marker.SetResourceReference(TextBlock.ForegroundProperty, ThemeKeys.Error);
 
         TextBlock caption = new()
@@ -112,9 +113,15 @@ internal static class FieldChrome
         caption.SetResourceReference(TextBlock.ForegroundProperty, ThemeKeys.Foreground);
         caption.SetResourceReference(TextBlock.FontWeightProperty, ThemeKeys.LabelFontWeight);
 
-        StackPanel panel = new()
+        // A DockPanel rather than a horizontal StackPanel: a horizontal StackPanel measures its
+        // children with unlimited width, so the caption never wraps and a long label is clipped
+        // at the edge of the label column. Here the caption fills whatever the column leaves
+        // after the marker, and HorizontalAlignment.Left keeps a short caption's marker right
+        // beside its text rather than out at the column's edge.
+        DockPanel panel = new()
         {
-            Orientation = Orientation.Horizontal,
+            LastChildFill = true,
+            HorizontalAlignment = HorizontalAlignment.Left,
 
             // Beside the control, the caption is nudged down so it sits on the control's first
             // line rather than floating against the top of a multi-line field.
@@ -124,8 +131,9 @@ internal static class FieldChrome
             VerticalAlignment = stackedAbove ? VerticalAlignment.Center : VerticalAlignment.Top,
         };
 
-        panel.Children.Add(caption);
+        // The marker docks first so the caption, added last, takes the remaining width.
         panel.Children.Add(marker);
+        panel.Children.Add(caption);
 
         return (panel, marker);
     }

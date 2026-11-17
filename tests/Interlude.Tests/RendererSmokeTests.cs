@@ -258,6 +258,58 @@ public class RendererSmokeTests
         }
     }
 
+    /// <summary>
+    /// Regression for issue #28: a side label wider than the label column was clipped on one
+    /// line, because its parent panel measured it with unlimited width.
+    /// </summary>
+    [WpfFact]
+    public void A_side_label_wider_than_the_label_column_wraps_instead_of_clipping()
+    {
+        WpfTestContext.EnsureApplication();
+
+        const string Caption = "OVERWRITE IF SHEET SET ALREADY EXISTS?";
+        FormElement toggle = new ToggleElement
+        {
+            Key = "overwrite",
+            Label = Caption,
+            OnText = "YES",
+            OffText = "NO",
+            RequiredIf = ConstantCondition.True,
+        };
+
+        FormDefinition form = TestForms.Form(toggle);
+        FormSession session = new(form);
+        FormWindow window = new(form, session, ControlRendererRegistry.CreateDefault());
+
+        try
+        {
+            ElementView view = ViewsOf(window)[form.AllElements().Single(e => e.Key == "overwrite")];
+            view.ApplyRequired(true);
+
+            view.Root.Measure(new Size(500, double.PositiveInfinity));
+            view.Root.Arrange(new Rect(view.Root.DesiredSize));
+
+            TextBlock caption = Descendants<TextBlock>(view.Root).Single(t => t.Text == Caption);
+            double labelWidth = ThemeDefinition.Default.LabelWidth;
+
+            Assert.True(caption.ActualWidth <= labelWidth,
+                $"The caption is {caption.ActualWidth} px wide, beyond the {labelWidth} px label column.");
+
+            // Wrapped onto more than one line, so taller than a single line of text.
+            Assert.True(caption.ActualHeight > caption.FontSize * 2,
+                $"The caption is {caption.ActualHeight} px tall, so it did not wrap.");
+
+            // The required marker still shows beside the wrapped caption.
+            FrameworkElement marker = Assert.IsAssignableFrom<FrameworkElement>(view.RequiredMarker);
+            Assert.Equal(Visibility.Visible, marker.Visibility);
+            Assert.True(marker.ActualWidth > 0, "The required marker was squeezed out by the caption.");
+        }
+        finally
+        {
+            window.Close();
+        }
+    }
+
     [WpfFact]
     public void The_theme_resolves_every_key_the_styles_ask_for()
     {
@@ -387,6 +439,25 @@ public class RendererSmokeTests
 
         Walk(root);
         return text.ToString();
+    }
+
+    private static IEnumerable<T> Descendants<T>(DependencyObject root)
+        where T : DependencyObject
+    {
+        int count = VisualTreeHelper.GetChildrenCount(root);
+        for (int i = 0; i < count; i++)
+        {
+            DependencyObject child = VisualTreeHelper.GetChild(root, i);
+            if (child is T match)
+            {
+                yield return match;
+            }
+
+            foreach (T nested in Descendants<T>(child))
+            {
+                yield return nested;
+            }
+        }
     }
 
     private static object? ReadByKey(IReadOnlyDictionary<FormElement, ElementView> views, string key)
