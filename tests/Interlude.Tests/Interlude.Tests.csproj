@@ -24,7 +24,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
-    <PackageReference Include="xunit.v3" Version="4.0.2" />
+    <!--
+      xunit.v3 4 defaults to Microsoft.Testing.Platform v2, which refuses the VSTest-based
+      `dotnet test` on the .NET 10 SDK. mtp-off keeps the existing VSTest CI command working
+      (see https://xunit.net/docs/getting-started/v3/microsoft-testing-platform).
+    -->
+    <PackageReference Include="xunit.v3.mtp-off" Version="4.0.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="4.0.1" />
 
     <!--
