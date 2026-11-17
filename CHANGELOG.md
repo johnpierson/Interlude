@@ -17,6 +17,11 @@ package version and `FileVersion` are what move.
   downstream as its own `DesignScript.Builtin.Dictionary`, which none of the nodes recognised, so
   every key quietly returned its fallback — `Result.ValueByKey` gave `null` for answers the user
   had plainly filled in. Wiring the `form` port worked, and still does.
+- **A side label wider than its label column now wraps instead of being clipped.** The caption
+  was set to wrap, but it sat in a horizontal panel that never gave it a width to wrap at, so
+  `"OVERWRITE IF SHEET SET ALREADY EXISTS?"` beside a toggle showed as `"OVERWRITE IF SHE"`. Every
+  input with a side label was affected. The required marker stays beside the wrapped text.
+  ([#28](https://github.com/johnpierson/Interlude/issues/28))
 
 ## [1.1.1] - 2026-10-05
 
